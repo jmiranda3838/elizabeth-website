@@ -928,7 +928,7 @@
 /* === Sections: How It Works === */
 .moon-journey-section {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background-image: url('../../images/howitworksbg3.png');
   background-size: cover;
   background-position: center;
@@ -946,22 +946,22 @@
 /* Botanical vine dividers - moon journey section */
 .moon-journey-section .vine-divider {
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 35px;
+  left: -30px;
+  right: -30px;
+  height: 55px;
   z-index: 3;
   pointer-events: none;
   max-width: none;
-  width: 100%;
+  width: calc(100% + 60px);
   margin: 0;
-  /* Repeating SVG pattern as background - tiles instead of stretching */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 15 Q12.5 12 25 15 T50 15 T75 15 T100 15' stroke='%2396ACA0' stroke-width='1' fill='none' stroke-linecap='round'/%3E%3Cg stroke='%2396ACA0' stroke-width='0.8' fill='none' stroke-linecap='round'%3E%3Cpath d='M12.5 15 C9 10 7 5 15 3'/%3E%3Cpath d='M12.5 15 C9 20 7 25 15 27'/%3E%3Cpath d='M37.5 15 C34 10 32 5 40 3'/%3E%3Cpath d='M37.5 15 C34 20 32 25 40 27'/%3E%3Cpath d='M62.5 15 C59 10 57 5 65 3'/%3E%3Cpath d='M62.5 15 C59 20 57 25 65 27'/%3E%3Cpath d='M87.5 15 C84 10 82 5 90 3'/%3E%3Cpath d='M87.5 15 C84 20 82 25 90 27'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 55' fill='none'%3E%3Cpath d='M0 28 C15 25, 25 32, 40 28 S65 22, 80 28 S105 34, 120 28' stroke='%2396ACA0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M0 30 Q20 35, 35 28 Q50 22, 65 30 Q80 38, 95 28 Q110 20, 120 30' stroke='%2396ACA0' stroke-width='0.6' fill='none' stroke-linecap='round' opacity='0.4'/%3E%3Cg transform='translate(8, 12) rotate(-25)'%3E%3Cellipse cx='0' cy='0' rx='8' ry='12' fill='%2396ACA0' fill-opacity='0.18'/%3E%3Cpath d='M0 -10 L0 10' stroke='%2396ACA0' stroke-width='0.5' opacity='0.5'/%3E%3Cpath d='M0 -6 L-4 -3' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M0 -6 L4 -3' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M0 0 L-5 3' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M0 0 L5 3' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M0 5 L-3 7' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3Cpath d='M0 5 L3 7' stroke='%2396ACA0' stroke-width='0.3' opacity='0.4'/%3E%3C/g%3E%3Cg transform='translate(18, 42) rotate(20)'%3E%3Cellipse cx='0' cy='0' rx='6' ry='10' fill='%2396ACA0' fill-opacity='0.15'/%3E%3Cpath d='M0 -8 L0 8' stroke='%2396ACA0' stroke-width='0.4' opacity='0.45'/%3E%3Cpath d='M0 -4 L-3 -2' stroke='%2396ACA0' stroke-width='0.25' opacity='0.35'/%3E%3Cpath d='M0 -4 L3 -2' stroke='%2396ACA0' stroke-width='0.25' opacity='0.35'/%3E%3Cpath d='M0 2 L-3 4' stroke='%2396ACA0' stroke-width='0.25' opacity='0.35'/%3E%3Cpath d='M0 2 L3 4' stroke='%2396ACA0' stroke-width='0.25' opacity='0.35'/%3E%3C/g%3E%3Cg transform='translate(45, 14)'%3E%3Cellipse cx='0' cy='-8' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.22'/%3E%3Cellipse cx='7.6' cy='-2.5' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.20' transform='rotate(72 7.6 -2.5)'/%3E%3Cellipse cx='4.7' cy='6.5' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.18' transform='rotate(144 4.7 6.5)'/%3E%3Cellipse cx='-4.7' cy='6.5' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.19' transform='rotate(-144 -4.7 6.5)'/%3E%3Cellipse cx='-7.6' cy='-2.5' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.21' transform='rotate(-72 -7.6 -2.5)'/%3E%3Cpath d='M0 0 L0 -12' stroke='%2396ACA0' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M0 0 L7 -4' stroke='%2396ACA0' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M0 0 L4.5 6' stroke='%2396ACA0' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M0 0 L-4.5 6' stroke='%2396ACA0' stroke-width='0.4' opacity='0.35'/%3E%3Cpath d='M0 0 L-7 -4' stroke='%2396ACA0' stroke-width='0.4' opacity='0.35'/%3E%3Ccircle cx='0' cy='0' r='3' fill='%2396ACA0' fill-opacity='0.3'/%3E%3Ccircle cx='0' cy='0' r='1.5' fill='%2396ACA0' fill-opacity='0.5'/%3E%3Ccircle cx='0' cy='-2' r='0.6' fill='%2396ACA0' fill-opacity='0.6'/%3E%3Ccircle cx='1.7' cy='-0.6' r='0.6' fill='%2396ACA0' fill-opacity='0.6'/%3E%3Ccircle cx='1' cy='1.6' r='0.6' fill='%2396ACA0' fill-opacity='0.6'/%3E%3Ccircle cx='-1' cy='1.6' r='0.6' fill='%2396ACA0' fill-opacity='0.6'/%3E%3Ccircle cx='-1.7' cy='-0.6' r='0.6' fill='%2396ACA0' fill-opacity='0.6'/%3E%3C/g%3E%3Cg transform='translate(75, 40)'%3E%3Cpath d='M0 -8 Q-2 -4, -5 0' stroke='%2396ACA0' stroke-width='0.5' fill='none' opacity='0.5'/%3E%3Cpath d='M0 -8 Q0 -4, 0 2' stroke='%2396ACA0' stroke-width='0.5' fill='none' opacity='0.5'/%3E%3Cpath d='M0 -8 Q2 -4, 6 -1' stroke='%2396ACA0' stroke-width='0.5' fill='none' opacity='0.5'/%3E%3Ccircle cx='-5' cy='2' r='3.5' fill='%2396ACA0' fill-opacity='0.28'/%3E%3Ccircle cx='-6' cy='0.5' r='1' fill='%2396ACA0' fill-opacity='0.15'/%3E%3Ccircle cx='0' cy='4' r='3' fill='%2396ACA0' fill-opacity='0.25'/%3E%3Ccircle cx='-1' cy='2.5' r='0.8' fill='%2396ACA0' fill-opacity='0.12'/%3E%3Ccircle cx='6' cy='1' r='2.5' fill='%2396ACA0' fill-opacity='0.22'/%3E%3Ccircle cx='5' cy='0' r='0.7' fill='%2396ACA0' fill-opacity='0.1'/%3E%3Ccircle cx='3' cy='-3' r='1.5' fill='%2396ACA0' fill-opacity='0.2'/%3E%3C/g%3E%3Cg transform='translate(100, 18) rotate(-15)'%3E%3Cellipse cx='0' cy='0' rx='5' ry='9' fill='%2396ACA0' fill-opacity='0.16'/%3E%3Cpath d='M0 -7 L0 7' stroke='%2396ACA0' stroke-width='0.35' opacity='0.4'/%3E%3Cpath d='M0 -3 L-2.5 -1' stroke='%2396ACA0' stroke-width='0.25' opacity='0.3'/%3E%3Cpath d='M0 -3 L2.5 -1' stroke='%2396ACA0' stroke-width='0.25' opacity='0.3'/%3E%3Cpath d='M0 2 L-2.5 4' stroke='%2396ACA0' stroke-width='0.25' opacity='0.3'/%3E%3Cpath d='M0 2 L2.5 4' stroke='%2396ACA0' stroke-width='0.25' opacity='0.3'/%3E%3C/g%3E%3Cg transform='translate(110, 38) rotate(30)'%3E%3Cellipse cx='0' cy='0' rx='4' ry='7' fill='%2396ACA0' fill-opacity='0.14'/%3E%3Cpath d='M0 -5 L0 5' stroke='%2396ACA0' stroke-width='0.3' opacity='0.35'/%3E%3C/g%3E%3Cg fill='%2396ACA0'%3E%3Cellipse cx='28' cy='22' rx='2' ry='3.5' fill-opacity='0.2' transform='rotate(-40 28 22)'/%3E%3Cpath d='M28 22 Q26 26, 28 28' stroke='%2396ACA0' stroke-width='0.4' fill='none' opacity='0.4'/%3E%3Cellipse cx='90' cy='32' rx='1.5' ry='2.5' fill-opacity='0.18' transform='rotate(25 90 32)'/%3E%3C/g%3E%3Cg fill='%2396ACA0' fill-opacity='0.3'%3E%3Ccircle cx='55' cy='38' r='0.8'/%3E%3Ccircle cx='35' cy='35' r='0.6'/%3E%3Ccircle cx='62' cy='42' r='0.5'/%3E%3Ccircle cx='22' cy='30' r='0.7'/%3E%3Ccircle cx='85' cy='22' r='0.6'/%3E%3Ccircle cx='105' cy='30' r='0.5'/%3E%3C/g%3E%3C/svg%3E");
   background-repeat: repeat-x;
-  background-size: 100px 35px;
-  background-position: center;
+  background-size: 120px 55px;
+  background-position: 0 center;
+  animation: botanicalSway 12s ease-in-out infinite;
 }
 
-/* Hide inline SVG - using CSS background instead */
+/* Hide inline SVG - using CSS background pattern */
 .moon-journey-section .vine-divider svg {
   display: none;
 }
@@ -973,6 +973,7 @@
 .vine-divider-bottom {
   bottom: -5px;
   transform: scaleY(-1);
+  animation-direction: reverse;
 }
 
 /* Ensure content sits above overlay */
@@ -1143,6 +1144,20 @@
   .moon-path,
   .steps-grid::before {
     display: none;
+  }
+
+  .moon-journey-section .vine-divider {
+    height: 45px;
+    background-size: 100px 45px;
+    animation-duration: 15s;
+  }
+}
+
+@media (max-width: 480px) {
+  .moon-journey-section .vine-divider {
+    height: 35px;
+    background-size: 80px 35px;
+    animation-duration: 18s;
   }
 }
 

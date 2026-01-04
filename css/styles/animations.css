@@ -97,6 +97,12 @@
   50% { transform: translateY(3px); }
 }
 
+/* Botanical border sway - animates background-position */
+@keyframes botanicalSway {
+  0%, 100% { background-position: 0 center; }
+  50% { background-position: 60px center; }
+}
+
 /* ===== ANIMATION CLASSES ===== */
 
 .animate-fade-in {
@@ -194,6 +200,10 @@
   .hero-text-content,
   .botanical,
   .hanging-bunch {
+    animation: none !important;
+  }
+
+  .vine-divider {
     animation: none !important;
   }
 }
