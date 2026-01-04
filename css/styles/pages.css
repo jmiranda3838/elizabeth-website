@@ -1,4 +1,4 @@
-/* === 17) Pages: About === */
+/* === Pages: About === */
 .page-hero {
   padding: calc(80px + var(--space-16)) 0 var(--space-16);
   text-align: center;
@@ -118,7 +118,7 @@
   margin-bottom: 0;
 }
 
-/* === 18) Pages: Therapy / Services === */
+/* === Pages: Therapy / Services === */
 .service-section {
   padding: var(--space-16) 0;
   border-bottom: var(--border-thin);
@@ -195,7 +195,7 @@
   }
 }
 
-/* === 19) Pages: FAQ === */
+/* === Pages: FAQ === */
 .faq-categories {
   display: flex;
   flex-wrap: wrap;
@@ -316,7 +316,7 @@
   margin-bottom: 0;
 }
 
-/* === 20) Pages: Contact === */
+/* === Pages: Contact === */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr;

@@ -1,4 +1,4 @@
-/* === 8) Sections: Hero === */
+/* === Sections: Hero === */
 .hero-botanical {
   position: relative;
   min-height: 100vh;
@@ -230,7 +230,7 @@
   }
 }
 
-/* === 9) Sections: Garland === */
+/* === Sections: Garland === */
 .hero-garland {
   position: absolute;
   bottom: -50px;
@@ -331,7 +331,7 @@
   }
 }
 
-/* === 10) Sections: Decorative Dividers === */
+/* === Sections: Decorative Dividers === */
 .decorative-divider {
   display: flex;
   justify-content: center;
@@ -344,7 +344,7 @@
   color: var(--dusty-peach);
 }
 
-/* === 11) Sections: Service Cards === */
+/* === Sections: Service Cards === */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -590,7 +590,7 @@
   }
 }
 
-/* === 12) Sections: Approach / Philosophy === */
+/* === Sections: Approach / Philosophy === */
 .approach-section {
   position: relative;
 }
@@ -780,7 +780,7 @@
   }
 }
 
-/* === 13) Sections: Areas of Support === */
+/* === Sections: Areas of Support === */
 .apothecary-section {
   position: relative;
 }
@@ -925,7 +925,7 @@
   }
 }
 
-/* === 14) Sections: How It Works === */
+/* === Sections: How It Works === */
 .moon-journey-section {
   position: relative;
   overflow: hidden;
@@ -1146,7 +1146,7 @@
   }
 }
 
-/* === 15) Sections: Testimonials === */
+/* === Sections: Testimonials === */
 .testimonial-section {
   position: relative;
 }
@@ -1315,7 +1315,7 @@
   margin-bottom: 0;
 }
 
-/* === 16) Sections: CTA Band === */
+/* === Sections: CTA Band === */
 .cta-band {
   background-color: var(--bg-accent);
   padding: var(--space-16) 0;
