@@ -1,0 +1,48 @@
+/* === 21) Utilities: Decorative Elements === */
+.decorative-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--dusty-peach), var(--sage));
+  margin: var(--space-6) 0;
+}
+
+.decorative-line.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--soft-sand);
+  margin: var(--space-16) 0;
+}
+
+/* Botanical SVG motif */
+.botanical-motif {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.06;
+  color: var(--sage);
+}
+
+/* === 22) Utilities: Responsive === */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+
+  .section-lg {
+    padding: var(--space-16) 0;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop {
+    display: none;
+  }
+}

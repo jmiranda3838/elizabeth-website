@@ -16,14 +16,25 @@ This is a static HTML/CSS/JavaScript website for a therapy practice. It uses no 
 
 ### File Structure
 - `index.html`, `about.html`, `contact.html`, `therapy.html`, `resources.html`, `fees.html`, `faqs.html` — Page templates
-- `css/styles.css` — Single stylesheet with design system
+- `css/styles.css` — Main stylesheet (imports modular files)
+- `css/styles/` — Modular CSS files:
+  - `tokens.css` — CSS custom properties (colors, typography, spacing)
+  - `base.css` — Reset and base element styles
+  - `typography.css` — Headings and text utilities
+  - `layout.css` — Containers, grid, and flex utilities
+  - `components.css` — Buttons, header, footer
+  - `sections.css` — Hero, garland, service cards, approach, testimonials, CTA
+  - `pages.css` — About, therapy, FAQ, contact page styles
+  - `utilities.css` — Decorative elements, responsive helpers
+  - `animations.css` — Keyframes and scroll reveal system
+  - `print.css` — Print media styles
 - `js/main.js` — All JavaScript functionality (IIFE pattern)
 - `images/` — Image assets including SVG botanical decorations
 
-### Design System (in css/styles.css)
+### Design System (in css/styles/tokens.css)
 
 **CSS Variables** define the entire design system:
-- Colors: `--warm-paper`, `--sage`, `--dusty-peach`, `--espresso`, `--soft-gold`, etc.
+- Colors: `--warm-paper`, `--sage`, `--dusty-peach`, `--espresso`, `--soft-coral`, etc.
 - Typography: Cormorant Garamond (serif headings), Inter (body), Raleway (navigation)
 - Spacing scale: `--space-1` through `--space-32`
 - Shadows: `--shadow-subtle`, `--shadow-soft`

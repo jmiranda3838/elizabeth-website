@@ -1,0 +1,62 @@
+/* === 3) Typography === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(var(--text-4xl), 5vw, var(--text-6xl));
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  margin-bottom: var(--space-6);
+}
+
+h3 {
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+  margin-bottom: var(--space-4);
+}
+
+h4 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+p {
+  margin-bottom: var(--space-4);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Eyebrow / Label text */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.lead {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
