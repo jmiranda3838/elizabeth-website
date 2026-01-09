@@ -1,0 +1,1217 @@
+/* === Why Therapy Page - Magical Threshold Design === */
+
+/* ============================================
+   1. THRESHOLD HERO - The Doorway
+   ============================================ */
+
+.threshold-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    var(--blush-wash) 0%,
+    var(--warm-paper) 60%,
+    rgba(210, 199, 193, 0.3) 100%
+  );
+  overflow: hidden;
+  padding: var(--space-20) var(--space-4);
+}
+
+/* Atmospheric mist effect */
+.threshold-mist {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(
+    to top,
+    rgba(247, 246, 245, 0.95) 0%,
+    rgba(247, 246, 245, 0.6) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Candlelight glow effects */
+.candle-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(249, 200, 194, 0.25) 0%,
+    rgba(249, 200, 194, 0.1) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: candleFlicker 4s ease-in-out infinite;
+}
+
+.candle-glow-1 {
+  top: 30%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.candle-glow-2 {
+  top: 25%;
+  right: 10%;
+  animation-delay: 2s;
+}
+
+@keyframes candleFlicker {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+/* The Doorway Frame */
+.threshold-doorway {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.doorway-frame {
+  width: 100%;
+  height: auto;
+  color: var(--espresso);
+}
+
+.doorway-arch {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawArch 3s ease-out forwards;
+}
+
+@keyframes drawArch {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.doorway-vine {
+  opacity: 0;
+  animation: fadeInVine 1s ease-out forwards;
+  animation-delay: 1.5s;
+}
+
+.doorway-vine-left {
+  animation-delay: 1.8s;
+}
+
+.doorway-vine-right {
+  animation-delay: 2s;
+}
+
+.doorway-crown {
+  opacity: 0;
+  animation: fadeInVine 1s ease-out forwards;
+  animation-delay: 2.2s;
+}
+
+@keyframes fadeInVine {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Content within the doorway */
+.threshold-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: var(--space-8);
+  width: 80%;
+}
+
+.threshold-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  margin-bottom: var(--space-4);
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 2.5s;
+}
+
+.threshold-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 400;
+  color: var(--espresso);
+  line-height: 1.2;
+  margin-bottom: var(--space-4);
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 2.7s;
+}
+
+.threshold-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--slate-olive);
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 2.9s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Floating botanicals */
+.floating-botanical {
+  position: absolute;
+  color: var(--dusty-peach);
+  opacity: 0.4;
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+.floating-botanical-1 {
+  top: 15%;
+  left: 5%;
+  width: 60px;
+  animation-delay: 0s;
+}
+
+.floating-botanical-2 {
+  top: 20%;
+  right: 8%;
+  width: 50px;
+  animation-delay: 3s;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+
+/* ============================================
+   2. ILLUMINATED MANUSCRIPT - Quote Section
+   ============================================ */
+
+.illuminated-section {
+  background: var(--warm-paper);
+  padding: var(--space-20) var(--space-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.illuminated-page {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-12);
+  background: linear-gradient(
+    135deg,
+    rgba(253, 242, 239, 0.5) 0%,
+    rgba(247, 246, 245, 0.8) 50%,
+    rgba(253, 242, 239, 0.3) 100%
+  );
+  border: 1px solid var(--dusty-peach);
+  box-shadow:
+    0 4px 20px rgba(84, 49, 35, 0.08),
+    inset 0 0 60px rgba(208, 180, 166, 0.1);
+}
+
+/* Corner flourishes */
+.manuscript-corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  color: var(--dusty-peach);
+}
+
+.manuscript-corner-tl {
+  top: 0;
+  left: 0;
+}
+
+.manuscript-corner-tr {
+  top: 0;
+  right: 0;
+}
+
+.manuscript-corner-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.manuscript-corner-br {
+  bottom: 0;
+  right: 0;
+}
+
+/* Content area */
+.illuminated-content {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+/* Decorative initial letter */
+.illuminated-initial {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.initial-letter {
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  font-weight: 600;
+  line-height: 0.8;
+  color: var(--espresso);
+  display: block;
+}
+
+.initial-flourish {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  width: 100px;
+  height: 120px;
+  color: var(--sage);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* Quote styling */
+.illuminated-quote {
+  flex: 1;
+}
+
+.illuminated-quote p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--espresso);
+  margin: 0;
+}
+
+.quote-hidden-initial {
+  visibility: hidden;
+  font-size: 0;
+}
+
+.quote-attribution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  font-style: normal;
+}
+
+.attribution-dash {
+  color: var(--dusty-peach);
+  font-size: var(--text-lg);
+}
+
+.quote-attribution cite {
+  font-family: var(--font-nav);
+  font-size: var(--text-sm);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--sage);
+}
+
+/* Margin decoration */
+.manuscript-margin {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 200px;
+  color: var(--dusty-peach);
+  opacity: 0.4;
+}
+
+/* ============================================
+   3. WELCOME SECTION - Therapy Is For Everyone
+   ============================================ */
+
+.welcome-section {
+  background: var(--blush-wash);
+  padding: var(--space-20) var(--space-4);
+}
+
+.welcome-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--space-12);
+}
+
+.welcome-wreath {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto var(--space-6);
+  color: var(--sage);
+}
+
+.welcome-wreath svg {
+  width: 100%;
+  height: 100%;
+}
+
+.welcome-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--espresso);
+  margin-bottom: var(--space-6);
+}
+
+.welcome-lead {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--slate-olive);
+}
+
+.welcome-content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.welcome-intro,
+.welcome-emphasis {
+  font-size: var(--text-lg);
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.welcome-emphasis {
+  color: var(--slate-olive);
+}
+
+/* ============================================
+   4. GRIMOIRE SECTION - Sacred Promises
+   ============================================ */
+
+.grimoire-section {
+  background: linear-gradient(
+    to bottom,
+    var(--soft-sand) 0%,
+    var(--warm-paper) 100%
+  );
+  padding: var(--space-24) var(--space-4);
+  display: flex;
+  justify-content: center;
+}
+
+.grimoire-book {
+  position: relative;
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  background: var(--warm-paper);
+  box-shadow:
+    0 10px 40px rgba(84, 49, 35, 0.15),
+    0 2px 10px rgba(84, 49, 35, 0.1);
+  border-radius: 4px 12px 12px 4px;
+}
+
+/* Book spine */
+.book-spine {
+  width: 30px;
+  background: linear-gradient(
+    to right,
+    var(--dusty-peach) 0%,
+    var(--warm-clay) 50%,
+    var(--dusty-peach) 100%
+  );
+  border-radius: 4px 0 0 4px;
+  flex-shrink: 0;
+}
+
+.book-spine svg {
+  width: 100%;
+  height: 100%;
+  color: var(--espresso);
+  opacity: 0.3;
+}
+
+/* Book pages */
+.grimoire-pages {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  padding: var(--space-10);
+}
+
+.grimoire-page {
+  padding: var(--space-6);
+}
+
+.grimoire-page-left {
+  border-right: 1px solid rgba(210, 199, 193, 0.5);
+}
+
+/* Page header */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.page-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: var(--text-3xl);
+  color: var(--espresso);
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.page-divider {
+  width: 150px;
+  margin: 0 auto;
+  color: var(--dusty-peach);
+}
+
+/* Promise items */
+.promise-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.promise-item {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.promise-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--sage);
+}
+
+.promise-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.promise-content h4 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: var(--space-2);
+}
+
+.promise-content p {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--slate-olive);
+  margin: 0;
+}
+
+/* Page botanical decoration */
+.page-botanical {
+  position: absolute;
+  bottom: 40px;
+  right: 60px;
+  width: 80px;
+  height: 100px;
+  color: var(--dusty-peach);
+  opacity: 0.3;
+}
+
+/* ============================================
+   5. ROOTS SECTION - Hidden Strength
+   ============================================ */
+
+.roots-section {
+  background: var(--warm-paper);
+  padding: var(--space-24) var(--space-4);
+  overflow: hidden;
+}
+
+.roots-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.roots-text {
+  padding-right: var(--space-8);
+}
+
+.roots-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  margin-bottom: var(--space-4);
+}
+
+.roots-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--espresso);
+  line-height: 1.3;
+  margin-bottom: var(--space-6);
+}
+
+.roots-description {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+}
+
+.roots-closing {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--slate-olive);
+  line-height: 1.7;
+}
+
+/* Roots illustration */
+.roots-illustration {
+  display: flex;
+  justify-content: center;
+}
+
+.roots-svg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  color: var(--espresso);
+}
+
+.plant-above {
+  opacity: 0;
+  animation: growUp 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+.roots-below {
+  opacity: 0;
+  animation: growDown 1.5s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes growUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes growDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   6. CONSTELLATION SECTION - Star Map
+   ============================================ */
+
+.constellation-section {
+  position: relative;
+}
+
+.constellation-sky {
+  background: linear-gradient(
+    to bottom,
+    var(--espresso) 0%,
+    #3d2a1f 50%,
+    #2a1d15 100%
+  );
+  padding: var(--space-24) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background stars */
+.star-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tiny-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--warm-paper);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.tiny-star:nth-child(odd) {
+  animation-delay: 1.5s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Header */
+.constellation-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  position: relative;
+  z-index: 1;
+}
+
+.constellation-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--dusty-peach);
+  margin-bottom: var(--space-4);
+}
+
+.constellation-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--warm-paper);
+  margin-bottom: var(--space-4);
+}
+
+.constellation-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--soft-sand);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Star map container */
+.constellation-map {
+  position: relative;
+  height: 500px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.constellation-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--dusty-peach);
+  pointer-events: none;
+}
+
+/* Individual stars */
+.constellation-stars {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-star {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  transition: transform var(--transition-base);
+}
+
+.constellation-star:hover {
+  transform: scale(1.1);
+}
+
+.star-glow {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(249, 200, 194, 0.3) 0%,
+    transparent 70%
+  );
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--warm-paper);
+  position: relative;
+  z-index: 1;
+}
+
+.star-label {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  color: var(--soft-sand);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   7. SPECIMEN TAGS SECTION - Services
+   ============================================ */
+
+.specimen-tags-section {
+  background: var(--blush-wash);
+  padding: var(--space-24) var(--space-4);
+}
+
+.specimen-header {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.specimen-header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 400;
+  color: var(--espresso);
+  margin-bottom: var(--space-6);
+}
+
+.specimen-divider {
+  width: 200px;
+  margin: 0 auto;
+  color: var(--sage);
+}
+
+/* Tags grid */
+.specimen-tags-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Individual tag card */
+.specimen-tag {
+  position: relative;
+  background: var(--warm-paper);
+  border: 1px solid var(--dusty-peach);
+  padding: var(--space-10) var(--space-6) var(--space-8);
+  text-align: center;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: var(--shadow-subtle);
+}
+
+.specimen-tag:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Tag hole and string */
+.tag-hole {
+  position: absolute;
+  top: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--dusty-peach);
+  border-radius: 50%;
+  background: var(--blush-wash);
+}
+
+.tag-string {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 40px;
+  color: var(--warm-clay);
+}
+
+/* Tag content */
+.tag-content {
+  padding-top: var(--space-4);
+}
+
+.tag-botanical {
+  width: 60px;
+  height: 80px;
+  margin: 0 auto var(--space-4);
+  color: var(--sage);
+}
+
+.tag-botanical svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tag-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: var(--space-2);
+}
+
+.tag-latin {
+  font-family: var(--font-serif);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--sage);
+  margin-bottom: var(--space-4);
+}
+
+.tag-description {
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--slate-olive);
+  margin-bottom: var(--space-6);
+}
+
+.tag-link {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--espresso);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--dusty-peach);
+  transition: border-color var(--transition-fast);
+}
+
+.tag-link:hover {
+  border-color: var(--espresso);
+}
+
+/* ============================================
+   8. GARDEN GATE SECTION - CTA
+   ============================================ */
+
+.garden-gate-section {
+  background: linear-gradient(
+    to bottom,
+    var(--soft-sand) 0%,
+    var(--warm-paper) 100%
+  );
+  padding: var(--space-24) var(--space-4);
+}
+
+.gate-frame {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.gate-svg {
+  width: 100%;
+  height: auto;
+  color: var(--espresso);
+  opacity: 0.6;
+}
+
+.gate-door-left,
+.gate-door-right {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.gate-frame:hover .gate-door-left {
+  transform: rotate(-5deg);
+}
+
+.gate-frame:hover .gate-door-right {
+  transform: rotate(5deg);
+}
+
+/* Gate content */
+.gate-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: var(--space-8);
+  max-width: 450px;
+}
+
+.gate-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  margin-bottom: var(--space-4);
+}
+
+.gate-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--espresso);
+  margin-bottom: var(--space-4);
+}
+
+.gate-description {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--slate-olive);
+  margin-bottom: var(--space-8);
+}
+
+.gate-button {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .grimoire-pages {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .grimoire-page-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(210, 199, 193, 0.5);
+    padding-bottom: var(--space-12);
+  }
+
+  .roots-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .roots-text {
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .roots-illustration {
+    order: -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .specimen-tags-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+
+  .constellation-map {
+    height: 600px;
+  }
+
+  .constellation-star {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 768px) {
+  .threshold-hero {
+    min-height: 80vh;
+  }
+
+  .threshold-doorway {
+    max-width: 350px;
+  }
+
+  .illuminated-page {
+    padding: var(--space-10) var(--space-6);
+  }
+
+  .illuminated-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .initial-letter {
+    font-size: 4rem;
+  }
+
+  .manuscript-margin {
+    display: none;
+  }
+
+  .grimoire-book {
+    flex-direction: column;
+  }
+
+  .book-spine {
+    width: 100%;
+    height: 20px;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .book-spine svg {
+    display: none;
+  }
+
+  .grimoire-pages {
+    padding: var(--space-6);
+  }
+
+  .page-botanical {
+    display: none;
+  }
+
+  .constellation-map {
+    height: auto;
+    min-height: 500px;
+  }
+
+  .constellation-stars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    padding: var(--space-4);
+  }
+
+  .constellation-star {
+    position: static !important;
+    transform: none !important;
+  }
+
+  .constellation-lines {
+    display: none;
+  }
+
+  .gate-svg {
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 480px) {
+  .threshold-content {
+    width: 90%;
+    padding: var(--space-4);
+  }
+
+  .welcome-wreath {
+    width: 80px;
+    height: 80px;
+  }
+
+  .promise-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .constellation-stars {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .doorway-arch {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .doorway-vine,
+  .doorway-crown,
+  .threshold-eyebrow,
+  .threshold-title,
+  .threshold-subtitle,
+  .plant-above,
+  .roots-below {
+    opacity: 1;
+    animation: none;
+  }
+
+  .candle-glow,
+  .floating-botanical,
+  .tiny-star,
+  .star-glow {
+    animation: none;
+  }
+
+  .gate-frame:hover .gate-door-left,
+  .gate-frame:hover .gate-door-right {
+    transform: none;
+  }
+}
