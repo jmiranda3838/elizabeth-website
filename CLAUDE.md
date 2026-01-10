@@ -34,12 +34,12 @@ This is a static HTML/CSS/JavaScript website for a therapy practice. It uses no 
 ### Design System (in css/styles/tokens.css)
 
 **CSS Variables** define the entire design system:
-- Colors: `--warm-paper`, `--sage`, `--dusty-peach`, `--espresso`, `--soft-coral`, etc.
+- Colors: `--warm-paper`, `--sage`, `--muted-rose`, `--dusty-peach`, `--misty-blue`, `--espresso` (dark sage), `--soft-coral`, etc.
 - Typography: Cormorant Garamond (serif headings), Inter (body), Raleway (navigation)
 - Spacing scale: `--space-1` through `--space-32`
 - Shadows: `--shadow-subtle`, `--shadow-soft`
 
-**Visual Theme**: Coastal/French-country aesthetic with botanical SVG decorations, paper textures, and muted warm tones.
+**Visual Theme**: Feminine botanical aesthetic with dusty rose accents, sage green tones, and soft blush-cream backgrounds. SVG botanical decorations throughout.
 
 ### JavaScript Patterns (js/main.js)
 

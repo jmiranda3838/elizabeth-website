@@ -2,16 +2,16 @@
 :root {
   /* Neutrals / Backgrounds */
   --warm-paper: #F7F6F5;
-  --soft-sand: #D2C7C1;
+  --soft-sand: #F5F0EE;
   --blush-wash: #FDF2EF;
 
   /* Typography / Ink */
-  --espresso: #543123;
+  --espresso: #60665A;
   --slate-olive: #71796E;
 
   /* Accents */
   --dusty-peach: #D0B4A6;
-  --warm-clay: #B38973;
+  --warm-clay: #B8817E;
   --sage: #96ACA0;
   --sage-warm: #A7A898;
   --misty-blue: #7D9094;
@@ -66,8 +66,8 @@
   /* Borders & Shadows */
   --border-thin: 1px solid var(--soft-sand);
   --border-accent: 1px solid var(--dusty-peach);
-  --shadow-subtle: 0 2px 8px rgba(84, 49, 35, 0.04);
-  --shadow-soft: 0 4px 16px rgba(84, 49, 35, 0.06);
+  --shadow-subtle: 0 2px 8px rgba(96, 102, 90, 0.04);
+  --shadow-soft: 0 4px 16px rgba(96, 102, 90, 0.06);
 
   /* Transitions */
   --transition-fast: 150ms ease;

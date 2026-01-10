@@ -16,9 +16,9 @@
 }
 
 .btn-primary {
-  background-color: var(--espresso);
+  background-color: var(--muted-rose);
   color: var(--warm-paper);
-  border: 1px solid var(--espresso);
+  border: 1px solid var(--muted-rose);
 }
 
 .btn-primary:hover,
