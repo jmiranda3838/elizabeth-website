@@ -976,6 +976,7 @@
   position: relative;
   max-width: 900px;
   margin: 0 auto;
+  transform-style: preserve-3d;
 }
 
 .gate-svg {
@@ -983,20 +984,27 @@
   height: auto;
   color: var(--espresso);
   opacity: 0.6;
+  transform-style: preserve-3d;
 }
 
-.gate-door-left,
+.gate-door-left {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
 .gate-door-right {
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center;
+  transform-box: fill-box;
+  transform-origin: right center;
 }
 
 .gate-frame:hover .gate-door-left {
-  transform: rotate(-5deg);
+  transform: perspective(1000px) rotateY(-15deg);
 }
 
 .gate-frame:hover .gate-door-right {
-  transform: rotate(5deg);
+  transform: perspective(1000px) rotateY(15deg);
 }
 
 /* Gate content */
