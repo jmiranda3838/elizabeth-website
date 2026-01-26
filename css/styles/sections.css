@@ -44,7 +44,7 @@
   width: 120px;
   height: 200px;
   left: 3%;
-  top: 20%;
+  top: 28%;
   opacity: 0.5;
   --base-rotate: -15deg;
   transform: rotate(-15deg);
@@ -55,7 +55,7 @@
   width: 100px;
   height: 180px;
   right: 5%;
-  top: 18%;
+  top: 26%;
   opacity: 0.45;
   --base-rotate: 10deg;
   transform: rotate(10deg);
@@ -88,7 +88,7 @@
   width: 90px;
   height: 180px;
   right: 15%;
-  top: 14%;
+  top: 24%;
   opacity: 0.4;
   --base-rotate: -8deg;
   transform: rotate(-8deg);
