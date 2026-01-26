@@ -596,7 +596,35 @@
 }
 
 .grimoire-section {
-  overflow: hidden;
+  overflow: visible;
+  clip-path: inset(0);
+}
+
+/* Fixed background */
+.approach-section.grimoire-section::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blush-wash);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above the fixed background */
+.approach-section.grimoire-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile: disable fixed background (causes issues on iOS) */
+@media (max-width: 768px) {
+  .approach-section.grimoire-section::before {
+    position: absolute;
+    background-attachment: scroll;
+  }
 }
 
 .approach-content {
@@ -929,7 +957,7 @@
 .moon-journey-section {
   position: relative;
   overflow: visible;
-  background-image: url('../../images/howitworksbg3.png');
+  background-image: url('../../images/horse-2.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -939,7 +967,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(150, 172, 160, 0.65);
+  background-color: rgba(96, 102, 90, 0.70);
   z-index: 0;
 }
 
