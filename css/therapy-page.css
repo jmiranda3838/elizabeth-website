@@ -778,10 +778,11 @@
   gap: var(--space-2);
   cursor: pointer;
   transition: transform var(--transition-base);
+  transform: translate(-50%, 0);
 }
 
 .constellation-star:hover {
-  transform: scale(1.1);
+  transform: translate(-50%, 0) scale(1.1);
 }
 
 .star-glow {
@@ -1076,11 +1077,15 @@
   }
 
   .constellation-map {
-    height: 600px;
+    height: 500px;
   }
 
   .constellation-star {
-    transform: scale(0.9);
+    transform: translate(-50%, 0) scale(0.9);
+  }
+
+  .constellation-star:hover {
+    transform: translate(-50%, 0) scale(1.0);
   }
 }
 

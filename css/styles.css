@@ -17,13 +17,13 @@
    10) Print Styles
 === */
 
-@import url("styles/tokens.css");
-@import url("styles/base.css");
-@import url("styles/typography.css");
-@import url("styles/layout.css");
-@import url("styles/components.css");
-@import url("styles/sections.css");
-@import url("styles/pages.css");
-@import url("styles/utilities.css");
-@import url("styles/animations.css");
-@import url("styles/print.css");
+@import url("styles/tokens.css?v=3");
+@import url("styles/base.css?v=3");
+@import url("styles/typography.css?v=3");
+@import url("styles/layout.css?v=3");
+@import url("styles/components.css?v=3");
+@import url("styles/sections.css?v=3");
+@import url("styles/pages.css?v=3");
+@import url("styles/utilities.css?v=3");
+@import url("styles/animations.css?v=3");
+@import url("styles/print.css?v=3");
