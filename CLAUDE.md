@@ -59,6 +59,10 @@ public/
 
 ### Key Conventions
 
+**Routing**: Astro config uses `build.format: 'file'`, so routes produce `.html` extensions (e.g., `/about.html`, `/contact.html`). All internal links must use `.html` suffixes.
+
+**Path aliases** (from tsconfig.json): `@/*` → `src/*`, `@components/*`, `@layouts/*`, `@styles/*`
+
 **Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content.
 
 **Components**: Reusable Astro components with props. Example:
@@ -74,12 +78,20 @@ public/
 
 **Layouts**: `BaseLayout.astro` wraps all pages with common structure (head, header, footer, scripts).
 
+**Generated/ignored paths**: Do not edit or rely on `dist/`, `.astro/`, `.playwright-mcp/`, `node_modules/`, or `migration-baselines/`. Source of truth is `src/` and `public/`.
+
 ### Design System (src/styles/tokens.css)
 
 **CSS Variables** define the entire design system:
-- Colors: `--warm-paper`, `--sage`, `--muted-rose`, `--dusty-peach`, `--misty-blue`, `--espresso`, `--soft-coral`
-- Typography: Cormorant Garamond (serif headings), Inter (body), Raleway (navigation)
+- Backgrounds: `--warm-paper`, `--soft-sand`, `--blush-wash`
+- Ink/text: `--espresso`, `--slate-olive`
+- Accents: `--sage`, `--sage-warm`, `--muted-rose`, `--dusty-peach`, `--warm-clay`, `--misty-blue`, `--soft-coral`
+- Typography: Cormorant Garamond (serif headings), Inter (body), Raleway (navigation), Great Vibes (decorative script)
+- Text scale: `--text-xs` through `--text-6xl`
 - Spacing scale: `--space-1` through `--space-32`
+- Layout: `--max-width`, `--max-width-narrow`, `--max-width-text`
+- Transitions: `--transition-fast`, `--transition-base`, `--transition-slow`
+- Border radius: `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-full`
 - Shadows: `--shadow-subtle`, `--shadow-soft`
 
 **Visual Theme**: Feminine botanical aesthetic with dusty rose accents, sage green tones, and soft blush-cream backgrounds. SVG botanical decorations throughout.
@@ -101,11 +113,15 @@ Classes apply `transition-delay` from 0.1s to 0.8s in 0.1s increments.
 
 Uses an IIFE pattern. Key functionality:
 - Mobile menu with focus trap and aria-expanded state
-- FAQ accordion with keyboard navigation
+- FAQ accordion with keyboard navigation and print expansion
 - Scroll reveal animations via IntersectionObserver
+- Header scroll behavior (adds `scrolled` class and box-shadow past 100px)
+- Active navigation state detection based on current URL
 - Smooth scroll with header offset compensation
 - Form validation with error states
 - Lazy image loading via `data-src` attribute
+- Service card touch effects for mobile
+- Dynamic SVG constellation lines connecting service cards (recalculates on resize)
 
 **Note**: Script is loaded with `is:inline` in BaseLayout to prevent Astro/Vite bundling.
 

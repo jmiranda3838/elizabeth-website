@@ -1,1 +1,17 @@
 .DS_Store
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Tooling artifacts
+.playwright-mcp/
+migration-baselines/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

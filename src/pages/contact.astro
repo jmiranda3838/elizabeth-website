@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Contact | Elizabeth Armstrong Therapy" description="Contact Elizabeth Armstrong, LMFT for a free 15-minute consultation. Therapy services available in Orange County and online across California.">
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Get in Touch</p>
+      <h1>Let's start a conversation</h1>
+      <p class="lead">
+        Reaching out is the first step. I offer a free 15-minute consultation to answer your questions and see if we're a good fit.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="section bg-paper">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <h2>I'd love to hear from you</h2>
+          <p>
+            Whether you're ready to schedule a consultation or simply have a question, don't hesitate to reach out. I respond to all inquiries within one business day.
+          </p>
+          <p>
+            If you're not sure therapy is right for you, or if you're wondering whether I'm the right fit, a brief phone conversation can help us both figure that out. There's no pressure and no obligation.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <svg class="contact-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <path d="M22 6l-10 7L2 6"/>
+              </svg>
+              <div class="contact-detail-content">
+                <p><strong>Email</strong></p>
+                <p><a href="mailto:elizabetharmstrongtherapy@gmail.com">elizabetharmstrongtherapy@gmail.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <svg class="contact-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              <div class="contact-detail-content">
+                <p><strong>Phone</strong></p>
+                <p><a href="tel:+19494443899">(949) 444-3899</a></p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <svg class="contact-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div class="contact-detail-content">
+                <p><strong>Location</strong></p>
+                <p>Orange County, California</p>
+                <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-1);">
+                  Telehealth available throughout California
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-detail-item">
+              <svg class="contact-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              <div class="contact-detail-content">
+                <p><strong>Response Time</strong></p>
+                <p>Within 1 business day</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <h3 style="margin-bottom: var(--space-2);">Request a Consultation</h3>
+          <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-6);">
+            Fill out the form below and I'll be in touch within one business day.
+          </p>
+
+          <form class="contact-form" id="contact-form" action="#" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first-name" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  id="first-name"
+                  name="first-name"
+                  class="form-input"
+                  required
+                  autocomplete="given-name"
+                >
+              </div>
+              <div class="form-group">
+                <label for="last-name" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  id="last-name"
+                  name="last-name"
+                  class="form-input"
+                  required
+                  autocomplete="family-name"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                required
+                autocomplete="email"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">
+                Phone Number <span class="optional">(optional)</span>
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="form-input"
+                autocomplete="tel"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="service" class="form-label">
+                What type of therapy are you interested in? <span class="optional">(optional)</span>
+              </label>
+              <select id="service" name="service" class="form-input">
+                <option value="">Select an option...</option>
+                <option value="individual">Individual Therapy</option>
+                <option value="couples">Couples Therapy</option>
+                <option value="family">Family Therapy</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-label">
+                Tell me a little about what brings you here
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-textarea"
+                rows="5"
+                placeholder="Feel free to share as much or as little as you'd like..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-checkbox-group">
+              <input
+                type="checkbox"
+                id="privacy"
+                name="privacy"
+                class="form-checkbox"
+                required
+              >
+              <label for="privacy" class="form-checkbox-label">
+                I understand that email is not a secure form of communication. I consent to receiving a response via email and understand that sensitive information should be shared only during our phone or video sessions.
+              </label>
+            </div>
+
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                Request a Consultation
+              </button>
+            </div>
+          </form>
+
+          <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-6); text-align: center;">
+            By submitting this form, you agree to my <a href="#" style="text-decoration: underline;">Privacy Policy</a>.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Location / Telehealth Info -->
+  <section class="section bg-blush">
+    <div class="container container-narrow text-center">
+      <h2>Serving California, wherever you are</h2>
+      <div class="decorative-line center"></div>
+      <p>
+        I offer secure telehealth sessions for clients located anywhere in California. This means you can access therapy from the comfort of your own home, office, or wherever feels right for you.
+      </p>
+      <p>
+        All video sessions are conducted through a HIPAA-compliant platform to ensure your privacy and security.
+      </p>
+      <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-top: var(--space-6);">
+        Orange County, Los Angeles, San Diego, San Francisco, Sacramento, and everywhere in between.
+      </p>
+    </div>
+  </section>
+
+  <!-- What to Expect -->
+  <section class="section bg-paper">
+    <div class="container container-narrow">
+      <h2 class="text-center">What happens after you reach out</h2>
+      <div class="decorative-line center"></div>
+
+      <div class="steps-grid" style="margin-top: var(--space-10);">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <h3>I'll respond</h3>
+          <p>Within one business day, I'll reach out to schedule a brief phone consultation.</p>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <h3>We'll talk</h3>
+          <p>Our 15-minute call is a chance to connect, ask questions, and see if we're a good fit.</p>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <h3>We'll begin</h3>
+          <p>If we decide to work together, we'll schedule your first full session.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,850 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Elizabeth Armstrong Therapy | Narrative Therapist in Orange County, CA">
+  <!-- Hero Section - Full Bleed Photo with Botanicals -->
+  <section class="hero-botanical">
+    <!-- Overlay for text readability -->
+    <div class="hero-overlay"></div>
+
+    <!-- Botanical Line Art Elements -->
+    <svg class="botanical botanical-1" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Wildflower stem with leaves -->
+      <path d="M60 200 Q55 150 60 100 Q65 50 60 10" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M60 160 Q40 150 25 160" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M60 130 Q80 120 95 130" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M60 100 Q45 90 30 100" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <circle cx="60" cy="10" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
+      <circle cx="60" cy="10" r="3" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <svg class="botanical botanical-2" viewBox="0 0 100 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Herb sprig -->
+      <path d="M50 180 Q50 120 50 60" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M50 140 Q30 130 20 140 Q30 145 50 140" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M50 140 Q70 130 80 140 Q70 145 50 140" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M50 110 Q30 100 20 110 Q30 115 50 110" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M50 110 Q70 100 80 110 Q70 115 50 110" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M50 80 Q35 70 25 80 Q35 85 50 80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M50 80 Q65 70 75 80 Q65 85 50 80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="50" cy="55" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <svg class="botanical botanical-3" viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Simple leaf branch -->
+      <path d="M40 160 Q38 100 40 40" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M40 130 Q20 115 15 95" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M40 100 Q60 85 65 65" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M40 70 Q25 55 20 40" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <circle cx="40" cy="35" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <svg class="botanical botanical-4" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Seed pod cluster -->
+      <path d="M10 90 Q70 85 130 90" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M30 90 Q30 60 35 30" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="35" cy="25" rx="5" ry="8" stroke="currentColor" stroke-width="1" fill="none"/>
+      <path d="M70 90 Q70 50 70 20" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="70" cy="15" rx="6" ry="9" stroke="currentColor" stroke-width="1" fill="none"/>
+      <path d="M110 90 Q110 55 105 25" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="105" cy="20" rx="5" ry="8" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <svg class="botanical botanical-5" viewBox="0 0 100 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lavender-style sprig -->
+      <path d="M50 200 Q48 140 50 80" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="50" cy="70" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="44" cy="60" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="56" cy="60" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="50" cy="50" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="44" cy="40" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="56" cy="40" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="50" cy="30" rx="4" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+      <ellipse cx="50" cy="20" rx="3" ry="5" stroke="currentColor" stroke-width="1" fill="none"/>
+    </svg>
+
+    <!-- Text Content -->
+    <div class="hero-text-content">
+      <h1 class="hero-tagline">Collaborative, kind therapy to promote growth and healing</h1>
+      <p class="hero-name">Elizabeth Armstrong, LMFT</p>
+    </div>
+    <!-- Hanging Botanical Garland - extends past hero edge -->
+    <div class="hero-garland">
+      <svg class="garland-svg" viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice">
+        <!-- Decorative string/twine across the curve -->
+        <path class="garland-string" d="M-20,45 Q200,55 360,40 Q520,25 720,50 Q920,75 1080,55 Q1240,35 1460,50" />
+
+        <!-- Bunch 1: Left - Dried lavender sprig -->
+        <g transform="translate(120, 35)">
+          <g class="hanging-bunch bunch-1">
+            <!-- Ribbon tie -->
+            <path d="M0,0 Q-5,8 -8,5 M0,0 Q5,8 8,5" stroke="currentColor" stroke-width="1.2" fill="none" class="ribbon"/>
+            <!-- Main stem -->
+            <path d="M0,5 Q-2,40 0,80" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Lavender buds (small ovals going up) -->
+            <ellipse cx="0" cy="75" rx="3" ry="5" fill="currentColor" opacity="0.6"/>
+            <ellipse cx="-3" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="3" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="-2" cy="60" rx="2" ry="3.5" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="2" cy="60" rx="2" ry="3.5" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="0" cy="53" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+            <!-- Secondary stem -->
+            <path d="M0,10 Q8,35 5,60" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <ellipse cx="5" cy="58" rx="2" ry="4" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="6" cy="50" rx="1.5" ry="3" fill="currentColor" opacity="0.4"/>
+          </g>
+        </g>
+
+        <!-- Bunch 2: Left-center - Wildflower bunch -->
+        <g transform="translate(360, 28)">
+          <g class="hanging-bunch bunch-2">
+            <!-- Ribbon tie -->
+            <path d="M0,0 Q-6,10 -10,6 M0,0 Q6,10 10,6" stroke="currentColor" stroke-width="1.2" fill="none" class="ribbon"/>
+            <!-- Multiple stems -->
+            <path d="M-5,8 Q-8,45 -3,85" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M0,8 Q2,50 0,90" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <path d="M5,8 Q10,40 6,80" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <!-- Small wildflowers at tips -->
+            <circle cx="-3" cy="88" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <circle cx="-3" cy="88" r="2" fill="currentColor" opacity="0.4"/>
+            <circle cx="0" cy="93" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <circle cx="0" cy="93" r="2.5" fill="currentColor" opacity="0.4"/>
+            <circle cx="6" cy="83" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <circle cx="6" cy="83" r="1.5" fill="currentColor" opacity="0.4"/>
+            <!-- Leaves -->
+            <path d="M-5,50 Q-15,45 -18,55" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <path d="M5,55 Q15,50 18,60" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          </g>
+        </g>
+
+        <!-- Bunch 3: Center-left - Herb bundle (rosemary style) -->
+        <g transform="translate(540, 42)">
+          <g class="hanging-bunch bunch-3">
+            <!-- Ribbon -->
+            <path d="M0,0 Q-4,6 -7,3 M0,0 Q4,6 7,3" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+            <!-- Main stem with needle leaves -->
+            <path d="M0,5 Q-1,35 0,70" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <!-- Needle pairs -->
+            <path d="M0,15 Q-8,12 -12,16 M0,15 Q8,12 12,16" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M0,25 Q-10,22 -14,26 M0,25 Q10,22 14,26" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M0,35 Q-9,32 -12,36 M0,35 Q9,32 12,36" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M0,45 Q-8,42 -10,46 M0,45 Q8,42 10,46" stroke="currentColor" stroke-width="0.7" fill="none"/>
+            <path d="M0,55 Q-6,52 -8,56 M0,55 Q6,52 8,56" stroke="currentColor" stroke-width="0.7" fill="none"/>
+          </g>
+        </g>
+
+        <!-- Bunch 4: Center - Larger decorative piece with moon -->
+        <g transform="translate(720, 38)">
+          <g class="hanging-bunch bunch-4">
+            <!-- Decorative bow -->
+            <path d="M-12,0 Q-6,-8 0,0 Q6,-8 12,0" stroke="currentColor" stroke-width="1.3" fill="none" class="ribbon"/>
+            <path d="M-10,2 Q-8,12 -12,18 M10,2 Q8,12 12,18" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+            <!-- Main hanging stems -->
+            <path d="M-8,8 Q-12,50 -6,95" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <path d="M0,8 Q0,55 0,100" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M8,8 Q12,50 6,95" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <!-- Dried flower heads -->
+            <ellipse cx="-6" cy="98" rx="5" ry="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <ellipse cx="0" cy="105" rx="6" ry="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <ellipse cx="6" cy="98" rx="5" ry="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <!-- Small crescent moon charm -->
+            <g transform="translate(0, 118)">
+              <path d="M5,0 C5,-8 -3,-10 -5,-3 C-3,-5 0,-4 2,-1 C3,1 5,2 5,0 Z" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.5"/>
+            </g>
+            <!-- Leaves -->
+            <path d="M-8,45 Q-18,40 -22,50" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <path d="M8,50 Q18,45 22,55" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          </g>
+        </g>
+
+        <!-- Bunch 5: Center-right - Small seed pod cluster -->
+        <g transform="translate(900, 58)">
+          <g class="hanging-bunch bunch-5">
+            <!-- Ribbon -->
+            <path d="M0,0 Q-4,5 -6,2 M0,0 Q4,5 6,2" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+            <!-- Hanging stems with seed pods -->
+            <path d="M-4,5 Q-6,25 -3,50" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M0,5 Q0,30 0,55" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M4,5 Q6,25 3,45" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <!-- Seed pods -->
+            <ellipse cx="-3" cy="52" rx="3" ry="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <ellipse cx="0" cy="58" rx="4" ry="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <ellipse cx="3" cy="48" rx="3" ry="4.5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+          </g>
+        </g>
+
+        <!-- Bunch 6: Right-center - Another lavender/herb -->
+        <g transform="translate(1080, 42)">
+          <g class="hanging-bunch bunch-6">
+            <!-- Ribbon -->
+            <path d="M0,0 Q-5,8 -8,4 M0,0 Q5,8 8,4" stroke="currentColor" stroke-width="1.1" fill="none" class="ribbon"/>
+            <!-- Stems -->
+            <path d="M-3,6 Q-5,40 -2,75" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M3,6 Q5,35 2,70" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <!-- Flower buds -->
+            <ellipse cx="-2" cy="73" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="-3" cy="65" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+            <ellipse cx="-1" cy="58" rx="1.5" ry="2.5" fill="currentColor" opacity="0.4"/>
+            <ellipse cx="2" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+            <ellipse cx="3" cy="60" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+          </g>
+        </g>
+
+        <!-- Bunch 7: Right - Trailing vine with small star -->
+        <g transform="translate(1320, 40)">
+          <g class="hanging-bunch bunch-7">
+            <!-- Ribbon -->
+            <path d="M0,0 Q-5,7 -8,3 M0,0 Q5,7 8,3" stroke="currentColor" stroke-width="1.1" fill="none" class="ribbon"/>
+            <!-- Curling vine -->
+            <path d="M0,6 Q-5,30 5,55 Q12,75 0,90" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <!-- Small leaves along vine -->
+            <path d="M-2,25 Q-10,20 -12,28" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <path d="M3,45 Q12,40 14,50" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <path d="M8,65 Q16,62 15,72" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            <!-- Tiny star charm -->
+            <g transform="translate(0, 95)">
+              <path d="M0,-5 L1,-1.5 L5,-1.5 L2,1 L3,5 L0,2.5 L-3,5 L-2,1 L-5,-1.5 L-1,-1.5 Z" stroke="currentColor" stroke-width="0.6" fill="currentColor" opacity="0.4" transform="scale(0.7)"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Services Section - Botanical Specimen Cards -->
+  <section class="section section-services bg-paper">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: var(--space-12);">
+        <p class="eyebrow">How I Can Help</p>
+        <h2>Therapy for Individuals, Couples & Families</h2>
+        <div class="decorative-divider">
+          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <p class="lead container-text" style="margin: 0 auto;">
+          Whether you're navigating life on your own, working through challenges with a partner, or seeking support for your family, I offer a collaborative space to explore what's possible.
+        </p>
+      </div>
+
+      <div class="services-grid specimen-cards">
+        <!-- Individual Therapy Card -->
+        <article class="service-card specimen-card reveal stagger-1">
+          <div class="specimen-corner specimen-corner-tl"></div>
+          <div class="specimen-corner specimen-corner-tr"></div>
+          <div class="specimen-corner specimen-corner-bl"></div>
+          <div class="specimen-corner specimen-corner-br"></div>
+          <div class="service-card-image">
+            <!-- Single blooming flower -->
+            <svg class="specimen-icon" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 95 Q38 70 40 45" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M40 75 Q25 68 18 75 Q25 82 40 75" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M40 60 Q55 53 62 60 Q55 67 40 60" stroke="currentColor" stroke-width="1" fill="none"/>
+              <ellipse cx="40" cy="30" rx="12" ry="14" stroke="currentColor" stroke-width="1" fill="none"/>
+              <ellipse cx="28" cy="25" rx="8" ry="12" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-30 28 25)"/>
+              <ellipse cx="52" cy="25" rx="8" ry="12" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(30 52 25)"/>
+              <ellipse cx="32" cy="38" rx="7" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-60 32 38)"/>
+              <ellipse cx="48" cy="38" rx="7" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(60 48 38)"/>
+              <circle cx="40" cy="28" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="40" cy="28" r="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="service-card-content">
+            <h3>Individual Therapy</h3>
+            <p>A space to slow down, make sense of your experiences, and rediscover what you value most. We'll work together to untangle what feels stuck.</p>
+            <a href="/therapy.html#individual" class="service-card-link">
+              Learn more
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Couples Therapy Card -->
+        <article class="service-card specimen-card reveal stagger-2">
+          <div class="specimen-corner specimen-corner-tl"></div>
+          <div class="specimen-corner specimen-corner-tr"></div>
+          <div class="specimen-corner specimen-corner-bl"></div>
+          <div class="specimen-corner specimen-corner-br"></div>
+          <div class="service-card-image">
+            <!-- Two intertwined stems -->
+            <svg class="specimen-icon" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 95 Q28 75 35 55 Q42 35 38 15" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M50 95 Q52 75 45 55 Q38 35 42 15" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M35 70 Q20 65 15 72 Q22 78 35 70" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M45 70 Q60 65 65 72 Q58 78 45 70" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M38 50 Q28 42 22 48 Q30 55 38 50" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M42 50 Q52 42 58 48 Q50 55 42 50" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="38" cy="12" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="42" cy="12" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="40" cy="10" r="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="service-card-content">
+            <h3>Couples Therapy</h3>
+            <p>Reconnect with your partner in a space of safety and respect. We'll explore the stories you've created together and find new ways forward.</p>
+            <a href="/therapy.html#couples" class="service-card-link">
+              Learn more
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Family Therapy Card -->
+        <article class="service-card specimen-card reveal stagger-3">
+          <div class="specimen-corner specimen-corner-tl"></div>
+          <div class="specimen-corner specimen-corner-tr"></div>
+          <div class="specimen-corner specimen-corner-bl"></div>
+          <div class="specimen-corner specimen-corner-br"></div>
+          <div class="service-card-image">
+            <!-- Tree with spreading branches -->
+            <svg class="specimen-icon" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 95 Q40 75 40 55" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M40 55 Q25 45 15 35" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M40 55 Q55 45 65 35" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M40 55 Q40 40 40 25" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M25 42 Q18 38 12 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <path d="M55 42 Q62 38 68 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <circle cx="15" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="40" cy="20" r="7" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="65" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="10" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="70" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M40 95 Q35 88 32 95" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M40 95 Q45 88 48 95" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <div class="service-card-content">
+            <h3>Family Therapy</h3>
+            <p>Strengthen the bonds that matter most. Family therapy helps you understand patterns, improve communication, and grow together.</p>
+            <a href="/therapy.html#family" class="service-card-link">
+              Learn more
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach / Philosophy Section - The Grimoire -->
+  <section class="section section-lg bg-blush approach-section grimoire-section">
+    <div class="container">
+      <div class="approach-content">
+        <div class="approach-text reveal-left">
+          <p class="eyebrow">My Approach</p>
+          <h2>Narrative therapy starts with your story</h2>
+          <!-- Decorative vine divider -->
+          <div class="vine-divider">
+            <svg viewBox="0 0 200 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 15 Q30 15 50 15 Q60 15 70 12 Q80 8 90 15 Q100 22 110 15 Q120 8 130 12 Q140 15 150 15 Q170 15 200 15" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <path d="M70 12 Q65 6 60 8" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M90 15 Q85 20 80 18" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M110 15 Q115 10 120 12" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M130 12 Q135 6 140 8" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <circle cx="100" cy="15" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            </svg>
+          </div>
+          <p>
+            I believe you are the expert on your own life. My role isn't to diagnose or fix, but to walk alongside you with curiosity and care. Narrative therapy helps us examine the stories you've been told, the ones you tell yourself, and the ones that haven't yet found voice.
+          </p>
+          <p>
+            Together, we'll separate you from the problem, discover the values that guide you, and uncover the "sparkling moments" that point toward your preferred way of living.
+          </p>
+
+          <div class="values-list magical-values">
+            <!-- Collaborative - Crescent Moon -->
+            <div class="value-item">
+              <div class="value-icon magical-icon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 16c0-6-4.5-10-10-10 1 2 1.5 4.5 1.5 7s-0.5 5-1.5 7c5.5 0 10-4 10-10z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                  <circle cx="18" cy="8" r="0.5" fill="currentColor" opacity="0.4"/>
+                  <circle cx="22" cy="14" r="0.5" fill="currentColor" opacity="0.3"/>
+                  <circle cx="20" cy="20" r="0.5" fill="currentColor" opacity="0.4"/>
+                </svg>
+              </div>
+              <div class="value-content">
+                <h4>Collaborative</h4>
+                <p>We work together as partners. You set the direction; I offer reflection and support.</p>
+              </div>
+            </div>
+
+            <!-- Respectful - Star -->
+            <div class="value-item">
+              <div class="value-icon magical-icon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 4 L18 12 L26 12 L20 17 L22 25 L16 20 L10 25 L12 17 L6 12 L14 12 Z" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+                  <circle cx="16" cy="14" r="2" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+                </svg>
+              </div>
+              <div class="value-content">
+                <h4>Respectful & Non-Pathologizing</h4>
+                <p>Problems are problems; you are not the problem. We work with struggles, not labels.</p>
+              </div>
+            </div>
+
+            <!-- Culturally Aware - Sun -->
+            <div class="value-item">
+              <div class="value-icon magical-icon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                  <line x1="16" y1="4" x2="16" y2="8" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="16" y1="24" x2="16" y2="28" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="4" y1="16" x2="8" y2="16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="24" y1="16" x2="28" y2="16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="7.5" y1="7.5" x2="10" y2="10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="22" y1="22" x2="24.5" y2="24.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="7.5" y1="24.5" x2="10" y2="22" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                  <line x1="22" y1="10" x2="24.5" y2="7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="value-content">
+                <h4>Culturally Aware</h4>
+                <p>I honor the cultural, social, and personal contexts that shape your experience.</p>
+              </div>
+            </div>
+
+            <!-- Practical - Crystal -->
+            <div class="value-item">
+              <div class="value-icon magical-icon">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 4 L22 10 L22 22 L16 28 L10 22 L10 10 Z" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+                  <path d="M16 4 L16 28" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+                  <path d="M10 10 L22 10" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.3"/>
+                  <path d="M10 22 L22 22" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.3"/>
+                  <path d="M13 7 L13 15" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
+                </svg>
+              </div>
+              <div class="value-content">
+                <h4>Practical & Reflective</h4>
+                <p>We balance deep reflection with real-world strategies you can use today.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botanical framed image area -->
+        <div class="approach-image botanical-frame reveal-right">
+          <div class="botanical-frame-border">
+            <svg class="frame-corner frame-tl" viewBox="0 0 40 40" fill="none">
+              <path d="M0 40 L0 20 Q0 0 20 0 L40 0" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M8 20 Q8 8 20 8" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+              <circle cx="5" cy="35" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+            </svg>
+            <svg class="frame-corner frame-tr" viewBox="0 0 40 40" fill="none">
+              <path d="M0 0 L20 0 Q40 0 40 20 L40 40" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M20 8 Q32 8 32 20" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+              <circle cx="35" cy="35" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+            </svg>
+            <svg class="frame-corner frame-bl" viewBox="0 0 40 40" fill="none">
+              <path d="M40 40 L20 40 Q0 40 0 20 L0 0" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M20 32 Q8 32 8 20" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+              <circle cx="35" cy="5" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+            </svg>
+            <svg class="frame-corner frame-br" viewBox="0 0 40 40" fill="none">
+              <path d="M0 40 L0 20 Q0 0 20 0" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(180 20 20)"/>
+              <circle cx="5" cy="5" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+            </svg>
+          </div>
+          <img src="/images/headshot.png" alt="Elizabeth - Therapist headshot" class="approach-headshot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Areas of Support Section - Apothecary Cabinet -->
+  <section class="section bg-paper apothecary-section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: var(--space-12);">
+        <p class="eyebrow">Areas of Support</p>
+        <h2>What brings people to therapy</h2>
+        <div class="decorative-divider">
+          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <p class="lead container-text" style="margin: 0 auto;">
+          Life presents us with challenges that can feel overwhelming. Here are some of the themes I commonly work with, though your experience is always unique.
+        </p>
+      </div>
+
+      <div class="apothecary-grid">
+        <!-- Anxiety - Fluttering Moth -->
+        <div class="apothecary-item reveal stagger-1">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="30" cy="32" rx="18" ry="12" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-15 30 32)"/>
+              <ellipse cx="30" cy="32" rx="18" ry="12" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(15 30 32)"/>
+              <ellipse cx="30" cy="32" rx="10" ry="6" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(-15 30 32)"/>
+              <ellipse cx="30" cy="32" rx="10" ry="6" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(15 30 32)"/>
+              <ellipse cx="30" cy="45" rx="3" ry="8" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M28 25 Q26 18 24 12" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M32 25 Q34 18 36 12" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <circle cx="24" cy="11" r="1.5" stroke="currentColor" stroke-width="0.5" fill="none"/>
+              <circle cx="36" cy="11" r="1.5" stroke="currentColor" stroke-width="0.5" fill="none"/>
+            </svg>
+          </div>
+          <h4>Anxiety</h4>
+          <p>When worry becomes the loudest voice in the room</p>
+        </div>
+
+        <!-- Depression - Drooping Flower -->
+        <div class="apothecary-item reveal stagger-2">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 55 Q30 45 28 35 Q26 25 20 20" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M28 40 Q20 38 15 42" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <ellipse cx="16" cy="16" rx="6" ry="8" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-30 16 16)"/>
+              <ellipse cx="22" cy="12" rx="5" ry="7" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-10 22 12)"/>
+              <ellipse cx="14" cy="22" rx="5" ry="6" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-50 14 22)"/>
+              <circle cx="18" cy="18" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="18" cy="18" r="1" fill="currentColor" opacity="0.5"/>
+            </svg>
+          </div>
+          <h4>Depression</h4>
+          <p>When life feels heavy, gray, or far away</p>
+        </div>
+
+        <!-- Life Transitions - Butterfly Emerging -->
+        <div class="apothecary-item reveal stagger-3">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="22" cy="28" rx="12" ry="16" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-20 22 28)"/>
+              <ellipse cx="38" cy="28" rx="12" ry="16" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(20 38 28)"/>
+              <ellipse cx="24" cy="45" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-15 24 45)"/>
+              <ellipse cx="36" cy="45" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(15 36 45)"/>
+              <ellipse cx="30" cy="35" rx="3" ry="12" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M28 20 Q25 12 22 6" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M32 20 Q35 12 38 6" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <circle cx="22" cy="5" r="1" fill="currentColor"/>
+              <circle cx="38" cy="5" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <h4>Life Transitions</h4>
+          <p>Navigating change with clarity and intention</p>
+        </div>
+
+        <!-- Relationship Issues - Two Flowers Turned Away -->
+        <div class="apothecary-item reveal stagger-4">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25 55 Q25 40 20 30" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <path d="M35 55 Q35 40 40 30" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <circle cx="14" cy="22" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="10" cy="18" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="10" cy="26" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="46" cy="22" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <circle cx="50" cy="18" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="50" cy="26" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="42" cy="18" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <circle cx="14" cy="22" r="2" fill="currentColor" opacity="0.4"/>
+              <circle cx="46" cy="22" r="2" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
+          <h4>Relationship Issues</h4>
+          <p>Finding new patterns in how you connect</p>
+        </div>
+
+        <!-- Trauma - Kintsugi Bowl -->
+        <div class="apothecary-item reveal stagger-5">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Bowl shape -->
+              <path d="M12 28 Q12 45 30 48 Q48 45 48 28" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="30" cy="28" rx="18" ry="6" stroke="currentColor" stroke-width="1" fill="none"/>
+              <!-- Kintsugi gold repair lines -->
+              <path d="M20 30 Q22 38 24 46" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <path d="M36 29 Q38 36 42 42" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <path d="M28 28 Q26 34 28 40" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.5"/>
+              <!-- Small gold dots at repair intersections -->
+              <circle cx="24" cy="46" r="1.5" fill="currentColor" opacity="0.6"/>
+              <circle cx="42" cy="42" r="1.5" fill="currentColor" opacity="0.6"/>
+              <circle cx="20" cy="30" r="1" fill="currentColor" opacity="0.5"/>
+            </svg>
+          </div>
+          <h4>Trauma</h4>
+          <p>When the past still echoes in the present</p>
+        </div>
+
+        <!-- Grief & Loss - Willow Branch -->
+        <div class="apothecary-item reveal stagger-6">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 8 Q30 15 30 22" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q15 25 10 45" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q20 28 18 50" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q28 35 26 55" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q32 35 34 55" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q40 28 42 50" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <path d="M30 22 Q45 25 50 45" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+              <ellipse cx="30" cy="6" rx="4" ry="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+            </svg>
+          </div>
+          <h4>Grief & Loss</h4>
+          <p>Making space for what you've loved and lost</p>
+        </div>
+
+        <!-- LGBTQ+ - Spectrum Arc with Botanical -->
+        <div class="apothecary-item reveal stagger-7">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Rainbow/spectrum arcs -->
+              <path d="M10 42 Q30 8 50 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <path d="M14 42 Q30 14 46 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.8"/>
+              <path d="M18 42 Q30 20 42 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+              <path d="M22 42 Q30 26 38 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.4"/>
+              <!-- Small botanical leaves at base -->
+              <path d="M26 48 Q22 52 18 50 Q22 48 26 48" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <path d="M34 48 Q38 52 42 50 Q38 48 34 48" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <!-- Center stem -->
+              <path d="M30 42 L30 55" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+              <circle cx="30" cy="42" r="2" fill="currentColor" opacity="0.4"/>
+            </svg>
+          </div>
+          <h4>LGBTQ+</h4>
+          <p>An affirming space for all identities and journeys</p>
+        </div>
+
+        <!-- Self-Esteem - Seedling Reaching Light -->
+        <div class="apothecary-item reveal stagger-8">
+          <div class="apothecary-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Stem growing upward -->
+              <path d="M30 55 Q30 40 30 28" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+              <!-- Unfurling leaves -->
+              <path d="M30 32 Q22 28 18 20 Q24 24 30 28" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M30 32 Q38 28 42 20 Q36 24 30 28" stroke="currentColor" stroke-width="1" fill="none"/>
+              <!-- Small emerging leaf at top -->
+              <path d="M30 28 Q28 22 30 16 Q32 22 30 28" stroke="currentColor" stroke-width="0.8" fill="none"/>
+              <!-- Light rays from above -->
+              <path d="M30 8 L30 12" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+              <path d="M22 10 L25 14" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+              <path d="M38 10 L35 14" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+              <!-- Soil line -->
+              <path d="M20 55 Q30 53 40 55" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+          </div>
+          <h4>Self-Esteem</h4>
+          <p>Rediscovering the worth that was always there</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section - Moon Phases Journey -->
+  <section class="section bg-sand moon-journey-section">
+    <!-- Decorative botanical vine divider - top (CSS background pattern) -->
+    <div class="vine-divider vine-divider-top"></div>
+
+    <!-- Decorative botanical vine divider - bottom (CSS background pattern) -->
+    <div class="vine-divider vine-divider-bottom"></div>
+
+    <div class="container">
+      <div class="text-center" style="margin-bottom: var(--space-12);">
+        <p class="eyebrow">How It Works</p>
+        <h2>Starting therapy is simple</h2>
+        <div class="decorative-divider">
+          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="moon-steps-grid">
+        <!-- Connecting vine path -->
+        <div class="moon-path">
+          <svg viewBox="0 0 100 10" preserveAspectRatio="none">
+            <path d="M0 5 Q25 2 50 5 Q75 8 100 5" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+
+        <div class="moon-step reveal stagger-1">
+          <!-- New Moon -->
+          <div class="moon-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <circle cx="30" cy="30" r="18" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.4"/>
+              <circle cx="26" cy="24" r="3" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
+              <circle cx="35" cy="32" r="4" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"/>
+              <circle cx="28" cy="38" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.25"/>
+            </svg>
+          </div>
+          <h3>Free Consultation</h3>
+          <p class="moon-phase-label">New Moon</p>
+          <p>We'll have a brief call to discuss what brings you to therapy and answer any questions. This helps us both determine if we're a good fit.</p>
+        </div>
+
+        <div class="moon-step reveal stagger-2">
+          <!-- Half Moon -->
+          <div class="moon-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <path d="M30 8 A22 22 0 0 1 30 52" stroke="currentColor" stroke-width="1.2" fill="currentColor" opacity="0.15"/>
+              <circle cx="35" cy="22" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
+              <circle cx="38" cy="32" r="3" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"/>
+              <circle cx="34" cy="42" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.25"/>
+            </svg>
+          </div>
+          <h3>First Session</h3>
+          <p class="moon-phase-label">Waxing Moon</p>
+          <p>In our first meeting, we'll explore your story more deeply. I'll get to know you and what matters most. You'll get a sense of how we work together.</p>
+        </div>
+
+        <div class="moon-step reveal stagger-3">
+          <!-- Full Moon -->
+          <div class="moon-icon">
+            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="currentColor" opacity="0.12"/>
+              <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <circle cx="30" cy="30" r="18" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
+              <circle cx="24" cy="22" r="4" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"/>
+              <circle cx="36" cy="28" r="5" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.15"/>
+              <circle cx="26" cy="36" r="3" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"/>
+              <circle cx="38" cy="40" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.25"/>
+              <!-- Subtle glow -->
+              <circle cx="30" cy="30" r="26" stroke="currentColor" stroke-width="0.3" fill="none" opacity="0.2"/>
+            </svg>
+          </div>
+          <h3>Ongoing Work</h3>
+          <p class="moon-phase-label">Full Moon</p>
+          <p>We'll meet regularly (typically weekly) to continue our exploration. Each session builds on the last, moving at a pace that feels right for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Clients Tell Me Section - Journal Pages -->
+  <section class="section bg-paper testimonial-section journal-section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: var(--space-10);">
+        <p class="eyebrow">What Clients Often Tell Me</p>
+        <h2>When people reach out, they often share thoughts like these...</h2>
+        <div class="decorative-divider">
+          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="journal-pages">
+        <div class="journal-page reveal stagger-1" style="--rotation: -2deg;">
+          <div class="journal-quote-mark">
+            <svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <p class="journal-text">I want to feel like myself again, but I'm not even sure who that is anymore.</p>
+        </div>
+
+        <div class="journal-page reveal stagger-2" style="--rotation: 1.5deg;">
+          <div class="journal-quote-mark">
+            <svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <p class="journal-text">I know what I should do, but I can't seem to make it happen.</p>
+        </div>
+
+        <div class="journal-page reveal stagger-3" style="--rotation: -1deg;">
+          <div class="journal-quote-mark">
+            <svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <p class="journal-text">I want to stop having the same argument over and over with my partner.</p>
+        </div>
+
+        <div class="journal-page reveal stagger-4" style="--rotation: 2deg;">
+          <div class="journal-quote-mark">
+            <svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <p class="journal-text">I need a space where I don't have to perform or pretend everything is fine.</p>
+        </div>
+
+        <div class="journal-page reveal stagger-5" style="--rotation: -1.5deg;">
+          <div class="journal-quote-mark">
+            <svg viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4" stroke="currentColor" stroke-width="1" fill="none"/>
+              <path d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4" stroke="currentColor" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <p class="journal-text">I want to understand why I keep getting in my own way.</p>
+        </div>
+      </div>
+
+      <p class="journal-closing">
+        If any of these resonate, you're in the right place.
+      </p>
+    </div>
+  </section>
+
+  <!-- Final CTA Band - The Invitation -->
+  <section class="cta-band botanical-cta">
+    <!-- Botanical frame elements -->
+    <div class="cta-botanical cta-botanical-left">
+      <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M70 200 Q65 150 60 100 Q55 50 60 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M60 160 Q40 150 25 160" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <path d="M60 120 Q45 110 30 120" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <path d="M60 80 Q50 70 35 80" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <circle cx="60" cy="10" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <circle cx="25" cy="160" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
+        <circle cx="30" cy="120" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
+      </svg>
+    </div>
+    <div class="cta-botanical cta-botanical-right">
+      <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 200 Q15 150 20 100 Q25 50 20 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M20 160 Q40 150 55 160" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <path d="M20 120 Q35 110 50 120" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <path d="M20 80 Q30 70 45 80" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+        <circle cx="20" cy="10" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <circle cx="55" cy="160" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
+        <circle cx="50" cy="120" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="container">
+      <div class="cta-content reveal">
+        <div class="decorative-divider" style="margin-bottom: var(--space-6);">
+          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="100" cy="10" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <h2>Ready to take the first step?</h2>
+        <p>
+          I offer a free 15-minute consultation to see if we're a good fit. There's no pressure, just a conversation.
+        </p>
+        <a href="/contact.html" class="btn btn-primary btn-lg cta-button">Schedule Your Free Consultation</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

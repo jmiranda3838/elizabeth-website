@@ -17,13 +17,14 @@
    10) Print Styles
 === */
 
-@import url("styles/tokens.css?v=7");
-@import url("styles/base.css?v=7");
-@import url("styles/typography.css?v=7");
-@import url("styles/layout.css?v=7");
-@import url("styles/components.css?v=7");
-@import url("styles/sections.css?v=7");
-@import url("styles/pages.css?v=7");
-@import url("styles/utilities.css?v=7");
-@import url("styles/animations.css?v=7");
-@import url("styles/print.css?v=7");
+@import "./tokens.css";
+@import "./base.css";
+@import "./typography.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./sections.css";
+@import "./pages.css";
+@import "./utilities.css";
+@import "./animations.css";
+@import "./therapy-page.css";
+@import "./print.css";

@@ -2,7 +2,7 @@
 .hero-botanical {
   position: relative;
   min-height: 100vh;
-  background-image: url('../../images/hero2.png');
+  background-image: url('/images/hero2.png');
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;
@@ -957,7 +957,7 @@
 .moon-journey-section {
   position: relative;
   overflow: visible;
-  background-image: url('../../images/horse-2.jpg');
+  background-image: url('/images/horse-2.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -1034,9 +1034,9 @@
 /* Connecting path */
 .moon-path {
   position: absolute;
-  top: 50px;
-  left: calc(16.67% + 40px);
-  right: calc(16.67% + 40px);
+  top: 35px;
+  left: calc((100% - 4rem) / 6 + 29px);
+  right: calc((100% - 4rem) / 6 + 29px);
   height: 10px;
   z-index: 0;
 }
