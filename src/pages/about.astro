@@ -1,5 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import IconImagePlaceholder from "@components/illustrations/icons/IconImagePlaceholder.astro";
+import IconCollaborative from "@components/illustrations/icons/IconCollaborative.astro";
+import IconClock from "@components/illustrations/icons/IconClock.astro";
+import IconChat from "@components/illustrations/icons/IconChat.astro";
+import IconGraduation from "@components/illustrations/icons/IconGraduation.astro";
+import IconLicense from "@components/illustrations/icons/IconLicense.astro";
+import IconTraining from "@components/illustrations/icons/IconTraining.astro";
+import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.astro";
 ---
 
 <BaseLayout title="About | Elizabeth Armstrong Therapy" description="Meet Elizabeth Armstrong, LMFT. A narrative therapist in Orange County offering collaborative, warm therapy for individuals, couples, and families.">
@@ -21,11 +29,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="about-intro">
         <div class="about-image-wrapper">
           <div class="about-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <path d="M21 15l-5-5L5 21"/>
-            </svg>
+            <IconImagePlaceholder />
           </div>
           <div class="about-image-decoration"></div>
         </div>
@@ -86,12 +90,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <div class="grid grid-3" style="margin-top: var(--space-10); gap: var(--space-6);">
         <div style="text-align: center; padding: var(--space-6);">
-          <svg style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-            <path d="M16 3.13a4 4 0 010 7.75"/>
-          </svg>
+          <IconCollaborative style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
           <h4>Collaborative</h4>
           <p style="font-size: var(--text-sm); color: var(--text-secondary);">
             We're partners in this work. I bring my training and perspective; you bring your lived experience and wisdom about your own life.
@@ -99,10 +98,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
 
         <div style="text-align: center; padding: var(--space-6);">
-          <svg style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 6v6l4 2"/>
-          </svg>
+          <IconClock style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
           <h4>Reflective</h4>
           <p style="font-size: var(--text-sm); color: var(--text-secondary);">
             I help you slow down and look at things from different angles. Sometimes the most powerful work happens when we pause to notice.
@@ -110,9 +106,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
 
         <div style="text-align: center; padding: var(--space-6);">
-          <svg style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-          </svg>
+          <IconChat style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
           <h4>Interactive</h4>
           <p style="font-size: var(--text-sm); color: var(--text-secondary);">
             Therapy isn't passive. I'll ask questions, offer observations, and engage actively in our conversation. We think together.
@@ -138,10 +132,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="credentials-list" style="margin-top: var(--space-10);">
         <div class="credential-item">
           <div class="credential-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 20px; height: 20px;">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-              <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
-            </svg>
+            <IconGraduation style="width: 20px; height: 20px;" />
           </div>
           <div class="credential-content">
             <h4>Master of Arts in Marriage & Family Therapy</h4>
@@ -151,10 +142,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <div class="credential-item">
           <div class="credential-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 20px; height: 20px;">
-              <rect x="3" y="4" width="18" height="16" rx="2"/>
-              <path d="M7 8h10M7 12h6"/>
-            </svg>
+            <IconLicense style="width: 20px; height: 20px;" />
           </div>
           <div class="credential-content">
             <h4>Licensed Marriage & Family Therapist (LMFT)</h4>
@@ -164,11 +152,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <div class="credential-item">
           <div class="credential-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 20px; height: 20px;">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5"/>
-              <path d="M2 12l10 5 10-5"/>
-            </svg>
+            <IconTraining style="width: 20px; height: 20px;" />
           </div>
           <div class="credential-content">
             <h4>Advanced Training in Narrative Therapy</h4>
@@ -178,10 +162,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
         <div class="credential-item">
           <div class="credential-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 20px; height: 20px;">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M8 12l3 3 5-6"/>
-            </svg>
+            <IconCheckCircle style="width: 20px; height: 20px;" />
           </div>
           <div class="credential-content">
             <h4>Gottman Method Couples Therapy, Level 1</h4>

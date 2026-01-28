@@ -1,4 +1,8 @@
 ---
+import LeafDivider from '@components/illustrations/dividers/LeafDivider.astro';
+import CtaVineLeft from '@components/illustrations/frames/CtaVineLeft.astro';
+import CtaVineRight from '@components/illustrations/frames/CtaVineRight.astro';
+
 interface Props {
   title?: string;
   description?: string;
@@ -20,37 +24,16 @@ const {
   <section class="cta-band botanical-cta">
     <!-- Botanical frame elements -->
     <div class="cta-botanical cta-botanical-left">
-      <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M70 200 Q65 150 60 100 Q55 50 60 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <path d="M60 160 Q40 150 25 160" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <path d="M60 120 Q45 110 30 120" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <path d="M60 80 Q50 70 35 80" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <circle cx="60" cy="10" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="25" cy="160" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-        <circle cx="30" cy="120" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
-      </svg>
+      <CtaVineLeft />
     </div>
     <div class="cta-botanical cta-botanical-right">
-      <svg viewBox="0 0 80 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 200 Q15 150 20 100 Q25 50 20 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <path d="M20 160 Q40 150 55 160" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <path d="M20 120 Q35 110 50 120" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <path d="M20 80 Q30 70 45 80" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-        <circle cx="20" cy="10" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="55" cy="160" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-        <circle cx="50" cy="120" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
-      </svg>
+      <CtaVineRight />
     </div>
 
     <div class="container">
       <div class="cta-content reveal">
         <div class="decorative-divider" style="margin-bottom: var(--space-6);">
-          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 10 Q50 10 70 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <path d="M200 10 Q150 10 130 10" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <path d="M85 10 Q100 2 115 10 Q100 18 85 10" stroke="currentColor" stroke-width="1" fill="none"/>
-            <circle cx="100" cy="10" r="2" fill="currentColor"/>
-          </svg>
+          <LeafDivider />
         </div>
         <h2>{title}</h2>
         <p>{description}</p>

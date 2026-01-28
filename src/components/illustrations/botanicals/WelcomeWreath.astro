@@ -1,0 +1,32 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circular wreath -->
+  <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <!-- Left arc of leaves -->
+  <path d="M30 120 Q20 100 30 80 Q40 60 60 50 Q80 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <path d="M35 110 Q25 105 28 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M40 85 Q30 80 33 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M55 62 Q45 57 48 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M78 48 Q73 38 83 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <!-- Right arc of leaves -->
+  <path d="M170 120 Q180 100 170 80 Q160 60 140 50 Q120 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <path d="M165 110 Q175 105 172 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M160 85 Q170 80 167 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M145 62 Q155 57 152 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M122 48 Q127 38 117 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <!-- Bottom ribbon bow -->
+  <path d="M80 160 Q90 170 100 160 Q110 170 120 160" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  <path d="M85 162 Q80 175 70 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M115 162 Q120 175 130 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <!-- Small flowers -->
+  <circle cx="30" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <circle cx="170" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <circle cx="50" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <circle cx="150" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+</svg>

@@ -1,0 +1,69 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <!-- Main arch structure -->
+  <path class="doorway-arch" d="M50 700 L50 280 Q50 50 300 50 Q550 50 550 280 L550 700" stroke="currentColor" stroke-width="2" fill="none"/>
+  <path class="doorway-arch-inner" d="M70 700 L70 290 Q70 80 300 80 Q530 80 530 290 L530 700" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Left vine climbing up -->
+  <g class="doorway-vine doorway-vine-left">
+    <path d="M50 680 Q45 620 55 560 Q65 500 50 440 Q35 380 55 320 Q75 260 60 200" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Leaves -->
+    <path d="M50 650 Q30 640 25 655 Q35 660 50 650" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M55 580 Q75 570 80 585 Q70 590 55 580" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M48 510 Q28 500 23 515 Q33 520 48 510" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M52 440 Q72 430 77 445 Q67 450 52 440" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M45 370 Q25 360 20 375 Q30 380 45 370" stroke="currentColor" stroke-width="1" fill="none"/>
+    <!-- Small berries -->
+    <circle cx="22" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <circle cx="82" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <circle cx="18" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  </g>
+
+  <!-- Right vine climbing up -->
+  <g class="doorway-vine doorway-vine-right">
+    <path d="M550 680 Q555 620 545 560 Q535 500 550 440 Q565 380 545 320 Q525 260 540 200" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Leaves -->
+    <path d="M550 650 Q570 640 575 655 Q565 660 550 650" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M545 580 Q525 570 520 585 Q530 590 545 580" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M552 510 Q572 500 577 515 Q567 520 552 510" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M548 440 Q528 430 523 445 Q533 450 548 440" stroke="currentColor" stroke-width="1" fill="none"/>
+    <path d="M555 370 Q575 360 580 375 Q570 380 555 370" stroke="currentColor" stroke-width="1" fill="none"/>
+    <!-- Small berries -->
+    <circle cx="578" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <circle cx="518" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <circle cx="582" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  </g>
+
+  <!-- Arch crown decoration - flowering vine -->
+  <g class="doorway-crown">
+    <path d="M140 160 Q180 120 220 140 Q260 100 300 120 Q340 100 380 140 Q420 120 460 160" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <!-- Crown flowers -->
+    <circle cx="180" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
+    <circle cx="180" cy="135" r="3" fill="currentColor" opacity="0.3"/>
+    <circle cx="300" cy="115" r="10" stroke="currentColor" stroke-width="1" fill="none"/>
+    <circle cx="300" cy="115" r="4" fill="currentColor" opacity="0.3"/>
+    <circle cx="420" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
+    <circle cx="420" cy="135" r="3" fill="currentColor" opacity="0.3"/>
+    <!-- Small hanging elements -->
+    <path d="M220 140 L220 155" stroke="currentColor" stroke-width="0.8"/>
+    <circle cx="220" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <path d="M380 140 L380 155" stroke="currentColor" stroke-width="0.8"/>
+    <circle cx="380" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  </g>
+
+  <!-- Candle niches in doorway -->
+  <g class="doorway-candles">
+    <!-- Left candle -->
+    <rect x="80" y="450" width="20" height="40" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
+    <ellipse cx="90" cy="448" rx="3" ry="6" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.3"/>
+    <!-- Right candle -->
+    <rect x="500" y="450" width="20" height="40" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
+    <ellipse cx="510" cy="448" rx="3" ry="6" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.3"/>
+  </g>
+</svg>

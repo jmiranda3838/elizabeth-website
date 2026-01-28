@@ -1,5 +1,31 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import DoorwayFrame from "@components/illustrations/scenes/DoorwayFrame.astro";
+import FloatingBotanical1 from "@components/illustrations/botanicals/FloatingBotanical1.astro";
+import FloatingBotanical2 from "@components/illustrations/botanicals/FloatingBotanical2.astro";
+import ManuscriptCornerTL from "@components/illustrations/frames/ManuscriptCornerTL.astro";
+import ManuscriptCornerTR from "@components/illustrations/frames/ManuscriptCornerTR.astro";
+import ManuscriptCornerBL from "@components/illustrations/frames/ManuscriptCornerBL.astro";
+import ManuscriptCornerBR from "@components/illustrations/frames/ManuscriptCornerBR.astro";
+import InitialFlourish from "@components/illustrations/botanicals/InitialFlourish.astro";
+import ManuscriptMargin from "@components/illustrations/misc/ManuscriptMargin.astro";
+import WelcomeWreath from "@components/illustrations/botanicals/WelcomeWreath.astro";
+import BookSpine from "@components/illustrations/scenes/BookSpine.astro";
+import PageDivider from "@components/illustrations/dividers/PageDivider.astro";
+import IconShield from "@components/illustrations/icons/IconShield.astro";
+import IconHeart from "@components/illustrations/icons/IconHeart.astro";
+import IconCrown from "@components/illustrations/icons/IconCrown.astro";
+import IconSeedling from "@components/illustrations/icons/IconSeedling.astro";
+import IconCompass from "@components/illustrations/icons/IconCompass.astro";
+import PageBotanical from "@components/illustrations/botanicals/PageBotanical.astro";
+import RootsSystem from "@components/illustrations/scenes/RootsSystem.astro";
+import ConstellationStar from "@components/illustrations/misc/ConstellationStar.astro";
+import SpecimenDivider from "@components/illustrations/misc/SpecimenDivider.astro";
+import TagString from "@components/illustrations/misc/TagString.astro";
+import TagBloomingFlower from "@components/illustrations/specimens/TagBloomingFlower.astro";
+import TagIntertwinedStems from "@components/illustrations/specimens/TagIntertwinedStems.astro";
+import TagTree from "@components/illustrations/specimens/TagTree.astro";
+import GardenGate from "@components/illustrations/scenes/GardenGate.astro";
 ---
 
 <BaseLayout title="Why Therapy | Elizabeth Armstrong Therapy" description="Therapy is for everyone. Discover a warm, non-judgmental space where you are the expert on your own life. Narrative therapy in Orange County and online across California.">
@@ -15,68 +41,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <!-- The Arched Doorway Frame -->
     <div class="threshold-doorway">
-      <svg class="doorway-frame" viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <!-- Main arch structure -->
-        <path class="doorway-arch" d="M50 700 L50 280 Q50 50 300 50 Q550 50 550 280 L550 700" stroke="currentColor" stroke-width="2" fill="none"/>
-        <path class="doorway-arch-inner" d="M70 700 L70 290 Q70 80 300 80 Q530 80 530 290 L530 700" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
-
-        <!-- Left vine climbing up -->
-        <g class="doorway-vine doorway-vine-left">
-          <path d="M50 680 Q45 620 55 560 Q65 500 50 440 Q35 380 55 320 Q75 260 60 200" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Leaves -->
-          <path d="M50 650 Q30 640 25 655 Q35 660 50 650" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M55 580 Q75 570 80 585 Q70 590 55 580" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M48 510 Q28 500 23 515 Q33 520 48 510" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M52 440 Q72 430 77 445 Q67 450 52 440" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M45 370 Q25 360 20 375 Q30 380 45 370" stroke="currentColor" stroke-width="1" fill="none"/>
-          <!-- Small berries -->
-          <circle cx="22" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="82" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="18" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        </g>
-
-        <!-- Right vine climbing up -->
-        <g class="doorway-vine doorway-vine-right">
-          <path d="M550 680 Q555 620 545 560 Q535 500 550 440 Q565 380 545 320 Q525 260 540 200" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- Leaves -->
-          <path d="M550 650 Q570 640 575 655 Q565 660 550 650" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M545 580 Q525 570 520 585 Q530 590 545 580" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M552 510 Q572 500 577 515 Q567 520 552 510" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M548 440 Q528 430 523 445 Q533 450 548 440" stroke="currentColor" stroke-width="1" fill="none"/>
-          <path d="M555 370 Q575 360 580 375 Q570 380 555 370" stroke="currentColor" stroke-width="1" fill="none"/>
-          <!-- Small berries -->
-          <circle cx="578" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="518" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="582" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        </g>
-
-        <!-- Arch crown decoration - flowering vine -->
-        <g class="doorway-crown">
-          <path d="M140 160 Q180 120 220 140 Q260 100 300 120 Q340 100 380 140 Q420 120 460 160" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <!-- Crown flowers -->
-          <circle cx="180" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-          <circle cx="180" cy="135" r="3" fill="currentColor" opacity="0.3"/>
-          <circle cx="300" cy="115" r="10" stroke="currentColor" stroke-width="1" fill="none"/>
-          <circle cx="300" cy="115" r="4" fill="currentColor" opacity="0.3"/>
-          <circle cx="420" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-          <circle cx="420" cy="135" r="3" fill="currentColor" opacity="0.3"/>
-          <!-- Small hanging elements -->
-          <path d="M220 140 L220 155" stroke="currentColor" stroke-width="0.8"/>
-          <circle cx="220" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <path d="M380 140 L380 155" stroke="currentColor" stroke-width="0.8"/>
-          <circle cx="380" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        </g>
-
-        <!-- Candle niches in doorway -->
-        <g class="doorway-candles">
-          <!-- Left candle -->
-          <rect x="80" y="450" width="20" height="40" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
-          <ellipse cx="90" cy="448" rx="3" ry="6" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.3"/>
-          <!-- Right candle -->
-          <rect x="500" y="450" width="20" height="40" rx="2" stroke="currentColor" stroke-width="1" fill="none"/>
-          <ellipse cx="510" cy="448" rx="3" ry="6" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.3"/>
-        </g>
-      </svg>
+      <DoorwayFrame class="doorway-frame" />
 
       <!-- Content within the doorway -->
       <div class="threshold-content">
@@ -88,22 +53,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <!-- Floating botanical elements -->
     <div class="floating-botanical floating-botanical-1">
-      <svg viewBox="0 0 60 80" fill="none">
-        <path d="M30 75 Q28 50 30 25" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <ellipse cx="30" cy="20" rx="8" ry="12" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <ellipse cx="22" cy="28" rx="6" ry="10" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(-25 22 28)"/>
-        <ellipse cx="38" cy="28" rx="6" ry="10" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(25 38 28)"/>
-        <circle cx="30" cy="22" r="3" fill="currentColor" opacity="0.3"/>
-      </svg>
+      <FloatingBotanical1 />
     </div>
     <div class="floating-botanical floating-botanical-2">
-      <svg viewBox="0 0 50 70" fill="none">
-        <path d="M25 65 Q25 45 25 25" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <path d="M25 50 Q15 45 10 52 Q18 55 25 50" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <path d="M25 38 Q35 33 40 40 Q32 43 25 38" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="25" cy="20" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="25" cy="20" r="2" fill="currentColor" opacity="0.4"/>
-      </svg>
+      <FloatingBotanical2 />
     </div>
   </section>
 
@@ -111,50 +64,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="illuminated-section">
     <div class="illuminated-page">
       <!-- Decorative corner flourishes -->
-      <svg class="manuscript-corner manuscript-corner-tl" viewBox="0 0 80 80" fill="none">
-        <path d="M0 80 L0 40 Q0 0 40 0 L80 0" stroke="currentColor" stroke-width="1" fill="none"/>
-        <path d="M0 60 L0 30 Q0 10 30 10 L60 10" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-        <circle cx="8" cy="70" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="70" cy="8" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <path d="M15 50 Q10 45 15 40" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <path d="M50 15 Q45 10 40 15" stroke="currentColor" stroke-width="0.8" fill="none"/>
-      </svg>
-      <svg class="manuscript-corner manuscript-corner-tr" viewBox="0 0 80 80" fill="none">
-        <path d="M80 80 L80 40 Q80 0 40 0 L0 0" stroke="currentColor" stroke-width="1" fill="none"/>
-        <path d="M80 60 L80 30 Q80 10 50 10 L20 10" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-        <circle cx="72" cy="70" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-      </svg>
-      <svg class="manuscript-corner manuscript-corner-bl" viewBox="0 0 80 80" fill="none">
-        <path d="M0 0 L0 40 Q0 80 40 80 L80 80" stroke="currentColor" stroke-width="1" fill="none"/>
-        <path d="M0 20 L0 50 Q0 70 30 70 L60 70" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-        <circle cx="8" cy="10" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="70" cy="72" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-      </svg>
-      <svg class="manuscript-corner manuscript-corner-br" viewBox="0 0 80 80" fill="none">
-        <path d="M80 0 L80 40 Q80 80 40 80 L0 80" stroke="currentColor" stroke-width="1" fill="none"/>
-        <path d="M80 20 L80 50 Q80 70 50 70 L20 70" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-        <circle cx="72" cy="10" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        <circle cx="10" cy="72" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-      </svg>
+      <ManuscriptCornerTL class="manuscript-corner manuscript-corner-tl" />
+      <ManuscriptCornerTR class="manuscript-corner manuscript-corner-tr" />
+      <ManuscriptCornerBL class="manuscript-corner manuscript-corner-bl" />
+      <ManuscriptCornerBR class="manuscript-corner manuscript-corner-br" />
 
       <div class="illuminated-content">
         <!-- Decorative initial letter -->
         <div class="illuminated-initial">
           <span class="initial-letter">D</span>
-          <svg class="initial-flourish" viewBox="0 0 100 120" fill="none">
-            <!-- Vine wrapping around letter -->
-            <path d="M10 100 Q5 70 15 50 Q25 30 20 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-            <path d="M15 85 Q5 80 3 88" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M18 60 Q8 55 6 63" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M20 35 Q30 30 32 38" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="3" cy="90" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
-            <circle cx="5" cy="65" r="2" stroke="currentColor" stroke-width="0.6" fill="none"/>
-            <circle cx="33" cy="40" r="2" stroke="currentColor" stroke-width="0.6" fill="none"/>
-            <!-- Small flower at top -->
-            <circle cx="20" cy="8" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="20" cy="8" r="2" fill="currentColor" opacity="0.3"/>
-          </svg>
+          <InitialFlourish class="initial-flourish" />
         </div>
 
         <blockquote class="illuminated-quote">
@@ -168,14 +87,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <!-- Decorative botanical margin illustration -->
       <div class="manuscript-margin">
-        <svg viewBox="0 0 40 200" fill="none">
-          <path d="M20 190 Q20 150 20 110 Q20 70 20 30" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" stroke-dasharray="3 4"/>
-          <circle cx="20" cy="25" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-          <circle cx="20" cy="60" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
-          <circle cx="20" cy="100" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-          <circle cx="20" cy="140" r="3" stroke="currentColor" stroke-width="0.6" fill="none"/>
-          <circle cx="20" cy="180" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-        </svg>
+        <ManuscriptMargin />
       </div>
     </div>
   </section>
@@ -185,31 +97,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container">
       <div class="welcome-header">
         <div class="welcome-wreath">
-          <svg viewBox="0 0 200 200" fill="none">
-            <!-- Circular wreath -->
-            <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
-            <!-- Left arc of leaves -->
-            <path d="M30 120 Q20 100 30 80 Q40 60 60 50 Q80 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-            <path d="M35 110 Q25 105 28 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M40 85 Q30 80 33 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M55 62 Q45 57 48 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M78 48 Q73 38 83 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <!-- Right arc of leaves -->
-            <path d="M170 120 Q180 100 170 80 Q160 60 140 50 Q120 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-            <path d="M165 110 Q175 105 172 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M160 85 Q170 80 167 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M145 62 Q155 57 152 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M122 48 Q127 38 117 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <!-- Bottom ribbon bow -->
-            <path d="M80 160 Q90 170 100 160 Q110 170 120 160" stroke="currentColor" stroke-width="1.2" fill="none"/>
-            <path d="M85 162 Q80 175 70 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <path d="M115 162 Q120 175 130 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <!-- Small flowers -->
-            <circle cx="30" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="170" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="50" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="150" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          </svg>
+          <WelcomeWreath />
         </div>
         <h2 class="welcome-title">Therapy Is For Everyone</h2>
         <p class="welcome-lead">We all have concerns, questions, and troubles—difficult or confusing times. As your therapist, I provide a safe space for us to explore solutions to life's challenges... together.</p>
@@ -228,17 +116,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="grimoire-book">
       <!-- Book spine decoration -->
       <div class="book-spine">
-        <svg viewBox="0 0 30 400" fill="none">
-          <rect x="5" y="10" width="20" height="380" stroke="currentColor" stroke-width="1" fill="none" rx="2"/>
-          <line x1="15" y1="30" x2="15" y2="370" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
-          <!-- Decorative elements on spine -->
-          <circle cx="15" cy="60" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="15" cy="60" r="3" fill="currentColor" opacity="0.2"/>
-          <circle cx="15" cy="200" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="15" cy="200" r="3" fill="currentColor" opacity="0.2"/>
-          <circle cx="15" cy="340" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="15" cy="340" r="3" fill="currentColor" opacity="0.2"/>
-        </svg>
+        <BookSpine />
       </div>
 
       <div class="grimoire-pages">
@@ -246,12 +124,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <div class="page-header">
             <span class="page-script">Sacred Promises</span>
             <div class="page-divider">
-              <svg viewBox="0 0 150 20" fill="none">
-                <path d="M0 10 Q30 10 50 10" stroke="currentColor" stroke-width="0.8"/>
-                <path d="M150 10 Q120 10 100 10" stroke="currentColor" stroke-width="0.8"/>
-                <circle cx="75" cy="10" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="75" cy="10" r="1.5" fill="currentColor" opacity="0.4"/>
-              </svg>
+              <PageDivider />
             </div>
           </div>
 
@@ -259,12 +132,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Promise 1 -->
             <div class="promise-item">
               <div class="promise-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <!-- Shield shape -->
-                  <path d="M20 5 L35 12 L35 25 Q35 35 20 38 Q5 35 5 25 L5 12 Z" stroke="currentColor" stroke-width="1" fill="none"/>
-                  <path d="M20 12 L20 28" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-                  <path d="M12 20 L28 20" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-                </svg>
+                <IconShield />
               </div>
               <div class="promise-content">
                 <h4>No Judgment</h4>
@@ -275,11 +143,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Promise 2 -->
             <div class="promise-item">
               <div class="promise-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <!-- Open hands/heart -->
-                  <path d="M10 25 Q5 20 10 15 Q15 10 20 15 Q25 10 30 15 Q35 20 30 25 L20 35 L10 25" stroke="currentColor" stroke-width="1" fill="none"/>
-                  <circle cx="20" cy="22" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                </svg>
+                <IconHeart />
               </div>
               <div class="promise-content">
                 <h4>Unconditional Respect</h4>
@@ -290,14 +154,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Promise 3 -->
             <div class="promise-item">
               <div class="promise-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <!-- Crown/expertise -->
-                  <path d="M8 28 L12 15 L20 22 L28 15 L32 28" stroke="currentColor" stroke-width="1" fill="none" stroke-linejoin="round"/>
-                  <path d="M8 28 L32 28" stroke="currentColor" stroke-width="1"/>
-                  <circle cx="12" cy="13" r="2" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <circle cx="20" cy="10" r="2.5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <circle cx="28" cy="13" r="2" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                </svg>
+                <IconCrown />
               </div>
               <div class="promise-content">
                 <h4>You Are The Expert</h4>
@@ -312,14 +169,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Promise 4 -->
             <div class="promise-item">
               <div class="promise-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <!-- Seedling/growth -->
-                  <path d="M20 35 L20 20" stroke="currentColor" stroke-width="1" fill="none"/>
-                  <path d="M20 25 Q12 22 10 15 Q15 18 20 20" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <path d="M20 25 Q28 22 30 15 Q25 18 20 20" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <path d="M20 20 Q18 12 20 6 Q22 12 20 20" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <circle cx="20" cy="5" r="2" stroke="currentColor" stroke-width="0.6" fill="none"/>
-                </svg>
+                <IconSeedling />
               </div>
               <div class="promise-content">
                 <h4>Facilitator of Growth</h4>
@@ -330,14 +180,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Promise 5 -->
             <div class="promise-item">
               <div class="promise-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <!-- Compass/journey -->
-                  <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1" fill="none"/>
-                  <circle cx="20" cy="20" r="10" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-                  <path d="M20 8 L22 18 L20 20 L18 18 Z" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.3"/>
-                  <path d="M20 32 L18 22 L20 20 L22 22 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                  <circle cx="20" cy="20" r="2" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                </svg>
+                <IconCompass />
               </div>
               <div class="promise-content">
                 <h4>Your Journey</h4>
@@ -348,14 +191,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
           <!-- Decorative page element -->
           <div class="page-botanical">
-            <svg viewBox="0 0 80 100" fill="none">
-              <path d="M40 95 Q38 70 40 50 Q42 30 40 10" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M40 80 Q25 75 20 82 Q28 85 40 80" stroke="currentColor" stroke-width="0.6" fill="none"/>
-              <path d="M40 60 Q55 55 60 62 Q52 65 40 60" stroke="currentColor" stroke-width="0.6" fill="none"/>
-              <path d="M40 40 Q25 35 20 42 Q28 45 40 40" stroke="currentColor" stroke-width="0.6" fill="none"/>
-              <circle cx="40" cy="8" r="4" stroke="currentColor" stroke-width="0.6" fill="none"/>
-              <circle cx="40" cy="8" r="1.5" fill="currentColor" opacity="0.3"/>
-            </svg>
+            <PageBotanical />
           </div>
         </div>
       </div>
@@ -374,63 +210,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
 
         <div class="roots-illustration">
-          <svg viewBox="0 0 300 400" fill="none" class="roots-svg">
-            <!-- Ground line -->
-            <path d="M0 180 Q75 175 150 180 Q225 185 300 180" stroke="currentColor" stroke-width="1.5" fill="none"/>
-
-            <!-- Above ground: small plant/flower -->
-            <g class="plant-above">
-              <path d="M150 180 Q150 160 150 140" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <path d="M150 165 Q135 158 125 165 Q138 170 150 165" stroke="currentColor" stroke-width="1" fill="none"/>
-              <path d="M150 150 Q165 143 175 150 Q162 155 150 150" stroke="currentColor" stroke-width="1" fill="none"/>
-              <!-- Flower at top -->
-              <circle cx="150" cy="130" r="12" stroke="currentColor" stroke-width="1" fill="none"/>
-              <circle cx="142" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-              <circle cx="158" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-              <circle cx="142" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-              <circle cx="158" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-              <circle cx="150" cy="130" r="5" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.2"/>
-            </g>
-
-            <!-- Below ground: extensive root system -->
-            <g class="roots-below">
-              <!-- Main taproot -->
-              <path d="M150 180 Q148 220 150 260 Q152 300 145 350" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-              <!-- Major root branches -->
-              <path d="M150 200 Q120 210 80 230 Q50 250 30 290" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-              <path d="M150 200 Q180 210 220 230 Q250 250 270 290" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-              <path d="M150 240 Q110 260 70 300 Q45 330 40 370" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-              <path d="M150 240 Q190 260 230 300 Q255 330 260 370" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-
-              <!-- Secondary branches -->
-              <path d="M100 220 Q85 240 60 255" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M200 220 Q215 240 240 255" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M90 260 Q70 280 50 310" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M210 260 Q230 280 250 310" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M148 280 Q130 310 110 350" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-              <path d="M152 280 Q170 310 190 350" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-
-              <!-- Fine root hairs (many small strokes) -->
-              <path d="M60 255 Q55 265 45 275" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M60 255 Q65 270 60 285" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M240 255 Q245 265 255 275" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M240 255 Q235 270 240 285" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M30 290 Q20 305 15 325" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M30 290 Q35 310 25 330" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M270 290 Q280 305 285 325" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-              <path d="M270 290 Q265 310 275 330" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-
-              <!-- Tiny root tips -->
-              <circle cx="30" cy="292" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="270" cy="292" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="40" cy="372" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="260" cy="372" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="145" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="110" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-              <circle cx="190" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-            </g>
-          </svg>
+          <RootsSystem class="roots-svg" />
         </div>
       </div>
     </div>
@@ -469,72 +249,56 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <!-- Star 1: Anxiety -->
             <div class="constellation-star" style="top: 15%; left: 15%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Anxiety</span>
             </div>
 
             <!-- Star 2: Depression -->
             <div class="constellation-star" style="top: 28%; left: 38%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Depression</span>
             </div>
 
             <!-- Star 3: Relationships -->
             <div class="constellation-star" style="top: 18%; left: 58%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Relationships</span>
             </div>
 
             <!-- Star 4: Grief -->
             <div class="constellation-star" style="top: 22%; left: 80%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Grief & Loss</span>
             </div>
 
             <!-- Star 5: Life Transitions -->
             <div class="constellation-star" style="top: 50%; left: 22%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Life Transitions</span>
             </div>
 
             <!-- Star 6: LGBTQ+ -->
             <div class="constellation-star" style="top: 65%; left: 42%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">LGBTQ+ Affirming</span>
             </div>
 
             <!-- Star 7: Career -->
             <div class="constellation-star" style="top: 58%; left: 63%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Career</span>
             </div>
 
             <!-- Star 8: Family -->
             <div class="constellation-star" style="top: 75%; left: 78%;">
               <div class="star-glow"></div>
-              <svg class="star-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <ConstellationStar class="star-icon" />
               <span class="star-label">Family & Couples</span>
             </div>
           </div>
@@ -549,17 +313,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="specimen-header">
         <h2>How I Can Help</h2>
         <div class="specimen-divider">
-          <svg viewBox="0 0 200 30" fill="none">
-            <path d="M0 15 Q40 15 60 15" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <path d="M200 15 Q160 15 140 15" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
-            <!-- Pressed flower center -->
-            <circle cx="100" cy="15" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-            <ellipse cx="100" cy="7" rx="3" ry="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <ellipse cx="100" cy="23" rx="3" ry="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <ellipse cx="92" cy="15" rx="5" ry="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <ellipse cx="108" cy="15" rx="5" ry="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
-            <circle cx="100" cy="15" r="3" fill="currentColor" opacity="0.3"/>
-          </svg>
+          <SpecimenDivider />
         </div>
       </div>
 
@@ -568,23 +322,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <article class="specimen-tag">
           <div class="tag-hole"></div>
           <div class="tag-string">
-            <svg viewBox="0 0 30 40" fill="none">
-              <path d="M15 0 Q10 15 15 25 Q20 35 15 40" stroke="currentColor" stroke-width="1" fill="none"/>
-            </svg>
+            <TagString />
           </div>
           <div class="tag-content">
             <div class="tag-botanical">
-              <svg viewBox="0 0 60 80" fill="none">
-                <!-- Single flower - for individual -->
-                <path d="M30 75 Q28 55 30 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <path d="M30 60 Q20 55 15 60 Q22 65 30 60" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <path d="M30 45 Q40 40 45 45 Q38 50 30 45" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <ellipse cx="30" cy="25" rx="10" ry="12" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <ellipse cx="22" cy="20" rx="6" ry="9" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(-20 22 20)"/>
-                <ellipse cx="38" cy="20" rx="6" ry="9" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(20 38 20)"/>
-                <circle cx="30" cy="23" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="30" cy="23" r="1.5" fill="currentColor" opacity="0.4"/>
-              </svg>
+              <TagBloomingFlower />
             </div>
             <h3 class="tag-title">Individual Therapy</h3>
             <p class="tag-latin">Solus florens</p>
@@ -597,21 +339,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <article class="specimen-tag">
           <div class="tag-hole"></div>
           <div class="tag-string">
-            <svg viewBox="0 0 30 40" fill="none">
-              <path d="M15 0 Q10 15 15 25 Q20 35 15 40" stroke="currentColor" stroke-width="1" fill="none"/>
-            </svg>
+            <TagString />
           </div>
           <div class="tag-content">
             <div class="tag-botanical">
-              <svg viewBox="0 0 60 80" fill="none">
-                <!-- Two intertwined stems -->
-                <path d="M22 75 Q20 55 28 40 Q36 25 32 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <path d="M38 75 Q40 55 32 40 Q24 25 28 10" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <path d="M25 55 Q15 50 12 57" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <path d="M35 55 Q45 50 48 57" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="30" cy="8" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="30" cy="8" r="2" fill="currentColor" opacity="0.4"/>
-              </svg>
+              <TagIntertwinedStems />
             </div>
             <h3 class="tag-title">Couples Therapy</h3>
             <p class="tag-latin">Duorum nexus</p>
@@ -624,25 +356,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <article class="specimen-tag">
           <div class="tag-hole"></div>
           <div class="tag-string">
-            <svg viewBox="0 0 30 40" fill="none">
-              <path d="M15 0 Q10 15 15 25 Q20 35 15 40" stroke="currentColor" stroke-width="1" fill="none"/>
-            </svg>
+            <TagString />
           </div>
           <div class="tag-content">
             <div class="tag-botanical">
-              <svg viewBox="0 0 60 80" fill="none">
-                <!-- Tree with branches -->
-                <path d="M30 75 Q30 55 30 40" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-                <path d="M30 40 Q18 30 10 22" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <path d="M30 40 Q42 30 50 22" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <path d="M30 40 Q30 28 30 18" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-                <circle cx="10" cy="18" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="30" cy="13" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="50" cy="18" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-                <circle cx="10" cy="18" r="2" fill="currentColor" opacity="0.3"/>
-                <circle cx="30" cy="13" r="2.5" fill="currentColor" opacity="0.3"/>
-                <circle cx="50" cy="18" r="2" fill="currentColor" opacity="0.3"/>
-              </svg>
+              <TagTree />
             </div>
             <h3 class="tag-title">Family Therapy</h3>
             <p class="tag-latin">Arbor familiae</p>
@@ -657,78 +375,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <!-- Garden Gate: Final CTA -->
   <section class="garden-gate-section">
     <div class="gate-frame">
-      <svg class="gate-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
-        <!-- Left gate post -->
-        <rect x="50" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <circle cx="65" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-        <circle cx="65" cy="100" r="3" fill="currentColor" opacity="0.3"/>
-
-        <!-- Right gate post -->
-        <rect x="720" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <circle cx="735" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-        <circle cx="735" cy="100" r="3" fill="currentColor" opacity="0.3"/>
-
-        <!-- Gate arch -->
-        <path d="M80 80 Q400 -20 720 80" stroke="currentColor" stroke-width="1.5" fill="none"/>
-        <path d="M100 90 Q400 10 700 90" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
-
-        <!-- Left gate door -->
-        <g class="gate-door gate-door-left">
-          <rect x="90" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"/>
-          <!-- Decorative bars -->
-          <line x1="150" y1="100" x2="150" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="210" y1="100" x2="210" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="270" y1="100" x2="270" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="330" y1="100" x2="330" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <!-- Horizontal bars -->
-          <line x1="90" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="90" y1="300" x2="380" y2="300" stroke="currentColor" stroke-width="0.8"/>
-          <!-- Decorative scrollwork -->
-          <path d="M120 150 Q150 130 180 150 Q210 170 180 190 Q150 210 120 190 Q90 170 120 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <path d="M280 150 Q310 130 340 150 Q370 170 340 190 Q310 210 280 190 Q250 170 280 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        </g>
-
-        <!-- Right gate door -->
-        <g class="gate-door gate-door-right">
-          <rect x="420" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"/>
-          <!-- Decorative bars -->
-          <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"/>
-          <!-- Horizontal bars -->
-          <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"/>
-          <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"/>
-          <!-- Decorative scrollwork -->
-          <path d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <path d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-        </g>
-
-        <!-- Climbing roses on gate -->
-        <g class="gate-roses">
-          <!-- Left side roses -->
-          <circle cx="100" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="100" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"/>
-          <circle cx="100" cy="150" r="2" fill="currentColor" opacity="0.3"/>
-          <path d="M95 165 Q85 180 90 200" stroke="currentColor" stroke-width="0.6" fill="none"/>
-
-          <circle cx="85" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="85" cy="250" r="3" fill="currentColor" opacity="0.3"/>
-
-          <!-- Right side roses -->
-          <circle cx="700" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="700" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"/>
-          <circle cx="700" cy="150" r="2" fill="currentColor" opacity="0.3"/>
-          <path d="M705 165 Q715 180 710 200" stroke="currentColor" stroke-width="0.6" fill="none"/>
-
-          <circle cx="715" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-          <circle cx="715" cy="250" r="3" fill="currentColor" opacity="0.3"/>
-
-          <!-- Leaves -->
-          <path d="M80 180 Q70 175 68 185 Q75 188 80 180" stroke="currentColor" stroke-width="0.6" fill="none"/>
-          <path d="M720 180 Q730 175 732 185 Q725 188 720 180" stroke="currentColor" stroke-width="0.6" fill="none"/>
-        </g>
-      </svg>
+      <GardenGate class="gate-svg" />
 
       <div class="gate-content">
         <p class="gate-eyebrow">The Garden Awaits</p>

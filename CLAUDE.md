@@ -34,9 +34,19 @@ src/
 │   ├── global/             # Site-wide components
 │   │   ├── Header.astro
 │   │   └── Footer.astro
-│   └── sections/           # Reusable page sections
-│       ├── CTA.astro
-│       └── DecorativeDivider.astro
+│   ├── sections/           # Reusable page sections
+│   │   ├── CTA.astro
+│   │   └── DecorativeDivider.astro
+│   └── illustrations/      # SVG illustration components (~74 files)
+│       ├── icons/           # Small functional icons (24-48px)
+│       ├── botanicals/      # Decorative plant elements
+│       ├── dividers/        # Section/page dividers
+│       ├── frames/          # Corner and border frame elements
+│       ├── scenes/          # Large illustrations (garland, gate, doorway)
+│       ├── apothecary/      # Specialty topic icons
+│       ├── specimens/       # Service card specimen illustrations
+│       ├── moon/            # Moon phase icons
+│       └── misc/            # Other decorative elements (quotes, stars)
 ├── styles/                 # Modular CSS
 │   ├── global.css          # Main entry (imports all modules)
 │   ├── tokens.css          # Design tokens (colors, spacing, typography)
@@ -77,6 +87,8 @@ public/
 ```
 
 **Layouts**: `BaseLayout.astro` wraps all pages with common structure (head, header, footer, scripts).
+
+**Illustrations**: SVG components in `src/components/illustrations/` accept `class` and `style` props and render a bare `<svg>` element. They use `currentColor` for theming via CSS color inheritance. Import with `@components/illustrations/...`.
 
 **Generated/ignored paths**: Do not edit or rely on `dist/`, `.astro/`, `.playwright-mcp/`, `node_modules/`, or `migration-baselines/`. Source of truth is `src/` and `public/`.
 

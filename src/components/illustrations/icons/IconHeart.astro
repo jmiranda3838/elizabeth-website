@@ -1,0 +1,12 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Open hands/heart -->
+  <path d="M10 25 Q5 20 10 15 Q15 10 20 15 Q25 10 30 15 Q35 20 30 25 L20 35 L10 25" stroke="currentColor" stroke-width="1" fill="none"/>
+  <circle cx="20" cy="22" r="3" stroke="currentColor" stroke-width="0.8" fill="none"/>
+</svg>

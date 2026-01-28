@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Single flower - for individual -->
+  <path d="M30 75 Q28 55 30 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <path d="M30 60 Q20 55 15 60 Q22 65 30 60" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path d="M30 45 Q40 40 45 45 Q38 50 30 45" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <ellipse cx="30" cy="25" rx="10" ry="12" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <ellipse cx="22" cy="20" rx="6" ry="9" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(-20 22 20)"/>
+  <ellipse cx="38" cy="20" rx="6" ry="9" stroke="currentColor" stroke-width="0.8" fill="none" transform="rotate(20 38 20)"/>
+  <circle cx="30" cy="23" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <circle cx="30" cy="23" r="1.5" fill="currentColor" opacity="0.4"/>
+</svg>

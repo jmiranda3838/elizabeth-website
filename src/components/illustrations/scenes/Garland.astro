@@ -1,0 +1,145 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 1440 180" preserveAspectRatio="xMidYMax slice">
+  <!-- Decorative string/twine across the curve -->
+  <path class="garland-string" d="M-20,45 Q200,55 360,40 Q520,25 720,50 Q920,75 1080,55 Q1240,35 1460,50" />
+
+  <!-- Bunch 1: Left - Dried lavender sprig -->
+  <g transform="translate(120, 35)">
+    <g class="hanging-bunch bunch-1">
+      <!-- Ribbon tie -->
+      <path d="M0,0 Q-5,8 -8,5 M0,0 Q5,8 8,5" stroke="currentColor" stroke-width="1.2" fill="none" class="ribbon"/>
+      <!-- Main stem -->
+      <path d="M0,5 Q-2,40 0,80" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- Lavender buds (small ovals going up) -->
+      <ellipse cx="0" cy="75" rx="3" ry="5" fill="currentColor" opacity="0.6"/>
+      <ellipse cx="-3" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="3" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="-2" cy="60" rx="2" ry="3.5" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="2" cy="60" rx="2" ry="3.5" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="0" cy="53" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+      <!-- Secondary stem -->
+      <path d="M0,10 Q8,35 5,60" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <ellipse cx="5" cy="58" rx="2" ry="4" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="6" cy="50" rx="1.5" ry="3" fill="currentColor" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- Bunch 2: Left-center - Wildflower bunch -->
+  <g transform="translate(360, 28)">
+    <g class="hanging-bunch bunch-2">
+      <!-- Ribbon tie -->
+      <path d="M0,0 Q-6,10 -10,6 M0,0 Q6,10 10,6" stroke="currentColor" stroke-width="1.2" fill="none" class="ribbon"/>
+      <!-- Multiple stems -->
+      <path d="M-5,8 Q-8,45 -3,85" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M0,8 Q2,50 0,90" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <path d="M5,8 Q10,40 6,80" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <!-- Small wildflowers at tips -->
+      <circle cx="-3" cy="88" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <circle cx="-3" cy="88" r="2" fill="currentColor" opacity="0.4"/>
+      <circle cx="0" cy="93" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <circle cx="0" cy="93" r="2.5" fill="currentColor" opacity="0.4"/>
+      <circle cx="6" cy="83" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <circle cx="6" cy="83" r="1.5" fill="currentColor" opacity="0.4"/>
+      <!-- Leaves -->
+      <path d="M-5,50 Q-15,45 -18,55" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <path d="M5,55 Q15,50 18,60" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Bunch 3: Center-left - Herb bundle (rosemary style) -->
+  <g transform="translate(540, 42)">
+    <g class="hanging-bunch bunch-3">
+      <!-- Ribbon -->
+      <path d="M0,0 Q-4,6 -7,3 M0,0 Q4,6 7,3" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+      <!-- Main stem with needle leaves -->
+      <path d="M0,5 Q-1,35 0,70" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <!-- Needle pairs -->
+      <path d="M0,15 Q-8,12 -12,16 M0,15 Q8,12 12,16" stroke="currentColor" stroke-width="0.7" fill="none"/>
+      <path d="M0,25 Q-10,22 -14,26 M0,25 Q10,22 14,26" stroke="currentColor" stroke-width="0.7" fill="none"/>
+      <path d="M0,35 Q-9,32 -12,36 M0,35 Q9,32 12,36" stroke="currentColor" stroke-width="0.7" fill="none"/>
+      <path d="M0,45 Q-8,42 -10,46 M0,45 Q8,42 10,46" stroke="currentColor" stroke-width="0.7" fill="none"/>
+      <path d="M0,55 Q-6,52 -8,56 M0,55 Q6,52 8,56" stroke="currentColor" stroke-width="0.7" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Bunch 4: Center - Larger decorative piece with moon -->
+  <g transform="translate(720, 38)">
+    <g class="hanging-bunch bunch-4">
+      <!-- Decorative bow -->
+      <path d="M-12,0 Q-6,-8 0,0 Q6,-8 12,0" stroke="currentColor" stroke-width="1.3" fill="none" class="ribbon"/>
+      <path d="M-10,2 Q-8,12 -12,18 M10,2 Q8,12 12,18" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+      <!-- Main hanging stems -->
+      <path d="M-8,8 Q-12,50 -6,95" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <path d="M0,8 Q0,55 0,100" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M8,8 Q12,50 6,95" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <!-- Dried flower heads -->
+      <ellipse cx="-6" cy="98" rx="5" ry="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <ellipse cx="0" cy="105" rx="6" ry="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <ellipse cx="6" cy="98" rx="5" ry="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <!-- Small crescent moon charm -->
+      <g transform="translate(0, 118)">
+        <path d="M5,0 C5,-8 -3,-10 -5,-3 C-3,-5 0,-4 2,-1 C3,1 5,2 5,0 Z" stroke="currentColor" stroke-width="0.8" fill="currentColor" opacity="0.5"/>
+      </g>
+      <!-- Leaves -->
+      <path d="M-8,45 Q-18,40 -22,50" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <path d="M8,50 Q18,45 22,55" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Bunch 5: Center-right - Small seed pod cluster -->
+  <g transform="translate(900, 58)">
+    <g class="hanging-bunch bunch-5">
+      <!-- Ribbon -->
+      <path d="M0,0 Q-4,5 -6,2 M0,0 Q4,5 6,2" stroke="currentColor" stroke-width="1" fill="none" class="ribbon"/>
+      <!-- Hanging stems with seed pods -->
+      <path d="M-4,5 Q-6,25 -3,50" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M0,5 Q0,30 0,55" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M4,5 Q6,25 3,45" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <!-- Seed pods -->
+      <ellipse cx="-3" cy="52" rx="3" ry="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <ellipse cx="0" cy="58" rx="4" ry="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <ellipse cx="3" cy="48" rx="3" ry="4.5" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Bunch 6: Right-center - Another lavender/herb -->
+  <g transform="translate(1080, 42)">
+    <g class="hanging-bunch bunch-6">
+      <!-- Ribbon -->
+      <path d="M0,0 Q-5,8 -8,4 M0,0 Q5,8 8,4" stroke="currentColor" stroke-width="1.1" fill="none" class="ribbon"/>
+      <!-- Stems -->
+      <path d="M-3,6 Q-5,40 -2,75" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M3,6 Q5,35 2,70" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <!-- Flower buds -->
+      <ellipse cx="-2" cy="73" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="-3" cy="65" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+      <ellipse cx="-1" cy="58" rx="1.5" ry="2.5" fill="currentColor" opacity="0.4"/>
+      <ellipse cx="2" cy="68" rx="2.5" ry="4" fill="currentColor" opacity="0.5"/>
+      <ellipse cx="3" cy="60" rx="2" ry="3" fill="currentColor" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- Bunch 7: Right - Trailing vine with small star -->
+  <g transform="translate(1320, 40)">
+    <g class="hanging-bunch bunch-7">
+      <!-- Ribbon -->
+      <path d="M0,0 Q-5,7 -8,3 M0,0 Q5,7 8,3" stroke="currentColor" stroke-width="1.1" fill="none" class="ribbon"/>
+      <!-- Curling vine -->
+      <path d="M0,6 Q-5,30 5,55 Q12,75 0,90" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      <!-- Small leaves along vine -->
+      <path d="M-2,25 Q-10,20 -12,28" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <path d="M3,45 Q12,40 14,50" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <path d="M8,65 Q16,62 15,72" stroke="currentColor" stroke-width="0.8" fill="none"/>
+      <!-- Tiny star charm -->
+      <g transform="translate(0, 95)">
+        <path d="M0,-5 L1,-1.5 L5,-1.5 L2,1 L3,5 L0,2.5 L-3,5 L-2,1 L-5,-1.5 L-1,-1.5 Z" stroke="currentColor" stroke-width="0.6" fill="currentColor" opacity="0.4" transform="scale(0.7)"/>
+      </g>
+    </g>
+  </g>
+</svg>

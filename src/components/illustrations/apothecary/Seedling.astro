@@ -1,0 +1,22 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stem growing upward -->
+  <path d="M30 55 Q30 40 30 28" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Unfurling leaves -->
+  <path d="M30 32 Q22 28 18 20 Q24 24 30 28" stroke="currentColor" stroke-width="1" fill="none"/>
+  <path d="M30 32 Q38 28 42 20 Q36 24 30 28" stroke="currentColor" stroke-width="1" fill="none"/>
+  <!-- Small emerging leaf at top -->
+  <path d="M30 28 Q28 22 30 16 Q32 22 30 28" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <!-- Light rays from above -->
+  <path d="M30 8 L30 12" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M22 10 L25 14" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+  <path d="M38 10 L35 14" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.4"/>
+  <!-- Soil line -->
+  <path d="M20 55 Q30 53 40 55" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+</svg>
