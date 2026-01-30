@@ -1,0 +1,217 @@
+/* === Sections: Approach / Philosophy === */
+.approach-section {
+  position: relative;
+}
+
+.grimoire-section {
+  overflow: visible;
+  clip-path: inset(0);
+}
+
+/* Fixed background */
+.approach-section.grimoire-section::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blush-wash);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above the fixed background */
+.approach-section.grimoire-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile: disable fixed background (causes issues on iOS) */
+@media (max-width: 768px) {
+  .approach-section.grimoire-section::before {
+    position: absolute;
+    background-attachment: scroll;
+  }
+}
+
+.approach-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.approach-text h2 {
+  margin-bottom: var(--space-2);
+}
+
+/* Vine divider */
+.vine-divider {
+  margin: var(--space-4) 0 var(--space-6);
+  max-width: 280px;
+}
+
+.vine-divider svg {
+  width: 100%;
+  height: 30px;
+  color: var(--dusty-peach);
+  opacity: 0.7;
+}
+
+.approach-text p {
+  margin-bottom: var(--space-8);
+}
+
+.values-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.magical-values {
+  gap: var(--space-5);
+}
+
+.value-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.value-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage);
+  margin-top: 2px;
+}
+
+.magical-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform var(--transition-base);
+}
+
+.magical-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.value-item:hover .magical-icon {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.value-content h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.value-content p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.approach-image {
+  position: relative;
+}
+
+/* Botanical frame */
+.botanical-frame {
+  position: relative;
+  padding: var(--space-6);
+}
+
+.botanical-frame-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.frame-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  color: var(--dusty-peach);
+}
+
+.frame-tl {
+  top: 0;
+  left: 0;
+}
+
+.frame-tr {
+  top: 0;
+  right: 0;
+}
+
+.frame-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.frame-br {
+  bottom: 0;
+  right: 0;
+}
+
+.approach-image-placeholder {
+  aspect-ratio: 4/5;
+  background-color: var(--soft-sand);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.approach-image-placeholder svg {
+  width: 80px;
+  height: 80px;
+  color: var(--dusty-peach);
+  opacity: 0.5;
+}
+
+.approach-image img {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.approach-headshot {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Legacy decorative element */
+.approach-decoration {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--dusty-peach);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+@media (max-width: 900px) {
+  .approach-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+  }
+
+  .approach-image {
+    order: -1;
+  }
+
+  .vine-divider {
+    max-width: 100%;
+  }
+}

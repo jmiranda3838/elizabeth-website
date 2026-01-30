@@ -1,0 +1,10 @@
+export { default as CtaVineLeft } from './CtaVineLeft.astro';
+export { default as CtaVineRight } from './CtaVineRight.astro';
+export { default as FrameCornerBL } from './FrameCornerBL.astro';
+export { default as FrameCornerBR } from './FrameCornerBR.astro';
+export { default as FrameCornerTL } from './FrameCornerTL.astro';
+export { default as FrameCornerTR } from './FrameCornerTR.astro';
+export { default as ManuscriptCornerBL } from './ManuscriptCornerBL.astro';
+export { default as ManuscriptCornerBR } from './ManuscriptCornerBR.astro';
+export { default as ManuscriptCornerTL } from './ManuscriptCornerTL.astro';
+export { default as ManuscriptCornerTR } from './ManuscriptCornerTR.astro';

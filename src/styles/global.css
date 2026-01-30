@@ -10,7 +10,7 @@
    3) Typography
    4) Layout Utilities
    5) Components: Buttons, Header, Footer
-   6) Sections: Hero, Garland, Service Cards, etc.
+   6) Sections: Hero, Service Cards, Approach, etc.
    7) Pages: About, Therapy, FAQ, Contact
    8) Utilities: Decorative Elements, Responsive
    9) Animations
@@ -21,10 +21,17 @@
 @import "./base.css";
 @import "./typography.css";
 @import "./layout.css";
-@import "./components.css";
-@import "./sections.css";
-@import "./pages.css";
+@import "./components/buttons.css";
+@import "./components/header.css";
+@import "./components/footer.css";
+@import "./sections/hero.css";
+@import "./sections/service-cards.css";
+@import "./sections/approach.css";
+@import "./sections/support-areas.css";
+@import "./sections/process-steps.css";
+@import "./sections/testimonials.css";
+@import "./sections/cta.css";
+@import "./sections/page-hero.css";
 @import "./utilities.css";
 @import "./animations.css";
-@import "./therapy-page.css";
 @import "./print.css";

@@ -1,0 +1,245 @@
+/* === Sections: Service Cards === */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+.services-grid.specimen-cards {
+  gap: var(--space-10);
+}
+
+.service-card {
+  position: relative;
+  background-color: var(--warm-paper);
+  border: var(--border-thin);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+/* Specimen Card Styling */
+.specimen-card {
+  border: 1px solid var(--dusty-peach);
+  border-radius: 0;
+  background: linear-gradient(
+    135deg,
+    var(--warm-paper) 0%,
+    #faf9f8 50%,
+    var(--warm-paper) 100%
+  );
+  box-shadow:
+    0 1px 3px rgba(84, 49, 35, 0.04),
+    inset 0 0 60px rgba(210, 199, 193, 0.15);
+}
+
+.specimen-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 40px rgba(84, 49, 35, 0.12),
+    inset 0 0 60px rgba(210, 199, 193, 0.15);
+}
+
+/* Decorative corners for specimen cards */
+.specimen-corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.specimen-corner::before,
+.specimen-corner::after {
+  content: '';
+  position: absolute;
+  background-color: var(--dusty-peach);
+}
+
+.specimen-corner-tl {
+  top: 8px;
+  left: 8px;
+}
+
+.specimen-corner-tl::before {
+  width: 16px;
+  height: 1px;
+  top: 0;
+  left: 0;
+}
+
+.specimen-corner-tl::after {
+  width: 1px;
+  height: 16px;
+  top: 0;
+  left: 0;
+}
+
+.specimen-corner-tr {
+  top: 8px;
+  right: 8px;
+}
+
+.specimen-corner-tr::before {
+  width: 16px;
+  height: 1px;
+  top: 0;
+  right: 0;
+}
+
+.specimen-corner-tr::after {
+  width: 1px;
+  height: 16px;
+  top: 0;
+  right: 0;
+}
+
+.specimen-corner-bl {
+  bottom: 8px;
+  left: 8px;
+}
+
+.specimen-corner-bl::before {
+  width: 16px;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+}
+
+.specimen-corner-bl::after {
+  width: 1px;
+  height: 16px;
+  bottom: 0;
+  left: 0;
+}
+
+.specimen-corner-br {
+  bottom: 8px;
+  right: 8px;
+}
+
+.specimen-corner-br::before {
+  width: 16px;
+  height: 1px;
+  bottom: 0;
+  right: 0;
+}
+
+.specimen-corner-br::after {
+  width: 1px;
+  height: 16px;
+  bottom: 0;
+  right: 0;
+}
+
+/* Specimen icon styling */
+.specimen-card .service-card-image {
+  height: 200px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px dashed var(--soft-sand);
+}
+
+.specimen-icon {
+  width: 100px;
+  height: 120px;
+  color: var(--sage);
+  opacity: 0.85;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.specimen-card:hover .specimen-icon {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+}
+
+.service-card-image {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background-color: var(--soft-sand);
+}
+
+.service-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.service-card:hover .service-card-image img {
+  transform: scale(1.05);
+}
+
+/* Placeholder for images */
+.service-card-image .placeholder-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  color: var(--dusty-peach);
+  opacity: 0.6;
+}
+
+.service-card-content {
+  padding: var(--space-6);
+}
+
+.specimen-card .service-card-content {
+  text-align: center;
+  padding: var(--space-8) var(--space-6);
+}
+
+.service-card h3 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-3);
+}
+
+.specimen-card h3 {
+  font-family: var(--font-serif);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.service-card p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.service-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.service-card-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.service-card:hover .service-card-link svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 900px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

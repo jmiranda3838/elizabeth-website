@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PlusExpand from "@components/illustrations/icons/PlusExpand.astro";
+import { PlusExpand } from "@illustrations/icons";
 ---
 
 <BaseLayout title="FAQs | Elizabeth Armstrong Therapy" description="Frequently asked questions about therapy with Elizabeth Armstrong, LMFT. Learn about sessions, fees, insurance, and what to expect.">
@@ -257,5 +257,128 @@ import PlusExpand from "@components/illustrations/icons/PlusExpand.astro";
       <a href="/contact.html" class="btn btn-primary btn-lg">Get in Touch</a>
     </div>
   </section>
+
+<style is:global>
+/* === Pages: FAQ === */
+.faq-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+  justify-content: center;
+}
+
+.faq-category-btn {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: var(--border-thin);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.faq-category-btn:hover,
+.faq-category-btn.active {
+  color: var(--text-primary);
+  background-color: var(--dusty-peach);
+  border-color: var(--dusty-peach);
+}
+
+.faq-section {
+  margin-bottom: var(--space-10);
+}
+
+.faq-section h3 {
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--border-thin);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.faq-item {
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-align: left;
+  background-color: var(--warm-paper);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.faq-question:hover {
+  background-color: var(--bg-accent);
+}
+
+.faq-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: transform var(--transition-fast);
+}
+
+.faq-item.open .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-base);
+}
+
+.faq-item.open .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer-content {
+  padding: var(--space-6);
+  padding-top: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Crisis callout */
+.crisis-callout {
+  padding: var(--space-6);
+  background-color: var(--bg-accent);
+  border-left: 4px solid var(--muted-rose);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-top: var(--space-8);
+}
+
+.crisis-callout h4 {
+  color: var(--warm-clay);
+  margin-bottom: var(--space-3);
+}
+
+.crisis-callout p {
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+}
+
+.crisis-callout p:last-child {
+  margin-bottom: 0;
+}
+</style>
 
 </BaseLayout>

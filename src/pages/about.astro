@@ -1,13 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import IconImagePlaceholder from "@components/illustrations/icons/IconImagePlaceholder.astro";
-import IconCollaborative from "@components/illustrations/icons/IconCollaborative.astro";
-import IconClock from "@components/illustrations/icons/IconClock.astro";
-import IconChat from "@components/illustrations/icons/IconChat.astro";
-import IconGraduation from "@components/illustrations/icons/IconGraduation.astro";
-import IconLicense from "@components/illustrations/icons/IconLicense.astro";
-import IconTraining from "@components/illustrations/icons/IconTraining.astro";
-import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.astro";
+import { IconImagePlaceholder, IconCollaborative, IconClock, IconChat, IconGraduation, IconLicense, IconTraining, IconCheckCircle } from "@illustrations/icons";
 ---
 
 <BaseLayout title="About | Elizabeth Armstrong Therapy" description="Meet Elizabeth Armstrong, LMFT. A narrative therapist in Orange County offering collaborative, warm therapy for individuals, couples, and families.">
@@ -48,7 +41,7 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
 
           <div class="decorative-line"></div>
 
-          <p style="font-style: italic; color: var(--text-secondary);">
+          <p class="italic text-secondary">
             "I don't see my role as telling you who to be. I see it as helping you reconnect with who you already are, and supporting you as you step more fully into that."
           </p>
         </div>
@@ -62,7 +55,7 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
       <p class="eyebrow text-center">Working Together</p>
       <h2 class="text-center">What to expect in sessions</h2>
 
-      <div style="margin-top: var(--space-10);">
+      <div class="mt-10">
         <p>
           When we work together, you can expect a space that's warm, genuine, and free of judgment. I won't rush you or push you anywhere you're not ready to go. At the same time, I won't let you stay stuck if we can help it.
         </p>
@@ -88,35 +81,35 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
       <p class="eyebrow text-center">My Therapeutic Style</p>
       <h2 class="text-center">How I work</h2>
 
-      <div class="grid grid-3" style="margin-top: var(--space-10); gap: var(--space-6);">
-        <div style="text-align: center; padding: var(--space-6);">
-          <IconCollaborative style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
+      <div class="grid grid-3 mt-10 gap-6">
+        <div class="text-center p-6">
+          <IconCollaborative class="icon-lg icon-centered icon-sage" />
           <h4>Collaborative</h4>
-          <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+          <p class="text-sm text-secondary">
             We're partners in this work. I bring my training and perspective; you bring your lived experience and wisdom about your own life.
           </p>
         </div>
 
-        <div style="text-align: center; padding: var(--space-6);">
-          <IconClock style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
+        <div class="text-center p-6">
+          <IconClock class="icon-lg icon-centered icon-sage" />
           <h4>Reflective</h4>
-          <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+          <p class="text-sm text-secondary">
             I help you slow down and look at things from different angles. Sometimes the most powerful work happens when we pause to notice.
           </p>
         </div>
 
-        <div style="text-align: center; padding: var(--space-6);">
-          <IconChat style="width: 48px; height: 48px; margin: 0 auto var(--space-4); color: var(--sage);" />
+        <div class="text-center p-6">
+          <IconChat class="icon-lg icon-centered icon-sage" />
           <h4>Interactive</h4>
-          <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+          <p class="text-sm text-secondary">
             Therapy isn't passive. I'll ask questions, offer observations, and engage actively in our conversation. We think together.
           </p>
         </div>
       </div>
 
-      <div style="margin-top: var(--space-12); padding: var(--space-8); background: var(--bg-secondary); border-radius: var(--radius-lg);">
-        <h4 style="margin-bottom: var(--space-4);">What I draw from</h4>
-        <p style="font-size: var(--text-sm); color: var(--text-secondary);">
+      <div class="callout-box">
+        <h4 class="mb-4">What I draw from</h4>
+        <p class="text-sm text-secondary">
           My work is grounded in <strong>narrative therapy</strong>, which focuses on the stories we tell about ourselves and our lives, and how those stories shape our experience. I also draw from <strong>collaborative therapy</strong>, <strong>systemic approaches</strong>, and <strong>attachment theory</strong>. I believe in meeting each person where they are and adapting my approach to what's most helpful for you.
         </p>
       </div>
@@ -129,10 +122,10 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
       <p class="eyebrow text-center">Education & Training</p>
       <h2 class="text-center">Credentials</h2>
 
-      <div class="credentials-list" style="margin-top: var(--space-10);">
+      <div class="credentials-list mt-10">
         <div class="credential-item">
           <div class="credential-icon">
-            <IconGraduation style="width: 20px; height: 20px;" />
+            <IconGraduation class="icon-sm" />
           </div>
           <div class="credential-content">
             <h4>Master of Arts in Marriage & Family Therapy</h4>
@@ -142,7 +135,7 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
 
         <div class="credential-item">
           <div class="credential-icon">
-            <IconLicense style="width: 20px; height: 20px;" />
+            <IconLicense class="icon-sm" />
           </div>
           <div class="credential-content">
             <h4>Licensed Marriage & Family Therapist (LMFT)</h4>
@@ -152,7 +145,7 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
 
         <div class="credential-item">
           <div class="credential-icon">
-            <IconTraining style="width: 20px; height: 20px;" />
+            <IconTraining class="icon-sm" />
           </div>
           <div class="credential-content">
             <h4>Advanced Training in Narrative Therapy</h4>
@@ -162,7 +155,7 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
 
         <div class="credential-item">
           <div class="credential-icon">
-            <IconCheckCircle style="width: 20px; height: 20px;" />
+            <IconCheckCircle class="icon-sm" />
           </div>
           <div class="credential-content">
             <h4>Gottman Method Couples Therapy, Level 1</h4>
@@ -199,5 +192,108 @@ import IconCheckCircle from "@components/illustrations/icons/IconCheckCircle.ast
       <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
     </div>
   </section>
+
+<style is:global>
+/* === Pages: About === */
+.about-intro {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-wrapper img {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.about-image-placeholder {
+  aspect-ratio: 3/4;
+  background-color: var(--soft-sand);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-image-placeholder svg {
+  width: 80px;
+  height: 80px;
+  color: var(--dusty-peach);
+  opacity: 0.5;
+}
+
+.about-image-decoration {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--sage);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+.about-text h2 {
+  font-size: var(--text-2xl);
+}
+
+@media (max-width: 900px) {
+  .about-intro {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+
+  .about-image-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* Credentials/education list */
+.credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.credential-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.credential-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--warm-paper);
+  border-radius: 50%;
+  color: var(--sage);
+}
+
+.credential-content h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.credential-content p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+</style>
 
 </BaseLayout>

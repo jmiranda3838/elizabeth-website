@@ -1,0 +1,144 @@
+/* === Sections: Areas of Support === */
+.apothecary-section {
+  position: relative;
+}
+
+.apothecary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.apothecary-item {
+  position: relative;
+  padding: var(--space-8) var(--space-5);
+  background: linear-gradient(
+    180deg,
+    #fdfcfb 0%,
+    var(--warm-paper) 50%,
+    #f5f3f1 100%
+  );
+  border: 1px solid var(--soft-sand);
+  text-align: center;
+  transition: all var(--transition-base);
+  /* Vintage label effect */
+  box-shadow:
+    0 1px 2px rgba(84, 49, 35, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Decorative top border like a drawer label */
+.apothecary-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--dusty-peach) 20%,
+    var(--dusty-peach) 80%,
+    transparent 100%
+  );
+}
+
+.apothecary-item:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 24px rgba(84, 49, 35, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-color: var(--dusty-peach);
+}
+
+.apothecary-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--space-4);
+}
+
+.apothecary-icon svg {
+  width: 100%;
+  height: 100%;
+  color: var(--sage);
+  opacity: 0.85;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.apothecary-item:hover .apothecary-icon svg {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.apothecary-item h4 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  font-style: italic;
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+}
+
+.apothecary-item p {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+/* Legacy support for areas-grid */
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.area-item {
+  padding: var(--space-6);
+  background-color: var(--warm-paper);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: all var(--transition-base);
+}
+
+.area-item:hover {
+  border-color: var(--dusty-peach);
+  background-color: var(--blush-wash);
+}
+
+.area-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto var(--space-4);
+  color: var(--sage);
+}
+
+.area-item h4 {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  font-weight: 500;
+  margin-bottom: var(--space-2);
+}
+
+.area-item p {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .apothecary-grid,
+  .areas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .apothecary-grid,
+  .areas-grid {
+    grid-template-columns: 1fr;
+  }
+}

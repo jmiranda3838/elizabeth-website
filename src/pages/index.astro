@@ -1,40 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Wildflower from "@components/illustrations/botanicals/Wildflower.astro";
-import HerbSprig from "@components/illustrations/botanicals/HerbSprig.astro";
-import LeafBranch from "@components/illustrations/botanicals/LeafBranch.astro";
-import SeedPodCluster from "@components/illustrations/botanicals/SeedPodCluster.astro";
-import LavenderSprig from "@components/illustrations/botanicals/LavenderSprig.astro";
-import Garland from "@components/illustrations/scenes/Garland.astro";
-import LeafDivider from "@components/illustrations/dividers/LeafDivider.astro";
-import BloomingFlower from "@components/illustrations/specimens/BloomingFlower.astro";
-import IntertwinedStems from "@components/illustrations/specimens/IntertwinedStems.astro";
-import SpreadingTree from "@components/illustrations/specimens/SpreadingTree.astro";
-import ArrowRight from "@components/illustrations/icons/ArrowRight.astro";
-import VineDivider from "@components/illustrations/dividers/VineDivider.astro";
-import IconCrescentMoon from "@components/illustrations/icons/IconCrescentMoon.astro";
-import IconStar from "@components/illustrations/icons/IconStar.astro";
-import IconSun from "@components/illustrations/icons/IconSun.astro";
-import IconCrystal from "@components/illustrations/icons/IconCrystal.astro";
-import FrameCornerTL from "@components/illustrations/frames/FrameCornerTL.astro";
-import FrameCornerTR from "@components/illustrations/frames/FrameCornerTR.astro";
-import FrameCornerBL from "@components/illustrations/frames/FrameCornerBL.astro";
-import FrameCornerBR from "@components/illustrations/frames/FrameCornerBR.astro";
-import Moth from "@components/illustrations/apothecary/Moth.astro";
-import DroopingFlower from "@components/illustrations/apothecary/DroopingFlower.astro";
-import Butterfly from "@components/illustrations/apothecary/Butterfly.astro";
-import TwoFlowers from "@components/illustrations/apothecary/TwoFlowers.astro";
-import KintsugiBowl from "@components/illustrations/apothecary/KintsugiBowl.astro";
-import WillowBranch from "@components/illustrations/apothecary/WillowBranch.astro";
-import SpectrumArc from "@components/illustrations/apothecary/SpectrumArc.astro";
-import Seedling from "@components/illustrations/apothecary/Seedling.astro";
-import NewMoon from "@components/illustrations/moon/NewMoon.astro";
-import WaxingMoon from "@components/illustrations/moon/WaxingMoon.astro";
-import FullMoon from "@components/illustrations/moon/FullMoon.astro";
-import MoonPath from "@components/illustrations/misc/MoonPath.astro";
-import QuoteMark from "@components/illustrations/misc/QuoteMark.astro";
-import CtaVineLeft from "@components/illustrations/frames/CtaVineLeft.astro";
-import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
+import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig } from "@illustrations/botanicals";
+import { Garland } from "@illustrations/scenes";
+import { LeafDivider, VineDivider } from "@illustrations/dividers";
+import { BloomingFlower, IntertwinedStems, SpreadingTree } from "@illustrations/specimens";
+import { ArrowRight, IconCrescentMoon, IconStar, IconSun, IconCrystal } from "@illustrations/icons";
+import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, CtaVineLeft, CtaVineRight } from "@illustrations/frames";
+import { Moth, DroopingFlower, Butterfly, TwoFlowers, KintsugiBowl, WillowBranch, SpectrumArc, Seedling } from "@illustrations/apothecary";
+import { NewMoon, WaxingMoon, FullMoon } from "@illustrations/moon";
+import { MoonPath, QuoteMark } from "@illustrations/misc";
 ---
 
 <BaseLayout title="Elizabeth Armstrong Therapy | Narrative Therapist in Orange County, CA">
@@ -64,13 +38,13 @@ import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
   <!-- Services Section - Botanical Specimen Cards -->
   <section class="section section-services bg-paper">
     <div class="container">
-      <div class="text-center" style="margin-bottom: var(--space-12);">
+      <div class="text-center mb-12">
         <p class="eyebrow">How I Can Help</p>
         <h2>Therapy for Individuals, Couples & Families</h2>
         <div class="decorative-divider">
           <LeafDivider />
         </div>
-        <p class="lead container-text" style="margin: 0 auto;">
+        <p class="lead container-text mx-auto">
           Whether you're navigating life on your own, working through challenges with a partner, or seeking support for your family, I offer a collaborative space to explore what's possible.
         </p>
       </div>
@@ -221,13 +195,13 @@ import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
   <!-- Areas of Support Section - Apothecary Cabinet -->
   <section class="section bg-paper apothecary-section">
     <div class="container">
-      <div class="text-center" style="margin-bottom: var(--space-12);">
+      <div class="text-center mb-12">
         <p class="eyebrow">Areas of Support</p>
         <h2>What brings people to therapy</h2>
         <div class="decorative-divider">
           <LeafDivider />
         </div>
-        <p class="lead container-text" style="margin: 0 auto;">
+        <p class="lead container-text mx-auto">
           Life presents us with challenges that can feel overwhelming. Here are some of the themes I commonly work with, though your experience is always unique.
         </p>
       </div>
@@ -317,7 +291,7 @@ import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
     <div class="vine-divider vine-divider-bottom"></div>
 
     <div class="container">
-      <div class="text-center" style="margin-bottom: var(--space-12);">
+      <div class="text-center mb-12">
         <p class="eyebrow">How It Works</p>
         <h2>Starting therapy is simple</h2>
         <div class="decorative-divider">
@@ -367,7 +341,7 @@ import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
   <!-- What Clients Tell Me Section - Journal Pages -->
   <section class="section bg-paper testimonial-section journal-section">
     <div class="container">
-      <div class="text-center" style="margin-bottom: var(--space-10);">
+      <div class="text-center mb-10">
         <p class="eyebrow">What Clients Often Tell Me</p>
         <h2>When people reach out, they often share thoughts like these...</h2>
         <div class="decorative-divider">
@@ -430,7 +404,7 @@ import CtaVineRight from "@components/illustrations/frames/CtaVineRight.astro";
 
     <div class="container">
       <div class="cta-content reveal">
-        <div class="decorative-divider" style="margin-bottom: var(--space-6);">
+        <div class="decorative-divider mb-6">
           <LeafDivider />
         </div>
         <h2>Ready to take the first step?</h2>

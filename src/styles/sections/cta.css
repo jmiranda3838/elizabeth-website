@@ -1,0 +1,96 @@
+/* === Sections: Decorative Dividers === */
+.decorative-divider {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.decorative-divider svg {
+  width: 200px;
+  height: 20px;
+  color: var(--dusty-peach);
+}
+
+/* === Sections: CTA Band === */
+.cta-band {
+  background-color: var(--bg-accent);
+  padding: var(--space-16) 0;
+  text-align: center;
+}
+
+.botanical-cta {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-20) 0;
+  background: linear-gradient(
+    180deg,
+    var(--bg-accent) 0%,
+    #fceee9 50%,
+    var(--bg-accent) 100%
+  );
+}
+
+/* Botanical frame elements */
+.cta-botanical {
+  position: absolute;
+  width: 80px;
+  height: 200px;
+  color: var(--dusty-peach);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: float 5s ease-in-out infinite;
+}
+
+.cta-botanical-left {
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 0s;
+}
+
+.cta-botanical-right {
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 2s;
+}
+
+.cta-botanical svg {
+  width: 100%;
+  height: 100%;
+}
+
+.cta-band h2 {
+  margin-bottom: var(--space-4);
+}
+
+.cta-band p {
+  max-width: 500px;
+  margin: 0 auto var(--space-8);
+  color: var(--text-secondary);
+}
+
+.cta-button {
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .cta-botanical {
+    opacity: 0.25;
+    width: 50px;
+  }
+
+  .cta-botanical-left {
+    left: 2%;
+  }
+
+  .cta-botanical-right {
+    right: 2%;
+  }
+}
+
+@media (max-width: 600px) {
+  .cta-botanical {
+    display: none;
+  }
+}
