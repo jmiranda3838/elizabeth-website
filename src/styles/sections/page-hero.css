@@ -1,6 +1,6 @@
 /* === Sections: Page Hero === */
 .page-hero {
-  padding: calc(80px + var(--space-16)) 0 var(--space-16);
+  padding: calc(160px + var(--space-16)) 0 var(--space-16);
   text-align: center;
   background-color: var(--bg-accent);
 }
