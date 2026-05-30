@@ -11,6 +11,9 @@ dist/
 .playwright-mcp/
 migration-baselines/
 
+# Local-only design reference material
+reference/
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
