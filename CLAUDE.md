@@ -23,11 +23,11 @@ src/
 ├── pages/                  # Astro pages (routes)
 │   ├── index.astro         # Homepage (hero, services, approach, support areas, process, testimonials, CTA)
 │   ├── about.astro         # About page (has co-located <style is:global> for about-specific CSS)
-│   ├── therapy.astro       # Therapy page (has co-located <style is:global> for therapy-specific CSS)
+│   ├── therapy.astro       # Therapy page (imports src/styles/pages/therapy.css)
 │   ├── resources.astro
 │   ├── fees.astro
 │   ├── faqs.astro          # FAQ page (has co-located <style is:global> for FAQ-specific CSS)
-│   └── contact.astro       # Contact page (has co-located <style is:global> + scoped <style>)
+│   └── contact.astro       # Contact page (imports src/styles/pages/contact.css)
 ├── layouts/
 │   └── BaseLayout.astro    # Main HTML wrapper (loads all 7 JS modules)
 ├── components/
@@ -61,15 +61,18 @@ src/
 │   │   ├── buttons.css     # .btn, .btn-primary, .btn-outline, .btn-ghost, .btn-lg
 │   │   ├── header.css      # .header, .nav-*, .mobile-nav-*, .nav-contact-*
 │   │   └── footer.css      # .footer, .footer-*, .botanical-footer
-│   └── sections/           # Section-level styles
-│       ├── hero.css        # .hero-botanical, garland, floating botanicals
-│       ├── service-cards.css # .services-grid, .service-card, .specimen-card
-│       ├── approach.css    # .approach-*, .grimoire-section, .botanical-frame
-│       ├── support-areas.css # .apothecary-*, .areas-grid
-│       ├── process-steps.css # .moon-journey-*, .moon-step, .steps-grid
-│       ├── testimonials.css  # .journal-*, .testimonial-*, .client-wishes
-│       ├── cta.css         # .decorative-divider, .cta-band, .botanical-cta
-│       └── page-hero.css   # .page-hero (shared by about, faqs, contact, fees, resources)
+│   ├── sections/           # Section-level styles
+│   │   ├── hero.css        # .hero-botanical, garland, floating botanicals
+│   │   ├── service-cards.css # .services-grid, .service-card, .specimen-card
+│   │   ├── approach.css    # .approach-*, .grimoire-section, .botanical-frame
+│   │   ├── support-areas.css # .apothecary-*, .areas-grid
+│   │   ├── process-steps.css # .moon-journey-*, .moon-step, .steps-grid
+│   │   ├── testimonials.css  # .journal-*, .testimonial-*, .client-wishes
+│   │   ├── cta.css         # .decorative-divider, .cta-band, .botanical-cta
+│   │   └── page-hero.css   # .page-hero (shared by about, faqs, contact, fees, resources)
+│   └── pages/              # Page-specific styles imported directly by .astro pages
+│       ├── therapy.css     # All therapy.astro styles (.threshold-*, .grimoire-*, .constellation-*, .specimen-tag-*, .garden-gate-*, etc.)
+│       └── contact.css     # All contact.astro styles (.contact-*, .form-*, .hint-text, .location-note)
 
 public/
 ├── images/                 # Static image assets
@@ -94,7 +97,7 @@ public/
 - `@styles/*` → `src/styles/*`
 - `@illustrations/*` → `src/components/illustrations/*`
 
-**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex styling (about, therapy, faqs, contact) have co-located CSS in `<style is:global>` blocks.
+**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex page-specific styling import a dedicated CSS file from `src/styles/pages/` (therapy, contact). Pages about and faqs still use co-located `<style is:global>` blocks.
 
 **Components**: Reusable Astro components with props. Example:
 ```astro
@@ -119,15 +122,15 @@ import { Wildflower, HerbSprig } from "@illustrations/botanicals";
 
 ### CSS-to-Page Mapping
 
-| Page | Global CSS | Co-located CSS (`<style is:global>`) | Scoped CSS (`<style>`) |
-|------|-----------|--------------------------------------|------------------------|
-| index.astro | hero, service-cards, approach, support-areas, process-steps, testimonials, cta | — | — |
-| about.astro | page-hero, layout utilities | `.about-intro`, `.credential-*` | — |
-| therapy.astro | — | All therapy styles: `.threshold-*`, `.manuscript-*`, `.grimoire-*`, `.roots-*`, `.constellation-*`, `.specimen-tag-*`, `.garden-gate-*` | — |
-| faqs.astro | page-hero | `.faq-*`, `.crisis-callout` | — |
-| contact.astro | page-hero, process-steps (.steps-grid) | `.contact-grid`, `.contact-detail-*`, `.form-*` | `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note` |
-| fees.astro | page-hero | — | — |
-| resources.astro | page-hero | — | — |
+| Page | Global CSS | Page-specific CSS (`src/styles/pages/`) | Co-located CSS (`<style is:global>`) | Scoped CSS (`<style>`) |
+|------|-----------|------------------------------------------|--------------------------------------|------------------------|
+| index.astro | hero, service-cards, approach, support-areas, process-steps, testimonials, cta | — | — | — |
+| about.astro | page-hero, layout utilities | — | `.about-intro`, `.credential-*` | — |
+| therapy.astro | — | `pages/therapy.css` (all `.threshold-*`, `.manuscript-*`, `.grimoire-*`, `.roots-*`, `.constellation-*`, `.specimen-tag-*`, `.garden-gate-*`) | — | — |
+| faqs.astro | page-hero | — | `.faq-*`, `.crisis-callout` | — |
+| contact.astro | page-hero, process-steps (.steps-grid) | `pages/contact.css` (all `.contact-*`, `.form-*`, `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note`) | — | — |
+| fees.astro | page-hero | — | — | — |
+| resources.astro | page-hero | — | — | — |
 
 ### Design System (src/styles/tokens.css)
 
