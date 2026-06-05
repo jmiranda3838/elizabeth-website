@@ -638,41 +638,25 @@
 /* Roots illustration */
 .roots-illustration {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-8);
+  justify-content: center;
 }
 
-/* Framed garden photo (mirrors approach.css .botanical-frame pattern) */
-.roots-photo {
+/* Planted composition: photo sits "above ground," roots grow from beneath it */
+.roots-figure {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   margin: 0;
-  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.roots-photo-border {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.roots-photo .frame-corner {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  color: var(--dusty-peach);
-}
-
-.roots-photo .frame-tl { top: 0; left: 0; }
-.roots-photo .frame-tr { top: 0; right: 0; }
-.roots-photo .frame-bl { bottom: 0; left: 0; }
-.roots-photo .frame-br { bottom: 0; right: 0; }
 
 .roots-photo-img {
   display: block;
-  width: 100%;
+  position: relative;
+  z-index: 1;
+  width: 80%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center center;
@@ -682,32 +666,15 @@
 
 .roots-svg {
   width: 100%;
-  max-width: 260px;
   height: auto;
+  margin-top: -2px; /* ground line tucks against the photo's base */
   color: var(--espresso);
-}
-
-.plant-above {
-  opacity: 0;
-  animation: growUp 1s ease-out forwards;
-  animation-delay: 0.5s;
 }
 
 .roots-below {
   opacity: 0;
   animation: growDown 1.5s ease-out forwards;
   animation-delay: 1s;
-}
-
-@keyframes growUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes growDown {
@@ -1140,7 +1107,7 @@
     order: -1;
   }
 
-  .roots-photo {
+  .roots-figure {
     max-width: 480px;
   }
 }
@@ -1257,13 +1224,8 @@
     max-width: 240px;
   }
 
-  .roots-photo {
-    padding: var(--space-4);
-  }
-
-  .roots-photo .frame-corner {
-    width: 36px;
-    height: 36px;
+  .roots-figure {
+    max-width: 340px;
   }
 }
 
@@ -1277,7 +1239,7 @@
     max-width: 200px;
   }
 
-  .roots-photo {
+  .roots-figure {
     max-width: 100%;
   }
 
@@ -1308,7 +1270,6 @@
   .threshold-eyebrow,
   .threshold-title,
   .threshold-subtitle,
-  .plant-above,
   .roots-below {
     opacity: 1;
     animation: none;

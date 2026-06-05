@@ -2,15 +2,17 @@
 interface Props {
   class?: string;
   style?: string;
+  /** Crop to the ground line + root system only (no flower above ground) */
+  rootsOnly?: boolean;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = '', style = '', rootsOnly = false } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 300 400" fill="none">
+<svg class={className} style={style} viewBox={rootsOnly ? '0 172 300 206' : '0 0 300 400'} fill="none">
   <!-- Ground line -->
   <path d="M0 180 Q75 175 150 180 Q225 185 300 180" stroke="currentColor" stroke-width="1.5" fill="none"/>
 
   <!-- Above ground: small plant/flower -->
-  <g class="plant-above">
+  {!rootsOnly && <g class="plant-above">
     <path d="M150 180 Q150 160 150 140" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
     <path d="M150 165 Q135 158 125 165 Q138 170 150 165" stroke="currentColor" stroke-width="1" fill="none"/>
     <path d="M150 150 Q165 143 175 150 Q162 155 150 150" stroke="currentColor" stroke-width="1" fill="none"/>
@@ -21,7 +23,7 @@ const { class: className = '', style = '' } = Astro.props;
     <circle cx="142" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
     <circle cx="158" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
     <circle cx="150" cy="130" r="5" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.2"/>
-  </g>
+  </g>}
 
   <!-- Below ground: extensive root system -->
   <g class="roots-below">

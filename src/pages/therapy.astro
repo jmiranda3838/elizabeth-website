@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { FloatingBotanical1, FloatingBotanical2, InitialFlourish, WelcomeWreath, PageBotanical } from "@illustrations/botanicals";
 import { DoorwayFrame, BookSpine, RootsSystem, GardenGate } from "@illustrations/scenes";
-import { ManuscriptCornerTL, ManuscriptCornerTR, ManuscriptCornerBL, ManuscriptCornerBR, FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR } from "@illustrations/frames";
+import { ManuscriptCornerTL, ManuscriptCornerTR, ManuscriptCornerBL, ManuscriptCornerBR } from "@illustrations/frames";
 import { PageDivider } from "@illustrations/dividers";
 import { IconShield, IconHeart, IconCrown, IconSeedling, IconCompass } from "@illustrations/icons";
 import { ConstellationStar, ManuscriptMargin, SpecimenDivider, TagString } from "@illustrations/misc";
@@ -197,20 +197,14 @@ import "@styles/pages/therapy.css";
         </div>
 
         <div class="roots-illustration">
-          <figure class="roots-photo">
-            <div class="roots-photo-border" aria-hidden="true">
-              <FrameCornerTL class="frame-corner frame-tl" />
-              <FrameCornerTR class="frame-corner frame-tr" />
-              <FrameCornerBL class="frame-corner frame-bl" />
-              <FrameCornerBR class="frame-corner frame-br" />
-            </div>
+          <figure class="roots-figure">
             <img
               src="/images/therapy-roots.jpg"
               alt="Elizabeth Armstrong seated in a garden"
               class="roots-photo-img"
             />
+            <RootsSystem rootsOnly class="roots-svg" aria-hidden="true" />
           </figure>
-          <RootsSystem class="roots-svg" />
         </div>
       </div>
     </div>
