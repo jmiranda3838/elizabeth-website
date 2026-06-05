@@ -817,6 +817,10 @@
 
 .star-glow {
   position: absolute;
+  /* center the 60px glow on the 24px icon's center (y = 12px) */
+  top: -18px;
+  left: 50%;
+  margin-left: -30px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -1207,8 +1211,11 @@
     padding: var(--space-4);
   }
 
+  /* Stay positioned (not static) so each star's glow anchors to it, not the grid */
   .constellation-star {
-    position: static !important;
+    position: relative !important;
+    top: auto;
+    left: auto;
     transform: none !important;
   }
 
