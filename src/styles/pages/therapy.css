@@ -372,20 +372,45 @@
   padding: var(--space-20) var(--space-4);
 }
 
-.welcome-header {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto var(--space-12);
+.welcome-layout {
+  display: grid;
+  grid-template-columns: minmax(420px, 600px) 1fr;
+  gap: var(--space-12);
+  align-items: center;
 }
 
-.welcome-wreath {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto var(--space-6);
+.welcome-text {
+  text-align: left;
+}
+
+.welcome-portrait {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.welcome-portrait-photo {
+  position: absolute;
+  top: 18%;
+  left: 18%;
+  width: 64%;
+  height: 64%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 25%;
+  box-shadow: var(--shadow-soft);
+}
+
+.welcome-portrait-wreath {
+  position: absolute;
+  inset: 0;
   color: var(--sage);
+  pointer-events: none;
 }
 
-.welcome-wreath svg {
+.welcome-portrait-wreath svg {
   width: 100%;
   height: 100%;
 }
@@ -404,12 +429,7 @@
   font-style: italic;
   line-height: 1.7;
   color: var(--slate-olive);
-}
-
-.welcome-content {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
+  margin-bottom: var(--space-6);
 }
 
 .welcome-intro,
@@ -618,12 +638,51 @@
 /* Roots illustration */
 .roots-illustration {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Framed garden photo (mirrors approach.css .botanical-frame pattern) */
+.roots-photo {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+  padding: var(--space-6);
+}
+
+.roots-photo-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.roots-photo .frame-corner {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  color: var(--dusty-peach);
+}
+
+.roots-photo .frame-tl { top: 0; left: 0; }
+.roots-photo .frame-tr { top: 0; right: 0; }
+.roots-photo .frame-bl { bottom: 0; left: 0; }
+.roots-photo .frame-br { bottom: 0; right: 0; }
+
+.roots-photo-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
 }
 
 .roots-svg {
   width: 100%;
-  max-width: 300px;
+  max-width: 260px;
   height: auto;
   color: var(--espresso);
 }
@@ -1080,9 +1139,28 @@
   .roots-illustration {
     order: -1;
   }
+
+  .roots-photo {
+    max-width: 480px;
+  }
 }
 
 @media (max-width: 900px) {
+  .welcome-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
+    justify-items: center;
+  }
+
+  .welcome-portrait {
+    max-width: 360px;
+  }
+
+  .welcome-text {
+    text-align: center;
+    max-width: 640px;
+  }
+
   .specimen-tags-grid {
     grid-template-columns: 1fr;
     max-width: 400px;
@@ -1174,6 +1252,19 @@
   .gate-svg {
     opacity: 0.3;
   }
+
+  .welcome-portrait {
+    max-width: 240px;
+  }
+
+  .roots-photo {
+    padding: var(--space-4);
+  }
+
+  .roots-photo .frame-corner {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1182,9 +1273,12 @@
     padding: var(--space-4);
   }
 
-  .welcome-wreath {
-    width: 80px;
-    height: 80px;
+  .welcome-portrait {
+    max-width: 200px;
+  }
+
+  .roots-photo {
+    max-width: 100%;
   }
 
   .promise-item {

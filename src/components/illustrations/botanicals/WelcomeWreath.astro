@@ -6,27 +6,94 @@ interface Props {
 const { class: className = '', style = '' } = Astro.props;
 ---
 <svg class={className} style={style} viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Circular wreath -->
-  <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
-  <!-- Left arc of leaves -->
-  <path d="M30 120 Q20 100 30 80 Q40 60 60 50 Q80 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M35 110 Q25 105 28 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M40 85 Q30 80 33 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M55 62 Q45 57 48 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M78 48 Q73 38 83 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <!-- Right arc of leaves -->
-  <path d="M170 120 Q180 100 170 80 Q160 60 140 50 Q120 40 100 35" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M165 110 Q175 105 172 95" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M160 85 Q170 80 167 70" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M145 62 Q155 57 152 47" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M122 48 Q127 38 117 35" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <!-- Bottom ribbon bow -->
-  <path d="M80 160 Q90 170 100 160 Q110 170 120 160" stroke="currentColor" stroke-width="1.2" fill="none"/>
-  <path d="M85 162 Q80 175 70 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M115 162 Q120 175 130 180" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <!-- Small flowers -->
-  <circle cx="30" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <circle cx="170" cy="100" r="5" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <circle cx="50" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <circle cx="150" cy="55" r="4" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <!-- Lush botanical wreath framing the portrait: two-tone sage laurel (sage leaves use currentColor
+       so CSS color:var(--sage) themes them), warm-sage filler leaves + veins, 5 rose/peach blossoms
+       with warm-clay centers, and small berry pairs between them. Hugs a circular photo of r≈64. -->
+  <path d="M169.0 100.0 Q169.9 111.2 179.6 117.0 Q178.7 105.7 169.0 100.0 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M169.0 100.0 L177.5 113.6" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M173.9 109.7 Q173.0 117.5 179.5 122.0 Q180.3 114.2 173.9 109.7 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M166.6 117.9 Q164.6 128.9 172.5 137.0 Q174.5 125.9 166.6 117.9 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M166.6 117.9 L171.3 133.2" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M168.8 128.5 Q166.0 135.8 171.1 141.8 Q173.9 134.5 168.8 128.5 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M159.8 134.5 Q154.9 144.7 160.5 154.5 Q165.3 144.3 159.8 134.5 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M159.8 134.5 L160.3 150.5" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M159.1 145.4 Q154.5 151.7 157.8 158.8 Q162.4 152.5 159.1 145.4 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M148.8 148.8 Q141.5 157.4 144.3 168.3 Q151.6 159.7 148.8 148.8 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M148.8 148.8 L145.2 164.4" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M145.4 159.1 Q139.2 164.0 140.6 171.7 Q146.7 166.8 145.4 159.1 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M134.5 159.8 Q125.2 166.1 125.1 177.4 Q134.4 171.0 134.5 159.8 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M134.5 159.8 L127.0 173.9" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M128.5 168.8 Q121.3 172.0 120.7 179.8 Q127.8 176.6 128.5 168.8 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M117.9 166.6 Q107.2 170.4 104.2 181.3 Q114.8 177.5 117.9 166.6 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M117.9 166.6 L106.9 178.4" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M109.7 173.9 Q102.0 175.1 99.3 182.4 Q107.1 181.2 109.7 173.9 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M100.0 169.0 Q88.8 169.9 83.0 179.6 Q94.3 178.7 100.0 169.0 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M100.0 169.0 L86.4 177.5" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M90.3 173.9 Q82.5 173.0 78.0 179.5 Q85.8 180.3 90.3 173.9 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M82.1 166.6 Q71.1 164.6 63.0 172.5 Q74.1 174.5 82.1 166.6 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M82.1 166.6 L66.8 171.3" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M71.5 168.8 Q64.2 166.0 58.2 171.1 Q65.5 173.9 71.5 168.8 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M65.5 159.8 Q55.3 154.9 45.5 160.5 Q55.7 165.3 65.5 159.8 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M65.5 159.8 L49.5 160.3" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M54.6 159.1 Q48.3 154.5 41.2 157.8 Q47.5 162.4 54.6 159.1 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M51.2 148.8 Q42.6 141.5 31.7 144.3 Q40.3 151.6 51.2 148.8 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M51.2 148.8 L35.6 145.2" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M40.9 145.4 Q36.0 139.2 28.3 140.6 Q33.2 146.7 40.9 145.4 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M40.2 134.5 Q33.9 125.2 22.6 125.1 Q29.0 134.4 40.2 134.5 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M40.2 134.5 L26.1 127.0" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M31.2 128.5 Q28.0 121.3 20.2 120.7 Q23.4 127.8 31.2 128.5 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M33.4 117.9 Q29.6 107.2 18.7 104.2 Q22.5 114.8 33.4 117.9 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M33.4 117.9 L21.6 106.9" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M26.1 109.7 Q24.9 102.0 17.6 99.3 Q18.8 107.1 26.1 109.7 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M31.0 100.0 Q30.1 88.8 20.4 83.0 Q21.3 94.3 31.0 100.0 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M31.0 100.0 L22.5 86.4" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M26.1 90.3 Q27.0 82.5 20.5 78.0 Q19.7 85.8 26.1 90.3 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M33.4 82.1 Q35.4 71.1 27.5 63.0 Q25.5 74.1 33.4 82.1 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M33.4 82.1 L28.7 66.8" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M31.2 71.5 Q34.0 64.2 28.9 58.2 Q26.1 65.5 31.2 71.5 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M40.2 65.5 Q45.1 55.3 39.5 45.5 Q34.7 55.7 40.2 65.5 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M40.2 65.5 L39.7 49.5" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M40.9 54.6 Q45.5 48.3 42.2 41.2 Q37.6 47.5 40.9 54.6 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M51.2 51.2 Q58.5 42.6 55.7 31.7 Q48.4 40.3 51.2 51.2 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M51.2 51.2 L54.8 35.6" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M54.6 40.9 Q60.8 36.0 59.4 28.3 Q53.3 33.2 54.6 40.9 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M65.5 40.2 Q74.8 33.9 74.9 22.6 Q65.6 29.0 65.5 40.2 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M65.5 40.2 L73.0 26.1" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M71.5 31.2 Q78.7 28.0 79.3 20.2 Q72.2 23.4 71.5 31.2 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M82.1 33.4 Q92.8 29.6 95.8 18.7 Q85.2 22.5 82.1 33.4 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M82.1 33.4 L93.1 21.6" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M90.3 26.1 Q98.0 24.9 100.7 17.6 Q92.9 18.8 90.3 26.1 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M100.0 31.0 Q111.2 30.1 117.0 20.4 Q105.7 21.3 100.0 31.0 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M100.0 31.0 L113.6 22.5" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M109.7 26.1 Q117.5 27.0 122.0 20.5 Q114.2 19.7 109.7 26.1 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M117.9 33.4 Q128.9 35.4 137.0 27.5 Q125.9 25.5 117.9 33.4 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M117.9 33.4 L133.2 28.7" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M128.5 31.2 Q135.8 34.0 141.8 28.9 Q134.5 26.1 128.5 31.2 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M134.5 40.2 Q144.7 45.1 154.5 39.5 Q144.3 34.7 134.5 40.2 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M134.5 40.2 L150.5 39.7" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M145.4 40.9 Q151.7 45.5 158.8 42.2 Q152.5 37.6 145.4 40.9 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M148.8 51.2 Q157.4 58.5 168.3 55.7 Q159.7 48.4 148.8 51.2 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M148.8 51.2 L164.4 54.8" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M159.1 54.6 Q164.0 60.8 171.7 59.4 Q166.8 53.3 159.1 54.6 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M159.8 65.5 Q166.1 74.8 177.4 74.9 Q171.0 65.6 159.8 65.5 Z" fill="#A7A898" opacity="0.92"/>
+  <path d="M159.8 65.5 L173.9 73.0" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M168.8 71.5 Q172.0 78.7 179.8 79.3 Q176.6 72.2 168.8 71.5 Z" fill="#A7A898" opacity="0.8"/>
+  <path d="M166.6 82.1 Q170.4 92.8 181.3 95.8 Q177.5 85.2 166.6 82.1 Z" fill="currentColor" opacity="0.92"/>
+  <path d="M166.6 82.1 L178.4 93.1" stroke="#A7A898" stroke-width="0.35" opacity="0.45"/>
+  <path d="M173.9 90.3 Q175.1 98.0 182.4 100.7 Q181.2 92.9 173.9 90.3 Z" fill="#A7A898" opacity="0.8"/>
+  <g><circle cx="100.0" cy="23.8" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="104.9" cy="27.4" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="103.1" cy="33.2" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="96.9" cy="33.2" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="95.1" cy="27.4" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="100.0" cy="29.0" r="2.2" fill="#B8817E"/></g>
+  <g><circle cx="167.5" cy="73.7" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="171.7" cy="76.7" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="170.1" cy="81.6" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="164.9" cy="81.6" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="163.3" cy="76.7" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="167.5" cy="78.1" r="1.8" fill="#B8817E"/></g>
+  <g><circle cx="141.7" cy="152.2" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="146.7" cy="155.8" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="144.8" cy="161.6" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="138.7" cy="161.6" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="136.8" cy="155.8" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="141.7" cy="157.4" r="2.2" fill="#B8817E"/></g>
+  <g><circle cx="58.3" cy="153.0" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="62.5" cy="156.1" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="60.9" cy="161.0" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="55.7" cy="161.0" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="54.1" cy="156.1" r="2.6" fill="#D0B4A6" opacity="0.92"/><circle cx="58.3" cy="157.4" r="1.8" fill="#B8817E"/></g>
+  <g><circle cx="32.5" cy="72.9" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="37.4" cy="76.5" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="35.5" cy="82.3" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="29.4" cy="82.3" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="27.5" cy="76.5" r="3.0" fill="#C69491" opacity="0.92"/><circle cx="32.5" cy="78.1" r="2.2" fill="#B8817E"/></g>
+  <circle cx="140.3" cy="41.8" r="1.8" fill="#C69491" opacity="0.8"/>
+  <circle cx="144.3" cy="40.8" r="1.5" fill="#D0B4A6" opacity="0.8"/>
+  <circle cx="166.5" cy="122.2" r="1.8" fill="#C69491" opacity="0.8"/>
+  <circle cx="170.5" cy="121.2" r="1.5" fill="#D0B4A6" opacity="0.8"/>
+  <circle cx="98.0" cy="172.0" r="1.8" fill="#C69491" opacity="0.8"/>
+  <circle cx="102.0" cy="171.0" r="1.5" fill="#D0B4A6" opacity="0.8"/>
+  <circle cx="29.5" cy="122.2" r="1.8" fill="#C69491" opacity="0.8"/>
+  <circle cx="33.5" cy="121.2" r="1.5" fill="#D0B4A6" opacity="0.8"/>
+  <circle cx="55.7" cy="41.8" r="1.8" fill="#C69491" opacity="0.8"/>
+  <circle cx="59.7" cy="40.8" r="1.5" fill="#D0B4A6" opacity="0.8"/>
 </svg>
