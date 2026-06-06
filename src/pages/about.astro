@@ -1,299 +1,328 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { IconImagePlaceholder, IconCollaborative, IconClock, IconChat, IconGraduation, IconLicense, IconTraining, IconCheckCircle } from "@illustrations/icons";
+import { IconCollaborative, IconSeedling, IconCompass, IconGraduation, IconLicense, IconTraining, IconHeart } from "@illustrations/icons";
+import { HerbSprig, LavenderSprig, Wildflower, LeafBranch } from "@illustrations/botanicals";
+import { QuoteMark, Clothespin } from "@illustrations/misc";
+import "@styles/pages/about.css";
 ---
 
-<BaseLayout title="About | Elizabeth Armstrong Therapy" description="Meet Elizabeth Armstrong, LMFT. A narrative therapist in Orange County offering collaborative, warm therapy for individuals, couples, and families.">
+<BaseLayout title="About | Growing Brighter Therapy — Elizabeth Armstrong, LMFT" description="Meet Elizabeth Armstrong, MA, LMFT — a narrative therapist in Orange County and former teacher who came to this work at 37. Warm, collaborative therapy for women navigating life's big transitions.">
 
-  <!-- Page Hero -->
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">About Me</p>
-      <h1>Hello, I'm Elizabeth</h1>
-      <p class="lead">
-        I'm a licensed marriage and family therapist who believes that you already have what you need to live the life you want. My job is to help you find it.
-      </p>
-    </div>
-  </section>
+  <!-- 1. Board Hero: the vision board -->
+  <section class="board-hero">
+    <div class="board-frame">
+      <div class="board-surface">
 
-  <!-- About Intro Section -->
-  <section class="section bg-paper">
-    <div class="container">
-      <div class="about-intro">
-        <div class="about-image-wrapper">
-          <div class="about-image-placeholder">
-            <IconImagePlaceholder />
+        <!-- Title card -->
+        <div class="board-item bi-title" style="--delay: 0.1s;">
+          <div class="board-item-inner" style="--tilt: -2deg;">
+            <div class="board-title-card">
+              <span class="board-pin pin-rose" aria-hidden="true"></span>
+              <p class="eyebrow">About Me</p>
+              <h1>Hello, I'm Elizabeth</h1>
+              <p class="board-lead">
+                I'm a narrative therapist in Orange County, and a former teacher who found this work at 37. I believe you are the expert on your own life — my job is to listen.
+              </p>
+            </div>
           </div>
-          <div class="about-image-decoration"></div>
         </div>
 
-        <div class="about-text">
-          <h2>Why I became a therapist</h2>
-          <p>
-            I've always been fascinated by stories: the ones we inherit from our families, the ones we tell ourselves, and the ones we're still writing. I came to therapy because I wanted to help people discover that they have more authorship over their lives than they might realize.
-          </p>
-          <p>
-            Before becoming a therapist, I spent years in roles where I learned to listen deeply and hold space for complexity. That experience taught me that people don't need to be fixed. They need to be heard, respected, and gently invited to see themselves and their situations from new angles.
-          </p>
-          <p>
-            I believe therapy should feel like a partnership. You bring your expertise about your own life; I bring curiosity, warmth, and a set of tools we can explore together. There's no script, no judgment, and no pretending to have all the answers. Just two people working together to understand what's happening and what's possible.
-          </p>
-
-          <div class="decorative-line"></div>
-
-          <p class="italic text-secondary">
-            "I don't see my role as telling you who to be. I see it as helping you reconnect with who you already are, and supporting you as you step more fully into that."
-          </p>
+        <!-- Fence photo -->
+        <div class="board-item bi-fence" style="--delay: 0.25s;">
+          <div class="board-item-inner" style="--tilt: 4deg;">
+            <figure class="polaroid">
+              <span class="board-pin pin-clay" aria-hidden="true"></span>
+              <img src="/images/about-hero-fence.jpg" alt="Elizabeth in a wide-brimmed hat, looking down and smiling near a wooden fence" width="1600" height="1066" />
+              <figcaption class="polaroid-caption">slow mornings</figcaption>
+            </figure>
+          </div>
         </div>
+
+        <!-- Couch photo -->
+        <div class="board-item bi-couch" style="--delay: 0.4s;">
+          <div class="board-item-inner" style="--tilt: -5deg;">
+            <figure class="polaroid">
+              <span class="washi-tape washi-top" aria-hidden="true"></span>
+              <img src="/images/about-hero-couch.jpg" alt="Elizabeth seated on a couch in warm lamplight, relaxed and smiling" width="1066" height="1600" />
+              <figcaption class="polaroid-caption">at home in the heart</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Script word cutouts -->
+        <div class="board-item bi-word-1" style="--delay: 0.55s;">
+          <div class="board-item-inner" style="--tilt: -6deg;">
+            <span class="word-cutout"><span class="board-pin pin-sage" aria-hidden="true"></span>warmth</span>
+          </div>
+        </div>
+        <div class="board-item bi-word-2" style="--delay: 0.65s;">
+          <div class="board-item-inner" style="--tilt: 3deg;">
+            <span class="word-cutout"><span class="washi-tape washi-corner washi-sage" aria-hidden="true"></span>connection</span>
+          </div>
+        </div>
+        <div class="board-item bi-word-3" style="--delay: 0.75s;">
+          <div class="board-item-inner" style="--tilt: -3deg;">
+            <span class="word-cutout"><span class="board-pin pin-peach" aria-hidden="true"></span>kindness</span>
+          </div>
+        </div>
+
+        <!-- Quote scrap -->
+        <div class="board-item bi-quote" style="--delay: 0.85s;">
+          <div class="board-item-inner" style="--tilt: 2deg;">
+            <p class="quote-scrap"><span class="washi-tape washi-top washi-sage" aria-hidden="true"></span>"no problem is bigger than your strength"</p>
+          </div>
+        </div>
+
+        <!-- Botanical sprigs -->
+        <div class="board-item bi-sprig-1" aria-hidden="true" style="--delay: 0.3s;">
+          <div class="board-item-inner" style="--tilt: -15deg;">
+            <HerbSprig class="board-sprig" />
+          </div>
+        </div>
+        <div class="board-item bi-sprig-2" aria-hidden="true" style="--delay: 0.5s;">
+          <div class="board-item-inner" style="--tilt: 12deg;">
+            <LavenderSprig class="board-sprig" />
+          </div>
+        </div>
+        <div class="board-item bi-sprig-3" aria-hidden="true" style="--delay: 0.7s;">
+          <div class="board-item-inner" style="--tilt: -8deg;">
+            <Wildflower class="board-sprig" />
+          </div>
+        </div>
+
+        <!-- Loose washi + a spare pin for texture -->
+        <div class="board-item bi-pin-spare" aria-hidden="true" style="--delay: 1.1s;">
+          <span class="board-pin pin-sage"></span>
+        </div>
+        <div class="board-item bi-washi-1" aria-hidden="true" style="--delay: 0.9s;">
+          <div class="board-item-inner">
+            <span class="washi-tape" style="--tape-rot: -22deg; position: static; display: block;"></span>
+          </div>
+        </div>
+        <div class="board-item bi-washi-2" aria-hidden="true" style="--delay: 1s;">
+          <div class="board-item-inner">
+            <span class="washi-tape washi-sage" style="--tape-rot: 14deg; position: static; display: block;"></span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- What to Expect Section -->
-  <section class="section bg-blush">
-    <div class="container container-narrow">
-      <p class="eyebrow text-center">Working Together</p>
-      <h2 class="text-center">What to expect in sessions</h2>
-
-      <div class="mt-10">
-        <p>
-          When we work together, you can expect a space that's warm, genuine, and free of judgment. I won't rush you or push you anywhere you're not ready to go. At the same time, I won't let you stay stuck if we can help it.
-        </p>
-
-        <p>
-          Sessions are typically conversational. We might explore a specific situation that's been on your mind, trace patterns that keep showing up in your life, or slow down to examine what certain experiences have meant to you. Sometimes we'll work with specific techniques; other times we'll simply talk and reflect.
-        </p>
-
-        <p>
-          I tend to ask a lot of questions, not because I'm testing you, but because I'm genuinely curious. I want to understand what matters to you, what you've been through, and what kind of life you're hoping to build. Your answers guide where we go.
-        </p>
-
-        <p>
-          Above all, you can expect to be treated as a whole person, not a set of symptoms. I'm interested in your strengths, your values, your moments of joy, not just your struggles. We'll work with all of it.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- My Style Section -->
+  <!-- 2. Pinned Letter: My Story -->
   <section class="section bg-paper">
-    <div class="container container-narrow">
-      <p class="eyebrow text-center">My Therapeutic Style</p>
-      <h2 class="text-center">How I work</h2>
-
-      <div class="grid grid-3 mt-10 gap-6">
-        <div class="text-center p-6">
-          <IconCollaborative class="icon-lg icon-centered icon-sage" />
-          <h4>Collaborative</h4>
-          <p class="text-sm text-secondary">
-            We're partners in this work. I bring my training and perspective; you bring your lived experience and wisdom about your own life.
-          </p>
+    <div class="container">
+      <div class="pinned-letter-grid">
+        <div class="pinned-card reveal-left">
+          <div class="pinned-card-inner paper-card letter-sheet" style="--tilt: -1deg;">
+            <span class="board-pin pin-sage pin-corner-left" aria-hidden="true"></span>
+            <span class="board-pin pin-clay pin-corner-right" aria-hidden="true"></span>
+            <h2>From the classroom to the therapy room</h2>
+            <p>
+              For years, I taught young children — including a stretch at Head Start, a program so warm and whole-family that its spirit never left me. But my favorite moments weren't in the classroom. They were the one-on-one conversations with parents at pickup, in that quiet space where they finally felt seen.
+            </p>
+            <p>
+              It eventually clicked: maybe therapy was where I was really meant to be. So I went to grad school at 37, training nights and weekends while I was still teaching full-time. And when I found narrative therapy, I just knew I had landed in the right place. These were my people.
+            </p>
+            <p>
+              I've been licensed since 2019, and these days I also serve as a clinical supervisor, mentoring new therapists at the institute where I trained. Having reinvented my own life right around midlife, I find there's a particular kind of joy in companioning someone through a season of change.
+            </p>
+            <div class="letter-quote">
+              <span class="washi-tape washi-top" aria-hidden="true"></span>
+              <p>
+                "I will not tell you what to do. I view problems as separate from people — and my work is simply to make room while you do yours."
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="text-center p-6">
-          <IconClock class="icon-lg icon-centered icon-sage" />
-          <h4>Reflective</h4>
-          <p class="text-sm text-secondary">
-            I help you slow down and look at things from different angles. Sometimes the most powerful work happens when we pause to notice.
-          </p>
+        <div class="story-polaroid-wrap reveal-right">
+          <figure class="polaroid story-polaroid" style="--tilt: 3deg;">
+            <span class="washi-tape washi-top" aria-hidden="true"></span>
+            <img src="/images/about-story-bench.jpg" alt="Elizabeth sitting on a park bench outdoors with a warm smile" width="1066" height="1600" loading="lazy" decoding="async" />
+            <figcaption class="polaroid-caption">come say hi</figcaption>
+          </figure>
         </div>
-
-        <div class="text-center p-6">
-          <IconChat class="icon-lg icon-centered icon-sage" />
-          <h4>Interactive</h4>
-          <p class="text-sm text-secondary">
-            Therapy isn't passive. I'll ask questions, offer observations, and engage actively in our conversation. We think together.
-          </p>
-        </div>
-      </div>
-
-      <div class="callout-box">
-        <h4 class="mb-4">What I draw from</h4>
-        <p class="text-sm text-secondary">
-          My work is grounded in <strong>narrative therapy</strong>, which focuses on the stories we tell about ourselves and our lives, and how those stories shape our experience. I also draw from <strong>collaborative therapy</strong>, <strong>systemic approaches</strong>, and <strong>attachment theory</strong>. I believe in meeting each person where they are and adapting my approach to what's most helpful for you.
-        </p>
       </div>
     </div>
   </section>
 
-  <!-- Credentials Section -->
+  <!-- 3. Session Cards: Working Together -->
+  <section class="section bg-blush">
+    <div class="container">
+      <p class="eyebrow text-center">Working Together</p>
+      <h2 class="text-center">What to expect when we sit down</h2>
+
+      <div class="session-notes pinned-card reveal">
+        <div class="pinned-card-inner paper-card session-notes-inner" style="--tilt: -0.5deg;">
+          <span class="board-pin pin-rose pin-corner-left" aria-hidden="true"></span>
+          <span class="board-pin pin-sage pin-corner-right" aria-hidden="true"></span>
+          <p>
+            Even in a collaborative relationship, I think of myself as the host of this gathering — the one who tends the trust, the safety, and the openness. So you'll be received with warmth, kindness, and genuine concern. I won't rush you, and I won't judge you. Come as you are.
+          </p>
+          <p>
+            Our sessions are mostly conversation. We might make sense of a big transition, trace a pattern that keeps showing up, or slow down and notice what an experience has meant to you. I tend to ask a lot of questions — not to test you, but because I'm honestly curious about your life.
+          </p>
+          <p>
+            I work from a feminist, strengths-based lens, and I'll sometimes send you home with a reading or a small practice to carry between visits. I'm not here to fix you or heal you. I'm here to hold the space while you heal yourself — I believe, deeply, that you already have what you need.
+          </p>
+          <p>
+            Above all, you'll be met as a whole person, not a list of symptoms. I'm just as interested in your strengths, your values, and the life you're hoping to build as I am in whatever weighs on you right now. We'll work with all of it, together.
+          </p>
+        </div>
+      </div>
+
+      <div class="index-cards-grid">
+        <div class="pinned-card reveal stagger-1">
+          <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: -2deg;">
+            <span class="board-pin pin-sage" aria-hidden="true"></span>
+            <IconCollaborative aria-hidden="true" />
+            <h4>Collaborative</h4>
+            <p>
+              We're partners in this. I bring my training and a curious presence; you bring lived experience and real wisdom about your own life.
+            </p>
+          </div>
+        </div>
+        <div class="pinned-card reveal stagger-2">
+          <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: 1.5deg;">
+            <span class="board-pin pin-clay" aria-hidden="true"></span>
+            <IconSeedling aria-hidden="true" />
+            <h4>Strengths-based</h4>
+            <p>
+              Let's harvest your strengths and capabilities. I start from what's already working in you, not from what's broken — there's more there than you think.
+            </p>
+          </div>
+        </div>
+        <div class="pinned-card reveal stagger-3">
+          <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: -1deg;">
+            <span class="board-pin pin-rose" aria-hidden="true"></span>
+            <IconCompass aria-hidden="true" />
+            <h4>Curious</h4>
+            <p>
+              I ask, listen, and look at things from fresh angles with you — the questions matter more than any answers I could hand you.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="draw-from pinned-card reveal">
+        <div class="pinned-card-inner paper-card draw-from-inner" style="--tilt: 0.5deg;">
+          <span class="board-pin pin-peach" aria-hidden="true"></span>
+          <h4>What I draw from</h4>
+          <p>
+            My home base is <strong>narrative therapy</strong>, which honors the stories we tell about ourselves and the bigger cultural and social forces that shape them. We are multistoried — and we get to keep writing. I weave in <strong>mindfulness</strong> and person-centered warmth, all through a feminist lens. Beyond the office, I also offer <strong>walk-and-talk sessions</strong> along the ocean, <strong>Reiki</strong>, and an annual retreat, for those drawn to a more embodied way of doing this work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Photo Band: golden quote -->
+  <section class="photo-band">
+    <img class="photo-band-img" src="/images/about-band-eucalyptus.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async" />
+    <div class="photo-band-content reveal">
+      <span class="photo-band-quotemark" aria-hidden="true"><QuoteMark /></span>
+      <p class="band-quote">toward a lighter, brighter, more joyful life</p>
+      <p class="band-attribution">Elizabeth Armstrong, MA, LMFT</p>
+    </div>
+  </section>
+
+  <!-- 5. Pinned Certs: Credentials -->
   <section class="section bg-sand">
-    <div class="container container-narrow">
-      <p class="eyebrow text-center">Education & Training</p>
+    <div class="container">
+      <p class="eyebrow text-center">Education &amp; Training</p>
       <h2 class="text-center">Credentials</h2>
 
-      <div class="credentials-list mt-10">
-        <div class="credential-item">
-          <div class="credential-icon">
-            <IconGraduation class="icon-sm" />
-          </div>
-          <div class="credential-content">
-            <h4>Master of Arts in Marriage & Family Therapy</h4>
-            <p>University of California, Placeholder Campus</p>
-          </div>
-        </div>
-
-        <div class="credential-item">
-          <div class="credential-icon">
-            <IconLicense class="icon-sm" />
-          </div>
-          <div class="credential-content">
-            <h4>Licensed Marriage & Family Therapist (LMFT)</h4>
-            <p>California Board of Behavioral Sciences, License #111154</p>
+      <div class="certs-grid">
+        <div class="pinned-card reveal-scale stagger-1">
+          <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: -1.5deg;">
+            <span class="board-pin pin-sage" aria-hidden="true"></span>
+            <div class="cert-seal"><IconGraduation aria-hidden="true" /></div>
+            <h4>MA, Clinical Psychology · BS, Family Service</h4>
+            <p>Pepperdine University, 2016</p>
           </div>
         </div>
-
-        <div class="credential-item">
-          <div class="credential-icon">
-            <IconTraining class="icon-sm" />
-          </div>
-          <div class="credential-content">
-            <h4>Advanced Training in Narrative Therapy</h4>
-            <p>Dulwich Centre, Adelaide, Australia</p>
+        <div class="pinned-card reveal-scale stagger-2">
+          <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
+            <span class="board-pin pin-clay" aria-hidden="true"></span>
+            <div class="cert-seal"><IconLicense aria-hidden="true" /></div>
+            <h4>Licensed Marriage &amp; Family Therapist (LMFT)</h4>
+            <p>California Board of Behavioral Sciences, License #111154 · since 2019</p>
           </div>
         </div>
-
-        <div class="credential-item">
-          <div class="credential-icon">
-            <IconCheckCircle class="icon-sm" />
+        <div class="pinned-card reveal-scale stagger-3">
+          <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
+            <span class="board-pin pin-rose" aria-hidden="true"></span>
+            <div class="cert-seal"><IconTraining aria-hidden="true" /></div>
+            <h4>AAMFT-Certified · Clinical Supervisor</h4>
+            <p>Substance Misuse and LGBTQIA Affirmative Therapy; supervisor at California Family Institute</p>
           </div>
-          <div class="credential-content">
-            <h4>Gottman Method Couples Therapy, Level 1</h4>
-            <p>The Gottman Institute</p>
+        </div>
+        <div class="pinned-card reveal-scale stagger-4">
+          <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: -1deg;">
+            <span class="board-pin pin-peach" aria-hidden="true"></span>
+            <div class="cert-seal"><IconHeart aria-hidden="true" /></div>
+            <h4>Reiki Master · Certified Pet Grief Counselor</h4>
+            <p>Certified in Reiki since 2020; trained to companion you through pet loss</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Personal Note Section -->
+  <!-- 6. Twine Gallery: Off the Clock -->
   <section class="section bg-paper">
-    <div class="container container-text">
+    <div class="container">
       <h2 class="text-center">A little more about me</h2>
       <div class="decorative-line center"></div>
 
-      <p>
-        Outside of the therapy room, you'll find me walking by the ocean, reading novels I probably should have read years ago, and attempting to keep houseplants alive with varying degrees of success. I believe in slowing down, in the power of a good conversation, and in the quiet moments where we actually hear ourselves think.
-      </p>
+      <div class="twine-gallery-intro">
+        <p>
+          I connect to my joyful spirit through travel, live music, yoga, and time with my friends, family, and puppies — three of them, to be exact. There's Leonard Sprinkles, my big goofy greyhound; Meatie, the dachshund comedian and snuggle muffin; and Otis, the dachshund we rescued in 2025, who made our home complete.
+        </p>
+        <p>
+          I'm a longtime yogi, a lover of woo-woo things, and a maker of vision boards. Every New Year I choose a word to grow toward — peace, release, joy. In 2025 it was warmth, and honestly? I think I've arrived.
+        </p>
+      </div>
 
-      <p>
-        I know that reaching out to a therapist takes courage. Whether you're ready to schedule a consultation or just browsing to see if this might be a fit, I'm glad you're here.
-      </p>
+      <div class="twine-wrap">
+        <div class="twine-line" aria-hidden="true"></div>
+        <div class="twine-photos">
+          <div class="hung-photo reveal stagger-1">
+            <figure class="polaroid" style="--tilt: -3deg; --sway-delay: 0s;">
+              <span class="clothespin" aria-hidden="true"><Clothespin /></span>
+              <img src="/images/about-dogs-greyhound.jpg" alt="Elizabeth at home on the rug with Leonard Sprinkles, Meatie, and Otis — her greyhound and two dachshunds" width="1066" height="1600" loading="lazy" decoding="async" />
+              <figcaption class="polaroid-caption">the whole pack</figcaption>
+            </figure>
+          </div>
+          <div class="hung-photo reveal stagger-2">
+            <figure class="polaroid photo-warmed" style="--tilt: 4deg; --sway-delay: 2.2s;">
+              <span class="clothespin" aria-hidden="true"><Clothespin /></span>
+              <img src="/images/about-dogs-couch.jpg" alt="Elizabeth laughing on the couch while hugging a dachshund" width="1066" height="1600" loading="lazy" decoding="async" />
+              <figcaption class="polaroid-caption">my favorite days</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- CTA Band -->
-  <section class="cta-band">
+  <!-- 7. Pinned CTA: a note, not a pitch -->
+  <section class="section bg-blush">
     <div class="container">
-      <h2>Let's see if we're a good fit</h2>
-      <p>
-        I offer a free 15-minute consultation where we can talk about what you're looking for and whether I might be the right therapist for you.
-      </p>
-      <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+      <div class="cta-note-wrap pinned-card reveal-scale">
+        <div class="pinned-card-inner paper-card cta-note-inner" style="--tilt: -1deg;">
+          <span class="board-pin pin-rose" aria-hidden="true"></span>
+          <h2>Let's see if we're a good fit</h2>
+          <p>
+            I offer a free 15-minute consultation — a chance to talk about what you're looking for and whether I might be the right person to walk alongside you for a while. It would be a privilege to be invited into your story.
+          </p>
+          <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+          <span class="cta-signature">&mdash; Elizabeth</span>
+        </div>
+        <span class="cta-sprig" aria-hidden="true"><LeafBranch /></span>
+      </div>
     </div>
   </section>
-
-<style is:global>
-/* === Pages: About === */
-.about-intro {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: var(--space-12);
-  align-items: start;
-}
-
-.about-image-wrapper {
-  position: relative;
-}
-
-.about-image-wrapper img {
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
-}
-
-.about-image-placeholder {
-  aspect-ratio: 3/4;
-  background-color: var(--soft-sand);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.about-image-placeholder svg {
-  width: 80px;
-  height: 80px;
-  color: var(--dusty-peach);
-  opacity: 0.5;
-}
-
-.about-image-decoration {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  width: 100%;
-  height: 100%;
-  border: 2px solid var(--sage);
-  border-radius: var(--radius-lg);
-  z-index: -1;
-}
-
-.about-text h2 {
-  font-size: var(--text-2xl);
-}
-
-@media (max-width: 900px) {
-  .about-intro {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
-
-  .about-image-wrapper {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-}
-
-/* Credentials/education list */
-.credentials-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.credential-item {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
-}
-
-.credential-icon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--warm-paper);
-  border-radius: 50%;
-  color: var(--sage);
-}
-
-.credential-content h4 {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  font-weight: 600;
-  margin-bottom: var(--space-1);
-}
-
-.credential-content p {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin-bottom: 0;
-}
-</style>
 
 </BaseLayout>
