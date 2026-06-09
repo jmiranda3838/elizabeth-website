@@ -1,0 +1,30 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 240 800" preserveAspectRatio="xMidYMin meet" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Channel edges: feathered shafts of light, narrow at the source, widening as they fall -->
+  <path d="M88 0 C76 200 44 480 16 800" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 8" opacity="0.7"/>
+  <path d="M152 0 C164 200 196 480 224 800" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="1 8" opacity="0.7"/>
+
+  <!-- Inner rays -->
+  <path d="M104 0 C98 240 78 540 62 800" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="1 12" opacity="0.35"/>
+  <path d="M136 0 C142 240 162 540 178 800" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="1 12" opacity="0.35"/>
+  <path d="M120 0 L120 800" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 16" opacity="0.25"/>
+
+  <!-- Drifting motes -->
+  <circle cx="62" cy="180" r="3" fill="currentColor" opacity="0.3"/>
+  <circle cx="168" cy="260" r="2" fill="currentColor" opacity="0.4"/>
+  <circle cx="92" cy="420" r="2.5" fill="currentColor" opacity="0.3"/>
+  <circle cx="152" cy="520" r="1.8" fill="currentColor" opacity="0.45"/>
+  <circle cx="74" cy="640" r="2.2" fill="currentColor" opacity="0.3"/>
+  <circle cx="186" cy="700" r="2.6" fill="currentColor" opacity="0.25"/>
+
+  <!-- Tiny glints -->
+  <path d="M126 140 h8 M130 136 v8" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+  <path d="M56 336 h8 M60 332 v8" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+  <path d="M176 596 h8 M180 592 v8" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.45"/>
+</svg>

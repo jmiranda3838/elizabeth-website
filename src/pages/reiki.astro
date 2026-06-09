@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "@styles/pages/reiki.css";
+import { IconSun, IconCrescentMoon, IconHandsOpen } from "@illustrations/icons";
+import { LightChannel } from "@illustrations/scenes";
+import { QuoteMark } from "@illustrations/misc";
+import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
+import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, CtaVineLeft, CtaVineRight } from "@illustrations/frames";
+import { WillowBranch, Seedling } from "@illustrations/apothecary";
+---
+
+<BaseLayout
+  title="Reiki in Orange County | Elizabeth Armstrong Therapy"
+  description="Gentle Reiki energy work in Orange County, offered by Elizabeth Armstrong — certified Reiki Master and licensed therapist. A separate, private-pay hour of rest: you stay fully clothed while your own system settles. Not psychotherapy — and honestly explained."
+>
+  <div class="reiki-page">
+
+    <!-- Conduit Hero: the source -->
+    <section class="conduit-hero">
+      <div class="conduit-channel" aria-hidden="true">
+        <LightChannel />
+      </div>
+      <div class="conduit-motes" aria-hidden="true"></div>
+
+      <div class="conduit-hero-content">
+        <span class="conduit-sun" aria-hidden="true">
+          <IconSun />
+        </span>
+        <p class="eyebrow">Energy Work</p>
+        <h1 class="conduit-title">Reiki</h1>
+        <p class="conduit-script">where the light comes in</p>
+        <p class="conduit-lead">
+          A gentle, hands-resting energy practice &mdash; and one of the more woo-woo things I love. You lie back, fully clothed, and rest while your own system does the settling.
+        </p>
+        <a href="/contact.html" class="btn btn-primary btn-lg">Schedule a Free Consultation</a>
+      </div>
+    </section>
+
+    <!-- The Honest Card: the boundary, stated first -->
+    <section class="section honest-section bg-paper">
+      <div class="container">
+        <div class="honest-card reveal">
+          <span class="honest-corner honest-corner-tl" aria-hidden="true"><FrameCornerTL /></span>
+          <span class="honest-corner honest-corner-tr" aria-hidden="true"><FrameCornerTR /></span>
+          <span class="honest-corner honest-corner-bl" aria-hidden="true"><FrameCornerBL /></span>
+          <span class="honest-corner honest-corner-br" aria-hidden="true"><FrameCornerBR /></span>
+
+          <span class="honest-icon" aria-hidden="true"><IconSun /></span>
+          <h2>The honest part, first</h2>
+          <p>
+            Reiki is not psychotherapy, and I want to be plain about that before anything else. When you come to me for Reiki, you're coming for energy work &mdash; its own kind of session, with its own purpose and its own fee, never billed to insurance. It isn't a diagnosis, a treatment, or a stand-in for medical or psychological care. I take that line seriously, because taking it seriously is part of how I keep you safe.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Reiki is / isn't -->
+    <section class="section section-lg isisnt-section">
+      <div class="container">
+        <div class="isisnt-grid">
+          <div class="isisnt-prose reveal">
+            <h2>What Reiki is &mdash; and what it isn't</h2>
+            <p>
+              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and comfortable, while I place my hands lightly on or just above you &mdash; and that's really the whole mechanism. Yes, I know how that sounds.
+            </p>
+            <p>
+              Think of it as a deliberate, unhurried hour to be still &mdash; no talking required, nothing to perform, nothing to fix. I'd rather undersell this than oversell it: many people simply find it deeply relaxing, and that alone is worth quite a lot.
+            </p>
+          </div>
+
+          <div class="isisnt-lists">
+            <div class="is-card reveal stagger-1">
+              <h3>Reiki is</h3>
+              <ul>
+                <li>A calm, restful hour of energy work</li>
+                <li>An invitation to your own body's way of settling</li>
+                <li>Offered by a certified Reiki Master, practicing since 2020</li>
+                <li>Held lightly, warmly, and on its own terms</li>
+              </ul>
+            </div>
+            <div class="isnt-card reveal stagger-2">
+              <h3>Reiki isn't</h3>
+              <ul>
+                <li>Not psychotherapy, and not a therapy session</li>
+                <li>Not a cure or treatment for any condition</li>
+                <li>Not a substitute for medical or psychological care</li>
+                <li>Not billed to insurance &mdash; a separate, private offering</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Her own words: the conduit -->
+    <section class="section section-lg conduit-quote-section">
+      <div class="container">
+        <figure class="conduit-quote reveal">
+          <span class="conduit-quote-mark" aria-hidden="true"><QuoteMark /></span>
+          <blockquote>
+            <p>I'm not healing you &mdash; you're healing you. I'm just being a conduit, like a straw.</p>
+          </blockquote>
+          <figcaption>&mdash; Elizabeth</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- How a session unfolds -->
+    <section class="section section-lg light-steps-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">What to Expect</p>
+          <h2>How a session unfolds</h2>
+        </div>
+
+        <div class="light-steps">
+          <div class="light-step reveal stagger-1">
+            <span class="light-step-icon" aria-hidden="true"><IconCrescentMoon /></span>
+            <span class="light-step-label">first light</span>
+            <h3>Settle</h3>
+            <p>You arrive, kick off your shoes, and get comfortable. We talk for a moment about what brought you in &mdash; then you let your shoulders drop.</p>
+          </div>
+          <div class="light-step reveal stagger-2">
+            <span class="light-step-icon" aria-hidden="true"><IconHandsOpen /></span>
+            <span class="light-step-label">the light moves through</span>
+            <h3>Channel</h3>
+            <p>You rest while I keep a light, unhurried touch and tend the space. There's nothing for you to do &mdash; no effort, no talking. I just hold the channel open; the quiet work underneath is yours.</p>
+          </div>
+          <div class="light-step reveal stagger-3">
+            <span class="light-step-icon" aria-hidden="true"><IconSun /></span>
+            <span class="light-step-label">full morning</span>
+            <h3>Glow</h3>
+            <p>We ease back out gently &mdash; a breath, a sip of water, no rush. Many people say they leave feeling softer than they came in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What it can feel like -->
+    <section class="section feel-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <h2>What it can feel like</h2>
+        </div>
+        <p class="feel-intro reveal">
+          Everyone's experience is their own, and some feel more than others &mdash; all of it is normal. But when I ask afterward, here's what people tend to say.
+        </p>
+
+        <div class="feel-grid">
+          <div class="feel-card reveal stagger-1">
+            <h3>Warmth</h3>
+            <p>A soft, spreading warmth where my hands rest, like sun through a window.</p>
+          </div>
+          <div class="feel-card reveal stagger-2">
+            <h3>Heaviness</h3>
+            <p>A pleasant heaviness, the way your body feels in the minutes before sleep.</p>
+          </div>
+          <div class="feel-card reveal stagger-3">
+            <h3>A quiet mind</h3>
+            <p>The mental chatter going unusually still, even if just for the hour.</p>
+          </div>
+          <div class="feel-card reveal stagger-4">
+            <h3>Simple rest</h3>
+            <p>Sometimes it's mostly an hour of real, uninterrupted rest &mdash; which is no small thing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reiki + therapy, and the fee note -->
+    <section class="section section-lg bridge-section">
+      <div class="container">
+        <div class="bridge-content reveal">
+          <h2>Reiki and therapy, side by side</h2>
+          <p>
+            Some people see me for both, and that's a beautiful thing &mdash; but they stay separate. Therapy and Reiki are different rooms with different purposes, booked on their own and paid for on their own. Reiki can be a gentle companion to the deeper work of talk therapy, but it never replaces it. If you're working through something tender, therapy is the place for that.
+          </p>
+          <a href="/therapy.html" class="bridge-link">About the therapy side of my practice &rarr;</a>
+        </div>
+
+        <div class="reiki-fees-note reveal">
+          <h3>About the fee</h3>
+          <p>
+            Reiki is a private-pay offering, separate from therapy and never billed to insurance. Rather than post numbers here, I'd rather walk you through the details in person &mdash; we can sort all of it out in a free 15-minute conversation, the same easy call whether you're curious about Reiki, therapy, or both. No pressure either way.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The lantern shelf: what's on the way -->
+    <section class="section section-lg shelf-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Also Growing Here</p>
+          <h2>On the way</h2>
+        </div>
+        <p class="shelf-intro reveal">
+          Reiki is one of a few more embodied ways I work, beyond the therapy room. Two more are coming soon &mdash; if either calls to you, mention it when we talk.
+        </p>
+
+        <div class="lantern-shelf">
+          <div class="lantern-card reveal stagger-1">
+            <div class="lantern-card-inner" style="--tilt: -1.5deg;">
+              <span class="lantern-icon" aria-hidden="true"><WillowBranch /></span>
+              <h3>Walk-and-Talk Therapy</h3>
+              <p class="lantern-nature">Talk therapy, outdoors</p>
+              <p>Real talk therapy, just outdoors &mdash; sessions on foot along the ocean path. We sit so much; sometimes moving in nature is exactly what the conversation needs.</p>
+              <span class="soon-chip">Coming soon</span>
+            </div>
+          </div>
+          <div class="lantern-card reveal stagger-2">
+            <div class="lantern-card-inner" style="--tilt: 1.5deg;">
+              <span class="lantern-icon" aria-hidden="true"><Seedling /></span>
+              <h3>Annual Retreat</h3>
+              <p class="lantern-nature">A small yearly gathering</p>
+              <p>Once a year, a few days to step away, rest, and renew. Intimate by design, and always a little magical.</p>
+              <span class="soon-chip">Coming soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full-bloom CTA: the brightest point on the page -->
+    <section class="bloom-cta">
+      <span class="bloom-vine bloom-vine-left" aria-hidden="true"><CtaVineLeft /></span>
+      <span class="bloom-vine bloom-vine-right" aria-hidden="true"><CtaVineRight /></span>
+      <span class="bloom-botanical bloom-botanical-1" aria-hidden="true"><HerbSprig /></span>
+      <span class="bloom-botanical bloom-botanical-2" aria-hidden="true"><LavenderSprig /></span>
+
+      <div class="bloom-cta-content reveal">
+        <span class="bloom-sun" aria-hidden="true"><IconSun /></span>
+        <h2>Curious is enough</h2>
+        <p>
+          Let's have a free 15-minute conversation about what you're looking for &mdash; ask me anything, skeptic questions warmly welcome. No commitment, no pressure, just a place to start.
+        </p>
+        <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>

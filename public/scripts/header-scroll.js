@@ -25,9 +25,17 @@
   var currentPath = window.location.pathname;
   var navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
 
+  // Spoke pages live one click under the "Offerings" hub nav item
+  var offeringSpokes = ['/therapy.html', '/reiki.html'];
+  var isOfferingSpoke = offeringSpokes.some(function(spoke) {
+    return currentPath.endsWith(spoke);
+  });
+
   navLinks.forEach(function(link) {
     var href = link.getAttribute('href');
     if (currentPath.endsWith(href) || (currentPath === '/' && href === 'index.html')) {
+      link.classList.add('active');
+    } else if (isOfferingSpoke && href === '/ways.html') {
       link.classList.add('active');
     }
   });

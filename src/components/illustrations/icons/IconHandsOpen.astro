@@ -1,0 +1,23 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<svg class={className} style={style} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cupped open hands -->
+  <path d="M4 18 Q4.5 24.5 11.5 25.8 Q14 26.2 16 26.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+  <path d="M28 18 Q27.5 24.5 20.5 25.8 Q18 26.2 16 26.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+  <path d="M7.5 19.5 Q10 22.5 13.5 23.2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none"/>
+  <path d="M24.5 19.5 Q22 22.5 18.5 23.2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none"/>
+
+  <!-- Light held above -->
+  <circle cx="16" cy="12" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  <line x1="16" y1="5.5" x2="16" y2="7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+  <line x1="10" y1="8" x2="11.5" y2="9.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+  <line x1="22" y1="8" x2="20.5" y2="9.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Light received -->
+  <circle cx="16" cy="20.5" r="1.1" fill="currentColor" opacity="0.3"/>
+</svg>
