@@ -1,40 +1,342 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import "@styles/pages/resources.css";
+import { HerbSprig, LavenderSprig, Wildflower, LeafBranch, PressedFlower } from "@illustrations/botanicals";
+import { LeafDivider } from "@illustrations/dividers";
+import { CatalogPull } from "@illustrations/misc";
+import { ArrowRight } from "@illustrations/icons";
 ---
 
-<BaseLayout title="Resources | Elizabeth Armstrong Therapy" description="Mental health resources, recommended reading, and helpful articles from Elizabeth Armstrong, LMFT. Supporting your therapy journey.">
+<BaseLayout
+  title="Resources | Elizabeth Armstrong Therapy"
+  description="A little lending library from Elizabeth Armstrong, LMFT — free self-assessments, client forms, and 24/7 support lines. Take what you need, return when you're ready."
+>
+  <div class="library-page">
 
-  <!-- Page Hero -->
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Resources</p>
-      <h1>Helpful Resources</h1>
-      <p class="lead">
-        A collection of articles, tools, and information to support your mental health journey.
-      </p>
-    </div>
-  </section>
+    <!-- Shelf Hero: afternoon light on a small library -->
+    <section class="library-hero">
+      <div class="library-motes" aria-hidden="true">
+        <span class="library-mote"></span>
+        <span class="library-mote" style="--mote-delay: -5s;"></span>
+        <span class="library-mote" style="--mote-delay: -9s;"></span>
+        <span class="library-mote" style="--mote-delay: -13s;"></span>
+      </div>
 
-  <!-- Resources Content -->
-  <section class="section bg-paper">
-    <div class="container container-narrow">
-      <h2 class="text-center">Coming Soon</h2>
-      <div class="decorative-line center"></div>
-      <p class="text-center">
-        This page is currently being developed. Check back soon for helpful resources, recommended reading, and mental health tools.
-      </p>
-    </div>
-  </section>
+      <div class="library-hero-content">
+        <p class="eyebrow">The Lending Library</p>
+        <h1>Take What You Need</h1>
+        <p class="library-epigraph">
+          &ldquo;Instructions for living a life: Pay attention. Be astonished. Tell about it.&rdquo;
+          <cite>&mdash; Mary Oliver</cite>
+        </p>
+        <p class="library-lead">
+          As part of our work together, I love weaving in resources &mdash; something to read, an activity to try, a kind tool that makes therapy a more holistic experience. Consider this shelf yours to browse. No library card required.
+        </p>
+      </div>
 
-  <!-- CTA Band -->
-  <section class="cta-band">
-    <div class="container">
-      <h2>Ready to take the next step?</h2>
-      <p>
-        I offer a free 15-minute consultation where we can talk about what you're looking for and whether I might be the right therapist for you.
-      </p>
-      <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
-    </div>
-  </section>
+      <div class="shelf">
+        <div class="shelf-row" role="group" aria-label="A shelf of books with a framed photo of Elizabeth — three books pull out to share a note">
+          <span class="shelf-bookend shelf-bookend-left" aria-hidden="true"><HerbSprig /></span>
 
+          <div class="shelf-book" style="--book-w: 38px; --book-h: 198px; --book-c: var(--sage);" aria-hidden="true">
+            <span class="shelf-book-title">growth</span>
+          </div>
+          <div class="shelf-book shelf-book--extra" style="--book-w: 30px; --book-h: 150px; --book-c: var(--misty-blue);" aria-hidden="true">
+            <span class="shelf-book-title">kind</span>
+          </div>
+
+          <div class="shelf-lend-wrap" style="--slip-shift: 36px;">
+            <button class="shelf-book shelf-book--lend" style="--book-w: 46px; --book-h: 214px; --book-c: var(--muted-rose);" aria-expanded="false" aria-controls="shelf-slip-1">
+              <span class="shelf-book-ribbon" aria-hidden="true"></span>
+              <span class="shelf-book-title">carry less</span>
+            </button>
+            <span class="shelf-slip" id="shelf-slip-1">Put down what&rsquo;s not yours to carry.</span>
+          </div>
+
+          <div class="shelf-book" style="--book-w: 34px; --book-h: 186px; --book-c: var(--dusty-peach); --book-lean: -5deg;" aria-hidden="true">
+            <span class="shelf-book-title">journey</span>
+          </div>
+          <div class="shelf-book shelf-book--extra" style="--book-w: 36px; --book-h: 204px; --book-c: var(--warm-clay);" aria-hidden="true">
+            <span class="shelf-book-title">joy</span>
+          </div>
+
+          <div class="shelf-lend-wrap">
+            <button class="shelf-book shelf-book--lend" style="--book-w: 42px; --book-h: 222px; --book-c: var(--sage);" aria-expanded="false" aria-controls="shelf-slip-2">
+              <span class="shelf-book-ribbon" aria-hidden="true"></span>
+              <span class="shelf-book-title">fly</span>
+            </button>
+            <span class="shelf-slip" id="shelf-slip-2">What if you fly?</span>
+          </div>
+
+          <span class="shelf-flower" aria-hidden="true"><PressedFlower /></span>
+
+          <figure class="shelf-frame">
+            <img src="/images/resources-shelf-park.jpg" alt="Elizabeth Armstrong standing in a sunlit park, smiling warmly" width="800" height="533" decoding="async" />
+          </figure>
+
+          <div class="shelf-book" style="--book-w: 38px; --book-h: 196px; --book-c: var(--misty-blue);" aria-hidden="true">
+            <span class="shelf-book-title">light</span>
+          </div>
+
+          <div class="shelf-lend-wrap" style="--slip-shift: -36px;">
+            <button class="shelf-book shelf-book--lend" style="--book-w: 44px; --book-h: 208px; --book-c: var(--dusty-peach);" aria-expanded="false" aria-controls="shelf-slip-3">
+              <span class="shelf-book-ribbon" aria-hidden="true"></span>
+              <span class="shelf-book-title">stories</span>
+            </button>
+            <span class="shelf-slip" id="shelf-slip-3">We are multistoried.</span>
+          </div>
+
+          <div class="shelf-book" style="--book-w: 34px; --book-h: 180px; --book-c: var(--muted-rose); --book-lean: 4deg;" aria-hidden="true">
+            <span class="shelf-book-title">healing</span>
+          </div>
+          <div class="shelf-book shelf-book--extra" style="--book-w: 38px; --book-h: 192px; --book-c: var(--sage-warm);" aria-hidden="true">
+            <span class="shelf-book-title">safe space</span>
+          </div>
+
+          <span class="shelf-bookend shelf-bookend-right" aria-hidden="true"><LavenderSprig /></span>
+        </div>
+        <div class="shelf-plank" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Welcome Desk: a librarian's note -->
+    <section class="welcome-desk">
+      <div class="welcome-desk-row">
+        <div class="welcome-desk-photo reveal">
+          <figure class="welcome-desk-snapshot" style="--tilt: -2.5deg;">
+            <img src="/images/resources-desk-bench.jpg" alt="Elizabeth Armstrong on a park bench, chin in hand, smiling" width="533" height="800" loading="lazy" decoding="async" />
+            <figcaption class="welcome-desk-caption">your librarian</figcaption>
+          </figure>
+        </div>
+        <p class="welcome-desk-note reveal stagger-1">
+          Everything here is free to borrow. Some of it we&rsquo;ll use together in session; some of it is simply good company between visits.
+        </p>
+      </div>
+      <div class="welcome-desk-divider reveal stagger-2" aria-hidden="true"><LeafDivider /></div>
+    </section>
+
+    <!-- Checkout Cards: the three self-assessments -->
+    <section class="section section-lg checkout-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">From the Reference Shelf</p>
+          <h2>Meet yourself on paper</h2>
+          <p class="checkout-sub">
+            Three free self-assessments I often suggest. They&rsquo;re not diagnoses &mdash; just kind ways to get curious about yourself. Bring what you discover to session, if you&rsquo;d like.
+          </p>
+        </div>
+
+        <div class="checkout-grid">
+          <article class="checkout-card reveal stagger-1">
+            <div class="checkout-card-inner" style="--tilt: -1.5deg;">
+              <header class="checkout-head">
+                <p class="checkout-title">The 5 Love Languages</p>
+                <p class="checkout-catalogued">catalogued under: <em>how you love</em></p>
+              </header>
+              <div class="checkout-rule-row" aria-hidden="true">
+                <span>Date Due</span><span>Borrower</span>
+              </div>
+              <p class="checkout-desc">
+                A short quiz about how you give and receive love &mdash; sweet to compare notes on with a partner.
+              </p>
+              <span class="checkout-stamp" aria-hidden="true">Take Freely</span>
+              <div class="checkout-pocket">
+                <a class="checkout-link" href="https://www.5lovelanguages.com" target="_blank" rel="noopener noreferrer">
+                  Check it out <ArrowRight /><span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="checkout-card reveal stagger-2">
+            <div class="checkout-card-inner" style="--tilt: 0.75deg;">
+              <header class="checkout-head">
+                <p class="checkout-title">16 Personalities</p>
+                <p class="checkout-catalogued">catalogued under: <em>meeting yourself on paper</em></p>
+              </header>
+              <div class="checkout-rule-row" aria-hidden="true">
+                <span>Date Due</span><span>Borrower</span>
+              </div>
+              <p class="checkout-desc">
+                A free, surprisingly tender personality profile. Many people see themselves named for the first time.
+              </p>
+              <span class="checkout-stamp" aria-hidden="true">No Due Date</span>
+              <div class="checkout-pocket">
+                <a class="checkout-link" href="https://www.16personalities.com" target="_blank" rel="noopener noreferrer">
+                  Check it out <ArrowRight /><span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="checkout-card reveal stagger-3">
+            <div class="checkout-card-inner" style="--tilt: 1.25deg;">
+              <header class="checkout-head">
+                <p class="checkout-title">Highly Sensitive Person Self&#8209;Test</p>
+                <p class="checkout-catalogued">catalogued under: <em>the deeply feeling</em></p>
+              </header>
+              <div class="checkout-rule-row" aria-hidden="true">
+                <span>Date Due</span><span>Borrower</span>
+              </div>
+              <p class="checkout-desc">
+                Dr. Elaine Aron&rsquo;s self-test. If the world has always felt a little louder to you, this may help explain why.
+              </p>
+              <span class="checkout-stamp" aria-hidden="true">Renew Anytime</span>
+              <div class="checkout-pocket">
+                <a class="checkout-link" href="https://hsperson.com" target="_blank" rel="noopener noreferrer">
+                  Check it out <ArrowRight /><span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bookmark band: a note from the margins -->
+    <section class="bookmark-band">
+      <span class="bookmark-ribbon" aria-hidden="true"></span>
+      <span class="bookmark-flower" aria-hidden="true"><PressedFlower /></span>
+      <div class="reveal">
+        <p class="bookmark-quote">You are love and light.</p>
+        <p class="bookmark-attribution">a note from Elizabeth&rsquo;s margins</p>
+      </div>
+    </section>
+
+    <!-- Card Catalog: forms & documents -->
+    <!--
+      TODO: When Elizabeth provides the PDFs, place them in /public/forms/,
+      point each .catalog-download at /forms/<name>.pdf, add the `download`
+      attribute, and remove is-placeholder / aria-disabled / tabindex="-1"
+      and the ON ORDER stamp from that drawer.
+    -->
+    <section class="section section-lg catalog-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Forms &amp; Documents</p>
+          <h2>The card catalog</h2>
+          <p class="catalog-sub">
+            The short stack of paperwork that begins our work together. We&rsquo;ll walk through all of it &mdash; nothing here is homework you have to face alone.
+          </p>
+        </div>
+
+        <div class="catalog-cabinet reveal">
+          <details class="catalog-drawer">
+            <summary class="catalog-drawer-face">
+              <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
+              <span class="catalog-label">Intake Information</span>
+            </summary>
+            <div class="catalog-drawer-inner">
+              <div class="catalog-card">
+                <p>Tell me a little about you before we meet, so our first session can begin where it matters.</p>
+                <!-- TODO(elizabeth): real file expected at /forms/intake-information.pdf -->
+                <a class="catalog-download is-placeholder" href="#" aria-disabled="true" tabindex="-1">Download PDF</a>
+                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
+              </div>
+            </div>
+          </details>
+
+          <details class="catalog-drawer">
+            <summary class="catalog-drawer-face">
+              <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
+              <span class="catalog-label">Informed Consent</span>
+            </summary>
+            <div class="catalog-drawer-inner">
+              <div class="catalog-card">
+                <p>What therapy is, what it isn&rsquo;t, and your rights inside it &mdash; all in plain language.</p>
+                <!-- TODO(elizabeth): real file expected at /forms/informed-consent.pdf -->
+                <a class="catalog-download is-placeholder" href="#" aria-disabled="true" tabindex="-1">Download PDF</a>
+                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
+              </div>
+            </div>
+          </details>
+
+          <details class="catalog-drawer">
+            <summary class="catalog-drawer-face">
+              <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
+              <span class="catalog-label">Credit Card Authorization</span>
+            </summary>
+            <div class="catalog-drawer-inner">
+              <div class="catalog-card">
+                <p>The simple card-on-file form for session fees.</p>
+                <!-- TODO(elizabeth): real file expected at /forms/credit-card-authorization.pdf -->
+                <a class="catalog-download is-placeholder" href="#" aria-disabled="true" tabindex="-1">Download PDF</a>
+                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <p class="catalog-footnote reveal">
+          If you&rsquo;d rather not wrestle with paperwork alone, just say so &mdash; we can walk through any of it together.
+        </p>
+      </div>
+    </section>
+
+    <!-- Bookmark band: mirrored reprise -->
+    <section class="bookmark-band bookmark-band--alt">
+      <span class="bookmark-ribbon" aria-hidden="true"></span>
+      <span class="bookmark-flower" aria-hidden="true"><PressedFlower /></span>
+      <div class="reveal">
+        <p class="bookmark-quote">renew your joyful spirit</p>
+        <p class="bookmark-attribution">a note from Elizabeth&rsquo;s margins</p>
+      </div>
+    </section>
+
+    <!-- The Help Desk: crisis support, deliberately the calmest section -->
+    <section class="section section-lg helpdesk-section" aria-labelledby="helpdesk-title">
+      <div class="container container-narrow">
+        <div class="helpdesk-card">
+          <p class="helpdesk-eyebrow">The Help Desk &mdash; always staffed</p>
+          <h2 id="helpdesk-title">If you need support right now</h2>
+          <p>
+            Some moments shouldn&rsquo;t wait for a session. If you&rsquo;re in crisis or thinking about harming yourself, please reach out to one of these free, 24/7 lines &mdash; or call 911, or go to your nearest emergency room.
+          </p>
+          <ul class="helpdesk-lines">
+            <li>
+              <a href="tel:988"><strong>988</strong></a>
+              <span>Suicide &amp; Crisis Lifeline &mdash; call or text 988, any hour</span>
+            </li>
+            <li>
+              <a href="sms:741741"><strong>Text HOME to 741741</strong></a>
+              <span>Crisis Text Line</span>
+            </li>
+            <li>
+              <a href="tel:1-866-488-7386"><strong>1-866-488-7386</strong></a>
+              <span>The Trevor Project &mdash; for LGBTQ+ young people</span>
+            </li>
+          </ul>
+          <p class="helpdesk-note">
+            Please don&rsquo;t use my contact form or email for urgent matters &mdash; I may not see messages right away.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checking Out: closing CTA -->
+    <section class="lending-cta">
+      <div class="lending-cta-wrap reveal">
+        <span class="lending-sprig lending-sprig-left" aria-hidden="true"><Wildflower /></span>
+        <span class="lending-sprig lending-sprig-right" aria-hidden="true"><LeafBranch /></span>
+
+        <div class="lending-cta-card">
+          <span class="lending-cta-stamp" aria-hidden="true">Due Back: Whenever</span>
+          <p class="eyebrow">Checking Out</p>
+          <h2>Take what you need. Return when you&rsquo;re ready.</h2>
+          <p>
+            If something on this shelf resonated &mdash; or you&rsquo;d simply like company for the next chapter &mdash; I offer a free 15-minute consultation. No pressure, and no late fees.
+          </p>
+          <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+          <div class="lending-signoff">
+            <figure class="lending-patron" style="--tilt: -4deg;">
+              <img src="/images/resources-cta-patron.jpg" alt="Elizabeth Armstrong smiling — the photo on her own library card" width="400" height="600" loading="lazy" decoding="async" />
+              <figcaption class="lending-patron-label">patron</figcaption>
+            </figure>
+            <span class="lending-signature">&mdash; Elizabeth</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </BaseLayout>

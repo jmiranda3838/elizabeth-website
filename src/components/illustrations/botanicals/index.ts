@@ -5,6 +5,7 @@ export { default as InitialFlourish } from './InitialFlourish.astro';
 export { default as LavenderSprig } from './LavenderSprig.astro';
 export { default as LeafBranch } from './LeafBranch.astro';
 export { default as PageBotanical } from './PageBotanical.astro';
+export { default as PressedFlower } from './PressedFlower.astro';
 export { default as SeedPodCluster } from './SeedPodCluster.astro';
 export { default as WelcomeWreath } from './WelcomeWreath.astro';
 export { default as Wildflower } from './Wildflower.astro';

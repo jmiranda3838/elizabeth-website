@@ -22,14 +22,16 @@ This is a therapy practice website built with **Astro** (static site generator).
 src/
 ├── pages/                  # Astro pages (routes)
 │   ├── index.astro         # Homepage (hero, services, approach, support areas, process, testimonials, CTA)
-│   ├── about.astro         # About page (has co-located <style is:global> for about-specific CSS)
-│   ├── therapy.astro       # Therapy page (imports src/styles/pages/therapy.css)
-│   ├── resources.astro
+│   ├── about.astro         # About page, "vision board" design (imports src/styles/pages/about.css)
+│   ├── therapy.astro       # Therapy page, night theme (imports src/styles/pages/therapy.css)
+│   ├── reiki.astro         # Reiki page, dawn "Conduit" theme (imports src/styles/pages/reiki.css)
+│   ├── ways.astro          # Offerings hub, 4 cards (imports src/styles/pages/ways.css)
+│   ├── resources.astro     # Resources page, "Lending Library" theme (imports src/styles/pages/resources.css)
 │   ├── fees.astro
 │   ├── faqs.astro          # FAQ page (has co-located <style is:global> for FAQ-specific CSS)
 │   └── contact.astro       # Contact page (imports src/styles/pages/contact.css)
 ├── layouts/
-│   └── BaseLayout.astro    # Main HTML wrapper (loads all 7 JS modules)
+│   └── BaseLayout.astro    # Main HTML wrapper (loads all 9 JS modules)
 ├── components/
 │   ├── global/             # Site-wide components
 │   │   ├── Header.astro
@@ -37,16 +39,16 @@ src/
 │   ├── sections/           # Reusable page sections
 │   │   ├── CTA.astro
 │   │   └── DecorativeDivider.astro
-│   └── illustrations/      # SVG illustration components (74 files, 9 subdirectories)
-│       ├── icons/           # Small functional icons (22 components)
-│       ├── botanicals/      # Decorative plant elements (10 components)
+│   └── illustrations/      # SVG illustration components (79 files, 9 subdirectories)
+│       ├── icons/           # Small functional icons (23 components)
+│       ├── botanicals/      # Decorative plant elements (11 components)
 │       ├── dividers/        # Section/page dividers (4 components)
 │       ├── frames/          # Corner and border frame elements (10 components)
-│       ├── scenes/          # Large illustrations (5 components)
+│       ├── scenes/          # Large illustrations (6 components)
 │       ├── apothecary/      # Specialty topic icons (8 components)
 │       ├── specimens/       # Service card specimen illustrations (6 components)
 │       ├── moon/            # Moon phase icons (3 components)
-│       └── misc/            # Other decorative elements (6 components)
+│       └── misc/            # Other decorative elements (8 components)
 │       (Each subdirectory has an index.ts barrel file for grouped imports)
 ├── styles/
 │   ├── global.css          # Main entry (imports all modules below)
@@ -72,18 +74,24 @@ src/
 │   │   └── page-hero.css   # .page-hero (shared by about, faqs, contact, fees, resources)
 │   └── pages/              # Page-specific styles imported directly by .astro pages
 │       ├── therapy.css     # All therapy.astro styles (.threshold-*, .grimoire-*, .constellation-*, .specimen-tag-*, .garden-gate-*, etc.)
+│       ├── reiki.css       # All reiki.astro styles (.conduit-*, .isisnt-*, .light-step*, .lantern-*, .bloom-*)
+│       ├── ways.css        # All ways.astro styles (.ways-grid, .way-card*)
+│       ├── about.css       # All about.astro styles (.board-*, .pinned-*, .polaroid, .washi-*, .twine-*)
+│       ├── resources.css   # All resources.astro styles (.library-*, .shelf-*, .checkout-*, .bookmark-*, .catalog-*, .helpdesk-*, .lending-*)
 │       └── contact.css     # All contact.astro styles (.contact-*, .form-*, .hint-text, .location-note)
 
 public/
 ├── images/                 # Static image assets
-└── scripts/                # Client-side JavaScript (7 IIFE modules, loaded via is:inline)
+└── scripts/                # Client-side JavaScript (9 IIFE modules, loaded via is:inline)
     ├── mobile-nav.js       # Mobile nav toggle + focus trap
     ├── faq-accordion.js    # FAQ accordion + print handling
     ├── smooth-scroll.js    # Anchor link smooth scrolling
     ├── header-scroll.js    # Header scroll behavior + active nav state
     ├── form-validation.js  # Contact form validation
     ├── scroll-reveal.js    # Reveal animations + service card touch effects
-    └── constellation.js    # Dynamic constellation SVG lines
+    ├── constellation.js    # Dynamic constellation SVG lines (therapy page)
+    ├── conduit.js          # Drifting light motes (reiki page)
+    └── library.js          # Pull-out book spines on the shelf (resources page)
 ```
 
 ### Key Conventions
@@ -97,7 +105,7 @@ public/
 - `@styles/*` → `src/styles/*`
 - `@illustrations/*` → `src/components/illustrations/*`
 
-**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex page-specific styling import a dedicated CSS file from `src/styles/pages/` (therapy, contact). Pages about and faqs still use co-located `<style is:global>` blocks.
+**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex page-specific styling import a dedicated CSS file from `src/styles/pages/` (therapy, reiki, ways, about, resources, contact). The faqs page still uses a co-located `<style is:global>` block.
 
 **Components**: Reusable Astro components with props. Example:
 ```astro
@@ -125,12 +133,14 @@ import { Wildflower, HerbSprig } from "@illustrations/botanicals";
 | Page | Global CSS | Page-specific CSS (`src/styles/pages/`) | Co-located CSS (`<style is:global>`) | Scoped CSS (`<style>`) |
 |------|-----------|------------------------------------------|--------------------------------------|------------------------|
 | index.astro | hero, service-cards, approach, support-areas, process-steps, testimonials, cta | — | — | — |
-| about.astro | page-hero, layout utilities | — | `.about-intro`, `.credential-*` | — |
+| about.astro | layout utilities | `pages/about.css` (all `.board-*`, `.pinned-*`, `.polaroid`, `.washi-*`, `.twine-*`, `.cert-*`) | — | — |
 | therapy.astro | — | `pages/therapy.css` (all `.threshold-*`, `.manuscript-*`, `.grimoire-*`, `.roots-*`, `.constellation-*`, `.specimen-tag-*`, `.garden-gate-*`) | — | — |
+| reiki.astro | — | `pages/reiki.css` (all `.conduit-*`, `.honest-*`, `.isisnt-*`, `.light-step*`, `.feel-*`, `.lantern-*`, `.bloom-*`) | — | — |
+| ways.astro | page-hero | `pages/ways.css` (`.ways-grid`, `.way-card*`, `.way-icon`, `.soon-chip`) | — | — |
 | faqs.astro | page-hero | — | `.faq-*`, `.crisis-callout` | — |
 | contact.astro | page-hero, process-steps (.steps-grid) | `pages/contact.css` (all `.contact-*`, `.form-*`, `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note`) | — | — |
 | fees.astro | page-hero | — | — | — |
-| resources.astro | page-hero | — | — | — |
+| resources.astro | — | `pages/resources.css` (all `.library-*`, `.shelf-*`, `.welcome-desk*`, `.checkout-*`, `.bookmark-*`, `.catalog-*`, `.helpdesk-*`, `.lending-*`) | — | — |
 
 ### Design System (src/styles/tokens.css)
 
@@ -194,7 +204,14 @@ The codebase uses metaphor-heavy class names. Here's what they map to:
 | `.garden-gate-*` | Final CTA section with garden gate illustration | therapy.astro |
 | `.roots-*` | Root system illustration section | therapy.astro |
 | `.page-hero` | Shared hero banner for inner pages | sections/page-hero.css |
-| `.about-intro`, `.credential-*` | About page layout and credentials list | about.astro |
+| `.conduit-*` | Reiki page hero and light-channel theme | pages/reiki.css |
+| `.way-card`, `.ways-grid` | Offerings hub cards | pages/ways.css |
+| `.board-*`, `.pinned-*`, `.polaroid` | About page vision-board collage and pinned paper cards | pages/about.css |
+| `.shelf-*`, `.library-*` | Resources page hero: bookshelf with pull-out spines | pages/resources.css |
+| `.checkout-*` | Resources page library checkout cards (self-assessments) | pages/resources.css |
+| `.catalog-*` | Resources page card-catalog drawers (client forms) | pages/resources.css |
+| `.helpdesk-*` | Resources page crisis-support section | pages/resources.css |
+| `.bookmark-band`, `.lending-cta` | Resources page quote interludes and closing CTA | pages/resources.css |
 | `.faq-item`, `.faq-question`, `.faq-answer` | Accordion FAQ items | faqs.astro |
 | `.crisis-callout` | Emergency/crisis information box | faqs.astro |
 | `.contact-grid`, `.contact-detail-*` | Contact page layout | contact.astro |
@@ -202,11 +219,11 @@ The codebase uses metaphor-heavy class names. Here's what they map to:
 
 ### Illustration Component Registry
 
-All 74 SVG components organized by subdirectory. Import via barrel files: `import { Name } from "@illustrations/subdir"`.
+All 79 SVG components organized by subdirectory. Import via barrel files: `import { Name } from "@illustrations/subdir"`.
 
-**icons/** (22): ArrowRight, IconChat, IconCheckCircle, IconClock, IconCollaborative, IconCompass, IconCrescentMoon, IconCrown, IconCrystal, IconEmail, IconGraduation, IconHeart, IconImagePlaceholder, IconLicense, IconLocation, IconPhone, IconSeedling, IconShield, IconStar, IconSun, IconTraining, PlusExpand
+**icons/** (23): ArrowRight, IconChat, IconCheckCircle, IconClock, IconCollaborative, IconCompass, IconCrescentMoon, IconCrown, IconCrystal, IconEmail, IconGraduation, IconHandsOpen, IconHeart, IconImagePlaceholder, IconLicense, IconLocation, IconPhone, IconSeedling, IconShield, IconStar, IconSun, IconTraining, PlusExpand
 
-**botanicals/** (10): FloatingBotanical1, FloatingBotanical2, HerbSprig, InitialFlourish, LavenderSprig, LeafBranch, PageBotanical, SeedPodCluster, WelcomeWreath, Wildflower
+**botanicals/** (11): FloatingBotanical1, FloatingBotanical2, HerbSprig, InitialFlourish, LavenderSprig, LeafBranch, PageBotanical, PressedFlower, SeedPodCluster, WelcomeWreath, Wildflower
 
 **frames/** (10): CtaVineLeft, CtaVineRight, FrameCornerBL, FrameCornerBR, FrameCornerTL, FrameCornerTR, ManuscriptCornerBL, ManuscriptCornerBR, ManuscriptCornerTL, ManuscriptCornerTR
 
@@ -214,9 +231,9 @@ All 74 SVG components organized by subdirectory. Import via barrel files: `impor
 
 **specimens/** (6): BloomingFlower, IntertwinedStems, SpreadingTree, TagBloomingFlower, TagIntertwinedStems, TagTree
 
-**misc/** (6): ConstellationStar, ManuscriptMargin, MoonPath, QuoteMark, SpecimenDivider, TagString
+**misc/** (8): CatalogPull, Clothespin, ConstellationStar, ManuscriptMargin, MoonPath, QuoteMark, SpecimenDivider, TagString
 
-**scenes/** (5): BookSpine, DoorwayFrame, GardenGate, Garland, RootsSystem
+**scenes/** (6): BookSpine, DoorwayFrame, GardenGate, Garland, LightChannel, RootsSystem
 
 **dividers/** (4): FooterDivider, LeafDivider, PageDivider, VineDivider
 
@@ -237,7 +254,7 @@ Classes apply `transition-delay` from 0.1s to 0.8s in 0.1s increments.
 
 ### JavaScript (public/scripts/)
 
-Seven IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout:
+Nine IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout. Page-specific modules query their page's selectors and bail when absent, so they are inert everywhere else:
 
 | Module | Functionality |
 |--------|--------------|
@@ -248,6 +265,8 @@ Seven IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout:
 | `form-validation.js` | Contact form validation, error states, success feedback |
 | `scroll-reveal.js` | IntersectionObserver reveal animations, service card touch effects |
 | `constellation.js` | Dynamic SVG lines connecting constellation stars (therapy page) |
+| `conduit.js` | Drifting light-mote particles in the hero (reiki page) |
+| `library.js` | Pull-out lendable book spines with note slips (resources page) |
 
 **Note**: Scripts use `is:inline` to prevent Astro/Vite bundling.
 

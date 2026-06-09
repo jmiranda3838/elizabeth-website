@@ -1,3 +1,4 @@
+export { default as CatalogPull } from './CatalogPull.astro';
 export { default as Clothespin } from './Clothespin.astro';
 export { default as ConstellationStar } from './ConstellationStar.astro';
 export { default as ManuscriptMargin } from './ManuscriptMargin.astro';
