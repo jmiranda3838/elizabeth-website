@@ -1,0 +1,223 @@
+/* === Sections: Constellation / Guiding Stars === */
+
+.constellation-section {
+  position: relative;
+}
+
+.constellation-sky {
+  background: linear-gradient(
+    to bottom,
+    var(--espresso) 0%,
+    #3d2a1f 50%,
+    #2a1d15 100%
+  );
+  padding: var(--space-24) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background stars */
+.star-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tiny-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--warm-paper);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: twinkle 3s ease-in-out infinite;
+  top: var(--star-top);
+  left: var(--star-left);
+}
+
+.tiny-star:nth-child(odd) {
+  animation-delay: 1.5s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Header */
+.constellation-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+  position: relative;
+  z-index: 1;
+}
+
+.constellation-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--dusty-peach);
+  margin-bottom: var(--space-4);
+}
+
+.constellation-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--warm-paper);
+  margin-bottom: var(--space-4);
+}
+
+.constellation-subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--soft-sand);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Star map container */
+.constellation-map {
+  position: relative;
+  height: 500px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.constellation-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--dusty-peach);
+  pointer-events: none;
+}
+
+/* Individual stars */
+.constellation-stars {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-star {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  transition: transform var(--transition-base);
+  transform: translate(-50%, 0);
+  top: var(--star-top);
+  left: var(--star-left);
+}
+
+.constellation-star:hover {
+  transform: translate(-50%, 0) scale(1.1);
+}
+
+.star-glow {
+  position: absolute;
+  /* center the 60px glow on the 24px icon's center (y = 12px) */
+  top: -18px;
+  left: 50%;
+  margin-left: -30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(249, 200, 194, 0.3) 0%,
+    transparent 70%
+  );
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--warm-paper);
+  position: relative;
+  z-index: 1;
+}
+
+.star-label {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  color: var(--soft-sand);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 900px) {
+  .constellation-map {
+    height: 500px;
+  }
+
+  .constellation-star {
+    transform: translate(-50%, 0) scale(0.9);
+  }
+
+  .constellation-star:hover {
+    transform: translate(-50%, 0) scale(1.0);
+  }
+}
+
+@media (max-width: 768px) {
+  .constellation-map {
+    height: auto;
+    min-height: 500px;
+  }
+
+  .constellation-stars {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    padding: var(--space-4);
+  }
+
+  /* Stay positioned (not static) so each star's glow anchors to it, not the grid */
+  .constellation-star {
+    position: relative !important;
+    top: auto;
+    left: auto;
+    transform: none !important;
+  }
+
+  .constellation-lines {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .constellation-stars {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tiny-star,
+  .star-glow {
+    animation: none;
+  }
+}

@@ -1,0 +1,170 @@
+/* === Sections: Illuminated Manuscript Quote === */
+
+.illuminated-section {
+  background: var(--warm-paper);
+  padding: var(--space-20) var(--space-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.illuminated-page {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-12);
+  background: linear-gradient(
+    135deg,
+    rgba(253, 242, 239, 0.5) 0%,
+    rgba(247, 246, 245, 0.8) 50%,
+    rgba(253, 242, 239, 0.3) 100%
+  );
+  border: 1px solid var(--dusty-peach);
+  box-shadow:
+    0 4px 20px rgba(84, 49, 35, 0.08),
+    inset 0 0 60px rgba(208, 180, 166, 0.1);
+}
+
+/* Corner flourishes */
+.manuscript-corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  color: var(--dusty-peach);
+}
+
+.manuscript-corner-tl {
+  top: 0;
+  left: 0;
+}
+
+.manuscript-corner-tr {
+  top: 0;
+  right: 0;
+}
+
+.manuscript-corner-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.manuscript-corner-br {
+  bottom: 0;
+  right: 0;
+}
+
+/* Content area */
+.illuminated-content {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+/* Decorative initial letter */
+.illuminated-initial {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.initial-letter {
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  font-weight: 600;
+  line-height: 0.8;
+  color: var(--espresso);
+  display: block;
+}
+
+.initial-flourish {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  width: 100px;
+  height: 120px;
+  color: var(--sage);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+/* Quote styling */
+.illuminated-quote {
+  flex: 1;
+}
+
+.illuminated-quote p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--espresso);
+  margin: 0;
+}
+
+/* Visually hidden but kept in the accessibility tree, so screen readers
+   read "Don't" as one word (the visible drop cap is aria-hidden) */
+.quote-hidden-initial {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.quote-attribution {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  font-style: normal;
+}
+
+.attribution-dash {
+  color: var(--dusty-peach);
+  font-size: var(--text-lg);
+}
+
+.quote-attribution cite {
+  font-family: var(--font-nav);
+  font-size: var(--text-sm);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--sage);
+}
+
+/* Margin decoration */
+.manuscript-margin {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 200px;
+  color: var(--dusty-peach);
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .illuminated-page {
+    padding: var(--space-10) var(--space-6);
+  }
+
+  .illuminated-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .initial-letter {
+    font-size: 4rem;
+  }
+
+  .manuscript-margin {
+    display: none;
+  }
+}

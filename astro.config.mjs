@@ -11,6 +11,12 @@ export default defineConfig({
     format: 'file'
   },
 
+  // Meta-refresh stubs for retired pages (therapy + offerings hub merged into the homepage)
+  redirects: {
+    '/therapy': '/',
+    '/ways': '/index.html#services'
+  },
+
   // Vite config for CSS
   vite: {
     css: {

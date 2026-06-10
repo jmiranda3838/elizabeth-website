@@ -11,19 +11,19 @@
   if (!map || !svg || stars.length === 0) return;
 
   // One connected figure: a ring through six stars spanning the whole sky,
-  // with Anxiety and Family & Couples trailing off opposite corners.
-  // Indices match the markup order in therapy.astro:
-  // 0 Anxiety, 1 Depression, 2 Relationships, 3 Grief, 4 Life Transitions,
-  // 5 LGBTQ+, 6 Career, 7 Family & Couples
+  // with Clarity and Joy trailing off opposite corners.
+  // Indices match the markup order in index.astro:
+  // 0 Clarity, 1 Self-Trust, 2 Connection, 3 Courage, 4 Rest,
+  // 5 Belonging, 6 Growth, 7 Joy
   var connections = [
-    [1, 2], // ring: Depression -> Relationships
-    [2, 3], // ring: Relationships -> Grief
-    [3, 6], // ring: Grief -> Career
-    [6, 5], // ring: Career -> LGBTQ+
-    [5, 4], // ring: LGBTQ+ -> Life Transitions
-    [4, 1], // ring: Life Transitions -> Depression
-    [0, 1], // tail: Anxiety -> Depression (top-left)
-    [6, 7]  // tail: Career -> Family & Couples (bottom-right)
+    [1, 2], // ring: Self-Trust -> Connection
+    [2, 3], // ring: Connection -> Courage
+    [3, 6], // ring: Courage -> Growth
+    [6, 5], // ring: Growth -> Belonging
+    [5, 4], // ring: Belonging -> Rest
+    [4, 1], // ring: Rest -> Self-Trust
+    [0, 1], // tail: Clarity -> Self-Trust (top-left)
+    [6, 7]  // tail: Growth -> Joy (bottom-right)
   ];
 
   // Stop lines short of each star so they rest at the glow's edge

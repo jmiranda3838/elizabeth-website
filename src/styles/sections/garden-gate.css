@@ -1,0 +1,98 @@
+/* === Sections: Garden Gate CTA === */
+
+.garden-gate-section {
+  background: linear-gradient(
+    to bottom,
+    var(--soft-sand) 0%,
+    var(--warm-paper) 100%
+  );
+  padding: var(--space-24) var(--space-4);
+}
+
+.gate-frame {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+.gate-svg {
+  width: 100%;
+  height: auto;
+  color: var(--espresso);
+  opacity: 0.6;
+  transform-style: preserve-3d;
+}
+
+.gate-door-left {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+.gate-door-right {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-box: fill-box;
+  transform-origin: right center;
+}
+
+.gate-frame:hover .gate-door-left {
+  transform: perspective(1000px) rotateY(-15deg);
+}
+
+.gate-frame:hover .gate-door-right {
+  transform: perspective(1000px) rotateY(15deg);
+}
+
+/* Gate content */
+.gate-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: var(--space-8);
+  max-width: 450px;
+}
+
+.gate-eyebrow {
+  font-family: var(--font-nav);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--sage);
+  margin-bottom: var(--space-4);
+}
+
+.gate-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--espresso);
+  margin-bottom: var(--space-4);
+}
+
+.gate-description {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--slate-olive);
+  margin-bottom: var(--space-8);
+}
+
+.gate-button {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .gate-svg {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-frame:hover .gate-door-left,
+  .gate-frame:hover .gate-door-right {
+    transform: none;
+  }
+}

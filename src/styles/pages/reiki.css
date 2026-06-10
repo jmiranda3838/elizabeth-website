@@ -1,4 +1,4 @@
-/* === Reiki Page - The Conduit (daybreak counterpart to the therapy page's night) === */
+/* === Reiki Page - The Conduit (daybreak counterpart to the homepage's constellation night sky) === */
 
 /* ============================================
    1. PAGE-WIDE DAWN TOKENS
@@ -579,9 +579,9 @@
 
 .lantern-shelf {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--space-8);
-  max-width: 820px;
+  max-width: 420px;
   margin: 0 auto;
 }
 
@@ -796,11 +796,6 @@
   }
 
   .light-steps {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-  }
-
-  .lantern-shelf {
     grid-template-columns: 1fr;
     max-width: 420px;
   }

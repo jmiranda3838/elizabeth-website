@@ -11,7 +11,7 @@
    4) Layout Utilities
    5) Components: Buttons, Header, Footer
    6) Sections: Hero, Service Cards, Approach, etc.
-   7) Pages: About, Therapy, FAQ, Contact
+   7) Pages: About, Reiki, Resources, FAQ, Contact
    8) Utilities: Decorative Elements, Responsive
    9) Animations
    10) Print Styles
@@ -32,6 +32,11 @@
 @import "./sections/testimonials.css";
 @import "./sections/cta.css";
 @import "./sections/beyond-band.css";
+@import "./sections/illuminated-quote.css";
+@import "./sections/promises.css";
+@import "./sections/roots.css";
+@import "./sections/constellation.css";
+@import "./sections/garden-gate.css";
 @import "./sections/page-hero.css";
 @import "./utilities.css";
 @import "./animations.css";

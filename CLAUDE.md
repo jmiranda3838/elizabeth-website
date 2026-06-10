@@ -21,11 +21,9 @@ This is a therapy practice website built with **Astro** (static site generator).
 ```
 src/
 ├── pages/                  # Astro pages (routes)
-│   ├── index.astro         # Homepage (hero, services, approach, support areas, process, testimonials, CTA)
+│   ├── index.astro         # Homepage (hero, services + walk-and-talk note, Reiki band, approach, Sacred Promises, roots, support areas, quote, guiding-stars constellation, process, testimonials, garden-gate CTA)
 │   ├── about.astro         # About page, "vision board" design (imports src/styles/pages/about.css)
-│   ├── therapy.astro       # Therapy page, night theme (imports src/styles/pages/therapy.css)
 │   ├── reiki.astro         # Reiki page, dawn "Conduit" theme (imports src/styles/pages/reiki.css)
-│   ├── ways.astro          # Offerings hub, 4 cards (imports src/styles/pages/ways.css)
 │   ├── resources.astro     # Resources page, "Lending Library" theme (imports src/styles/pages/resources.css)
 │   ├── fees.astro
 │   ├── faqs.astro          # FAQ page (has co-located <style is:global> for FAQ-specific CSS)
@@ -65,17 +63,21 @@ src/
 │   │   └── footer.css      # .footer, .footer-*, .botanical-footer
 │   ├── sections/           # Section-level styles
 │   │   ├── hero.css        # .hero-botanical, garland, floating botanicals
-│   │   ├── service-cards.css # .services-grid, .service-card, .specimen-card
+│   │   ├── service-cards.css # .services-grid, .service-card, .specimen-card, .specimen-latin, .services-soon-note
 │   │   ├── approach.css    # .approach-*, .grimoire-section, .botanical-frame
 │   │   ├── support-areas.css # .apothecary-*, .areas-grid
 │   │   ├── process-steps.css # .moon-journey-*, .moon-step, .steps-grid
 │   │   ├── testimonials.css  # .journal-*, .testimonial-*, .client-wishes
 │   │   ├── cta.css         # .decorative-divider, .cta-band, .botanical-cta
+│   │   ├── beyond-band.css # .beyond-band* (homepage Reiki band)
+│   │   ├── illuminated-quote.css # .illuminated-*, .manuscript-corner*, .quote-attribution
+│   │   ├── promises.css    # .promises-*, .book-spine, .page-script, .promise-* (Sacred Promises book spread)
+│   │   ├── roots.css       # .roots-* (Hidden Strength photo-over-roots figure)
+│   │   ├── constellation.css # .constellation-*, .star-* (dark guiding-stars section)
+│   │   ├── garden-gate.css # .garden-gate-section, .gate-* (final CTA)
 │   │   └── page-hero.css   # .page-hero (shared by about, faqs, contact, fees, resources)
 │   └── pages/              # Page-specific styles imported directly by .astro pages
-│       ├── therapy.css     # All therapy.astro styles (.threshold-*, .grimoire-*, .constellation-*, .specimen-tag-*, .garden-gate-*, etc.)
 │       ├── reiki.css       # All reiki.astro styles (.conduit-*, .isisnt-*, .light-step*, .lantern-*, .bloom-*)
-│       ├── ways.css        # All ways.astro styles (.ways-grid, .way-card*)
 │       ├── about.css       # All about.astro styles (.board-*, .pinned-*, .polaroid, .washi-*, .twine-*)
 │       ├── resources.css   # All resources.astro styles (.library-*, .shelf-*, .checkout-*, .bookmark-*, .catalog-*, .helpdesk-*, .lending-*)
 │       └── contact.css     # All contact.astro styles (.contact-*, .form-*, .hint-text, .location-note)
@@ -89,14 +91,14 @@ public/
     ├── header-scroll.js    # Header scroll behavior + active nav state
     ├── form-validation.js  # Contact form validation
     ├── scroll-reveal.js    # Reveal animations + service card touch effects
-    ├── constellation.js    # Dynamic constellation SVG lines (therapy page)
+    ├── constellation.js    # Dynamic constellation SVG lines (homepage guiding-stars section)
     ├── conduit.js          # Drifting light motes (reiki page)
     └── library.js          # Pull-out book spines on the shelf (resources page)
 ```
 
 ### Key Conventions
 
-**Routing**: Astro config uses `build.format: 'file'`, so routes produce `.html` extensions (e.g., `/about.html`, `/contact.html`). All internal links must use `.html` suffixes.
+**Routing**: Astro config uses `build.format: 'file'`, so routes produce `.html` extensions (e.g., `/about.html`, `/contact.html`). All internal links must use `.html` suffixes. The retired `/therapy.html` and `/ways.html` URLs are kept alive as meta-refresh stubs via the `redirects` option in `astro.config.mjs` (their content was merged into the homepage).
 
 **Path aliases** (from tsconfig.json):
 - `@/*` → `src/*`
@@ -105,7 +107,7 @@ public/
 - `@styles/*` → `src/styles/*`
 - `@illustrations/*` → `src/components/illustrations/*`
 
-**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex page-specific styling import a dedicated CSS file from `src/styles/pages/` (therapy, reiki, ways, about, resources, contact). The faqs page still uses a co-located `<style is:global>` block.
+**Pages**: Each `.astro` file in `src/pages/` becomes a route. Pages use `BaseLayout` and contain page-specific content. Pages with complex page-specific styling import a dedicated CSS file from `src/styles/pages/` (reiki, about, resources, contact). The faqs page still uses a co-located `<style is:global>` block. The homepage is styled entirely from globally-imported `src/styles/sections/*.css`.
 
 **Components**: Reusable Astro components with props. Example:
 ```astro
@@ -132,11 +134,9 @@ import { Wildflower, HerbSprig } from "@illustrations/botanicals";
 
 | Page | Global CSS | Page-specific CSS (`src/styles/pages/`) | Co-located CSS (`<style is:global>`) | Scoped CSS (`<style>`) |
 |------|-----------|------------------------------------------|--------------------------------------|------------------------|
-| index.astro | hero, service-cards, approach, support-areas, process-steps, testimonials, cta | — | — | — |
+| index.astro | hero, service-cards, beyond-band, approach, promises, roots, support-areas, illuminated-quote, constellation, process-steps, testimonials, garden-gate | — | — | — |
 | about.astro | layout utilities | `pages/about.css` (all `.board-*`, `.pinned-*`, `.polaroid`, `.washi-*`, `.twine-*`, `.cert-*`) | — | — |
-| therapy.astro | — | `pages/therapy.css` (all `.threshold-*`, `.manuscript-*`, `.grimoire-*`, `.roots-*`, `.constellation-*`, `.specimen-tag-*`, `.garden-gate-*`) | — | — |
 | reiki.astro | — | `pages/reiki.css` (all `.conduit-*`, `.honest-*`, `.isisnt-*`, `.light-step*`, `.feel-*`, `.lantern-*`, `.bloom-*`) | — | — |
-| ways.astro | page-hero | `pages/ways.css` (`.ways-grid`, `.way-card*`, `.way-icon`, `.soon-chip`) | — | — |
 | faqs.astro | page-hero | — | `.faq-*`, `.crisis-callout` | — |
 | contact.astro | page-hero, process-steps (.steps-grid) | `pages/contact.css` (all `.contact-*`, `.form-*`, `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note`) | — | — |
 | fees.astro | page-hero | — | — | — |
@@ -195,17 +195,17 @@ The codebase uses metaphor-heavy class names. Here's what they map to:
 | `.moon-journey-*`, `.moon-step` | Process steps section (styled as moon phases) | sections/process-steps.css |
 | `.journal-*`, `.testimonial-*` | Testimonials section (styled as journal entries) | sections/testimonials.css |
 | `.client-wishes` | Additional testimonial display | sections/testimonials.css |
-| `.cta-band`, `.botanical-cta` | Call-to-action sections with vine decorations | sections/cta.css |
+| `.cta-band`, `.botanical-cta` | Call-to-action sections with vine decorations (used by CTA.astro, fees, faqs) | sections/cta.css |
 | `.decorative-divider` | Leaf/vine section dividers | sections/cta.css |
-| `.threshold-*` | Therapy page hero (arched doorway) | therapy.astro |
-| `.manuscript-*` | Illuminated manuscript-style section | therapy.astro |
-| `.constellation-*` | Star constellation grid for support areas | therapy.astro |
-| `.specimen-tag-*` | Botanical specimen tag cards for services | therapy.astro |
-| `.garden-gate-*` | Final CTA section with garden gate illustration | therapy.astro |
-| `.roots-*` | Root system illustration section | therapy.astro |
+| `.beyond-band` | Homepage Reiki teaser band | sections/beyond-band.css |
+| `.illuminated-*`, `.manuscript-*` | Illuminated manuscript quote section (homepage) | sections/illuminated-quote.css |
+| `.promises-*`, `.promise-*`, `.page-script` | Sacred Promises book spread (homepage) | sections/promises.css |
+| `.constellation-*`, `.star-*` | Dark guiding-stars constellation map (homepage) | sections/constellation.css |
+| `.garden-gate-*`, `.gate-*` | Final CTA section with garden gate illustration (homepage) | sections/garden-gate.css |
+| `.roots-*` | Hidden Strength photo-over-roots section (homepage) | sections/roots.css |
+| `.services-soon-note`, `.soon-badge` | Walk-and-talk "coming soon" note under the services grid | sections/service-cards.css |
 | `.page-hero` | Shared hero banner for inner pages | sections/page-hero.css |
 | `.conduit-*` | Reiki page hero and light-channel theme | pages/reiki.css |
-| `.way-card`, `.ways-grid` | Offerings hub cards | pages/ways.css |
 | `.board-*`, `.pinned-*`, `.polaroid` | About page vision-board collage and pinned paper cards | pages/about.css |
 | `.shelf-*`, `.library-*` | Resources page hero: bookshelf with pull-out spines | pages/resources.css |
 | `.checkout-*` | Resources page library checkout cards (self-assessments) | pages/resources.css |
@@ -264,7 +264,7 @@ Nine IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout. Page-sp
 | `header-scroll.js` | Header shadow on scroll past 100px, active nav link detection |
 | `form-validation.js` | Contact form validation, error states, success feedback |
 | `scroll-reveal.js` | IntersectionObserver reveal animations, service card touch effects |
-| `constellation.js` | Dynamic SVG lines connecting constellation stars (therapy page) |
+| `constellation.js` | Dynamic SVG lines connecting constellation stars (homepage guiding-stars section) |
 | `conduit.js` | Drifting light-mote particles in the hero (reiki page) |
 | `library.js` | Pull-out lendable book spines with note slips (resources page) |
 

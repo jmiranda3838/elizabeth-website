@@ -1,17 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig } from "@illustrations/botanicals";
-import { Garland } from "@illustrations/scenes";
-import { LeafDivider, VineDivider } from "@illustrations/dividers";
+import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig, InitialFlourish, PageBotanical } from "@illustrations/botanicals";
+import { Garland, BookSpine, RootsSystem, GardenGate } from "@illustrations/scenes";
+import { LeafDivider, VineDivider, PageDivider } from "@illustrations/dividers";
 import { BloomingFlower, IntertwinedStems, SpreadingTree } from "@illustrations/specimens";
-import { ArrowRight, IconCrescentMoon, IconStar, IconSun, IconCrystal } from "@illustrations/icons";
-import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, CtaVineLeft, CtaVineRight } from "@illustrations/frames";
+import { IconCrescentMoon, IconStar, IconSun, IconCrystal, IconShield, IconHeart, IconCrown, IconSeedling, IconCompass } from "@illustrations/icons";
+import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, ManuscriptCornerTL, ManuscriptCornerTR, ManuscriptCornerBL, ManuscriptCornerBR } from "@illustrations/frames";
 import { Moth, DroopingFlower, Butterfly, TwoFlowers, KintsugiBowl, WillowBranch, SpectrumArc, Seedling } from "@illustrations/apothecary";
 import { NewMoon, WaxingMoon, FullMoon } from "@illustrations/moon";
-import { MoonPath, QuoteMark } from "@illustrations/misc";
+import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illustrations/misc";
 ---
 
-<BaseLayout title="Elizabeth Armstrong Therapy | Narrative Therapist in Orange County, CA">
+<BaseLayout
+  title="Elizabeth Armstrong Therapy | Narrative Therapist in Orange County, CA"
+  description="Collaborative, kind narrative therapy for individuals, couples, and families — in Orange County and online across California. A warm, non-judgmental space where you are the expert on your own life."
+>
   <!-- Hero Section - Full Bleed Photo with Botanicals -->
   <section class="hero-botanical">
     <!-- Overlay for text readability -->
@@ -36,7 +39,7 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
   </section>
 
   <!-- Services Section - Botanical Specimen Cards -->
-  <section class="section section-services bg-paper">
+  <section id="services" class="section section-services bg-paper">
     <div class="container">
       <div class="text-center mb-12">
         <p class="eyebrow">How I Can Help</p>
@@ -51,7 +54,7 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
 
       <div class="services-grid specimen-cards">
         <!-- Individual Therapy Card -->
-        <article class="service-card specimen-card reveal stagger-1">
+        <article id="individual" class="service-card specimen-card reveal stagger-1">
           <div class="specimen-corner specimen-corner-tl"></div>
           <div class="specimen-corner specimen-corner-tr"></div>
           <div class="specimen-corner specimen-corner-bl"></div>
@@ -62,16 +65,13 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
           </div>
           <div class="service-card-content">
             <h3>Individual Therapy</h3>
-            <p>A space to slow down, make sense of your experiences, and rediscover what you value most. We'll work together to untangle what feels stuck.</p>
-            <a href="/therapy.html#individual" class="service-card-link">
-              Learn more
-              <ArrowRight />
-            </a>
+            <p class="specimen-latin">Solus florens</p>
+            <p>A space to slow down and be heard &mdash; to make sense of your experiences and rediscover what you value most. Together, we'll untangle what feels stuck.</p>
           </div>
         </article>
 
         <!-- Couples Therapy Card -->
-        <article class="service-card specimen-card reveal stagger-2">
+        <article id="couples" class="service-card specimen-card reveal stagger-2">
           <div class="specimen-corner specimen-corner-tl"></div>
           <div class="specimen-corner specimen-corner-tr"></div>
           <div class="specimen-corner specimen-corner-bl"></div>
@@ -82,16 +82,13 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
           </div>
           <div class="service-card-content">
             <h3>Couples Therapy</h3>
-            <p>Reconnect with your partner in a space of safety and respect. We'll explore the stories you've created together and find new ways forward.</p>
-            <a href="/therapy.html#couples" class="service-card-link">
-              Learn more
-              <ArrowRight />
-            </a>
+            <p class="specimen-latin">Duorum nexus</p>
+            <p>Reconnect with your partner in a space of safety and respect. We'll explore the story you've created together and find new ways forward.</p>
           </div>
         </article>
 
         <!-- Family Therapy Card -->
-        <article class="service-card specimen-card reveal stagger-3">
+        <article id="family" class="service-card specimen-card reveal stagger-3">
           <div class="specimen-corner specimen-corner-tl"></div>
           <div class="specimen-corner specimen-corner-tr"></div>
           <div class="specimen-corner specimen-corner-bl"></div>
@@ -102,18 +99,23 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
           </div>
           <div class="service-card-content">
             <h3>Family Therapy</h3>
+            <p class="specimen-latin">Arbor familiae</p>
             <p>Strengthen the bonds that matter most. Family therapy helps you understand patterns, improve communication, and grow together.</p>
-            <a href="/therapy.html#family" class="service-card-link">
-              Learn more
-              <ArrowRight />
-            </a>
           </div>
         </article>
       </div>
+
+      <!-- Walk-and-talk: same therapy, on foot by the ocean -->
+      <p class="services-soon-note reveal">
+        <span class="soon-badge">Coming soon</span>
+        Walk-and-talk therapy &mdash; the same work we'd do in the office, just on foot
+        along the ocean. We sit so much; sometimes movement and salt air are exactly
+        what the conversation needs. If it calls to you, mention it when we talk.
+      </p>
     </div>
   </section>
 
-  <!-- Beyond the Therapy Room: Reiki + future offerings -->
+  <!-- Beyond the Therapy Room: Reiki -->
   <section class="beyond-band">
     <div class="container beyond-band-inner reveal">
       <span class="beyond-band-icon" aria-hidden="true">
@@ -122,10 +124,10 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
       <div class="beyond-band-text">
         <h2>Beyond the therapy room</h2>
         <p>
-          Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I now offer <a href="/reiki.html">Reiki</a> as its own quiet hour, with walk-and-talk sessions by the ocean and a small annual retreat on the way.
+          Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I also offer Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy and honestly explained &mdash; and a small annual retreat is on the way.
         </p>
       </div>
-      <a href="/ways.html" class="btn btn-outline">See all offerings</a>
+      <a href="/reiki.html" class="btn btn-outline">Learn about Reiki</a>
     </div>
   </section>
 
@@ -141,7 +143,10 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
             <VineDivider />
           </div>
           <p>
-            I believe you are the expert on your own life. My role isn't to diagnose or fix, but to walk alongside you with curiosity and care. Narrative therapy helps us examine the stories you've been told, the ones you tell yourself, and the ones that haven't yet found voice.
+            Therapy is for everyone. We all have concerns, questions, and troubles &mdash; difficult or confusing times. In my practice, you'll be received with warmth, kindness, and genuine concern.
+          </p>
+          <p>
+            No one knows your life better than you do. My role isn't to diagnose or fix, but to walk alongside you with curiosity and care. Narrative therapy helps us examine the stories you've been told, the ones you tell yourself, and the ones that haven't yet found voice.
           </p>
           <p>
             Together, we'll separate you from the problem, discover the values that guide you, and uncover the "sparkling moments" that point toward your preferred way of living.
@@ -203,6 +208,118 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
             <FrameCornerBR class="frame-corner frame-br" />
           </div>
           <img src="/images/headshot.jpg" alt="Elizabeth - Therapist headshot" class="approach-headshot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sacred Promises - Book Spread -->
+  <section class="promises-section">
+    <div class="promises-book">
+      <!-- Book spine decoration -->
+      <div class="book-spine">
+        <BookSpine />
+      </div>
+
+      <div class="promises-pages">
+        <div class="promises-page promises-page-left">
+          <div class="page-header">
+            <h2 class="page-script">Sacred Promises</h2>
+            <div class="page-divider">
+              <PageDivider />
+            </div>
+          </div>
+
+          <div class="promise-list">
+            <!-- Promise 1 -->
+            <div class="promise-item">
+              <div class="promise-icon">
+                <IconShield />
+              </div>
+              <div class="promise-content">
+                <h4>No Judgment</h4>
+                <p>I will NOT judge you. This is a sanctuary free from criticism.</p>
+              </div>
+            </div>
+
+            <!-- Promise 2 -->
+            <div class="promise-item">
+              <div class="promise-icon">
+                <IconHeart />
+              </div>
+              <div class="promise-content">
+                <h4>Unconditional Respect</h4>
+                <p>I will RESPECT and HONOR your thoughts, feelings, opinions, and ideas unconditionally.</p>
+              </div>
+            </div>
+
+            <!-- Promise 3 -->
+            <div class="promise-item">
+              <div class="promise-icon">
+                <IconCrown />
+              </div>
+              <div class="promise-content">
+                <h4>You Are The Expert</h4>
+                <p>I will not tell you what to do. I believe you are the EXPERT on your own life.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="promises-page promises-page-right">
+          <div class="promise-list">
+            <!-- Promise 4 -->
+            <div class="promise-item">
+              <div class="promise-icon">
+                <IconSeedling />
+              </div>
+              <div class="promise-content">
+                <h4>Facilitator of Growth</h4>
+                <p>I will guide you as you explore what you VALUE&mdash;and how to approach your life in ways that reflect those values.</p>
+              </div>
+            </div>
+
+            <!-- Promise 5 -->
+            <div class="promise-item">
+              <div class="promise-icon">
+                <IconCompass />
+              </div>
+              <div class="promise-content">
+                <h4>Your Journey</h4>
+                <p>Therapy is all about YOU. I will be open, honest, genuine, and sincere&mdash;still, therapy is about YOUR journey.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative page element -->
+          <div class="page-botanical">
+            <PageBotanical />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Root System: Hidden Strength Section -->
+  <section class="roots-section">
+    <div class="container">
+      <div class="roots-content">
+        <div class="roots-text">
+          <p class="roots-eyebrow">Your Hidden Strength</p>
+          <h2 class="roots-title">No problem is bigger than your strength</h2>
+          <p class="roots-description">Beneath every struggle lies a root system of resilience you may have forgotten. We will work collaboratively as I guide you&mdash;exploring what troubles you and how problems influence your life, decisions, and relationships.</p>
+          <p class="roots-closing">I will support you as we work together to find relief from whatever weighs on you, so you may live a lighter, brighter, and more joyful life.</p>
+        </div>
+
+        <div class="roots-illustration">
+          <figure class="roots-figure">
+            <img
+              src="/images/therapy-roots.jpg"
+              alt="Elizabeth Armstrong seated in a garden"
+              class="roots-photo-img"
+            />
+            <RootsSystem rootsOnly class="roots-svg" aria-hidden="true" />
+          </figure>
         </div>
       </div>
     </div>
@@ -293,6 +410,129 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
           </div>
           <h4>Self-Esteem</h4>
           <p>Rediscovering the worth that was always there</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Illuminated Manuscript Quote Section -->
+  <section class="illuminated-section">
+    <div class="illuminated-page">
+      <!-- Decorative corner flourishes -->
+      <ManuscriptCornerTL class="manuscript-corner manuscript-corner-tl" />
+      <ManuscriptCornerTR class="manuscript-corner manuscript-corner-tr" />
+      <ManuscriptCornerBL class="manuscript-corner manuscript-corner-bl" />
+      <ManuscriptCornerBR class="manuscript-corner manuscript-corner-br" />
+
+      <div class="illuminated-content">
+        <!-- Decorative initial letter -->
+        <div class="illuminated-initial" aria-hidden="true">
+          <span class="initial-letter">D</span>
+          <InitialFlourish class="initial-flourish" />
+        </div>
+
+        <blockquote class="illuminated-quote">
+          <p><span class="quote-hidden-initial">D</span>on't surrender all your joy for an idea you used to have about yourself that isn't true anymore.</p>
+          <footer class="quote-attribution">
+            <span class="attribution-dash">—</span>
+            <cite>Cheryl Strayed</cite>
+          </footer>
+        </blockquote>
+      </div>
+
+      <!-- Decorative botanical margin illustration -->
+      <div class="manuscript-margin">
+        <ManuscriptMargin />
+      </div>
+    </div>
+  </section>
+
+  <!-- Constellation Map: Guiding Stars -->
+  <section class="constellation-section">
+    <div class="constellation-sky">
+      <!-- Background stars -->
+      <div class="star-field">
+        <span class="tiny-star" style="--star-top: 10%; --star-left: 15%;"></span>
+        <span class="tiny-star" style="--star-top: 25%; --star-left: 8%;"></span>
+        <span class="tiny-star" style="--star-top: 40%; --star-left: 22%;"></span>
+        <span class="tiny-star" style="--star-top: 15%; --star-left: 85%;"></span>
+        <span class="tiny-star" style="--star-top: 35%; --star-left: 92%;"></span>
+        <span class="tiny-star" style="--star-top: 55%; --star-left: 78%;"></span>
+        <span class="tiny-star" style="--star-top: 70%; --star-left: 12%;"></span>
+        <span class="tiny-star" style="--star-top: 80%; --star-left: 88%;"></span>
+        <span class="tiny-star" style="--star-top: 60%; --star-left: 5%;"></span>
+        <span class="tiny-star" style="--star-top: 45%; --star-left: 95%;"></span>
+      </div>
+
+      <div class="container">
+        <div class="constellation-header">
+          <p class="constellation-eyebrow">Guiding Stars</p>
+          <h2 class="constellation-title">What we navigate toward</h2>
+          <p class="constellation-subtitle">Struggles may bring you in, but they don't get to steer. These are some of the stars people set their course by &mdash; we'll find the ones that are yours.</p>
+        </div>
+
+        <div class="constellation-map">
+          <svg class="constellation-lines" viewBox="0 0 900 500">
+            <!-- Lines generated dynamically by JavaScript -->
+          </svg>
+
+          <div class="constellation-stars">
+            <!-- Star 1: Clarity -->
+            <div class="constellation-star" style="--star-top: 15%; --star-left: 15%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Clarity</span>
+            </div>
+
+            <!-- Star 2: Self-Trust -->
+            <div class="constellation-star" style="--star-top: 28%; --star-left: 38%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Self-Trust</span>
+            </div>
+
+            <!-- Star 3: Connection -->
+            <div class="constellation-star" style="--star-top: 18%; --star-left: 58%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Connection</span>
+            </div>
+
+            <!-- Star 4: Courage -->
+            <div class="constellation-star" style="--star-top: 22%; --star-left: 80%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Courage</span>
+            </div>
+
+            <!-- Star 5: Rest -->
+            <div class="constellation-star" style="--star-top: 50%; --star-left: 22%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Rest</span>
+            </div>
+
+            <!-- Star 6: Belonging -->
+            <div class="constellation-star" style="--star-top: 65%; --star-left: 42%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Belonging</span>
+            </div>
+
+            <!-- Star 7: Growth -->
+            <div class="constellation-star" style="--star-top: 58%; --star-left: 63%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Growth</span>
+            </div>
+
+            <!-- Star 8: Joy -->
+            <div class="constellation-star" style="--star-top: 75%; --star-left: 78%;">
+              <div class="star-glow"></div>
+              <ConstellationStar class="star-icon" />
+              <span class="star-label">Joy</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -408,26 +648,16 @@ import { MoonPath, QuoteMark } from "@illustrations/misc";
     </div>
   </section>
 
-  <!-- Final CTA Band - The Invitation -->
-  <section class="cta-band botanical-cta">
-    <!-- Botanical frame elements -->
-    <div class="cta-botanical cta-botanical-left">
-      <CtaVineLeft />
-    </div>
-    <div class="cta-botanical cta-botanical-right">
-      <CtaVineRight />
-    </div>
+  <!-- Garden Gate: Final CTA -->
+  <section class="garden-gate-section">
+    <div class="gate-frame">
+      <GardenGate class="gate-svg" />
 
-    <div class="container">
-      <div class="cta-content reveal">
-        <div class="decorative-divider mb-6">
-          <LeafDivider />
-        </div>
-        <h2>Ready to take the first step?</h2>
-        <p>
-          I offer a free 15-minute consultation to see if we're a good fit. There's no pressure, just a conversation.
-        </p>
-        <a href="/contact.html" class="btn btn-primary btn-lg cta-button">Schedule Your Free Consultation</a>
+      <div class="gate-content">
+        <p class="gate-eyebrow">The Garden Awaits</p>
+        <h2 class="gate-title">Ready to step through?</h2>
+        <p class="gate-description">I offer a free 15-minute consultation to answer your questions and see if we're a good fit. There's no pressure&mdash;just a conversation about what you need.</p>
+        <a href="/contact.html" class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
       </div>
     </div>
   </section>

@@ -1,0 +1,180 @@
+/* === Sections: Sacred Promises Book Spread === */
+/* (Migrated from therapy.css; renamed grimoire-* -> promises-* to avoid
+   colliding with the approach section's .grimoire-section in approach.css) */
+
+.promises-section {
+  background: linear-gradient(
+    to bottom,
+    var(--soft-sand) 0%,
+    var(--warm-paper) 100%
+  );
+  padding: var(--space-24) var(--space-4);
+  display: flex;
+  justify-content: center;
+}
+
+.promises-book {
+  position: relative;
+  display: flex;
+  max-width: 1000px;
+  width: 100%;
+  background: var(--warm-paper);
+  box-shadow:
+    0 10px 40px rgba(84, 49, 35, 0.15),
+    0 2px 10px rgba(84, 49, 35, 0.1);
+  border-radius: 4px 12px 12px 4px;
+}
+
+/* Book spine */
+.book-spine {
+  width: 30px;
+  background: linear-gradient(
+    to right,
+    var(--dusty-peach) 0%,
+    var(--warm-clay) 50%,
+    var(--dusty-peach) 100%
+  );
+  border-radius: 4px 0 0 4px;
+  flex-shrink: 0;
+}
+
+.book-spine svg {
+  width: 100%;
+  height: 100%;
+  color: var(--espresso);
+  opacity: 0.3;
+}
+
+/* Book pages */
+.promises-pages {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  padding: var(--space-10);
+}
+
+.promises-page {
+  padding: var(--space-6);
+}
+
+.promises-page-left {
+  border-right: 1px solid rgba(210, 199, 193, 0.5);
+}
+
+/* Page header */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.page-script {
+  font-family: 'Great Vibes', cursive;
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  color: var(--espresso);
+  display: block;
+  margin-bottom: var(--space-4);
+}
+
+.page-divider {
+  width: 150px;
+  margin: 0 auto;
+  color: var(--dusty-peach);
+}
+
+/* Promise items */
+.promise-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.promise-item {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.promise-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--sage);
+}
+
+.promise-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.promise-content h4 {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--espresso);
+  margin-bottom: var(--space-2);
+}
+
+.promise-content p {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--slate-olive);
+  margin: 0;
+}
+
+/* Page botanical decoration */
+.page-botanical {
+  position: absolute;
+  bottom: 40px;
+  right: 60px;
+  width: 80px;
+  height: 100px;
+  color: var(--dusty-peach);
+  opacity: 0.3;
+}
+
+@media (max-width: 1024px) {
+  .promises-pages {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .promises-page-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(210, 199, 193, 0.5);
+    padding-bottom: var(--space-12);
+  }
+}
+
+@media (max-width: 768px) {
+  .promises-book {
+    flex-direction: column;
+  }
+
+  .book-spine {
+    width: 100%;
+    height: 20px;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .book-spine svg {
+    display: none;
+  }
+
+  .promises-pages {
+    padding: var(--space-6);
+  }
+
+  .page-botanical {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .promise-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
