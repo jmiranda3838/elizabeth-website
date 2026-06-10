@@ -27,7 +27,7 @@ src/
 │   ├── resources.astro     # Resources page, "Lending Library" theme (imports src/styles/pages/resources.css)
 │   ├── fees.astro
 │   ├── faqs.astro          # FAQ page (has co-located <style is:global> for FAQ-specific CSS)
-│   └── contact.astro       # Contact page (imports src/styles/pages/contact.css)
+│   └── contact.astro       # Contact page, threshold doorway hero (imports src/styles/pages/contact.css)
 ├── layouts/
 │   └── BaseLayout.astro    # Main HTML wrapper (loads all 9 JS modules)
 ├── components/
@@ -75,12 +75,12 @@ src/
 │   │   ├── roots.css       # .roots-* (Hidden Strength photo-over-roots figure)
 │   │   ├── constellation.css # .constellation-*, .star-* (dark guiding-stars section)
 │   │   ├── garden-gate.css # .garden-gate-section, .gate-* (final CTA)
-│   │   └── page-hero.css   # .page-hero (shared by about, faqs, contact, fees, resources)
+│   │   └── page-hero.css   # .page-hero (shared by faqs, fees)
 │   └── pages/              # Page-specific styles imported directly by .astro pages
 │       ├── reiki.css       # All reiki.astro styles (.conduit-*, .isisnt-*, .light-step*, .lantern-*, .bloom-*)
 │       ├── about.css       # All about.astro styles (.board-*, .pinned-*, .polaroid, .washi-*, .twine-*)
 │       ├── resources.css   # All resources.astro styles (.library-*, .shelf-*, .checkout-*, .bookmark-*, .catalog-*, .helpdesk-*, .lending-*)
-│       └── contact.css     # All contact.astro styles (.contact-*, .form-*, .hint-text, .location-note)
+│       └── contact.css     # All contact.astro styles (.threshold-*, .doorway-*, .candle-glow, .floating-botanical, .contact-*, .form-*, .hint-text, .location-note)
 
 public/
 ├── images/                 # Static image assets
@@ -138,7 +138,7 @@ import { Wildflower, HerbSprig } from "@illustrations/botanicals";
 | about.astro | layout utilities | `pages/about.css` (all `.board-*`, `.pinned-*`, `.polaroid`, `.washi-*`, `.twine-*`, `.cert-*`) | — | — |
 | reiki.astro | — | `pages/reiki.css` (all `.conduit-*`, `.honest-*`, `.isisnt-*`, `.light-step*`, `.feel-*`, `.lantern-*`, `.bloom-*`) | — | — |
 | faqs.astro | page-hero | — | `.faq-*`, `.crisis-callout` | — |
-| contact.astro | page-hero, process-steps (.steps-grid) | `pages/contact.css` (all `.contact-*`, `.form-*`, `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note`) | — | — |
+| contact.astro | process-steps (.steps-grid) | `pages/contact.css` (all `.threshold-*`, `.doorway-*`, `.candle-glow`, `.floating-botanical`, `.contact-*`, `.form-*`, `.hint-text`, `.form-subtitle`, `.form-footer`, `.location-note`) | — | — |
 | fees.astro | page-hero | — | — | — |
 | resources.astro | — | `pages/resources.css` (all `.library-*`, `.shelf-*`, `.welcome-desk*`, `.checkout-*`, `.bookmark-*`, `.catalog-*`, `.helpdesk-*`, `.lending-*`) | — | — |
 
@@ -204,7 +204,8 @@ The codebase uses metaphor-heavy class names. Here's what they map to:
 | `.garden-gate-*`, `.gate-*` | Final CTA section with garden gate illustration (homepage) | sections/garden-gate.css |
 | `.roots-*` | Hidden Strength photo-over-roots section (homepage) | sections/roots.css |
 | `.services-soon-note`, `.soon-badge` | Walk-and-talk "coming soon" note under the services grid | sections/service-cards.css |
-| `.page-hero` | Shared hero banner for inner pages | sections/page-hero.css |
+| `.page-hero` | Shared hero banner for inner pages (faqs, fees) | sections/page-hero.css |
+| `.threshold-*`, `.doorway-*`, `.candle-glow`, `.floating-botanical` | Contact page doorway hero (self-drawing arch, load-timed animation) | pages/contact.css |
 | `.conduit-*` | Reiki page hero and light-channel theme | pages/reiki.css |
 | `.board-*`, `.pinned-*`, `.polaroid` | About page vision-board collage and pinned paper cards | pages/about.css |
 | `.shelf-*`, `.library-*` | Resources page hero: bookshelf with pull-out spines | pages/resources.css |

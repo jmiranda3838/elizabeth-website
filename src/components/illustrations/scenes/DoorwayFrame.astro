@@ -2,10 +2,11 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = '', style = '', ...rest } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+<svg class={className} style={style} {...rest} viewBox="0 0 600 700" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
   <!-- Main arch structure -->
   <path class="doorway-arch" d="M50 700 L50 280 Q50 50 300 50 Q550 50 550 280 L550 700" stroke="currentColor" stroke-width="2" fill="none"/>
   <path class="doorway-arch-inner" d="M70 700 L70 290 Q70 80 300 80 Q530 80 530 290 L530 700" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>

@@ -4,10 +4,11 @@ interface Props {
   style?: string;
   /** Crop to the ground line + root system only (no flower above ground) */
   rootsOnly?: boolean;
+  [key: string]: unknown;
 }
-const { class: className = '', style = '', rootsOnly = false } = Astro.props;
+const { class: className = '', style = '', rootsOnly = false, ...rest } = Astro.props;
 ---
-<svg class={className} style={style} viewBox={rootsOnly ? '0 172 300 206' : '0 0 300 400'} fill="none">
+<svg class={className} style={style} {...rest} viewBox={rootsOnly ? '0 172 300 206' : '0 0 300 400'} fill="none">
   <!-- Ground line -->
   <path d="M0 180 Q75 175 150 180 Q225 185 300 180" stroke="currentColor" stroke-width="1.5" fill="none"/>
 

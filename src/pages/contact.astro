@@ -1,19 +1,40 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { IconEmail, IconPhone, IconLocation, IconClock } from "@illustrations/icons";
+import { FloatingBotanical1, FloatingBotanical2 } from "@illustrations/botanicals";
+import { DoorwayFrame } from "@illustrations/scenes";
 import "@styles/pages/contact.css";
 ---
 
 <BaseLayout title="Contact | Elizabeth Armstrong Therapy" description="Contact Elizabeth Armstrong, LMFT for a free 15-minute consultation. Therapy services available in Orange County and online across California.">
 
-  <!-- Page Hero -->
-  <section class="page-hero">
-    <div class="container">
-      <p class="eyebrow">Get in Touch</p>
-      <h1>Let's start a conversation</h1>
-      <p class="lead">
-        Reaching out is the first step. I offer a free 15-minute consultation to answer your questions and see if we're a good fit.
-      </p>
+  <!-- Hero: The Threshold/Doorway -->
+  <section class="threshold-hero">
+    <!-- Atmospheric mist at bottom -->
+    <div class="threshold-mist"></div>
+
+    <!-- Candlelight glow effects -->
+    <div class="candle-glow candle-glow-1"></div>
+    <div class="candle-glow candle-glow-2"></div>
+
+    <!-- The Arched Doorway Frame -->
+    <div class="threshold-doorway">
+      <DoorwayFrame class="doorway-frame" aria-hidden="true" />
+
+      <!-- Content within the doorway -->
+      <div class="threshold-content">
+        <p class="threshold-eyebrow">Get in Touch</p>
+        <h1 class="threshold-title">The door is open</h1>
+        <p class="threshold-subtitle">Reaching out is the first step &mdash; a free 15-minute conversation is the next</p>
+      </div>
+    </div>
+
+    <!-- Floating botanical elements -->
+    <div class="floating-botanical floating-botanical-1" aria-hidden="true">
+      <FloatingBotanical1 />
+    </div>
+    <div class="floating-botanical floating-botanical-2" aria-hidden="true">
+      <FloatingBotanical2 />
     </div>
   </section>
 
