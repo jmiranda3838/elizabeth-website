@@ -2,27 +2,84 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Fees & Insurance | Elizabeth Armstrong Therapy" description="Therapy fees, insurance information, and payment options at Elizabeth Armstrong Therapy. Transparent pricing for individual, couples, and family therapy.">
+<BaseLayout title="Fees & Insurance | Elizabeth Armstrong Therapy" description="Session fees, sliding-scale availability, and out-of-network insurance information for therapy with Elizabeth Armstrong, LMFT — in Orange County and online across California.">
 
   <!-- Page Hero -->
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Investment</p>
-      <h1>Fees & Insurance</h1>
+      <h1>Fees &amp; Insurance</h1>
       <p class="lead">
-        Transparent pricing and payment options to make therapy accessible.
+        Clear, honest pricing &mdash; so the only thing left to consider is whether we&rsquo;re the right fit.
       </p>
     </div>
   </section>
 
-  <!-- Fees Content -->
+  <!-- Session Fees -->
   <section class="section bg-paper">
     <div class="container container-narrow">
-      <h2 class="text-center">Coming Soon</h2>
+      <h2 class="text-center">Session fees</h2>
       <div class="decorative-line center"></div>
-      <p class="text-center">
-        This page is currently being developed. Check back soon for detailed information about session fees, insurance options, and payment methods.
+
+      <div class="fees-grid">
+        <div class="fee-card">
+          <p class="fee-amount">$150</p>
+          <p class="fee-label">55-minute session</p>
+          <p class="fee-note">The standard session length for individual therapy.</p>
+        </div>
+        <div class="fee-card">
+          <p class="fee-amount">$200</p>
+          <p class="fee-label">90-minute session</p>
+          <p class="fee-note">A longer session &mdash; well suited to couples or deeper pieces of work.</p>
+        </div>
+      </div>
+
+      <p class="fees-fineprint text-center">
+        Payment is due at the time of each session. I accept cash, check, and major credit cards.
       </p>
+    </div>
+  </section>
+
+  <!-- Details -->
+  <section class="section bg-blush">
+    <div class="container container-narrow">
+      <div class="fees-detail">
+        <h3>Sliding scale</h3>
+        <p>
+          I hold a limited number of sliding-scale spots for those for whom the full fee is a barrier. If cost is standing between you and the support you need, please mention it during our consultation &mdash; we&rsquo;ll talk it through together.
+        </p>
+      </div>
+
+      <div class="fees-detail">
+        <h3>Insurance</h3>
+        <p>
+          I&rsquo;m an out-of-network provider, which means I don&rsquo;t bill insurance directly. If you have a PPO plan with out-of-network mental-health benefits, you may be eligible for partial reimbursement. On request, I can provide a superbill (an itemized receipt) to submit to your insurer.
+        </p>
+        <p>
+          I&rsquo;d recommend calling the number on your insurance card before we begin and asking about your out-of-network outpatient mental-health coverage.
+        </p>
+      </div>
+
+      <div class="fees-detail">
+        <h3>Good Faith Estimate</h3>
+        <p>
+          Under the No Surprises Act, you have the right to a &ldquo;Good Faith Estimate&rdquo; of what your care will cost. I&rsquo;ll provide one before we begin, and I&rsquo;m always happy to answer questions about it.
+        </p>
+      </div>
+
+      <div class="fees-detail">
+        <h3>Cancellations</h3>
+        <p>
+          Life happens. I just ask for at least 24 hours&rsquo; notice to change or cancel a session, so the time can be offered to someone else. Sessions missed without notice are charged the full fee.
+        </p>
+      </div>
+
+      <div class="fees-detail">
+        <h3>A note on Reiki</h3>
+        <p>
+          Reiki is a separate, private-pay offering &mdash; its own kind of session, never billed to insurance. You can read more on the <a href="/reiki.html">Reiki page</a>, and we can sort out the details on the same free call.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -31,10 +88,69 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container">
       <h2>Questions about fees?</h2>
       <p>
-        I'm happy to discuss fees and payment options during our free 15-minute consultation.
+        I&rsquo;m happy to talk through fees and payment options during your free 15-minute consultation. No pressure &mdash; just answers.
       </p>
       <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
     </div>
   </section>
+
+  <style>
+    .fees-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 640px;
+      margin: var(--space-10) auto 0;
+    }
+    .fee-card {
+      text-align: center;
+      padding: var(--space-8) var(--space-6);
+      background-color: var(--warm-paper);
+      border: 1px solid var(--dusty-peach);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-subtle);
+    }
+    .fee-amount {
+      font-family: var(--font-serif);
+      font-size: var(--text-5xl);
+      color: var(--warm-clay);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+    .fee-label {
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+    .fee-note {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: 0;
+    }
+    .fees-fineprint {
+      margin-top: var(--space-8);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .fees-detail {
+      max-width: var(--max-width-text);
+      margin: 0 auto var(--space-8);
+    }
+    .fees-detail:last-child {
+      margin-bottom: 0;
+    }
+    .fees-detail h3 {
+      margin-bottom: var(--space-3);
+    }
+    .fees-detail a {
+      color: var(--warm-clay);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    @media (max-width: 600px) {
+      .fees-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 
 </BaseLayout>

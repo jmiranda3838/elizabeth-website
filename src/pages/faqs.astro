@@ -22,7 +22,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Getting Started Section -->
       <div class="faq-section" id="getting-started">
-        <h3>Getting Started</h3>
+        <h2>Getting Started</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -68,7 +68,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Logistics Section -->
       <div class="faq-section" id="logistics">
-        <h3>Logistics</h3>
+        <h2>Logistics</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -77,7 +77,7 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>Individual therapy sessions are 50 minutes. Couples sessions are typically 75-90 minutes, and family sessions range from 60-90 minutes depending on the needs of the family.</p>
+                <p>Standard sessions are 55 minutes. A longer 90-minute session is also available &mdash; helpful for couples or for deeper pieces of work. We&rsquo;ll decide together what fits.</p>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Fees & Insurance Section -->
       <div class="faq-section" id="fees">
-        <h3>Fees & Insurance</h3>
+        <h2>Fees & Insurance</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -134,10 +134,9 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>Individual therapy sessions (50 min): $175</p>
-                <p>Couples therapy sessions (75-90 min): $225</p>
-                <p>Family therapy sessions (60-90 min): $200</p>
-                <p>I offer a limited number of sliding scale spots for those who need them. If cost is a barrier, please mention it during our consultation and we can discuss options.</p>
+                <p>55-minute session: $150</p>
+                <p>90-minute session: $200</p>
+                <p>I offer a limited number of sliding-scale spots for those who need them. If cost is a barrier, please mention it during our consultation and we can discuss options. For the full breakdown, see my <a href="/fees.html">Fees &amp; Insurance</a> page.</p>
               </div>
             </div>
           </div>
@@ -162,7 +161,7 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>I accept credit cards, debit cards, and HSA/FSA cards. Payment is due at the time of the session.</p>
+                <p>I accept cash, check, and major credit cards. Payment is due at the time of each session.</p>
               </div>
             </div>
           </div>
@@ -184,7 +183,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- About Therapy Section -->
       <div class="faq-section" id="about-therapy">
-        <h3>About Therapy</h3>
+        <h2>About Therapy</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -243,7 +242,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Crisis Information -->
       <div class="crisis-callout">
-        <h4>Important: Crisis & Emergency Information</h4>
+        <h3>Important: Crisis & Emergency Information</h3>
         <p>
           Therapy is not appropriate for crisis situations. If you are in immediate danger or experiencing a mental health emergency, please take one of the following steps:
         </p>
@@ -273,38 +272,11 @@ import { PlusExpand } from "@illustrations/icons";
 
 <style is:global>
 /* === Pages: FAQ === */
-.faq-categories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-bottom: var(--space-10);
-  justify-content: center;
-}
-
-.faq-category-btn {
-  padding: var(--space-2) var(--space-5);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-secondary);
-  background-color: transparent;
-  border: var(--border-thin);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.faq-category-btn:hover,
-.faq-category-btn.active {
-  color: var(--text-primary);
-  background-color: var(--dusty-peach);
-  border-color: var(--dusty-peach);
-}
-
 .faq-section {
   margin-bottom: var(--space-10);
 }
 
-.faq-section h3 {
+.faq-section h2 {
   margin-bottom: var(--space-6);
   padding-bottom: var(--space-3);
   border-bottom: var(--border-thin);
@@ -359,7 +331,7 @@ import { PlusExpand } from "@illustrations/icons";
 }
 
 .faq-item.open .faq-answer {
-  max-height: 500px;
+  max-height: 1000px;
 }
 
 .faq-answer-content {
@@ -379,7 +351,7 @@ import { PlusExpand } from "@illustrations/icons";
   margin-top: var(--space-8);
 }
 
-.crisis-callout h4 {
+.crisis-callout h3 {
   color: var(--warm-clay);
   margin-bottom: var(--space-3);
 }

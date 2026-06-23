@@ -88,21 +88,12 @@
   color: var(--espresso);
 }
 
+/* The roots draw themselves on scroll via GSAP (see the <script> in
+   index.astro). Default state is fully visible so the section reads
+   correctly with no JS or when motion is reduced; the script sets its
+   own hidden start state before animating. */
 .roots-below {
-  opacity: 0;
-  animation: growDown 1.5s ease-out forwards;
-  animation-delay: 1s;
-}
-
-@keyframes growDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {
@@ -138,8 +129,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Roots are shown fully drawn; the scroll-growth script bails out. */
   .roots-below {
     opacity: 1;
-    animation: none;
   }
 }

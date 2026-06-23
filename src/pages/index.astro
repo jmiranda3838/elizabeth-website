@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig, InitialFlourish, PageBotanical } from "@illustrations/botanicals";
-import { Garland, BookSpine, RootsSystem, GardenGate } from "@illustrations/scenes";
+import { Garland, BookSpine, RootsSystem, GateFrame, GateDoorLeft, GateDoorRight } from "@illustrations/scenes";
 import { LeafDivider, VineDivider, PageDivider } from "@illustrations/dividers";
 import { BloomingFlower, IntertwinedStems, SpreadingTree } from "@illustrations/specimens";
 import { IconCrescentMoon, IconStar, IconSun, IconCrystal, IconShield, IconHeart, IconCrown, IconSeedling, IconCompass } from "@illustrations/icons";
@@ -115,6 +115,62 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     </div>
   </section>
 
+  <!-- How It Works Section - Moon Phases Journey -->
+  <section class="section bg-sand moon-journey-section">
+    <!-- Decorative botanical vine divider - top (CSS background pattern) -->
+    <div class="vine-divider vine-divider-top"></div>
+
+    <!-- Decorative botanical vine divider - bottom (CSS background pattern) -->
+    <div class="vine-divider vine-divider-bottom"></div>
+
+    <div class="container">
+      <div class="text-center mb-12">
+        <p class="eyebrow">How It Works</p>
+        <h2>Starting therapy is simple</h2>
+        <div class="decorative-divider">
+          <LeafDivider />
+        </div>
+      </div>
+
+      <div class="moon-steps-grid">
+        <!-- Connecting vine path -->
+        <div class="moon-path">
+          <MoonPath />
+        </div>
+
+        <div class="moon-step reveal stagger-1">
+          <!-- New Moon -->
+          <div class="moon-icon">
+            <NewMoon />
+          </div>
+          <h3>Free Consultation</h3>
+          <p class="moon-phase-label">New Moon</p>
+          <p>We'll have a brief call to discuss what brings you to therapy and answer any questions. This helps us both determine if we're a good fit.</p>
+        </div>
+
+        <div class="moon-step reveal stagger-2">
+          <!-- Half Moon -->
+          <div class="moon-icon">
+            <WaxingMoon />
+          </div>
+          <h3>First Session</h3>
+          <p class="moon-phase-label">Waxing Moon</p>
+          <p>In our first meeting, we'll explore your story more deeply. I'll get to know you and what matters most. You'll get a sense of how we work together.</p>
+        </div>
+
+        <div class="moon-step reveal stagger-3">
+          <!-- Full Moon -->
+          <div class="moon-icon">
+            <FullMoon />
+          </div>
+          <h3>Ongoing Work</h3>
+          <p class="moon-phase-label">Full Moon</p>
+          <p>We'll meet regularly (typically weekly) to continue our exploration. Each session builds on the last, moving at a pace that feels right for you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Beyond the Therapy Room: Reiki -->
   <section class="beyond-band">
     <div class="container beyond-band-inner reveal">
@@ -207,7 +263,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             <FrameCornerBL class="frame-corner frame-bl" />
             <FrameCornerBR class="frame-corner frame-br" />
           </div>
-          <img src="/images/headshot.jpg" alt="Elizabeth - Therapist headshot" class="approach-headshot">
+          <img src="/images/headshot.jpg" alt="Elizabeth Armstrong, LMFT" class="approach-headshot" width="1200" height="1800" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -317,6 +373,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               src="/images/therapy-roots.jpg"
               alt="Elizabeth Armstrong seated in a garden"
               class="roots-photo-img"
+              width="1800"
+              height="1200"
+              loading="lazy"
+              decoding="async"
             />
             <RootsSystem rootsOnly class="roots-svg" aria-hidden="true" />
           </figure>
@@ -538,62 +598,6 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     </div>
   </section>
 
-  <!-- How It Works Section - Moon Phases Journey -->
-  <section class="section bg-sand moon-journey-section">
-    <!-- Decorative botanical vine divider - top (CSS background pattern) -->
-    <div class="vine-divider vine-divider-top"></div>
-
-    <!-- Decorative botanical vine divider - bottom (CSS background pattern) -->
-    <div class="vine-divider vine-divider-bottom"></div>
-
-    <div class="container">
-      <div class="text-center mb-12">
-        <p class="eyebrow">How It Works</p>
-        <h2>Starting therapy is simple</h2>
-        <div class="decorative-divider">
-          <LeafDivider />
-        </div>
-      </div>
-
-      <div class="moon-steps-grid">
-        <!-- Connecting vine path -->
-        <div class="moon-path">
-          <MoonPath />
-        </div>
-
-        <div class="moon-step reveal stagger-1">
-          <!-- New Moon -->
-          <div class="moon-icon">
-            <NewMoon />
-          </div>
-          <h3>Free Consultation</h3>
-          <p class="moon-phase-label">New Moon</p>
-          <p>We'll have a brief call to discuss what brings you to therapy and answer any questions. This helps us both determine if we're a good fit.</p>
-        </div>
-
-        <div class="moon-step reveal stagger-2">
-          <!-- Half Moon -->
-          <div class="moon-icon">
-            <WaxingMoon />
-          </div>
-          <h3>First Session</h3>
-          <p class="moon-phase-label">Waxing Moon</p>
-          <p>In our first meeting, we'll explore your story more deeply. I'll get to know you and what matters most. You'll get a sense of how we work together.</p>
-        </div>
-
-        <div class="moon-step reveal stagger-3">
-          <!-- Full Moon -->
-          <div class="moon-icon">
-            <FullMoon />
-          </div>
-          <h3>Ongoing Work</h3>
-          <p class="moon-phase-label">Full Moon</p>
-          <p>We'll meet regularly (typically weekly) to continue our exploration. Each session builds on the last, moving at a pace that feels right for you.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- What Clients Tell Me Section - Journal Pages -->
   <section class="section bg-paper testimonial-section journal-section">
     <div class="container">
@@ -648,17 +652,120 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     </div>
   </section>
 
-  <!-- Garden Gate: Final CTA -->
-  <section class="garden-gate-section">
-    <div class="gate-frame">
-      <GardenGate class="gate-svg" />
-
-      <div class="gate-content">
-        <p class="gate-eyebrow">The Garden Awaits</p>
-        <h2 class="gate-title">Ready to step through?</h2>
-        <p class="gate-description">I offer a free 15-minute consultation to answer your questions and see if we're a good fit. There's no pressure&mdash;just a conversation about what you need.</p>
-        <a href="/contact.html" class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
+  <!-- Garden Gate: Final CTA.
+       A full-bleed, immersive 2.5D scene built from the site's own hand-drawn
+       line art. A warm garden glow + receding path fill the ENTIRE section behind
+       a large central gate; the two doors swing open in CSS 3D perspective on
+       hover/focus, flooding the whole section with light. Pure CSS drives the
+       swing and reveal; garden-gate.js adds optional pointer parallax (hover
+       devices) and scroll-into-view opening (touch devices). -->
+  <section class="garden-gate-section" data-gate>
+    <!-- The full-bleed 3D stage: every animated layer lives here -->
+    <div class="gate-frame" aria-hidden="true">
+      <!-- Garden filling the whole section (revealed as the doors open) -->
+      <div class="gate-garden">
+        <span class="gate-sky"></span>
+        <span class="gate-glow"></span>
+        <span class="gate-path"></span>
+        <Wildflower class="gate-far gate-far-1" />
+        <LavenderSprig class="gate-far gate-far-2" />
+        <HerbSprig class="gate-far gate-far-3" />
+        <Wildflower class="gate-far gate-far-4" />
       </div>
+
+      <!-- The gate: a large centered stage whose two doors swing open -->
+      <div class="gate-doors">
+        <GateDoorLeft class="gate-door gate-door-left" />
+        <GateDoorRight class="gate-door gate-door-right" />
+        <GateFrame class="gate-structure" />
+      </div>
+
+      <!-- Drifting petals + light motes across the section -->
+      <div class="gate-foreground">
+        <span class="gate-mote gate-mote-1"></span>
+        <span class="gate-mote gate-mote-2"></span>
+        <span class="gate-mote gate-mote-3"></span>
+        <span class="gate-mote gate-mote-4"></span>
+        <span class="gate-mote gate-mote-5"></span>
+        <LeafBranch class="gate-petal gate-petal-1" />
+        <LeafBranch class="gate-petal gate-petal-2" />
+      </div>
+    </div>
+
+    <!-- CTA: always visible, overlaid at the foot of the scene -->
+    <div class="gate-content">
+      <p class="gate-eyebrow">The Garden Awaits</p>
+      <h2 class="gate-title">Ready to step through?</h2>
+      <p class="gate-description">I offer a free 15-minute consultation to answer your questions and see if we're a good fit. There's no pressure&mdash;just a conversation about what you need.</p>
+      <a href="/contact.html" class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
     </div>
   </section>
 </BaseLayout>
+
+<!-- Garden Gate: optional pointer parallax (hover devices) + scroll-into-view
+     opening (touch devices). The swing/reveal itself is pure CSS; this only
+     enriches it. Bundled by Astro/Vite. -->
+<script>
+  import { initGardenGate } from "../scripts/garden-gate.js";
+  initGardenGate();
+</script>
+
+<!-- Roots "growing" on scroll — GSAP ScrollTrigger draws the root system
+     downward, scrubbed to scroll position. Bundled by Astro/Vite. -->
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const section = document.querySelector(".roots-section");
+  const svg = section?.querySelector(".roots-svg");
+
+  if (section && svg && !prefersReduced) {
+    const paths = svg.querySelectorAll(".roots-below path");
+    const tips = svg.querySelectorAll(".roots-below circle");
+    const photo = section.querySelector(".roots-photo-img");
+    const textBits = section.querySelectorAll(
+      ".roots-eyebrow, .roots-title, .roots-description, .roots-closing"
+    );
+
+    // Prep each root stroke so it can "draw" from the ground line down.
+    paths.forEach((p) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = String(len);
+      p.style.strokeDashoffset = String(len);
+    });
+
+    // Root tips wait, then bloom in once the roots reach them.
+    gsap.set(tips, { opacity: 0, scale: 0, transformOrigin: "center" });
+
+    // Roots draw + photo settles — scrubbed to scroll through the section.
+    const grow = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 78%",
+        end: "bottom 75%",
+        scrub: 1,
+      },
+    });
+
+    grow
+      .from(photo, { yPercent: 8, scale: 1.05, ease: "none" }, 0)
+      .to(paths, { strokeDashoffset: 0, ease: "none", stagger: 0.05 }, 0)
+      .to(tips, { opacity: 0.5, scale: 1, ease: "none", stagger: 0.03 }, 0.55);
+
+    // Text drifts up once as the section arrives.
+    gsap.from(textBits, {
+      y: 24,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power2.out",
+      stagger: 0.12,
+      scrollTrigger: { trigger: section, start: "top 72%", once: true },
+    });
+  }
+</script>

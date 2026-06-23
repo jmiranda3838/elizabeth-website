@@ -1,58 +1,378 @@
-/* === Sections: Garden Gate CTA === */
+/* === Sections: Garden Gate CTA (full-bleed, immersive 2.5D) ===
+   A depth scene built entirely from the site's own hand-drawn line art that
+   fills the WHOLE section: a warm garden (sky · glow · receding path · foliage)
+   spans edge to edge behind a large central gate; two doors swing open in CSS 3D
+   perspective on :hover / :focus-within (or a .gate-open class for touch),
+   flooding the entire section with warm light.
+   garden-gate.js only adds pointer parallax (--gx/--gy) and touch opening. */
 
 .garden-gate-section {
+  position: relative;
+  overflow: hidden;
+  /* Full, immersive height — the scene is the section, not a box within it.
+     Both children (.gate-frame and .gate-content) are absolutely positioned,
+     so min-height alone holds the section open. */
+  min-height: clamp(600px, 90vh, 960px);
   background: linear-gradient(
     to bottom,
     var(--soft-sand) 0%,
     var(--warm-paper) 100%
   );
-  padding: var(--space-24) var(--space-4);
+  /* Pointer-parallax inputs, set by garden-gate.js (normalised -1..1). */
+  --gx: 0;
+  --gy: 0;
+  /* One perspective for the whole scene: the doors swing in it and every layer
+     sits at real depth. Origin a touch above centre, where the gate opening is. */
+  perspective: 1900px;
+  perspective-origin: 50% 42%;
 }
 
+/* The full-bleed, depth-sorted 3D stage holding every animated layer. */
 .gate-frame {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   transform-style: preserve-3d;
+  /* Purely decorative — never intercept pointer/clicks from the CTA. */
+  pointer-events: none;
 }
 
-.gate-svg {
-  width: 100%;
+/* --- Garden: fills the entire section, floods warm as the doors open ------ */
+.gate-garden {
+  position: absolute;
+  inset: 0;
+  /* Pushed well back in Z (real depth) and scaled up to still cover the whole
+     section — sits behind the doors through their full swing. Gentle parallax. */
+  transform: translateZ(-420px) scale(1.3)
+    translate3d(calc(var(--gx) * -16px), calc(var(--gy) * -11px), 0);
+  transition: transform 0.5s ease;
+}
+
+/* The garden's stacked fills each cover the whole layer. */
+.gate-sky,
+.gate-glow,
+.gate-path {
+  position: absolute;
+  inset: 0;
+}
+
+/* Sunlit warmth up top, cool foliage below — the warm/cool contrast is what
+   makes it read as a garden you're looking into rather than a flat backdrop. */
+.gate-sky {
+  background: linear-gradient(
+    to bottom,
+    #fce6d0 0%,
+    #f6cba4 38%,
+    #e5cb98 60%,
+    #b3c79a 100%
+  );
+  /* Soft warm inner vignette so the depth reads at the section's edges. */
+  box-shadow: inset 0 0 200px 60px rgba(116, 92, 74, 0.18);
+  /* Closed = neutral section; warmth floods in only as the doors open. */
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+/* Receding sunlit path, narrow at the gate, widening to the foreground. */
+.gate-path {
+  background: linear-gradient(
+    to top,
+    rgba(255, 224, 184, 0.7) 0%,
+    rgba(250, 205, 170, 0.22) 58%,
+    transparent 100%
+  );
+  clip-path: polygon(45% 46%, 55% 46%, 82% 100%, 18% 100%);
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+/* Warm bloom of light through the opening — a golden sun behind the garden.
+   Kept amber (not white) so it glows warm instead of bleaching the opening. */
+.gate-glow {
+  background: radial-gradient(
+    44% 46% at 50% 40%,
+    rgba(255, 211, 144, 0.95) 0%,
+    rgba(250, 188, 146, 0.72) 30%,
+    rgba(240, 192, 160, 0.3) 58%,
+    rgba(253, 242, 239, 0) 80%
+  );
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Faint botanicals receding along the path. */
+.gate-far {
+  position: absolute;
+  color: var(--sage);
+  opacity: 0;
+  transform: translateY(14px) scale(0.9);
+  transition: opacity 1.1s ease, transform 1.1s ease;
+}
+.gate-far-1 {
+  left: 30%;
+  bottom: 6%;
+  width: 86px;
   height: auto;
-  color: var(--espresso);
-  opacity: 0.6;
+}
+.gate-far-2 {
+  left: 39%;
+  bottom: 22%;
+  width: 48px;
+  height: auto;
+  color: var(--sage-warm);
+}
+.gate-far-3 {
+  right: 38%;
+  bottom: 20%;
+  width: 54px;
+  height: auto;
+  color: var(--sage-warm);
+}
+.gate-far-4 {
+  right: 29%;
+  bottom: 5%;
+  width: 92px;
+  height: auto;
+}
+
+/* --- The gate: a large centred stage with two swinging doors ------------- */
+.gate-doors {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: min(90vw, 1040px);
+  aspect-ratio: 2 / 1; /* matches the doors' 0 0 800 400 viewBox — no letterbox */
+  transform: translate(-50%, -50%)
+    translate3d(calc(var(--gx) * 8px), calc(var(--gy) * 5px), 0);
   transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+.gate-doors > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
+.gate-door {
+  color: var(--espresso);
+  transform-style: preserve-3d;
+  transition: transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
 .gate-door-left {
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-box: fill-box;
-  transform-origin: left center;
+  transform-origin: 11.25% 50%;
 }
-
 .gate-door-right {
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-box: fill-box;
-  transform-origin: right center;
+  transform-origin: 88.75% 50%;
 }
 
-.gate-frame:hover .gate-door-left {
-  transform: perspective(1000px) rotateY(-15deg);
+/* Translucent door panels: substance when closed, light glows faintly through. */
+.gate-door-panel {
+  fill: #faf3ee;
+  opacity: 0.72;
 }
 
-.gate-frame:hover .gate-door-right {
-  transform: perspective(1000px) rotateY(15deg);
+/* Static structure: posts, arch, roses — a touch in front of the door plane. */
+.gate-structure {
+  color: var(--espresso);
+  transform: translateZ(12px);
 }
 
-/* Gate content */
+/* --- Foreground: drifting motes + petals across the whole section -------- */
+.gate-foreground {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(70px)
+    translate3d(calc(var(--gx) * 24px), calc(var(--gy) * 17px), 0);
+  transition: transform 0.5s ease;
+}
+
+.gate-mote {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 250, 245, 0.95) 0%,
+    rgba(249, 200, 194, 0.5) 60%,
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.gate-mote-1 {
+  left: 36%;
+  top: 56%;
+}
+.gate-mote-2 {
+  left: 47%;
+  top: 66%;
+  width: 6px;
+  height: 6px;
+}
+.gate-mote-3 {
+  left: 57%;
+  top: 50%;
+}
+.gate-mote-4 {
+  left: 62%;
+  top: 62%;
+  width: 7px;
+  height: 7px;
+}
+.gate-mote-5 {
+  left: 42%;
+  top: 44%;
+  width: 6px;
+  height: 6px;
+}
+
+.gate-petal {
+  position: absolute;
+  width: 78px;
+  height: auto;
+  color: var(--dusty-peach);
+  opacity: 0.5;
+  transform-origin: top center;
+}
+.gate-petal-1 {
+  left: 11%;
+  top: 9%;
+  animation: gate-sway 7s ease-in-out infinite;
+}
+.gate-petal-2 {
+  right: 11%;
+  top: 13%;
+  width: 64px;
+  color: var(--muted-rose);
+  animation: gate-sway 9s ease-in-out infinite reverse;
+}
+
+/* --- Open state (hover / keyboard focus / touch .gate-open) --------------
+   Hovering anywhere in the immersive section opens the gate. */
+.garden-gate-section:hover .gate-door-left,
+.garden-gate-section:focus-within .gate-door-left,
+.garden-gate-section.gate-open .gate-door-left {
+  transform: rotateY(72deg);
+}
+.garden-gate-section:hover .gate-door-right,
+.garden-gate-section:focus-within .gate-door-right,
+.garden-gate-section.gate-open .gate-door-right {
+  transform: rotateY(-72deg);
+}
+
+.garden-gate-section:hover .gate-sky,
+.garden-gate-section:focus-within .gate-sky,
+.garden-gate-section.gate-open .gate-sky {
+  opacity: 1;
+}
+
+.garden-gate-section:hover .gate-glow,
+.garden-gate-section:focus-within .gate-glow,
+.garden-gate-section.gate-open .gate-glow {
+  opacity: 1;
+  transform: scale(1.7);
+}
+
+.garden-gate-section:hover .gate-path,
+.garden-gate-section:focus-within .gate-path,
+.garden-gate-section.gate-open .gate-path {
+  opacity: 0.85;
+}
+
+.garden-gate-section:hover .gate-far,
+.garden-gate-section:focus-within .gate-far,
+.garden-gate-section.gate-open .gate-far {
+  opacity: 0.85;
+  transform: translateY(0) scale(1);
+}
+/* Stagger the garden's awakening. */
+.gate-far-1 {
+  transition-delay: 0.18s;
+}
+.gate-far-2 {
+  transition-delay: 0.34s;
+}
+.gate-far-3 {
+  transition-delay: 0.44s;
+}
+.gate-far-4 {
+  transition-delay: 0.26s;
+}
+
+.garden-gate-section:hover .gate-mote,
+.garden-gate-section:focus-within .gate-mote,
+.garden-gate-section.gate-open .gate-mote {
+  opacity: 1;
+  animation: gate-mote-rise 6s ease-in-out infinite;
+}
+.gate-mote-2 {
+  animation-delay: 1.1s;
+}
+.gate-mote-3 {
+  animation-delay: 2.3s;
+}
+.gate-mote-4 {
+  animation-delay: 0.6s;
+}
+.gate-mote-5 {
+  animation-delay: 3s;
+}
+
+@keyframes gate-mote-rise {
+  0% {
+    transform: translateY(8px) scale(0.8);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes gate-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* --- CTA -------------------------------------------------------------------
+   Always visible, overlaid at the foot of the scene so the door-swing + light
+   bloom above it are never obscured; the invitation is the threshold you cross. */
 .gate-content {
   position: absolute;
-  top: 50%;
   left: 50%;
+  /* Anchor the block's centre at the gate's threshold — below the glowing
+     opening above, well clear of the awkward bottom edge. */
+  top: 57%;
   transform: translate(-50%, -50%);
+  z-index: 2;
+  width: min(560px, 92vw);
   text-align: center;
-  padding: var(--space-8);
-  max-width: 450px;
+}
+/* A soft halo lifts the text off the garden for legibility in any state. */
+.gate-content::before {
+  content: "";
+  position: absolute;
+  inset: -22% -14%;
+  z-index: -1;
+  background: radial-gradient(
+    62% 70% at 50% 52%,
+    rgba(253, 246, 240, 0.72) 0%,
+    rgba(253, 246, 240, 0.4) 48%,
+    transparent 76%
+  );
+  pointer-events: none;
 }
 
 .gate-eyebrow {
@@ -66,7 +386,7 @@
 
 .gate-title {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
   font-weight: 400;
   color: var(--espresso);
   margin-bottom: var(--space-4);
@@ -82,17 +402,62 @@
 .gate-button {
   position: relative;
   z-index: 1;
+  /* Long label must not force horizontal overflow on narrow phones. */
+  max-width: 100%;
+  white-space: normal;
 }
 
+/* --- Responsive --------------------------------------------------------- */
 @media (max-width: 768px) {
-  .gate-svg {
-    opacity: 0.3;
+  .garden-gate-section {
+    min-height: clamp(520px, 80vh, 780px);
+    perspective: 1300px;
+  }
+  .gate-doors {
+    top: 44%;
+    width: 92vw;
+  }
+  .gate-petal-1 {
+    width: 58px;
+  }
+  .gate-petal-2 {
+    width: 48px;
   }
 }
 
+/* --- Reduced motion: a calm, static peek through an ajar gate ------------ */
 @media (prefers-reduced-motion: reduce) {
-  .gate-frame:hover .gate-door-left,
-  .gate-frame:hover .gate-door-right {
+  .gate-garden,
+  .gate-foreground,
+  .gate-doors,
+  .gate-door,
+  .gate-glow,
+  .gate-path,
+  .gate-sky,
+  .gate-far,
+  .gate-mote,
+  .gate-petal {
+    transition: none !important;
+    animation: none !important;
+  }
+  .gate-door-left {
+    transform: rotateY(22deg);
+  }
+  .gate-door-right {
+    transform: rotateY(-22deg);
+  }
+  .gate-sky {
+    opacity: 1;
+  }
+  .gate-glow {
+    opacity: 0.85;
+    transform: scale(1.25);
+  }
+  .gate-path {
+    opacity: 0.85;
+  }
+  .gate-far {
+    opacity: 0.6;
     transform: none;
   }
 }

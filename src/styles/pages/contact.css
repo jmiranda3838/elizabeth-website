@@ -178,6 +178,23 @@ select.form-input {
   text-align: center;
 }
 
+.form-notice {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background-color: var(--blush-wash);
+  border: 1px solid var(--dusty-peach);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.form-notice a {
+  color: var(--warm-clay);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .location-note {
   font-size: var(--text-sm);
   color: var(--text-secondary);
