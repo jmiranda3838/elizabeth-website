@@ -1,0 +1,29 @@
+name = "elizabeth-feedback"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+# Non-secret config (safe to commit). The GitHub token is NOT here — it is set with
+#   gh auth token | npx wrangler secret put GITHUB_TOKEN
+[vars]
+GH_OWNER = "jmiranda3838"
+GH_REPO = "elizabeth-website"
+ASSETS_BRANCH = "feedback-assets"
+FEEDBACK_LABEL = "site-feedback"
+# Comma-separated origins allowed to POST/GET. The first is the live GitHub Pages origin;
+# localhost entries let us test from `npm run preview` if ever needed.
+ALLOWED_ORIGINS = "https://jmiranda3838.github.io,http://localhost:4321,http://localhost:4322"
+# Best-effort obfuscation key (it ships in the public client JS). Real protection is the
+# Origin check + rate limit. Rotate by changing this and the client constant together.
+SHARED_KEY = "46def8a8cd78db6fc1ef5682d7fb84464396719d445975f6"
+MAX_COMMENT_CHARS = "5000"
+MAX_SCREENSHOT_BYTES = "3500000"
+
+# Native rate limiting binding (no extra infra). period must be 10 or 60.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 15
+  period = 60

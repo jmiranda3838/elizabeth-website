@@ -79,5 +79,7 @@ const ogImage = new URL(withBase("/og-image.jpg"), Astro.site);
   <script is:inline src={withBase('/scripts/constellation.js')}></script>
   <script is:inline src={withBase('/scripts/conduit.js')}></script>
   <script is:inline src={withBase('/scripts/library.js')}></script>
+  <!-- Review/comment overlay: inert unless ?review=on (or remembered on the device). -->
+  <script is:inline src={withBase('/scripts/review-comments.js')}></script>
 </body>
 </html>

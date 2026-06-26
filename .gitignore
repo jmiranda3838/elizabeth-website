@@ -18,6 +18,11 @@ reference/
 /quote-*.png
 /s-*.jpeg
 
+# Feedback worker (Cloudflare) local/build artifacts
+feedback-worker/.wrangler/
+feedback-worker/node_modules/
+feedback-worker/.dev.vars
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
