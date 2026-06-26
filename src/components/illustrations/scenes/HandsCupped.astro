@@ -1,0 +1,35 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: className = '', style = '' } = Astro.props;
+---
+<!-- A pair of cupped, open hands receiving a held light — the literal image of
+     "I'm just being a conduit, like a straw." Higher-detail sibling to LightChannel,
+     drawn for hero scale (~150-180px). Uses currentColor; the glowing orb itself is
+     layered behind via CSS so it can breathe. -->
+<svg class={className} style={style} viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- Cupped bowl: the two palms meeting at the base -->
+  <path d="M26 128 C 40 180, 180 180, 194 128" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+  <!-- Palm creases, suggesting the cupped hollow that holds the light -->
+  <path d="M54 138 C 74 164, 98 170, 110 170" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.7"/>
+  <path d="M166 138 C 146 164, 122 170, 110 170" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Left hand: thumb + four fingers curling up and gently inward (cupping) -->
+  <path d="M30 130 C 22 120, 22 110, 30 104" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M44 126 C 38 108, 38 96, 44 88" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M58 123 C 54 105, 56 92, 62 84" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M73 121 C 71 104, 74 91, 81 84" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Right hand: mirror -->
+  <path d="M190 130 C 198 120, 198 110, 190 104" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M176 126 C 182 108, 182 96, 176 88" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M162 123 C 166 105, 164 92, 158 84" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M147 121 C 149 104, 146 91, 139 84" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- The held light: a ring with a soft core and rising rays -->
+  <circle cx="110" cy="92" r="15" stroke="currentColor" stroke-width="2.1" opacity="0.8"/>
+  <circle cx="110" cy="92" r="6" fill="currentColor" opacity="0.35"/>
+  <path d="M110 64 v-10 M88 70 l-6 -7 M132 70 l6 -7 M78 92 h-9 M151 92 h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/>
+</svg>

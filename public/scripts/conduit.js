@@ -1,6 +1,6 @@
 /**
  * Conduit Light Motes (Reiki page)
- * Spawns soft drifting light particles inside the hero's light channel.
+ * Spawns soft motes that drift UP out of the cupped hands like rising warmth.
  * Inert on every page without a .conduit-motes container.
  */
 (function() {
@@ -12,7 +12,7 @@
   // Respect reduced motion: no motes at all
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var COUNT = 14;
+  var COUNT = 32;
 
   for (var i = 0; i < COUNT; i++) {
     var mote = document.createElement('span');
@@ -21,7 +21,8 @@
     var size = 3 + Math.random() * 4;
     mote.style.width = size + 'px';
     mote.style.height = size + 'px';
-    mote.style.left = (18 + Math.random() * 64) + '%';
+    // Cluster tightly inside the central beam so they read as rising light
+    mote.style.left = (34 + Math.random() * 32) + '%';
     mote.style.setProperty('--sway', (Math.random() * 60 - 30).toFixed(0) + 'px');
 
     var duration = 9 + Math.random() * 8;

@@ -5,5 +5,6 @@ export { default as GateFrame } from './GateFrame.astro';
 export { default as GateDoorLeft } from './GateDoorLeft.astro';
 export { default as GateDoorRight } from './GateDoorRight.astro';
 export { default as Garland } from './Garland.astro';
+export { default as HandsCupped } from './HandsCupped.astro';
 export { default as LightChannel } from './LightChannel.astro';
 export { default as RootsSystem } from './RootsSystem.astro';

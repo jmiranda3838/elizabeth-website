@@ -1,11 +1,14 @@
 ---
+import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/reiki.css";
-import { IconSun, IconCrescentMoon, IconHandsOpen } from "@illustrations/icons";
-import { LightChannel } from "@illustrations/scenes";
-import { QuoteMark } from "@illustrations/misc";
+import { IconSun, IconCrescentMoon, IconHandsOpen, IconShield, IconHeart } from "@illustrations/icons";
+import { HandsCupped } from "@illustrations/scenes";
+import { QuoteMark, ConstellationStar } from "@illustrations/misc";
 import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
 import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, CtaVineLeft, CtaVineRight } from "@illustrations/frames";
+import { LeafDivider } from "@illustrations/dividers";
+import { FullMoon } from "@illustrations/moon";
 import { Seedling } from "@illustrations/apothecary";
 ---
 
@@ -15,16 +18,23 @@ import { Seedling } from "@illustrations/apothecary";
 >
   <div class="reiki-page">
 
-    <!-- Conduit Hero: the source -->
+    <!-- Daybreak: a single sun climbs the sky as you scroll (GSAP-scrubbed),
+         turning the whole page into one continuous dawn. -->
+    <div class="daybreak" aria-hidden="true">
+      <span class="daybreak-sun"></span>
+    </div>
+
+    <!-- ============================================================
+         1. CONDUIT HERO — the source: held light + a real beam
+         ============================================================ -->
     <section class="conduit-hero">
-      <div class="conduit-channel" aria-hidden="true">
-        <LightChannel />
-      </div>
+      <div class="light-beam" aria-hidden="true"></div>
       <div class="conduit-motes" aria-hidden="true"></div>
 
       <div class="conduit-hero-content">
-        <span class="conduit-sun" aria-hidden="true">
-          <IconSun />
+        <span class="conduit-hands" aria-hidden="true">
+          <span class="conduit-orb"></span>
+          <HandsCupped class="conduit-hands-svg" />
         </span>
         <p class="eyebrow">Energy Work</p>
         <h1 class="conduit-title">Reiki</h1>
@@ -32,44 +42,37 @@ import { Seedling } from "@illustrations/apothecary";
         <p class="conduit-lead">
           A gentle, hands-resting energy practice &mdash; and one of the more woo-woo things I love. You lie back, fully clothed, and rest while your own system does the settling.
         </p>
-        <a href="/contact.html" class="btn btn-primary btn-lg">Schedule a Free Consultation</a>
+        <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Schedule a Free Consultation</a>
       </div>
     </section>
 
-    <!-- The Honest Card: the boundary, stated first -->
-    <section class="section honest-section bg-paper">
+    <!-- ============================================================
+         2. ESSENCE — what Reiki is, and what it isn't (honest + spread,
+            merged into one portrait-anchored centerpiece on the mauve dark)
+         ============================================================ -->
+    <section class="section section-lg essence-section">
       <div class="container">
-        <div class="honest-card reveal">
-          <span class="honest-corner honest-corner-tl" aria-hidden="true"><FrameCornerTL /></span>
-          <span class="honest-corner honest-corner-tr" aria-hidden="true"><FrameCornerTR /></span>
-          <span class="honest-corner honest-corner-bl" aria-hidden="true"><FrameCornerBL /></span>
-          <span class="honest-corner honest-corner-br" aria-hidden="true"><FrameCornerBR /></span>
-
-          <span class="honest-icon" aria-hidden="true"><IconSun /></span>
-          <h2>The honest part, first</h2>
-          <p>
-            Reiki is not psychotherapy, and I want to be plain about that before anything else. When you come to me for Reiki, you're coming for energy work &mdash; its own kind of session, with its own purpose and its own fee, never billed to insurance. It isn't a diagnosis, a treatment, or a stand-in for medical or psychological care. I take that line seriously, because taking it seriously is part of how I keep you safe.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- What Reiki is / isn't -->
-    <section class="section section-lg isisnt-section">
-      <div class="container">
-        <div class="isisnt-grid">
-          <div class="isisnt-prose reveal">
+        <div class="essence-grid">
+          <div class="essence-intro reveal-left">
+            <figure class="essence-photo">
+              <img
+                src={withBase('/images/reiki-honest.jpg')}
+                alt="Elizabeth Armstrong sitting calmly outdoors, resting her chin on her hand"
+                width="1400"
+                height="933"
+                loading="lazy"
+              />
+            </figure>
+            <p class="eyebrow">The honest part, first</p>
             <h2>What Reiki is &mdash; and what it isn't</h2>
             <p>
-              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and comfortable, while I place my hands lightly on or just above you &mdash; and that's really the whole mechanism. Yes, I know how that sounds.
-            </p>
-            <p>
-              Think of it as a deliberate, unhurried hour to be still &mdash; no talking required, nothing to perform, nothing to fix. I'd rather undersell this than oversell it: many people simply find it deeply relaxing, and that alone is worth quite a lot.
+              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and comfortable, while I place my hands lightly on or just above you &mdash; and that's really the whole mechanism. Yes, I know how that sounds. I'd rather undersell this than oversell it, so let me be plain first: this is energy work &mdash; its own kind of session, with its own purpose and fee, never psychotherapy and never billed to insurance. I take that line seriously, because taking it seriously is part of how I keep you safe. And many people simply find it deeply relaxing &mdash; that alone is worth quite a lot.
             </p>
           </div>
 
-          <div class="isisnt-lists">
-            <div class="is-card reveal stagger-1">
+          <div class="essence-spread reveal-right">
+            <div class="spread-pane is-pane lit-card">
+              <span class="spread-icon" aria-hidden="true"><IconHandsOpen /></span>
               <h3>Reiki is</h3>
               <ul>
                 <li>A calm, restful hour of energy work</li>
@@ -78,7 +81,11 @@ import { Seedling } from "@illustrations/apothecary";
                 <li>Held lightly, warmly, and on its own terms</li>
               </ul>
             </div>
-            <div class="isnt-card reveal stagger-2">
+
+            <span class="spread-seam" aria-hidden="true"></span>
+
+            <div class="spread-pane isnt-pane lit-card">
+              <span class="spread-icon" aria-hidden="true"><IconShield /></span>
               <h3>Reiki isn't</h3>
               <ul>
                 <li>Not psychotherapy, and not a therapy session</li>
@@ -92,20 +99,37 @@ import { Seedling } from "@illustrations/apothecary";
       </div>
     </section>
 
-    <!-- Her own words: the conduit -->
+    <!-- ============================================================
+         4. THE CONDUIT QUOTE — her own words, as a resonance chamber
+         ============================================================ -->
     <section class="section section-lg conduit-quote-section">
+      <img
+        class="quote-photo"
+        src={withBase('/images/reiki-quote.jpg')}
+        alt=""
+        width="1600"
+        height="1066"
+        loading="lazy"
+        aria-hidden="true"
+      />
+      <span class="candle-glow candle-glow-1" aria-hidden="true"></span>
+      <span class="candle-glow candle-glow-2" aria-hidden="true"></span>
+
       <div class="container">
+        <span class="quote-divider reveal" aria-hidden="true"><LeafDivider /></span>
         <figure class="conduit-quote reveal">
           <span class="conduit-quote-mark" aria-hidden="true"><QuoteMark /></span>
           <blockquote>
             <p>I'm not healing you &mdash; you're healing you. I'm just being a conduit, like a straw.</p>
           </blockquote>
-          <figcaption>&mdash; Elizabeth</figcaption>
+          <figcaption>Elizabeth</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- How a session unfolds -->
+    <!-- ============================================================
+         5. HOW A SESSION UNFOLDS — one daybreak timeline
+         ============================================================ -->
     <section class="section section-lg light-steps-section">
       <div class="container">
         <div class="section-heading reveal">
@@ -114,6 +138,8 @@ import { Seedling } from "@illustrations/apothecary";
         </div>
 
         <div class="light-steps">
+          <span class="steps-thread" aria-hidden="true"></span>
+
           <div class="light-step reveal stagger-1">
             <span class="light-step-icon" aria-hidden="true"><IconCrescentMoon /></span>
             <span class="light-step-label">first light</span>
@@ -136,7 +162,9 @@ import { Seedling } from "@illustrations/apothecary";
       </div>
     </section>
 
-    <!-- What it can feel like -->
+    <!-- ============================================================
+         6. WHAT IT CAN FEEL LIKE — embodied sensation tiles
+         ============================================================ -->
     <section class="section feel-section">
       <div class="container">
         <div class="section-heading reveal">
@@ -147,19 +175,23 @@ import { Seedling } from "@illustrations/apothecary";
         </p>
 
         <div class="feel-grid">
-          <div class="feel-card reveal stagger-1">
+          <div class="feel-card feel-warmth lit-card reveal stagger-1">
+            <span class="feel-glyph" aria-hidden="true"><IconSun /></span>
             <h3>Warmth</h3>
             <p>A soft, spreading warmth where my hands rest, like sun through a window.</p>
           </div>
-          <div class="feel-card reveal stagger-2">
+          <div class="feel-card feel-heavy lit-card reveal stagger-2">
+            <span class="feel-glyph" aria-hidden="true"><FullMoon /></span>
             <h3>Heaviness</h3>
             <p>A pleasant heaviness, the way your body feels in the minutes before sleep.</p>
           </div>
-          <div class="feel-card reveal stagger-3">
+          <div class="feel-card feel-quiet lit-card reveal stagger-3">
+            <span class="feel-glyph" aria-hidden="true"><ConstellationStar /></span>
             <h3>A quiet mind</h3>
             <p>The mental chatter going unusually still, even if just for the hour.</p>
           </div>
-          <div class="feel-card reveal stagger-4">
+          <div class="feel-card feel-rest lit-card reveal stagger-4">
+            <span class="feel-glyph" aria-hidden="true"><IconHeart /></span>
             <h3>Simple rest</h3>
             <p>Sometimes it's mostly an hour of real, uninterrupted rest &mdash; which is no small thing.</p>
           </div>
@@ -167,67 +199,195 @@ import { Seedling } from "@illustrations/apothecary";
       </div>
     </section>
 
-    <!-- Reiki + therapy, and the fee note -->
-    <section class="section section-lg bridge-section">
-      <div class="container">
-        <div class="bridge-content reveal">
-          <h2>Reiki and therapy, side by side</h2>
-          <p>
-            Some people see me for both, and that's a beautiful thing &mdash; but they stay separate. Therapy and Reiki are different rooms with different purposes, booked on their own and paid for on their own. Reiki can be a gentle companion to the deeper work of talk therapy, but it never replaces it. If you're working through something tender, therapy is the place for that.
-          </p>
-          <a href="/index.html" class="bridge-link">About the therapy side of my practice &rarr;</a>
-        </div>
-
-        <div class="reiki-fees-note reveal">
-          <h3>About the fee</h3>
-          <p>
-            Reiki is a private-pay offering, separate from therapy and never billed to insurance. Rather than post numbers here, I'd rather walk you through the details in person &mdash; we can sort all of it out in a free 15-minute conversation, the same easy call whether you're curious about Reiki, therapy, or both. No pressure either way.
-          </p>
-        </div>
+    <!-- ============================================================
+         7. ATMOSPHERIC BAND — a breathing pause in the light
+         ============================================================ -->
+    <section class="atmos-band">
+      <img
+        class="atmos-photo"
+        src={withBase('/images/reiki-band.jpg')}
+        alt=""
+        width="1800"
+        height="1200"
+        loading="lazy"
+        aria-hidden="true"
+      />
+      <div class="atmos-scrim" aria-hidden="true"></div>
+      <div class="atmos-content reveal">
+        <p class="atmos-line">No talking required. Nothing to perform. Nothing to fix.<br />Just a deliberate, unhurried hour to be still.</p>
       </div>
     </section>
 
-    <!-- The lantern shelf: what's on the way -->
-    <section class="section section-lg shelf-section">
+    <!-- ============================================================
+         8. REIKI + THERAPY — side by side, two separate rooms
+         ============================================================ -->
+    <section class="section section-lg bridge-section">
       <div class="container">
         <div class="section-heading reveal">
-          <p class="eyebrow">Also Growing Here</p>
-          <h2>On the way</h2>
+          <h2>Reiki and therapy, side by side</h2>
         </div>
-        <p class="shelf-intro reveal">
-          Reiki is one of the more embodied ways I work, beyond the therapy room. One more is on the way &mdash; if it calls to you, mention it when we talk.
-        </p>
 
-        <div class="lantern-shelf">
-          <div class="lantern-card reveal stagger-1">
-            <div class="lantern-card-inner" style="--tilt: 1.5deg;">
-              <span class="lantern-icon" aria-hidden="true"><Seedling /></span>
-              <h3>Annual Retreat</h3>
-              <p class="lantern-nature">A small yearly gathering</p>
-              <p>Once a year, a few days to step away, rest, and renew. Intimate by design, and always a little magical.</p>
-              <span class="soon-chip">Coming soon</span>
+        <div class="bridge-spread reveal">
+          <figure class="bridge-photo">
+            <img
+              src={withBase('/images/reiki-bridge.jpg')}
+              alt="Elizabeth Armstrong relaxing at home in warm lamplight"
+              width="933"
+              height="1400"
+              loading="lazy"
+            />
+          </figure>
+
+          <div class="bridge-panels">
+            <div class="bridge-panel">
+              <h3>The therapy room</h3>
+              <p>If you're working through something tender, therapy is the place for that &mdash; the deeper, collaborative work of talk therapy, booked and paid for on its own.</p>
+              <a href={withBase('/index.html')} class="bridge-link">About the therapy side of my practice</a>
+            </div>
+
+            <span class="kintsugi-seam" aria-hidden="true"></span>
+
+            <div class="bridge-panel">
+              <h3>The Reiki room</h3>
+              <p>Some people see me for both, and that's a beautiful thing &mdash; but they stay separate. Reiki can be a gentle companion to the deeper work, never a replacement for it.</p>
+              <div class="reiki-fees-note">
+                <span class="fees-label">About the fee</span>
+                <p>A private-pay offering, never billed to insurance. Rather than post numbers, I'd rather walk you through it in a free 15-minute call &mdash; the same easy conversation whether you're curious about Reiki, therapy, or both.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Full-bloom CTA: the brightest point on the page -->
+    <!-- ============================================================
+         9. ON THE HORIZON — one offering, on its way
+         ============================================================ -->
+    <section class="section horizon-section">
+      <span class="horizon-line" aria-hidden="true"></span>
+      <span class="horizon-sun" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Also Growing Here</p>
+          <h2>On the horizon</h2>
+        </div>
+        <p class="horizon-intro reveal">
+          Reiki is one of the more embodied ways I work, beyond the therapy room. One more is on the way &mdash; if it calls to you, mention it when we talk.
+        </p>
+
+        <div class="horizon-card reveal">
+          <span class="horizon-corner horizon-corner-tl" aria-hidden="true"><FrameCornerTL /></span>
+          <span class="horizon-corner horizon-corner-tr" aria-hidden="true"><FrameCornerTR /></span>
+          <span class="horizon-corner horizon-corner-bl" aria-hidden="true"><FrameCornerBL /></span>
+          <span class="horizon-corner horizon-corner-br" aria-hidden="true"><FrameCornerBR /></span>
+          <span class="horizon-card-icon" aria-hidden="true"><Seedling /></span>
+          <span class="soon-chip">Coming soon</span>
+          <h3>Annual Retreat</h3>
+          <p class="horizon-card-nature">A small yearly gathering</p>
+          <p>Once a year, a few days to step away, rest, and renew. Intimate by design, and always a little magical.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         10. FULL-BLOOM CTA — sunrise over the horizon, the climax
+         ============================================================ -->
     <section class="bloom-cta">
+      <svg class="cta-sunrise" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="ctaSunFill" cx="50%" cy="100%" r="78%">
+            <stop offset="0%" stop-color="#FFF8EC" />
+            <stop offset="38%" stop-color="#F7DCA6" />
+            <stop offset="100%" stop-color="#EFD3A0" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <circle class="cta-sun-disc" cx="600" cy="360" r="165" fill="url(#ctaSunFill)" />
+        <!-- Soft, blurred ray volume behind the crisp rays -->
+        <g class="cta-rays cta-rays-soft reveal" stroke="#F4CE86" stroke-width="5" stroke-linecap="round">
+          <line x1="600" y1="281" x2="600" y2="110" />
+          <line x1="617" y1="283" x2="661" y2="118" />
+          <line x1="583" y1="283" x2="539" y2="118" />
+          <line x1="632" y1="290" x2="712" y2="150" />
+          <line x1="568" y1="290" x2="488" y2="150" />
+          <line x1="645" y1="300" x2="748" y2="197" />
+          <line x1="555" y1="300" x2="452" y2="197" />
+          <line x1="655" y1="313" x2="769" y2="248" />
+          <line x1="545" y1="313" x2="431" y2="248" />
+          <line x1="662" y1="329" x2="774" y2="298" />
+          <line x1="538" y1="329" x2="426" y2="298" />
+        </g>
+        <!-- Crisp self-drawing god-rays -->
+        <g class="cta-rays reveal" stroke="#F2C879" stroke-width="2.4" stroke-linecap="round">
+          <line x1="600" y1="281" x2="600" y2="110" />
+          <line x1="617" y1="283" x2="661" y2="118" />
+          <line x1="583" y1="283" x2="539" y2="118" />
+          <line x1="632" y1="290" x2="712" y2="150" />
+          <line x1="568" y1="290" x2="488" y2="150" />
+          <line x1="645" y1="300" x2="748" y2="197" />
+          <line x1="555" y1="300" x2="452" y2="197" />
+          <line x1="655" y1="313" x2="769" y2="248" />
+          <line x1="545" y1="313" x2="431" y2="248" />
+          <line x1="662" y1="329" x2="774" y2="298" />
+          <line x1="538" y1="329" x2="426" y2="298" />
+        </g>
+      </svg>
+
       <span class="bloom-vine bloom-vine-left" aria-hidden="true"><CtaVineLeft /></span>
       <span class="bloom-vine bloom-vine-right" aria-hidden="true"><CtaVineRight /></span>
       <span class="bloom-botanical bloom-botanical-1" aria-hidden="true"><HerbSprig /></span>
       <span class="bloom-botanical bloom-botanical-2" aria-hidden="true"><LavenderSprig /></span>
 
       <div class="bloom-cta-content reveal">
-        <span class="bloom-sun" aria-hidden="true"><IconSun /></span>
         <h2>Curious is enough</h2>
         <p>
           Let's have a free 15-minute conversation about what you're looking for &mdash; ask me anything, skeptic questions warmly welcome. No commitment, no pressure, just a place to start.
         </p>
-        <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+        <a href={withBase('/contact.html')} class="btn btn-primary btn-lg bloom-btn">Schedule Your Free Consultation</a>
       </div>
     </section>
 
   </div>
 </BaseLayout>
+
+<!-- Daybreak on scroll — GSAP ScrollTrigger climbs the sun and warms the page,
+     scrubbed to scroll position. Bundled by Astro/Vite. (Mirrors the homepage
+     roots system; ships a static mid-morning fallback under reduced-motion.) -->
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const page = document.querySelector(".reiki-page");
+  const sun = document.querySelector(".daybreak-sun");
+
+  if (page && sun && !prefersReduced) {
+    // The sun climbs from below the hero horizon (low) to high in the sky over
+    // the CTA — one continuous daybreak. Travel spans the viewport and ends high
+    // so it never bleeds onto the footer. Brightens and shrinks as it rises.
+    gsap.fromTo(
+      sun,
+      { y: () => window.innerHeight * 0.78, scale: 1.18, opacity: 0.45 },
+      {
+        y: () => window.innerHeight * 0.04,
+        scale: 0.85,
+        opacity: 0.9,
+        ease: "none",
+        scrollTrigger: {
+          trigger: page,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+
+    // Keep positions honest as fonts/images settle and on resize.
+    window.addEventListener("load", () => ScrollTrigger.refresh());
+  }
+</script>

@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 // Footer component with navigation and contact info
 import { FooterDivider } from '@illustrations/dividers';
 ---
@@ -11,7 +12,7 @@ import { FooterDivider } from '@illustrations/dividers';
   <div class="container">
     <div class="footer-top reveal">
       <div class="footer-brand">
-        <a href="/index.html" class="logo">
+        <a href={withBase('/index.html')} class="logo">
           Elizabeth Armstrong
           <span>LMFT</span>
         </a>
@@ -23,22 +24,22 @@ import { FooterDivider } from '@illustrations/dividers';
       <div class="footer-col">
         <h4>Navigate</h4>
         <ul class="footer-links">
-          <li><a href="/index.html" class="footer-link">Home</a></li>
-          <li><a href="/about.html" class="footer-link">About Me</a></li>
-          <li><a href="/resources.html" class="footer-link">Resources</a></li>
-          <li><a href="/fees.html" class="footer-link">Fees & Insurance</a></li>
-          <li><a href="/faqs.html" class="footer-link">FAQs</a></li>
-          <li><a href="/contact.html" class="footer-link">Contact</a></li>
+          <li><a href={withBase('/index.html')} class="footer-link">Home</a></li>
+          <li><a href={withBase('/about.html')} class="footer-link">About Me</a></li>
+          <li><a href={withBase('/resources.html')} class="footer-link">Resources</a></li>
+          <li><a href={withBase('/fees.html')} class="footer-link">Fees & Insurance</a></li>
+          <li><a href={withBase('/faqs.html')} class="footer-link">FAQs</a></li>
+          <li><a href={withBase('/contact.html')} class="footer-link">Contact</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Ways to Work Together</h4>
         <ul class="footer-links">
-          <li><a href="/index.html#individual" class="footer-link">Individual Therapy</a></li>
-          <li><a href="/index.html#couples" class="footer-link">Couples Therapy</a></li>
-          <li><a href="/index.html#family" class="footer-link">Family Therapy</a></li>
-          <li><a href="/reiki.html" class="footer-link">Reiki</a></li>
+          <li><a href={withBase('/index.html#individual')} class="footer-link">Individual Therapy</a></li>
+          <li><a href={withBase('/index.html#couples')} class="footer-link">Couples Therapy</a></li>
+          <li><a href={withBase('/index.html#family')} class="footer-link">Family Therapy</a></li>
+          <li><a href={withBase('/reiki.html')} class="footer-link">Reiki</a></li>
         </ul>
       </div>
 

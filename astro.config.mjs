@@ -3,9 +3,12 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // ⚠️ PLACEHOLDER production URL — swap to the real domain before launch.
-  // Drives canonical links, Open Graph URLs (BaseLayout), and the sitemap/robots.txt.
-  site: 'https://www.growingbrightertherapy.com',
+  // ⚠️ PREVIEW config — review deploy on GitHub Pages (subpath).
+  // At launch: set `site` to the real domain, set `base` back to '/', remove the
+  // noindex meta in BaseLayout, and restore public/robots.txt to Allow.
+  // `site` + `base` drive canonical links, Open Graph URLs (BaseLayout), and the sitemap.
+  site: 'https://jmiranda3838.github.io',
+  base: '/elizabeth-website',
 
   // Output static HTML files (default behavior)
   output: 'static',

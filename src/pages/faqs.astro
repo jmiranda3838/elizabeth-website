@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { PlusExpand } from "@illustrations/icons";
 ---
@@ -31,7 +32,7 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>The first step is scheduling a free 15-minute consultation. This gives us a chance to talk briefly about what brings you to therapy and whether we might be a good fit. You can request a consultation through my <a href="/contact.html">contact page</a> or by calling (949) 444-3899.</p>
+                <p>The first step is scheduling a free 15-minute consultation. This gives us a chance to talk briefly about what brings you to therapy and whether we might be a good fit. You can request a consultation through my <a href={withBase('/contact.html')}>contact page</a> or by calling (949) 444-3899.</p>
                 <p>If we decide to move forward, we'll find a time for your first full session. I typically have availability within 1-2 weeks.</p>
               </div>
             </div>
@@ -136,7 +137,7 @@ import { PlusExpand } from "@illustrations/icons";
               <div class="faq-answer-content">
                 <p>55-minute session: $150</p>
                 <p>90-minute session: $200</p>
-                <p>I offer a limited number of sliding-scale spots for those who need them. If cost is a barrier, please mention it during our consultation and we can discuss options. For the full breakdown, see my <a href="/fees.html">Fees &amp; Insurance</a> page.</p>
+                <p>I offer a limited number of sliding-scale spots for those who need them. If cost is a barrier, please mention it during our consultation and we can discuss options. For the full breakdown, see my <a href={withBase('/fees.html')}>Fees &amp; Insurance</a> page.</p>
               </div>
             </div>
           </div>
@@ -232,7 +233,7 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>Yes &mdash; I also offer <a href="/reiki.html">Reiki</a>, a gentle energy practice that is separate from therapy: its own kind of session, with its own private-pay fee, never billed to insurance, and never a substitute for medical or psychological care.</p>
+                <p>Yes &mdash; I also offer <a href={withBase('/reiki.html')}>Reiki</a>, a gentle energy practice that is separate from therapy: its own kind of session, with its own private-pay fee, never billed to insurance, and never a substitute for medical or psychological care.</p>
                 <p>Walk-and-talk therapy sessions by the ocean and a small annual retreat are on the way, too &mdash; if either calls to you, mention it when we talk.</p>
               </div>
             </div>
@@ -266,7 +267,7 @@ import { PlusExpand } from "@illustrations/icons";
       <p>
         I'm happy to answer any questions you have. Reach out for a free consultation and we can talk.
       </p>
-      <a href="/contact.html" class="btn btn-primary btn-lg">Get in Touch</a>
+      <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Get in Touch</a>
     </div>
   </section>
 

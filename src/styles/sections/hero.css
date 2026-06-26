@@ -2,7 +2,8 @@
 .hero-botanical {
   position: relative;
   min-height: 100vh;
-  background-image: url('/images/index-hero.jpg');
+  /* background-image is set inline in index.astro via withBase() so it resolves
+     correctly under the GitHub Pages subpath (CSS url() can't read BASE_URL). */
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;

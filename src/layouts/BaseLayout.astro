@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 import "../styles/global.css";
 import Header from "../components/global/Header.astro";
 import Footer from "../components/global/Footer.astro";
@@ -14,7 +15,7 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL("/og-image.jpg", Astro.site);
+const ogImage = new URL(withBase("/og-image.jpg"), Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -23,12 +24,14 @@ const ogImage = new URL("/og-image.jpg", Astro.site);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
+  <!-- ⚠️ PREVIEW ONLY — keep this site out of search results while Elizabeth reviews. Remove at launch. -->
+  <meta name="robots" content="noindex, nofollow">
   <title>{title}</title>
   <link rel="canonical" href={canonicalURL}>
 
   <!-- Icons & theme -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')}>
+  <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')}>
   <meta name="theme-color" content="#FDF2EF">
 
   <!-- Open Graph -->
@@ -67,14 +70,14 @@ const ogImage = new URL("/og-image.jpg", Astro.site);
   <Footer />
 
   <!-- JavaScript -->
-  <script is:inline src="/scripts/mobile-nav.js"></script>
-  <script is:inline src="/scripts/faq-accordion.js"></script>
-  <script is:inline src="/scripts/smooth-scroll.js"></script>
-  <script is:inline src="/scripts/header-scroll.js"></script>
-  <script is:inline src="/scripts/form-validation.js"></script>
-  <script is:inline src="/scripts/scroll-reveal.js"></script>
-  <script is:inline src="/scripts/constellation.js"></script>
-  <script is:inline src="/scripts/conduit.js"></script>
-  <script is:inline src="/scripts/library.js"></script>
+  <script is:inline src={withBase('/scripts/mobile-nav.js')}></script>
+  <script is:inline src={withBase('/scripts/faq-accordion.js')}></script>
+  <script is:inline src={withBase('/scripts/smooth-scroll.js')}></script>
+  <script is:inline src={withBase('/scripts/header-scroll.js')}></script>
+  <script is:inline src={withBase('/scripts/form-validation.js')}></script>
+  <script is:inline src={withBase('/scripts/scroll-reveal.js')}></script>
+  <script is:inline src={withBase('/scripts/constellation.js')}></script>
+  <script is:inline src={withBase('/scripts/conduit.js')}></script>
+  <script is:inline src={withBase('/scripts/library.js')}></script>
 </body>
 </html>

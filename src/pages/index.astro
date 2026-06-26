@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig, InitialFlourish, PageBotanical } from "@illustrations/botanicals";
 import { Garland, BookSpine, RootsSystem, GateFrame, GateDoorLeft, GateDoorRight } from "@illustrations/scenes";
@@ -16,7 +17,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
   description="Collaborative, kind narrative therapy for individuals, couples, and families — in Orange County and online across California. A warm, non-judgmental space where you are the expert on your own life."
 >
   <!-- Hero Section - Full Bleed Photo with Botanicals -->
-  <section class="hero-botanical">
+  <section class="hero-botanical" style={`background-image: url(${withBase('/images/index-hero.jpg')});`}>
     <!-- Overlay for text readability -->
     <div class="hero-overlay"></div>
 
@@ -183,7 +184,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I also offer Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy and honestly explained &mdash; and a small annual retreat is on the way.
         </p>
       </div>
-      <a href="/reiki.html" class="btn btn-outline">Learn about Reiki</a>
+      <a href={withBase('/reiki.html')} class="btn btn-outline">Learn about Reiki</a>
     </div>
   </section>
 
@@ -263,7 +264,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             <FrameCornerBL class="frame-corner frame-bl" />
             <FrameCornerBR class="frame-corner frame-br" />
           </div>
-          <img src="/images/headshot.jpg" alt="Elizabeth Armstrong, LMFT" class="approach-headshot" width="1200" height="1800" loading="lazy" decoding="async">
+          <img src={withBase('/images/headshot.jpg')} alt="Elizabeth Armstrong, LMFT" class="approach-headshot" width="1200" height="1800" loading="lazy" decoding="async">
         </div>
       </div>
     </div>
@@ -370,7 +371,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         <div class="roots-illustration">
           <figure class="roots-figure">
             <img
-              src="/images/therapy-roots.jpg"
+              src={withBase('/images/therapy-roots.jpg')}
               alt="Elizabeth Armstrong seated in a garden"
               class="roots-photo-img"
               width="1800"
@@ -697,7 +698,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
       <p class="gate-eyebrow">The Garden Awaits</p>
       <h2 class="gate-title">Ready to step through?</h2>
       <p class="gate-description">I offer a free 15-minute consultation to answer your questions and see if we're a good fit. There's no pressure&mdash;just a conversation about what you need.</p>
-      <a href="/contact.html" class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
+      <a href={withBase('/contact.html')} class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
     </div>
   </section>
 </BaseLayout>

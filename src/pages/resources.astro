@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/resources.css";
 import { HerbSprig, LavenderSprig, Wildflower, LeafBranch, PressedFlower } from "@illustrations/botanicals";
@@ -71,7 +72,7 @@ import { ArrowRight } from "@illustrations/icons";
           <span class="shelf-flower" aria-hidden="true"><PressedFlower /></span>
 
           <figure class="shelf-frame">
-            <img src="/images/resources-shelf-park.jpg" alt="Elizabeth Armstrong standing in a sunlit park, smiling warmly" width="800" height="533" decoding="async" />
+            <img src={withBase('/images/resources-shelf-park.jpg')} alt="Elizabeth Armstrong standing in a sunlit park, smiling warmly" width="800" height="533" decoding="async" />
           </figure>
 
           <div class="shelf-book" style="--book-w: 38px; --book-h: 196px; --book-c: var(--misty-blue);" aria-hidden="true">
@@ -104,7 +105,7 @@ import { ArrowRight } from "@illustrations/icons";
       <div class="welcome-desk-row">
         <div class="welcome-desk-photo reveal">
           <figure class="welcome-desk-snapshot" style="--tilt: -2.5deg;">
-            <img src="/images/resources-desk-bench.jpg" alt="Elizabeth Armstrong on a park bench, chin in hand, smiling" width="533" height="800" loading="lazy" decoding="async" />
+            <img src={withBase('/images/resources-desk-bench.jpg')} alt="Elizabeth Armstrong on a park bench, chin in hand, smiling" width="533" height="800" loading="lazy" decoding="async" />
             <figcaption class="welcome-desk-caption">your librarian</figcaption>
           </figure>
         </div>
@@ -326,10 +327,10 @@ import { ArrowRight } from "@illustrations/icons";
           <p>
             If something on this shelf resonated &mdash; or you&rsquo;d simply like company for the next chapter &mdash; I offer a free 15-minute consultation. No pressure, and no late fees.
           </p>
-          <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+          <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
           <div class="lending-signoff">
             <figure class="lending-patron" style="--tilt: -4deg;">
-              <img src="/images/resources-cta-patron.jpg" alt="Elizabeth Armstrong smiling — the photo on her own library card" width="400" height="600" loading="lazy" decoding="async" />
+              <img src={withBase('/images/resources-cta-patron.jpg')} alt="Elizabeth Armstrong smiling — the photo on her own library card" width="400" height="600" loading="lazy" decoding="async" />
               <figcaption class="lending-patron-label">patron</figcaption>
             </figure>
             <span class="lending-signature">&mdash; Elizabeth</span>

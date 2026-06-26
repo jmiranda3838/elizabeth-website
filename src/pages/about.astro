@@ -1,4 +1,5 @@
 ---
+import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { IconCollaborative, IconSeedling, IconCompass, IconGraduation, IconLicense, IconTraining, IconHeart } from "@illustrations/icons";
 import { HerbSprig, LavenderSprig, Wildflower, LeafBranch } from "@illustrations/botanicals";
@@ -32,7 +33,7 @@ import "@styles/pages/about.css";
           <div class="board-item-inner" style="--tilt: 4deg;">
             <figure class="polaroid">
               <span class="board-pin pin-clay" aria-hidden="true"></span>
-              <img src="/images/about-hero-fence.jpg" alt="Elizabeth in a wide-brimmed hat, looking down and smiling near a wooden fence" width="1600" height="1066" />
+              <img src={withBase('/images/about-hero-fence.jpg')} alt="Elizabeth in a wide-brimmed hat, looking down and smiling near a wooden fence" width="1600" height="1066" />
               <figcaption class="polaroid-caption">slow mornings</figcaption>
             </figure>
           </div>
@@ -43,7 +44,7 @@ import "@styles/pages/about.css";
           <div class="board-item-inner" style="--tilt: -5deg;">
             <figure class="polaroid">
               <span class="washi-tape washi-top" aria-hidden="true"></span>
-              <img src="/images/about-hero-couch.jpg" alt="Elizabeth seated on a couch in warm lamplight, relaxed and smiling" width="1066" height="1600" />
+              <img src={withBase('/images/about-hero-couch.jpg')} alt="Elizabeth seated on a couch in warm lamplight, relaxed and smiling" width="1066" height="1600" />
               <figcaption class="polaroid-caption">at home in the heart</figcaption>
             </figure>
           </div>
@@ -139,7 +140,7 @@ import "@styles/pages/about.css";
         <div class="story-polaroid-wrap reveal-right">
           <figure class="polaroid story-polaroid" style="--tilt: 3deg;">
             <span class="washi-tape washi-top" aria-hidden="true"></span>
-            <img src="/images/about-story-bench.jpg" alt="Elizabeth sitting on a park bench outdoors with a warm smile" width="1066" height="1600" loading="lazy" decoding="async" />
+            <img src={withBase('/images/about-story-bench.jpg')} alt="Elizabeth sitting on a park bench outdoors with a warm smile" width="1066" height="1600" loading="lazy" decoding="async" />
             <figcaption class="polaroid-caption">come say hi</figcaption>
           </figure>
         </div>
@@ -210,7 +211,7 @@ import "@styles/pages/about.css";
           <span class="board-pin pin-peach" aria-hidden="true"></span>
           <h4>What I draw from</h4>
           <p>
-            My home base is <strong>narrative therapy</strong>, which honors the stories we tell about ourselves and the bigger cultural and social forces that shape them. We are multistoried — and we get to keep writing. I weave in <strong>mindfulness</strong> and person-centered warmth, all through a feminist lens. Beyond the office, I also offer <a href="/index.html#services"><strong>walk-and-talk sessions</strong></a> along the ocean and &mdash; separate from therapy &mdash; <a href="/reiki.html"><strong>Reiki</strong></a> and an annual retreat, for those drawn to something more embodied.
+            My home base is <strong>narrative therapy</strong>, which honors the stories we tell about ourselves and the bigger cultural and social forces that shape them. We are multistoried — and we get to keep writing. I weave in <strong>mindfulness</strong> and person-centered warmth, all through a feminist lens. Beyond the office, I also offer <a href={withBase('/index.html#services')}><strong>walk-and-talk sessions</strong></a> along the ocean and &mdash; separate from therapy &mdash; <a href={withBase('/reiki.html')}><strong>Reiki</strong></a> and an annual retreat, for those drawn to something more embodied.
           </p>
         </div>
       </div>
@@ -219,7 +220,7 @@ import "@styles/pages/about.css";
 
   <!-- 4. Photo Band: golden quote -->
   <section class="photo-band">
-    <img class="photo-band-img" src="/images/about-band-eucalyptus.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async" />
+    <img class="photo-band-img" src={withBase('/images/about-band-eucalyptus.jpg')} alt="" width="2000" height="1333" loading="lazy" decoding="async" />
     <div class="photo-band-content reveal">
       <span class="photo-band-quotemark" aria-hidden="true"><QuoteMark /></span>
       <p class="band-quote">toward a lighter, brighter, more joyful life</p>
@@ -291,14 +292,14 @@ import "@styles/pages/about.css";
           <div class="hung-photo reveal stagger-1">
             <figure class="polaroid" style="--tilt: -3deg; --sway-delay: 0s;">
               <span class="clothespin" aria-hidden="true"><Clothespin /></span>
-              <img src="/images/about-dogs-greyhound.jpg" alt="Elizabeth at home on the rug with Leonard Sprinkles, Meatie, and Otis — her greyhound and two dachshunds" width="1066" height="1600" loading="lazy" decoding="async" />
+              <img src={withBase('/images/about-dogs-greyhound.jpg')} alt="Elizabeth at home on the rug with Leonard Sprinkles, Meatie, and Otis — her greyhound and two dachshunds" width="1066" height="1600" loading="lazy" decoding="async" />
               <figcaption class="polaroid-caption">the whole pack</figcaption>
             </figure>
           </div>
           <div class="hung-photo reveal stagger-2">
             <figure class="polaroid photo-warmed" style="--tilt: 4deg; --sway-delay: 2.2s;">
               <span class="clothespin" aria-hidden="true"><Clothespin /></span>
-              <img src="/images/about-dogs-couch.jpg" alt="Elizabeth laughing on the couch while hugging a dachshund" width="1066" height="1600" loading="lazy" decoding="async" />
+              <img src={withBase('/images/about-dogs-couch.jpg')} alt="Elizabeth laughing on the couch while hugging a dachshund" width="1066" height="1600" loading="lazy" decoding="async" />
               <figcaption class="polaroid-caption">my favorite days</figcaption>
             </figure>
           </div>
@@ -317,7 +318,7 @@ import "@styles/pages/about.css";
           <p>
             I offer a free 15-minute consultation — a chance to talk about what you're looking for and whether I might be the right person to walk alongside you for a while. It would be a privilege to be invited into your story.
           </p>
-          <a href="/contact.html" class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+          <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
           <span class="cta-signature">&mdash; Elizabeth</span>
         </div>
         <span class="cta-sprig" aria-hidden="true"><LeafBranch /></span>

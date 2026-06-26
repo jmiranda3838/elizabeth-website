@@ -1,4 +1,6 @@
+# ⚠️ PREVIEW ONLY — site is in review; keep crawlers out. Restore "Allow: /" at launch.
+# Note: under a GitHub Pages subpath this file is served at /elizabeth-website/robots.txt,
+# which crawlers do NOT read (they look at the domain root). The real protection is the
+# <meta name="robots" content="noindex, nofollow"> tag in BaseLayout.astro.
 User-agent: *
-Allow: /
-
-Sitemap: https://www.growingbrightertherapy.com/sitemap-index.xml
+Disallow: /
