@@ -30,7 +30,7 @@ export default {
     }
 
     try {
-      if (request.method === "GET") return await listComments(env, cors);
+      if (request.method === "GET") return await listComments(request, env, cors);
       if (request.method === "POST") return await createComment(request, env, cors, origin);
       return json({ ok: false, error: "method not allowed" }, 405, cors);
     } catch (e) {
@@ -51,7 +51,16 @@ function pickOrigin(request, env) {
   const list = allowedOrigins(env);
   const reqOrigin = request.headers.get("Origin") || "";
   if (reqOrigin && list.indexOf(reqOrigin) !== -1) return reqOrigin;
-  return list[0] || "*";
+  return list[0] || "null";
+}
+
+// Shared gate for POST and GET: allowed origin/referer + shared key.
+function gate(request, env, cors) {
+  if (!isAllowed(request, env)) return json({ ok: false, error: "forbidden origin" }, 403, cors);
+  if ((request.headers.get("X-Feedback-Key") || "") !== env.SHARED_KEY) {
+    return json({ ok: false, error: "bad key" }, 403, cors);
+  }
+  return null;
 }
 
 function isAllowed(request, env) {
@@ -106,10 +115,8 @@ function trim(s, n) {
 
 async function createComment(request, env, cors, origin) {
   // 1) security gate
-  if (!isAllowed(request, env)) return json({ ok: false, error: "forbidden origin" }, 403, cors);
-  if ((request.headers.get("X-Feedback-Key") || "") !== env.SHARED_KEY) {
-    return json({ ok: false, error: "bad key" }, 403, cors);
-  }
+  var blocked = gate(request, env, cors);
+  if (blocked) return blocked;
 
   // 2) rate limit (best-effort; guarded in case the binding is absent)
   if (env.RATE_LIMITER && typeof env.RATE_LIMITER.limit === "function") {
@@ -203,8 +210,7 @@ async function createComment(request, env, cors, origin) {
     }),
   });
   if (!issRes.ok) {
-    const detail = await issRes.text();
-    return json({ ok: false, error: "issue create failed " + issRes.status, detail }, 502, cors);
+    return json({ ok: false, error: "issue create failed", status: issRes.status }, 502, cors);
   }
   const issue = await issRes.json();
 
@@ -259,7 +265,9 @@ function buildIssueBody(b, rawUrl, meta) {
 
 /* ----------------------------- GET /comments ----------------------------- */
 
-async function listComments(env, cors) {
+async function listComments(request, env, cors) {
+  var blocked = gate(request, env, cors);
+  if (blocked) return blocked;
   const out = [];
   let page = 1;
   for (;;) {
@@ -276,8 +284,7 @@ async function listComments(env, cors) {
       { headers: ghHeaders(env) }
     );
     if (!res.ok) {
-      const detail = await res.text();
-      return json({ ok: false, error: "list failed " + res.status, detail }, 502, cors);
+      return json({ ok: false, error: "list failed", status: res.status }, 502, cors);
     }
     const arr = await res.json();
     if (!Array.isArray(arr) || arr.length === 0) break;
@@ -311,7 +318,9 @@ async function listComments(env, cors) {
 
 function parseMeta(body) {
   if (!body) return null;
-  const m = /```json\s*([\s\S]*?)```/.exec(body);
+  // Anchor to the sentinel we emit, so a comment containing its own ```json fence
+  // can't forge the metadata block.
+  var m = /<!-- feedback-meta -->\s*```json\s*([\s\S]*?)```/.exec(body);
   if (!m) return null;
   try {
     return JSON.parse(m[1].trim());

@@ -23,12 +23,16 @@
   var H2C_PATH = "/scripts/vendor/html2canvas.min.js";
   var LS_FLAG = "ea_review";
   var LS_NAME = "ea_review_name";
-  var MAX_SHOT_BYTES = 3000000;
+  var MAX_SHOT_BYTES = 3500000;
 
   // Derive the base URL prefix (origin + base path) from this script's own src, so the
   // vendored html2canvas loads correctly under /elizabeth-website now and at / after launch.
   var SELF_SRC = (document.currentScript && document.currentScript.src) || "";
-  var BASE = SELF_SRC.replace(/\/scripts\/review-comments\.js.*$/, "");
+  if (!SELF_SRC) {
+    var selfTag = document.querySelector('script[src*="scripts/review-comments.js"]');
+    if (selfTag) SELF_SRC = selfTag.src;
+  }
+  var BASE = SELF_SRC.replace(/\/scripts\/review-comments\.js(?:[?#].*)?$/, "");
   function withBase(p) {
     return BASE + (p.charAt(0) === "/" ? p : "/" + p);
   }
@@ -95,6 +99,17 @@
   }
   function isOwnUI(node) {
     return !!(node && node.closest && node.closest("#ea-review-root"));
+  }
+  // Only navigate to same-origin http(s) URLs — neutralizes any javascript:/cross-origin
+  // value that could reach a deep link via the (public) backend.
+  function safeNavUrl(u) {
+    try {
+      var x = new URL(u, location.origin);
+      if ((x.protocol === "http:" || x.protocol === "https:") && x.origin === location.origin) {
+        return x.href;
+      }
+    } catch (e) {}
+    return null;
   }
   function relTime(iso) {
     if (!iso) return "";
@@ -480,7 +495,11 @@
         return Promise.race([p, timeout]);
       })
       .then(function (dataUrl) {
-        if (dataUrl && dataUrl.length > MAX_SHOT_BYTES * 1.37) return null; // too big -> drop
+        if (dataUrl) {
+          var comma = dataUrl.indexOf(",");
+          var b64len = comma >= 0 ? dataUrl.length - comma - 1 : dataUrl.length;
+          if (b64len * 0.75 > MAX_SHOT_BYTES) return null; // exceeds worker cap -> drop, still submit
+        }
         return dataUrl || null;
       })
       .catch(function () {
@@ -670,8 +689,8 @@
     var rowsEls = body.querySelectorAll(".ea-row");
     for (var i = 0; i < rowsEls.length; i++) {
       rowsEls[i].addEventListener("click", function () {
-        var link = this.getAttribute("data-link");
-        if (link) location.href = link;
+        var safe = safeNavUrl(this.getAttribute("data-link"));
+        if (safe) location.href = safe;
       });
     }
   }
