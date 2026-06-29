@@ -4,11 +4,7 @@
   overflow: visible;
   /* Light section: gentle sand-to-paper wash that settles into the
      testimonials (warm-paper) below, restoring the page's light/dark rhythm. */
-  background: linear-gradient(
-    to bottom,
-    var(--soft-sand) 0%,
-    var(--warm-paper) 100%
-  );
+  background: linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);
 }
 
 /* Botanical vine dividers - moon journey section */
@@ -134,7 +130,7 @@
 
 /* Connecting line */
 .steps-grid::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 40px;
   left: calc(16.67% + 30px);

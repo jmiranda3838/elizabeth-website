@@ -4,41 +4,41 @@
  * One book out at a time; Escape or clicking elsewhere reshelves it.
  * Inert on every page without a .shelf-lend-wrap.
  */
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
-  var wraps = document.querySelectorAll('.shelf-lend-wrap');
+  var wraps = document.querySelectorAll(".shelf-lend-wrap");
   if (!wraps.length) return;
 
   function reshelve(wrap) {
-    wrap.classList.remove('is-pulled');
-    var btn = wrap.querySelector('.shelf-book--lend');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
+    wrap.classList.remove("is-pulled");
+    var btn = wrap.querySelector(".shelf-book--lend");
+    if (btn) btn.setAttribute("aria-expanded", "false");
   }
 
   function reshelveAll() {
     wraps.forEach(reshelve);
   }
 
-  wraps.forEach(function(wrap) {
-    var btn = wrap.querySelector('.shelf-book--lend');
+  wraps.forEach(function (wrap) {
+    var btn = wrap.querySelector(".shelf-book--lend");
     if (!btn) return;
 
-    btn.addEventListener('click', function() {
-      var wasPulled = wrap.classList.contains('is-pulled');
+    btn.addEventListener("click", function () {
+      var wasPulled = wrap.classList.contains("is-pulled");
       reshelveAll();
       if (!wasPulled) {
-        wrap.classList.add('is-pulled');
-        btn.setAttribute('aria-expanded', 'true');
+        wrap.classList.add("is-pulled");
+        btn.setAttribute("aria-expanded", "true");
       }
     });
   });
 
-  document.addEventListener('click', function(event) {
-    if (!event.target.closest('.shelf-lend-wrap')) reshelveAll();
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".shelf-lend-wrap")) reshelveAll();
   });
 
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') reshelveAll();
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") reshelveAll();
   });
 })();

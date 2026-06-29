@@ -3,15 +3,58 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 100 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M50 180 Q50 120 50 60" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M50 140 Q30 130 20 140 Q30 145 50 140" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M50 140 Q70 130 80 140 Q70 145 50 140" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M50 110 Q30 100 20 110 Q30 115 50 110" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M50 110 Q70 100 80 110 Q70 115 50 110" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M50 80 Q35 70 25 80 Q35 85 50 80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M50 80 Q65 70 75 80 Q65 85 50 80" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <ellipse cx="50" cy="55" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none"/>
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 100 180"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M50 180 Q50 120 50 60"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 140 Q30 130 20 140 Q30 145 50 140"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 140 Q70 130 80 140 Q70 145 50 140"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 110 Q30 100 20 110 Q30 115 50 110"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 110 Q70 100 80 110 Q70 115 50 110"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 80 Q35 70 25 80 Q35 85 50 80"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M50 80 Q65 70 75 80 Q65 85 50 80"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <ellipse cx="50" cy="55" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none"
+  ></ellipse>
 </svg>

@@ -3,11 +3,7 @@
    colliding with the approach section's .grimoire-section in approach.css) */
 
 .promises-section {
-  background: linear-gradient(
-    to bottom,
-    var(--soft-sand) 0%,
-    var(--warm-paper) 100%
-  );
+  background: linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);
   padding: var(--space-24) var(--space-4);
   display: flex;
   justify-content: center;
@@ -69,7 +65,7 @@
 }
 
 .page-script {
-  font-family: 'Great Vibes', cursive;
+  font-family: "Great Vibes", cursive;
   font-size: var(--text-3xl);
   font-weight: 400;
   color: var(--espresso);

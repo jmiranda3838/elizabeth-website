@@ -13,16 +13,16 @@
    1. PAGE TOKENS
    ============================================ */
 .library-page {
-  --shelf-wood: #C9AA8C;       /* warm oak, kin to --dusty-peach */
-  --shelf-wood-deep: #B08F73;  /* shelf underside / cabinet shadow */
-  --library-cream: #FDFAF2;    /* card stock */
-  --sun-pool: rgba(243, 220, 173, 0.4);  /* afternoon light wash */
-  --stamp-ink: var(--warm-clay);         /* rubber-stamp clay red */
+  --shelf-wood: #c9aa8c; /* warm oak, kin to --dusty-peach */
+  --shelf-wood-deep: #b08f73; /* shelf underside / cabinet shadow */
+  --library-cream: #fdfaf2; /* card stock */
+  --sun-pool: rgba(243, 220, 173, 0.4); /* afternoon light wash */
+  --stamp-ink: var(--warm-clay); /* rubber-stamp clay red */
   --card-rule: rgba(125, 144, 148, 0.24); /* misty-blue ruled lines */
-  --pocket-kraft: #EBDCC6;     /* kraft-paper card pocket */
+  --pocket-kraft: #ebdcc6; /* kraft-paper card pocket */
   --ribbon-rose: var(--muted-rose);
-  --spine-ink: #2F332C;        /* dark ink for lendable spine titles (AA on their colors) */
-  --brass: #A98F62;            /* catalog drawer hardware */
+  --spine-ink: #2f332c; /* dark ink for lendable spine titles (AA on their colors) */
+  --brass: #a98f62; /* catalog drawer hardware */
 }
 
 /* Screen-reader-only helper (not in global utilities yet) */
@@ -57,7 +57,7 @@
 
 /* Diagonal pool of window light */
 .library-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 4%;
@@ -80,21 +80,43 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #FBEED9, var(--dusty-peach) 75%, transparent);
+  background: radial-gradient(circle at 35% 30%, #fbeed9, var(--dusty-peach) 75%, transparent);
   box-shadow: 0 0 8px 2px rgba(238, 196, 134, 0.35);
   opacity: 0.55;
   animation: moteDrift 16s ease-in-out infinite alternate;
   animation-delay: var(--mote-delay, 0s);
 }
 
-.library-mote:nth-child(1) { top: 22%; left: 58%; }
-.library-mote:nth-child(2) { top: 38%; left: 70%; width: 3px; height: 3px; }
-.library-mote:nth-child(3) { top: 16%; left: 78%; width: 4px; height: 4px; }
-.library-mote:nth-child(4) { top: 48%; left: 64%; width: 3px; height: 3px; }
+.library-mote:nth-child(1) {
+  top: 22%;
+  left: 58%;
+}
+.library-mote:nth-child(2) {
+  top: 38%;
+  left: 70%;
+  width: 3px;
+  height: 3px;
+}
+.library-mote:nth-child(3) {
+  top: 16%;
+  left: 78%;
+  width: 4px;
+  height: 4px;
+}
+.library-mote:nth-child(4) {
+  top: 48%;
+  left: 64%;
+  width: 3px;
+  height: 3px;
+}
 
 @keyframes moteDrift {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(22px, 30px, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(22px, 30px, 0);
+  }
 }
 
 .library-hero-content {
@@ -180,7 +202,7 @@
 /* Gilded bands near head and tail */
 .shelf-book::before,
 .shelf-book::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 4px;
   right: 4px;
@@ -189,8 +211,12 @@
   box-shadow: 0 3px 0 rgba(253, 250, 242, 0.35);
 }
 
-.shelf-book::before { top: 12px; }
-.shelf-book::after { bottom: 14px; }
+.shelf-book::before {
+  top: 12px;
+}
+.shelf-book::after {
+  bottom: 14px;
+}
 
 .shelf-book-title {
   position: absolute;
@@ -276,7 +302,7 @@
       var(--card-rule) 23px,
       var(--card-rule) 24px
     ),
-    linear-gradient(135deg, var(--library-cream), #FAF5E9);
+    linear-gradient(135deg, var(--library-cream), #faf5e9);
   border: 1px solid rgba(208, 180, 166, 0.55);
   border-radius: 2px;
   box-shadow: 0 6px 18px rgba(96, 102, 90, 0.18);
@@ -289,7 +315,10 @@
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    visibility var(--transition-base);
   z-index: 6;
 }
 
@@ -335,8 +364,12 @@
   height: auto;
 }
 
-.shelf-bookend-left { margin-right: var(--space-3); }
-.shelf-bookend-right { margin-left: var(--space-3); }
+.shelf-bookend-left {
+  margin-right: var(--space-3);
+}
+.shelf-bookend-right {
+  margin-left: var(--space-3);
+}
 
 /* A framed photo of Elizabeth standing among the books,
    in the same wood as the plank. Static lean follows the
@@ -351,7 +384,9 @@
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 9px),
     linear-gradient(160deg, var(--shelf-wood) 0%, var(--shelf-wood-deep) 100%);
   border-radius: 2px;
-  box-shadow: 0 2px 5px rgba(96, 102, 90, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 2px 5px rgba(96, 102, 90, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transform: rotate(-1.5deg);
   transform-origin: bottom center;
 }
@@ -381,7 +416,7 @@
 }
 
 .shelf-plank::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 6px;
   right: 6px;
@@ -459,7 +494,7 @@
       var(--card-rule) 23px,
       var(--card-rule) 24px
     ),
-    linear-gradient(135deg, var(--library-cream), #FAF5E9);
+    linear-gradient(135deg, var(--library-cream), #faf5e9);
   border: 1px solid rgba(208, 180, 166, 0.5);
   border-radius: 2px;
   box-shadow: 0 3px 10px rgba(60, 48, 40, 0.14);
@@ -483,7 +518,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Great Vibes', cursive;
+  font-family: "Great Vibes", cursive;
   font-size: var(--text-lg);
   color: var(--slate-olive);
 }
@@ -527,7 +562,7 @@
       var(--card-rule) 27px,
       var(--card-rule) 28px
     ),
-    linear-gradient(135deg, var(--library-cream) 0%, #FAF5EA 100%);
+    linear-gradient(135deg, var(--library-cream) 0%, #faf5ea 100%);
   border: 1px solid rgba(208, 180, 166, 0.55);
   border-radius: 3px;
   box-shadow:
@@ -643,7 +678,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-5) var(--space-10);
-  background: #FFFDF8;
+  background: #fffdf8;
   border: 1px solid rgba(150, 172, 160, 0.4);
   border-radius: 2px 2px 0 0;
   box-shadow: 0 2px 6px rgba(96, 102, 90, 0.12);
@@ -655,7 +690,9 @@
   color: var(--text-primary);
   text-decoration: none;
   white-space: nowrap;
-  transition: transform var(--transition-base), color var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    color var(--transition-base);
 }
 
 .checkout-link svg {
@@ -677,14 +714,14 @@
 
 /* Pocket front, drawn over the card's lower half */
 .checkout-pocket::after {
-  content: '';
+  content: "";
   position: absolute;
   left: calc(-1 * var(--space-6));
   right: calc(-1 * var(--space-6));
   top: 34px;
   bottom: calc(-1 * var(--space-6));
   z-index: 2;
-  background: linear-gradient(180deg, var(--pocket-kraft) 0%, #E3D2B8 100%);
+  background: linear-gradient(180deg, var(--pocket-kraft) 0%, #e3d2b8 100%);
   clip-path: polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%);
   box-shadow: inset 0 4px 6px -3px rgba(96, 102, 90, 0.3);
   pointer-events: none;
@@ -708,7 +745,11 @@
   left: 16%;
   width: 48px;
   height: 130px;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--ribbon-rose) 88%, white) 0%, var(--ribbon-rose) 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ribbon-rose) 88%, white) 0%,
+    var(--ribbon-rose) 100%
+  );
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), 50% 100%, 0 calc(100% - 16px));
   box-shadow: 0 4px 10px rgba(96, 102, 90, 0.18);
   opacity: 0.9;
@@ -731,7 +772,7 @@
 }
 
 .bookmark-quote {
-  font-family: 'Great Vibes', cursive;
+  font-family: "Great Vibes", cursive;
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
   line-height: 1.35;
   color: var(--warm-clay);
@@ -756,7 +797,11 @@
 .bookmark-band--alt .bookmark-ribbon {
   left: auto;
   right: 16%;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--sage) 88%, white) 0%, var(--sage) 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--sage) 88%, white) 0%,
+    var(--sage) 100%
+  );
 }
 
 .bookmark-band--alt .bookmark-flower {
@@ -805,10 +850,12 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
-  background: linear-gradient(180deg, #D5B898 0%, #C7A685 100%);
+  background: linear-gradient(180deg, #d5b898 0%, #c7a685 100%);
   border: 1px solid rgba(96, 70, 50, 0.25);
   border-radius: var(--radius-sm);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 4px rgba(60, 48, 40, 0.15);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 2px 4px rgba(60, 48, 40, 0.15);
   cursor: pointer;
   list-style: none;
   transition: transform var(--transition-fast);
@@ -887,7 +934,7 @@
       var(--card-rule) 25px,
       var(--card-rule) 26px
     ),
-    linear-gradient(135deg, var(--library-cream), #FAF5E9);
+    linear-gradient(135deg, var(--library-cream), #faf5e9);
   border: 1px solid rgba(208, 180, 166, 0.5);
   border-radius: 2px;
   box-shadow: 0 3px 10px rgba(60, 48, 40, 0.14);
@@ -1063,7 +1110,7 @@
       var(--card-rule) 31px,
       var(--card-rule) 32px
     ),
-    linear-gradient(135deg, var(--library-cream) 0%, #FAF5EA 100%);
+    linear-gradient(135deg, var(--library-cream) 0%, #faf5ea 100%);
   border: 1px solid rgba(208, 180, 166, 0.55);
   border-radius: 3px;
   box-shadow:
@@ -1104,7 +1151,7 @@
 
 .lending-signature {
   display: block;
-  font-family: 'Great Vibes', cursive;
+  font-family: "Great Vibes", cursive;
   font-size: 1.9rem;
   color: var(--warm-clay);
   margin-top: var(--space-6);
@@ -1128,7 +1175,7 @@
   width: 108px;
   margin: 0;
   padding: 6px 6px 4px;
-  background: #FFFDF8;
+  background: #fffdf8;
   border: 1px solid rgba(150, 172, 160, 0.4);
   border-radius: 2px;
   box-shadow: 0 2px 6px rgba(96, 102, 90, 0.18);
@@ -1204,10 +1251,20 @@
     margin-right: auto;
   }
 
-  .bookmark-ribbon { left: 7%; }
-  .bookmark-band--alt .bookmark-ribbon { left: auto; right: 7%; }
-  .bookmark-flower { right: 6%; }
-  .bookmark-band--alt .bookmark-flower { right: auto; left: 6%; }
+  .bookmark-ribbon {
+    left: 7%;
+  }
+  .bookmark-band--alt .bookmark-ribbon {
+    left: auto;
+    right: 7%;
+  }
+  .bookmark-flower {
+    right: 6%;
+  }
+  .bookmark-band--alt .bookmark-flower {
+    right: auto;
+    left: 6%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1234,8 +1291,12 @@
     padding: var(--space-8) var(--space-6) var(--space-6);
   }
 
-  .lending-sprig-left { left: -18px; }
-  .lending-sprig-right { right: -16px; }
+  .lending-sprig-left {
+    left: -18px;
+  }
+  .lending-sprig-right {
+    right: -16px;
+  }
 }
 
 @media (max-width: 600px) {

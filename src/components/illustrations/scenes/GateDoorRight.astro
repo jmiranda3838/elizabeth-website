@@ -6,23 +6,40 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 800 400" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 800 400"
+  fill="none"
+  preserveAspectRatio="xMidYMid meet"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <!-- Translucent panel so the door reads as substance and softly catches the
        garden light; styled (fill) from garden-gate.css via .gate-door-panel. -->
-  <rect class="gate-door-panel" x="420" y="100" width="290" height="300" rx="4"/>
+  <rect class="gate-door-panel" x="420" y="100" width="290" height="300" rx="4"></rect>
 
-  <rect x="420" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"/>
+  <rect x="420" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"
+  ></rect>
   <!-- Vertical bars -->
-  <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"/>
-  <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"/>
-  <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"/>
-  <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"/>
+  <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+  <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+  <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+  <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"></line>
   <!-- Horizontal rails -->
-  <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"/>
-  <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"/>
+  <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"></line>
+  <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"></line>
   <!-- Decorative scrollwork -->
-  <path d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-  <path d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
+  <path
+    d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150"
+    stroke="currentColor"
+    stroke-width="0.8"
+    fill="none"></path>
+  <path
+    d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150"
+    stroke="currentColor"
+    stroke-width="0.8"
+    fill="none"></path>
 </svg>

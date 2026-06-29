@@ -96,7 +96,9 @@
   background-color: var(--warm-paper);
   border: var(--border-thin);
   border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .form-input:focus,
@@ -279,7 +281,8 @@ select.form-input {
 }
 
 @keyframes candleFlicker {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     transform: scale(1);
   }
@@ -425,7 +428,8 @@ select.form-input {
 }
 
 @keyframes floatGentle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {

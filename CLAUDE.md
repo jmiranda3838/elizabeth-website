@@ -21,6 +21,7 @@ Run **`npm run check`** before committing — it is the single gate for this rep
 - **`npm run check:types`** — `astro check` (TypeScript strict mode across `.astro`/`.ts`).
 - **`npm run check:docs`** — verifies this file's component/script counts still match the filesystem, so the registry and counts above never drift again. If it fails, it prints the expected numbers; update CLAUDE.md to match.
 - **`npm run check:links`** — offline validator: every `withBase('…')` / `href`/`src` internal path must resolve to a real page in `src/pages/`, a redirect key in `astro.config.mjs`, or an asset under `public/`. Catches broken `.html` links and base-path mistakes before deploy.
+- **`npm run check:format`** — `prettier --check .` (config in `.prettierrc.json`, scope in `.prettierignore`). Markdown, the vendored `html2canvas`, `feedback-worker/`, and `.claude/` are intentionally excluded. Run **`npm run format`** to auto-fix any failures. **Gotcha**: Prettier's Astro parser rejects HTML comments (`<!-- -->`) placed *inside* a `{…}` JSX expression — use a JSX comment `{/* … */}` there instead (top-level template comments are fine).
 - **`npm run build`** — the production build.
 
 **Visual check (Playwright MCP)**: to confirm a UI change renders, run `npm run preview`, then `browser_navigate` to `http://localhost:4321/elizabeth-website/index.html` (the `/elizabeth-website` base path is required) and `browser_take_screenshot`. Old reference shots live in `migration-baselines/` for ad-hoc comparison.

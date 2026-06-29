@@ -2,11 +2,24 @@
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/reiki.css";
-import { IconSun, IconCrescentMoon, IconHandsOpen, IconShield, IconHeart } from "@illustrations/icons";
+import {
+  IconSun,
+  IconCrescentMoon,
+  IconHandsOpen,
+  IconShield,
+  IconHeart,
+} from "@illustrations/icons";
 import { HandsCupped } from "@illustrations/scenes";
 import { QuoteMark, ConstellationStar } from "@illustrations/misc";
 import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
-import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, CtaVineLeft, CtaVineRight } from "@illustrations/frames";
+import {
+  FrameCornerTL,
+  FrameCornerTR,
+  FrameCornerBL,
+  FrameCornerBR,
+  CtaVineLeft,
+  CtaVineRight,
+} from "@illustrations/frames";
 import { LeafDivider } from "@illustrations/dividers";
 import { FullMoon } from "@illustrations/moon";
 import { Seedling } from "@illustrations/apothecary";
@@ -17,7 +30,6 @@ import { Seedling } from "@illustrations/apothecary";
   description="Gentle Reiki energy work in Orange County, offered by Elizabeth Armstrong — certified Reiki Master and licensed therapist. A separate, private-pay hour of rest: you stay fully clothed while your own system settles. Not psychotherapy — and honestly explained."
 >
   <div class="reiki-page">
-
     <!-- Daybreak: a single sun climbs the sky as you scroll (GSAP-scrubbed),
          turning the whole page into one continuous dawn. -->
     <div class="daybreak" aria-hidden="true">
@@ -40,9 +52,12 @@ import { Seedling } from "@illustrations/apothecary";
         <h1 class="conduit-title">Reiki</h1>
         <p class="conduit-script">where the light comes in</p>
         <p class="conduit-lead">
-          A gentle, hands-resting energy practice &mdash; and one of the more woo-woo things I love. You lie back, fully clothed, and rest while your own system does the settling.
+          A gentle, hands-resting energy practice &mdash; and one of the more woo-woo things I love.
+          You lie back, fully clothed, and rest while your own system does the settling.
         </p>
-        <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Schedule a Free Consultation</a>
+        <a href={withBase("/contact.html")} class="btn btn-primary btn-lg"
+          >Schedule a Free Consultation</a
+        >
       </div>
     </section>
 
@@ -56,7 +71,7 @@ import { Seedling } from "@illustrations/apothecary";
           <div class="essence-intro reveal-left">
             <figure class="essence-photo">
               <img
-                src={withBase('/images/reiki-honest.jpg')}
+                src={withBase("/images/reiki-honest.jpg")}
                 alt="Elizabeth Armstrong sitting calmly outdoors, resting her chin on her hand"
                 width="1400"
                 height="933"
@@ -66,7 +81,14 @@ import { Seedling } from "@illustrations/apothecary";
             <p class="eyebrow">The honest part, first</p>
             <h2>What Reiki is &mdash; and what it isn't</h2>
             <p>
-              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and comfortable, while I place my hands lightly on or just above you &mdash; and that's really the whole mechanism. Yes, I know how that sounds. I'd rather undersell this than oversell it, so let me be plain first: this is energy work &mdash; its own kind of session, with its own purpose and fee, never psychotherapy and never billed to insurance. I take that line seriously, because taking it seriously is part of how I keep you safe. And many people simply find it deeply relaxing &mdash; that alone is worth quite a lot.
+              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and
+              comfortable, while I place my hands lightly on or just above you &mdash; and that's
+              really the whole mechanism. Yes, I know how that sounds. I'd rather undersell this
+              than oversell it, so let me be plain first: this is energy work &mdash; its own kind
+              of session, with its own purpose and fee, never psychotherapy and never billed to
+              insurance. I take that line seriously, because taking it seriously is part of how I
+              keep you safe. And many people simply find it deeply relaxing &mdash; that alone is
+              worth quite a lot.
             </p>
           </div>
 
@@ -77,7 +99,10 @@ import { Seedling } from "@illustrations/apothecary";
               <ul>
                 <li>A calm, restful hour of energy work</li>
                 <li>An invitation to your own body's way of settling</li>
-                <li>Offered by a certified Reiki Master &mdash; energy work since 2020, Master level since 2021</li>
+                <li>
+                  Offered by a certified Reiki Master &mdash; energy work since 2020, Master level
+                  since 2021
+                </li>
                 <li>Held lightly, warmly, and on its own terms</li>
               </ul>
             </div>
@@ -105,7 +130,7 @@ import { Seedling } from "@illustrations/apothecary";
     <section class="section section-lg conduit-quote-section">
       <img
         class="quote-photo"
-        src={withBase('/images/reiki-quote.jpg')}
+        src={withBase("/images/reiki-quote.jpg")}
         alt=""
         width="1600"
         height="1066"
@@ -120,7 +145,10 @@ import { Seedling } from "@illustrations/apothecary";
         <figure class="conduit-quote reveal">
           <span class="conduit-quote-mark" aria-hidden="true"><QuoteMark /></span>
           <blockquote>
-            <p>I'm not healing you &mdash; you're healing you. I'm just being a conduit, like a straw.</p>
+            <p>
+              I'm not healing you &mdash; you're healing you. I'm just being a conduit, like a
+              straw.
+            </p>
           </blockquote>
           <figcaption>Elizabeth</figcaption>
         </figure>
@@ -144,19 +172,29 @@ import { Seedling } from "@illustrations/apothecary";
             <span class="light-step-icon" aria-hidden="true"><IconCrescentMoon /></span>
             <span class="light-step-label">first light</span>
             <h3>Settle</h3>
-            <p>You arrive, kick off your shoes, and get comfortable. We talk for a moment about what brought you in &mdash; then you let your shoulders drop.</p>
+            <p>
+              You arrive, kick off your shoes, and get comfortable. We talk for a moment about what
+              brought you in &mdash; then you let your shoulders drop.
+            </p>
           </div>
           <div class="light-step reveal stagger-2">
             <span class="light-step-icon" aria-hidden="true"><IconHandsOpen /></span>
             <span class="light-step-label">the light moves through</span>
             <h3>Channel</h3>
-            <p>You rest while I keep a light, unhurried touch and tend the space. There's nothing for you to do &mdash; no effort, no talking. I just hold the channel open; the quiet work underneath is yours.</p>
+            <p>
+              You rest while I keep a light, unhurried touch and tend the space. There's nothing for
+              you to do &mdash; no effort, no talking. I just hold the channel open; the quiet work
+              underneath is yours.
+            </p>
           </div>
           <div class="light-step reveal stagger-3">
             <span class="light-step-icon" aria-hidden="true"><IconSun /></span>
             <span class="light-step-label">full morning</span>
             <h3>Glow</h3>
-            <p>We ease back out gently &mdash; a breath, a sip of water, no rush. Many people say they leave feeling softer than they came in.</p>
+            <p>
+              We ease back out gently &mdash; a breath, a sip of water, no rush. Many people say
+              they leave feeling softer than they came in.
+            </p>
           </div>
         </div>
       </div>
@@ -171,7 +209,8 @@ import { Seedling } from "@illustrations/apothecary";
           <h2>What it can feel like</h2>
         </div>
         <p class="feel-intro reveal">
-          Everyone's experience is their own, and some feel more than others &mdash; all of it is normal. But when I ask afterward, here's what people tend to say.
+          Everyone's experience is their own, and some feel more than others &mdash; all of it is
+          normal. But when I ask afterward, here's what people tend to say.
         </p>
 
         <div class="feel-grid">
@@ -193,7 +232,10 @@ import { Seedling } from "@illustrations/apothecary";
           <div class="feel-card feel-rest lit-card reveal stagger-4">
             <span class="feel-glyph" aria-hidden="true"><IconHeart /></span>
             <h3>Simple rest</h3>
-            <p>Sometimes it's mostly an hour of real, uninterrupted rest &mdash; which is no small thing.</p>
+            <p>
+              Sometimes it's mostly an hour of real, uninterrupted rest &mdash; which is no small
+              thing.
+            </p>
           </div>
         </div>
       </div>
@@ -205,7 +247,7 @@ import { Seedling } from "@illustrations/apothecary";
     <section class="atmos-band">
       <img
         class="atmos-photo"
-        src={withBase('/images/reiki-band.jpg')}
+        src={withBase("/images/reiki-band.jpg")}
         alt=""
         width="1800"
         height="1200"
@@ -214,7 +256,10 @@ import { Seedling } from "@illustrations/apothecary";
       />
       <div class="atmos-scrim" aria-hidden="true"></div>
       <div class="atmos-content reveal">
-        <p class="atmos-line">No talking required. Nothing to perform. Nothing to fix.<br />Just a deliberate, unhurried hour to be still.</p>
+        <p class="atmos-line">
+          No talking required. Nothing to perform. Nothing to fix.<br />Just a deliberate, unhurried
+          hour to be still.
+        </p>
       </div>
     </section>
 
@@ -230,7 +275,7 @@ import { Seedling } from "@illustrations/apothecary";
         <div class="bridge-spread reveal">
           <figure class="bridge-photo">
             <img
-              src={withBase('/images/reiki-bridge.jpg')}
+              src={withBase("/images/reiki-bridge.jpg")}
               alt="Elizabeth Armstrong relaxing at home in warm lamplight"
               width="933"
               height="1400"
@@ -241,18 +286,31 @@ import { Seedling } from "@illustrations/apothecary";
           <div class="bridge-panels">
             <div class="bridge-panel">
               <h3>The therapy room</h3>
-              <p>If you're working through something tender, therapy is the place for that &mdash; the deeper, collaborative work of talk therapy, booked and paid for on its own.</p>
-              <a href={withBase('/index.html')} class="bridge-link">About the therapy side of my practice</a>
+              <p>
+                If you're working through something tender, therapy is the place for that &mdash;
+                the deeper, collaborative work of talk therapy, booked and paid for on its own.
+              </p>
+              <a href={withBase("/index.html")} class="bridge-link"
+                >About the therapy side of my practice</a
+              >
             </div>
 
             <span class="kintsugi-seam" aria-hidden="true"></span>
 
             <div class="bridge-panel">
               <h3>The Reiki room</h3>
-              <p>Some people see me for both, and that's a beautiful thing &mdash; but they stay separate. Reiki can be a gentle companion to the deeper work, never a replacement for it.</p>
+              <p>
+                Some people see me for both, and that's a beautiful thing &mdash; but they stay
+                separate. Reiki can be a gentle companion to the deeper work, never a replacement
+                for it.
+              </p>
               <div class="reiki-fees-note">
                 <span class="fees-label">About the fee</span>
-                <p>A private-pay offering, never billed to insurance. Rather than post numbers, I'd rather walk you through it in a free 15-minute call &mdash; the same easy conversation whether you're curious about Reiki, therapy, or both.</p>
+                <p>
+                  A private-pay offering, never billed to insurance. Rather than post numbers, I'd
+                  rather walk you through it in a free 15-minute call &mdash; the same easy
+                  conversation whether you're curious about Reiki, therapy, or both.
+                </p>
               </div>
             </div>
           </div>
@@ -272,7 +330,8 @@ import { Seedling } from "@illustrations/apothecary";
           <h2>On the horizon</h2>
         </div>
         <p class="horizon-intro reveal">
-          Reiki is one of the more embodied ways I work, beyond the therapy room. One more is on the way &mdash; if it calls to you, mention it when we talk.
+          Reiki is one of the more embodied ways I work, beyond the therapy room. One more is on the
+          way &mdash; if it calls to you, mention it when we talk.
         </p>
 
         <div class="horizon-card reveal">
@@ -284,7 +343,10 @@ import { Seedling } from "@illustrations/apothecary";
           <span class="soon-chip">Coming soon</span>
           <h3>Annual Retreat</h3>
           <p class="horizon-card-nature">A small yearly gathering</p>
-          <p>Once a year, a few days to step away, rest, and renew. Intimate by design, and always a little magical.</p>
+          <p>
+            Once a year, a few days to step away, rest, and renew. Intimate by design, and always a
+            little magical.
+          </p>
         </div>
       </div>
     </section>
@@ -293,42 +355,52 @@ import { Seedling } from "@illustrations/apothecary";
          10. FULL-BLOOM CTA — sunrise over the horizon, the climax
          ============================================================ -->
     <section class="bloom-cta">
-      <svg class="cta-sunrise" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <svg
+        class="cta-sunrise"
+        viewBox="0 0 1200 360"
+        preserveAspectRatio="xMidYMax slice"
+        aria-hidden="true"
+      >
         <defs>
           <radialGradient id="ctaSunFill" cx="50%" cy="100%" r="78%">
-            <stop offset="0%" stop-color="#FFF8EC" />
-            <stop offset="38%" stop-color="#F7DCA6" />
-            <stop offset="100%" stop-color="#EFD3A0" stop-opacity="0" />
+            <stop offset="0%" stop-color="#FFF8EC"></stop>
+            <stop offset="38%" stop-color="#F7DCA6"></stop>
+            <stop offset="100%" stop-color="#EFD3A0" stop-opacity="0"></stop>
           </radialGradient>
         </defs>
-        <circle class="cta-sun-disc" cx="600" cy="360" r="165" fill="url(#ctaSunFill)" />
+        <circle class="cta-sun-disc" cx="600" cy="360" r="165" fill="url(#ctaSunFill)"></circle>
         <!-- Soft, blurred ray volume behind the crisp rays -->
-        <g class="cta-rays cta-rays-soft reveal" stroke="#F4CE86" stroke-width="5" stroke-linecap="round">
-          <line x1="600" y1="281" x2="600" y2="110" />
-          <line x1="617" y1="283" x2="661" y2="118" />
-          <line x1="583" y1="283" x2="539" y2="118" />
-          <line x1="632" y1="290" x2="712" y2="150" />
-          <line x1="568" y1="290" x2="488" y2="150" />
-          <line x1="645" y1="300" x2="748" y2="197" />
-          <line x1="555" y1="300" x2="452" y2="197" />
-          <line x1="655" y1="313" x2="769" y2="248" />
-          <line x1="545" y1="313" x2="431" y2="248" />
-          <line x1="662" y1="329" x2="774" y2="298" />
-          <line x1="538" y1="329" x2="426" y2="298" />
+        <g
+          class="cta-rays cta-rays-soft reveal"
+          stroke="#F4CE86"
+          stroke-width="5"
+          stroke-linecap="round"
+        >
+          <line x1="600" y1="281" x2="600" y2="110"></line>
+          <line x1="617" y1="283" x2="661" y2="118"></line>
+          <line x1="583" y1="283" x2="539" y2="118"></line>
+          <line x1="632" y1="290" x2="712" y2="150"></line>
+          <line x1="568" y1="290" x2="488" y2="150"></line>
+          <line x1="645" y1="300" x2="748" y2="197"></line>
+          <line x1="555" y1="300" x2="452" y2="197"></line>
+          <line x1="655" y1="313" x2="769" y2="248"></line>
+          <line x1="545" y1="313" x2="431" y2="248"></line>
+          <line x1="662" y1="329" x2="774" y2="298"></line>
+          <line x1="538" y1="329" x2="426" y2="298"></line>
         </g>
         <!-- Crisp self-drawing god-rays -->
         <g class="cta-rays reveal" stroke="#F2C879" stroke-width="2.4" stroke-linecap="round">
-          <line x1="600" y1="281" x2="600" y2="110" />
-          <line x1="617" y1="283" x2="661" y2="118" />
-          <line x1="583" y1="283" x2="539" y2="118" />
-          <line x1="632" y1="290" x2="712" y2="150" />
-          <line x1="568" y1="290" x2="488" y2="150" />
-          <line x1="645" y1="300" x2="748" y2="197" />
-          <line x1="555" y1="300" x2="452" y2="197" />
-          <line x1="655" y1="313" x2="769" y2="248" />
-          <line x1="545" y1="313" x2="431" y2="248" />
-          <line x1="662" y1="329" x2="774" y2="298" />
-          <line x1="538" y1="329" x2="426" y2="298" />
+          <line x1="600" y1="281" x2="600" y2="110"></line>
+          <line x1="617" y1="283" x2="661" y2="118"></line>
+          <line x1="583" y1="283" x2="539" y2="118"></line>
+          <line x1="632" y1="290" x2="712" y2="150"></line>
+          <line x1="568" y1="290" x2="488" y2="150"></line>
+          <line x1="645" y1="300" x2="748" y2="197"></line>
+          <line x1="555" y1="300" x2="452" y2="197"></line>
+          <line x1="655" y1="313" x2="769" y2="248"></line>
+          <line x1="545" y1="313" x2="431" y2="248"></line>
+          <line x1="662" y1="329" x2="774" y2="298"></line>
+          <line x1="538" y1="329" x2="426" y2="298"></line>
         </g>
       </svg>
 
@@ -340,12 +412,15 @@ import { Seedling } from "@illustrations/apothecary";
       <div class="bloom-cta-content reveal">
         <h2>Curious is enough</h2>
         <p>
-          Let's have a free 15-minute conversation about what you're looking for &mdash; ask me anything, skeptic questions warmly welcome. No commitment, no pressure, just a place to start.
+          Let's have a free 15-minute conversation about what you're looking for &mdash; ask me
+          anything, skeptic questions warmly welcome. No commitment, no pressure, just a place to
+          start.
         </p>
-        <a href={withBase('/contact.html')} class="btn btn-primary btn-lg bloom-btn">Schedule Your Free Consultation</a>
+        <a href={withBase("/contact.html")} class="btn btn-primary btn-lg bloom-btn"
+          >Schedule Your Free Consultation</a
+        >
       </div>
     </section>
-
   </div>
 </BaseLayout>
 
@@ -358,9 +433,7 @@ import { Seedling } from "@illustrations/apothecary";
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const page = document.querySelector(".reiki-page");
   const sun = document.querySelector(".daybreak-sun");
@@ -384,7 +457,7 @@ import { Seedling } from "@illustrations/apothecary";
           scrub: 1,
           invalidateOnRefresh: true,
         },
-      }
+      },
     );
 
     // Keep positions honest as fonts/images settle and on resize.

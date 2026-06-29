@@ -37,8 +37,7 @@
     return BASE + (p.charAt(0) === "/" ? p : "/" + p);
   }
 
-  var REDUCED =
-    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ----------------------------- activation gate ----------------------------- */
   function resolveActive() {
@@ -162,11 +161,12 @@
   function describeElement(node) {
     var tag = node.tagName ? node.tagName.toLowerCase() : "element";
     if (tag === "img") return "Image" + (node.alt ? ': "' + clip(node.alt, 40) + '"' : "");
-    if (tag === "svg" || node.closest && node.closest("svg")) return "Illustration";
-    if (tag === "a") return 'Link: "' + clip(node.textContent || node.getAttribute("aria-label"), 40) + '"';
+    if (tag === "svg" || (node.closest && node.closest("svg"))) return "Illustration";
+    if (tag === "a")
+      return 'Link: "' + clip(node.textContent || node.getAttribute("aria-label"), 40) + '"';
     if (tag === "button" || node.getAttribute("role") === "button")
       return 'Button: "' + clip(node.textContent || node.getAttribute("aria-label"), 40) + '"';
-    if (/^h[1-6]$/.test(tag)) return "Heading: \"" + clip(node.textContent, 60) + '"';
+    if (/^h[1-6]$/.test(tag)) return 'Heading: "' + clip(node.textContent, 60) + '"';
     if (tag === "li") return 'List item: "' + clip(node.textContent, 50) + '"';
     if (tag === "p" || (node.childElementCount === 0 && (node.textContent || "").trim())) {
       var txt = clip(node.textContent, 60);
@@ -204,7 +204,8 @@
       /* highlight box + label */
       "#ea-hl{position:fixed;pointer-events:none;z-index:2147483000;border:2px solid var(--warm-clay,#b5836a);" +
       "background:rgba(181,131,106,.14);border-radius:4px;display:none;transition:" +
-      (REDUCED ? "none" : "all .06s ease") + ";}" +
+      (REDUCED ? "none" : "all .06s ease") +
+      ";}" +
       "#ea-hl.pulse{animation:ea-pulse 1.2s ease 2;}" +
       "@keyframes ea-pulse{0%,100%{box-shadow:0 0 0 0 rgba(181,131,106,.55);}50%{box-shadow:0 0 0 8px rgba(181,131,106,0);}}" +
       "#ea-label{position:fixed;pointer-events:none;z-index:2147483001;display:none;max-width:320px;" +
@@ -220,7 +221,9 @@
       "#ea-bar .ea-hint{font-size:12.5px;color:var(--slate-olive,#6b6a5c);flex:1 1 200px;min-width:120px;}" +
       "#ea-bar .ea-spacer{flex:1 1 auto;}" +
       ".ea-btn{font:inherit;font-size:13.5px;cursor:pointer;border-radius:999px;padding:8px 15px;border:1px solid rgba(58,46,38,.22);" +
-      "background:#fff;color:var(--espresso,#3a2e26);transition:" + (REDUCED ? "none" : "background .15s,border-color .15s,transform .05s") + ";}" +
+      "background:#fff;color:var(--espresso,#3a2e26);transition:" +
+      (REDUCED ? "none" : "background .15s,border-color .15s,transform .05s") +
+      ";}" +
       ".ea-btn:hover{background:#f3efe9;}" +
       ".ea-btn:active{transform:translateY(1px);}" +
       ".ea-btn.ea-toggle{background:#fff;}" +
@@ -233,7 +236,8 @@
       ".ea-panel{position:fixed;left:0;right:0;bottom:0;z-index:2147483006;background:var(--warm-paper,#faf8f5);color:var(--espresso,#3a2e26);" +
       "max-height:82vh;display:flex;flex-direction:column;border-top:1px solid rgba(58,46,38,.16);" +
       "box-shadow:0 -10px 40px rgba(58,46,38,.20);transform:translateY(110%);transition:" +
-      (REDUCED ? "none" : "transform .28s cubic-bezier(.22,.61,.36,1)") + ";}" +
+      (REDUCED ? "none" : "transform .28s cubic-bezier(.22,.61,.36,1)") +
+      ";}" +
       ".ea-panel.open{transform:translateY(0);}" +
       ".ea-panel[hidden]{display:none;}" +
       ".ea-phead{display:flex;align-items:flex-start;gap:12px;padding:14px 16px 10px;border-bottom:1px solid rgba(58,46,38,.10);}" +
@@ -283,7 +287,8 @@
       "#ea-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(10px);z-index:2147483010;" +
       "background:var(--espresso,#3a2e26);color:#fff;font-size:13px;padding:9px 16px;border-radius:999px;" +
       "box-shadow:0 6px 22px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:" +
-      (REDUCED ? "none" : "opacity .2s,transform .2s") + ";max-width:84vw;text-align:center;}" +
+      (REDUCED ? "none" : "opacity .2s,transform .2s") +
+      ";max-width:84vw;text-align:center;}" +
       "#ea-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}" +
       "body.ea-comment-cursor, body.ea-comment-cursor *{cursor:crosshair !important;}" +
       "@media (max-width:600px){.ea-thumb{width:74px;height:56px;}#ea-bar .ea-hint{flex-basis:100%;order:5;}}";
@@ -528,9 +533,12 @@
 
     showPanel(panel);
     hideHighlight();
-    setTimeout(function () {
-      el("#ea-ta").focus();
-    }, REDUCED ? 0 : 200);
+    setTimeout(
+      function () {
+        el("#ea-ta").focus();
+      },
+      REDUCED ? 0 : 200,
+    );
 
     // capture screenshot after the panel is up (so the highlight box is hidden)
     captureElement(node).then(function (dataUrl) {
@@ -657,7 +665,8 @@
     var body = el("#ea-mybody");
     var sub = el("#ea-mysub");
     if (state.fetchError) {
-      body.innerHTML = '<div class="ea-empty">Couldn’t load your comments right now. Please try again in a moment.</div>';
+      body.innerHTML =
+        '<div class="ea-empty">Couldn’t load your comments right now. Please try again in a moment.</div>';
       sub.textContent = "";
       return;
     }
@@ -705,7 +714,7 @@
       esc(c.deepLink || "") +
       '"><div class="ea-rlabel">' +
       esc(c.elementLabel || "Element") +
-      "</div><div class=\"ea-rtext\">" +
+      '</div><div class="ea-rtext">' +
       esc(clip(c.comment, 90)) +
       '</div><div class="ea-cmeta" style="margin-top:5px;">' +
       badge +
@@ -772,7 +781,7 @@
       var p = !panel.hidden ? panel : !myPanel.hidden ? myPanel : null;
       if (!p) return;
       var f = p.querySelectorAll(
-        'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])',
       );
       f = Array.prototype.filter.call(f, function (n) {
         return !n.disabled && n.offsetParent !== null;
@@ -845,11 +854,14 @@
       return;
     }
     node.scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
-    setTimeout(function () {
-      showHighlight(node, true);
-      toast("Here’s the spot from your comment.");
-      setTimeout(hideHighlight, 4000);
-    }, REDUCED ? 0 : 450);
+    setTimeout(
+      function () {
+        showHighlight(node, true);
+        toast("Here’s the spot from your comment.");
+        setTimeout(hideHighlight, 4000);
+      },
+      REDUCED ? 0 : 450,
+    );
   }
 
   /* ----------------------------- bootstrap ----------------------------- */
@@ -864,7 +876,7 @@
       function () {
         if (state.commentMode) hideHighlight();
       },
-      { passive: true }
+      { passive: true },
     );
     fetchAll().then(handleDeepLink);
   }

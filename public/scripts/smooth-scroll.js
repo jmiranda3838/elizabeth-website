@@ -1,17 +1,17 @@
 /**
  * Smooth Scroll for Anchor Links
  */
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
   var anchorLinks = document.querySelectorAll('a[href^="#"]');
 
-  anchorLinks.forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      var href = this.getAttribute('href');
+  anchorLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var href = this.getAttribute("href");
 
       // Skip if it's just "#" or empty
-      if (href === '#' || href === '') {
+      if (href === "#" || href === "") {
         return;
       }
 
@@ -20,12 +20,13 @@
       if (target) {
         e.preventDefault();
 
-        var headerHeight = document.querySelector('.header').offsetHeight;
-        var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+        var headerHeight = document.querySelector(".header").offsetHeight;
+        var targetPosition =
+          target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
 
         window.scrollTo({
           top: targetPosition,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
 
         // Update URL without jumping

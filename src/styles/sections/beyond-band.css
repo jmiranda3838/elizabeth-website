@@ -1,7 +1,7 @@
 /* === "Beyond the Therapy Room" Band (homepage) === */
 
 .beyond-band {
-  background: linear-gradient(180deg, var(--warm-paper), #F8EEDD);
+  background: linear-gradient(180deg, var(--warm-paper), #f8eedd);
   border-top: 1px solid rgba(208, 180, 166, 0.35);
   border-bottom: 1px solid rgba(208, 180, 166, 0.35);
   padding: var(--space-12) 0;
@@ -22,7 +22,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: #FFFEFA;
+  background: #fffefa;
   border: 1px solid rgba(196, 154, 108, 0.4);
   color: var(--warm-clay);
 }
@@ -33,7 +33,7 @@
 }
 
 .beyond-band-icon::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -12px;
   border-radius: 50%;

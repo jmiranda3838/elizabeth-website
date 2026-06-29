@@ -11,9 +11,7 @@ export function initGardenGate() {
   const frame = document.querySelector("[data-gate]");
   if (!frame) return;
 
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) return;
 
   const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -74,7 +72,7 @@ function enableTouch(frame) {
           frame.classList.toggle("gate-open", entry.isIntersecting);
         }
       },
-      { threshold: 0.45 }
+      { threshold: 0.45 },
     );
     io.observe(frame);
   } else {

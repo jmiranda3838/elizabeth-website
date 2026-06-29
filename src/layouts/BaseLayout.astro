@@ -11,75 +11,77 @@ interface Props {
 
 const {
   title,
-  description = "Collaborative, warm therapy in Orange County and online across California. Narrative therapy to help you reconnect with your values, rewrite limiting stories, and find your way forward."
+  description = "Collaborative, warm therapy in Orange County and online across California. Narrative therapy to help you reconnect with your values, rewrite limiting stories, and find your way forward.",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(withBase("/og-image.jpg"), Astro.site);
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content={description}>
-  <!-- ⚠️ PREVIEW ONLY — keep this site out of search results while Elizabeth reviews. Remove at launch. -->
-  <meta name="robots" content="noindex, nofollow">
-  <title>{title}</title>
-  <link rel="canonical" href={canonicalURL}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <!-- ⚠️ PREVIEW ONLY — keep this site out of search results while Elizabeth reviews. Remove at launch. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalURL} />
 
-  <!-- Icons & theme -->
-  <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')}>
-  <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')}>
-  <meta name="theme-color" content="#FDF2EF">
+    <!-- Icons & theme -->
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <link rel="apple-touch-icon" href={withBase("/apple-touch-icon.png")} />
+    <meta name="theme-color" content="#FDF2EF" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Growing Brighter Therapy">
-  <meta property="og:title" content={title}>
-  <meta property="og:description" content={description}>
-  <meta property="og:url" content={canonicalURL}>
-  <meta property="og:image" content={ogImage}>
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Growing Brighter Therapy" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content={title}>
-  <meta name="twitter:description" content={description}>
-  <meta name="twitter:image" content={ogImage}>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Raleway:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Raleway:wght@400;500;600&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-</head>
-<body>
-  <!-- Skip Link for Accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Header />
 
-  <Header />
+    <!-- Main Content -->
+    <main id="main-content">
+      <slot />
+    </main>
 
-  <!-- Main Content -->
-  <main id="main-content">
-    <slot />
-  </main>
+    <Footer />
 
-  <Footer />
-
-  <!-- JavaScript -->
-  <script is:inline src={withBase('/scripts/mobile-nav.js')}></script>
-  <script is:inline src={withBase('/scripts/faq-accordion.js')}></script>
-  <script is:inline src={withBase('/scripts/smooth-scroll.js')}></script>
-  <script is:inline src={withBase('/scripts/header-scroll.js')}></script>
-  <script is:inline src={withBase('/scripts/form-validation.js')}></script>
-  <script is:inline src={withBase('/scripts/scroll-reveal.js')}></script>
-  <script is:inline src={withBase('/scripts/constellation.js')}></script>
-  <script is:inline src={withBase('/scripts/conduit.js')}></script>
-  <script is:inline src={withBase('/scripts/library.js')}></script>
-  <!-- Review/comment overlay: inert unless ?review=on (or remembered on the device). -->
-  <script is:inline src={withBase('/scripts/review-comments.js')}></script>
-</body>
+    <!-- JavaScript -->
+    <script is:inline src={withBase("/scripts/mobile-nav.js")}></script>
+    <script is:inline src={withBase("/scripts/faq-accordion.js")}></script>
+    <script is:inline src={withBase("/scripts/smooth-scroll.js")}></script>
+    <script is:inline src={withBase("/scripts/header-scroll.js")}></script>
+    <script is:inline src={withBase("/scripts/form-validation.js")}></script>
+    <script is:inline src={withBase("/scripts/scroll-reveal.js")}></script>
+    <script is:inline src={withBase("/scripts/constellation.js")}></script>
+    <script is:inline src={withBase("/scripts/conduit.js")}></script>
+    <script is:inline src={withBase("/scripts/library.js")}></script>
+    <!-- Review/comment overlay: inert unless ?review=on (or remembered on the device). -->
+    <script is:inline src={withBase("/scripts/review-comments.js")}></script>
+  </body>
 </html>

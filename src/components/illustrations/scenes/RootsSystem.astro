@@ -6,62 +6,253 @@ interface Props {
   rootsOnly?: boolean;
   [key: string]: unknown;
 }
-const { class: className = '', style = '', rootsOnly = false, ...rest } = Astro.props;
+const { class: className = "", style = "", rootsOnly = false, ...rest } = Astro.props;
 ---
-<svg class={className} style={style} {...rest} viewBox={rootsOnly ? '0 172 300 206' : '0 0 300 400'} fill="none">
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox={rootsOnly ? "0 172 300 206" : "0 0 300 400"}
+  fill="none"
+>
   <!-- Ground line -->
-  <path d="M0 180 Q75 175 150 180 Q225 185 300 180" stroke="currentColor" stroke-width="1.5" fill="none"/>
+  <path
+    d="M0 180 Q75 175 150 180 Q225 185 300 180"
+    stroke="currentColor"
+    stroke-width="1.5"
+    fill="none"></path>
 
   <!-- Above ground: small plant/flower -->
-  {!rootsOnly && <g class="plant-above">
-    <path d="M150 180 Q150 160 150 140" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M150 165 Q135 158 125 165 Q138 170 150 165" stroke="currentColor" stroke-width="1" fill="none"/>
-    <path d="M150 150 Q165 143 175 150 Q162 155 150 150" stroke="currentColor" stroke-width="1" fill="none"/>
-    <!-- Flower at top -->
-    <circle cx="150" cy="130" r="12" stroke="currentColor" stroke-width="1" fill="none"/>
-    <circle cx="142" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="158" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="142" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="158" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="150" cy="130" r="5" stroke="currentColor" stroke-width="1" fill="currentColor" opacity="0.2"/>
-  </g>}
+  {
+    !rootsOnly && (
+      <g class="plant-above">
+        <path
+          d="M150 180 Q150 160 150 140"
+          stroke="currentColor"
+          stroke-width="1.5"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <path
+          d="M150 165 Q135 158 125 165 Q138 170 150 165"
+          stroke="currentColor"
+          stroke-width="1"
+          fill="none"
+        />
+        <path
+          d="M150 150 Q165 143 175 150 Q162 155 150 150"
+          stroke="currentColor"
+          stroke-width="1"
+          fill="none"
+        />
+        {/* Flower at top */}
+        <circle cx="150" cy="130" r="12" stroke="currentColor" stroke-width="1" fill="none" />
+        <circle cx="142" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none" />
+        <circle cx="158" cy="122" r="6" stroke="currentColor" stroke-width="0.8" fill="none" />
+        <circle cx="142" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none" />
+        <circle cx="158" cy="138" r="6" stroke="currentColor" stroke-width="0.8" fill="none" />
+        <circle
+          cx="150"
+          cy="130"
+          r="5"
+          stroke="currentColor"
+          stroke-width="1"
+          fill="currentColor"
+          opacity="0.2"
+        />
+      </g>
+    )
+  }
 
   <!-- Below ground: extensive root system -->
   <g class="roots-below">
     <!-- Main taproot -->
-    <path d="M150 180 Q148 220 150 260 Q152 300 145 350" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path
+      d="M150 180 Q148 220 150 260 Q152 300 145 350"
+      stroke="currentColor"
+      stroke-width="1.5"
+      fill="none"
+      stroke-linecap="round"></path>
 
     <!-- Major root branches -->
-    <path d="M150 200 Q120 210 80 230 Q50 250 30 290" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <path d="M150 200 Q180 210 220 230 Q250 250 270 290" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <path d="M150 240 Q110 260 70 300 Q45 330 40 370" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-    <path d="M150 240 Q190 260 230 300 Q255 330 260 370" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <path
+      d="M150 200 Q120 210 80 230 Q50 250 30 290"
+      stroke="currentColor"
+      stroke-width="1.2"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M150 200 Q180 210 220 230 Q250 250 270 290"
+      stroke="currentColor"
+      stroke-width="1.2"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M150 240 Q110 260 70 300 Q45 330 40 370"
+      stroke="currentColor"
+      stroke-width="1"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M150 240 Q190 260 230 300 Q255 330 260 370"
+      stroke="currentColor"
+      stroke-width="1"
+      fill="none"
+      stroke-linecap="round"></path>
 
     <!-- Secondary branches -->
-    <path d="M100 220 Q85 240 60 255" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M200 220 Q215 240 240 255" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M90 260 Q70 280 50 310" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M210 260 Q230 280 250 310" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M148 280 Q130 310 110 350" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M152 280 Q170 310 190 350" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+    <path
+      d="M100 220 Q85 240 60 255"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M200 220 Q215 240 240 255"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M90 260 Q70 280 50 310"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M210 260 Q230 280 250 310"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M148 280 Q130 310 110 350"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
+    <path
+      d="M152 280 Q170 310 190 350"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"
+      stroke-linecap="round"></path>
 
     <!-- Fine root hairs (many small strokes) -->
-    <path d="M60 255 Q55 265 45 275" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M60 255 Q65 270 60 285" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M240 255 Q245 265 255 275" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M240 255 Q235 270 240 285" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M30 290 Q20 305 15 325" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M30 290 Q35 310 25 330" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M270 290 Q280 305 285 325" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
-    <path d="M270 290 Q265 310 275 330" stroke="currentColor" stroke-width="0.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path
+      d="M60 255 Q55 265 45 275"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M60 255 Q65 270 60 285"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M240 255 Q245 265 255 275"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M240 255 Q235 270 240 285"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M30 290 Q20 305 15 325"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M30 290 Q35 310 25 330"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M270 290 Q280 305 285 325"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
+    <path
+      d="M270 290 Q265 310 275 330"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      stroke-linecap="round"
+      opacity="0.6"></path>
 
     <!-- Tiny root tips -->
-    <circle cx="30" cy="292" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="270" cy="292" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="40" cy="372" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="260" cy="372" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="145" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="110" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
-    <circle cx="190" cy="352" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"/>
+    <circle
+      cx="30"
+      cy="292"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="270"
+      cy="292"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="40"
+      cy="372"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="260"
+      cy="372"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="145"
+      cy="352"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="110"
+      cy="352"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
+    <circle
+      cx="190"
+      cy="352"
+      r="2"
+      stroke="currentColor"
+      stroke-width="0.5"
+      fill="none"
+      opacity="0.5"></circle>
   </g>
 </svg>

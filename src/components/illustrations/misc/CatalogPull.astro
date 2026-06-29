@@ -3,18 +3,47 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 120 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <!-- label frame -->
-  <rect x="10" y="6" width="100" height="30" rx="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
-  <rect x="16" y="11" width="88" height="20" rx="1.5" stroke="currentColor" stroke-width="1" fill="currentColor" fill-opacity="0.08"/>
+  <rect
+    x="10"
+    y="6"
+    width="100"
+    height="30"
+    rx="3"
+    stroke="currentColor"
+    stroke-width="1.5"
+    fill="none"></rect>
+  <rect
+    x="16"
+    y="11"
+    width="88"
+    height="20"
+    rx="1.5"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="currentColor"
+    fill-opacity="0.08"></rect>
   <!-- frame screws -->
-  <circle cx="13.5" cy="21" r="1.4" fill="currentColor"/>
-  <circle cx="106.5" cy="21" r="1.4" fill="currentColor"/>
+  <circle cx="13.5" cy="21" r="1.4" fill="currentColor"></circle>
+  <circle cx="106.5" cy="21" r="1.4" fill="currentColor"></circle>
   <!-- bow handle below -->
-  <path d="M42 42 L78 42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <path d="M44 42 Q60 56 76 42" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <circle cx="42" cy="42" r="2.2" fill="currentColor"/>
-  <circle cx="78" cy="42" r="2.2" fill="currentColor"/>
+  <path d="M42 42 L78 42" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+  <path
+    d="M44 42 Q60 56 76 42"
+    stroke="currentColor"
+    stroke-width="2.5"
+    fill="none"
+    stroke-linecap="round"></path>
+  <circle cx="42" cy="42" r="2.2" fill="currentColor"></circle>
+  <circle cx="78" cy="42" r="2.2" fill="currentColor"></circle>
 </svg>

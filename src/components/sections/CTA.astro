@@ -1,14 +1,14 @@
 ---
 import { withBase } from "@/lib/withBase";
-import { LeafDivider } from '@illustrations/dividers';
-import { CtaVineLeft, CtaVineRight } from '@illustrations/frames';
+import { LeafDivider } from "@illustrations/dividers";
+import { CtaVineLeft, CtaVineRight } from "@illustrations/frames";
 
 interface Props {
   title?: string;
   description?: string;
   buttonText?: string;
   buttonHref?: string;
-  variant?: 'botanical' | 'simple';
+  variant?: "botanical" | "simple";
 }
 
 const {
@@ -16,37 +16,43 @@ const {
   description = "I offer a free 15-minute consultation to see if we're a good fit. There's no pressure, just a conversation.",
   buttonText = "Schedule Your Free Consultation",
   buttonHref = "/contact.html",
-  variant = 'botanical'
+  variant = "botanical",
 } = Astro.props;
 ---
 
-{variant === 'botanical' ? (
-  <section class="cta-band botanical-cta">
-    <!-- Botanical frame elements -->
-    <div class="cta-botanical cta-botanical-left">
-      <CtaVineLeft />
-    </div>
-    <div class="cta-botanical cta-botanical-right">
-      <CtaVineRight />
-    </div>
+{
+  variant === "botanical" ? (
+    <section class="cta-band botanical-cta">
+      {/* Botanical frame elements */}
+      <div class="cta-botanical cta-botanical-left">
+        <CtaVineLeft />
+      </div>
+      <div class="cta-botanical cta-botanical-right">
+        <CtaVineRight />
+      </div>
 
-    <div class="container">
-      <div class="cta-content reveal">
-        <div class="decorative-divider" style="margin-bottom: var(--space-6);">
-          <LeafDivider />
+      <div class="container">
+        <div class="cta-content reveal">
+          <div class="decorative-divider" style="margin-bottom: var(--space-6);">
+            <LeafDivider />
+          </div>
+          <h2>{title}</h2>
+          <p>{description}</p>
+          <a href={withBase(buttonHref)} class="btn btn-primary btn-lg cta-button">
+            {buttonText}
+          </a>
         </div>
+      </div>
+    </section>
+  ) : (
+    <section class="cta-simple">
+      <div class="container">
         <h2>{title}</h2>
         <p>{description}</p>
-        <a href={withBase(buttonHref)} class="btn btn-primary btn-lg cta-button">{buttonText}</a>
+        <a href={withBase(buttonHref)} class="btn btn-primary btn-lg">
+          {buttonText}
+        </a>
       </div>
-    </div>
-  </section>
-) : (
-  <section class="cta-simple">
-    <div class="container">
-      <h2>{title}</h2>
-      <p>{description}</p>
-      <a href={withBase(buttonHref)} class="btn btn-primary btn-lg">{buttonText}</a>
-    </div>
-  </section>
-)}
+    </section>
+  )
+}

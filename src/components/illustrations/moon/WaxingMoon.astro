@@ -3,12 +3,27 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="none"/>
-  <path d="M30 8 A22 22 0 0 1 30 52" stroke="currentColor" stroke-width="1.2" fill="currentColor" opacity="0.15"/>
-  <circle cx="35" cy="22" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"/>
-  <circle cx="38" cy="32" r="3" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"/>
-  <circle cx="34" cy="42" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.25"/>
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 60 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <circle cx="30" cy="30" r="22" stroke="currentColor" stroke-width="1.2" fill="none"></circle>
+  <path
+    d="M30 8 A22 22 0 0 1 30 52"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="currentColor"
+    opacity="0.15"></path>
+  <circle cx="35" cy="22" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.3"
+  ></circle>
+  <circle cx="38" cy="32" r="3" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.2"
+  ></circle>
+  <circle cx="34" cy="42" r="2" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.25"
+  ></circle>
 </svg>

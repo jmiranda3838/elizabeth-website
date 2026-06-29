@@ -3,20 +3,57 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M40 95 Q40 75 40 55" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-  <path d="M40 55 Q25 45 15 35" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M40 55 Q55 45 65 35" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M40 55 Q40 40 40 25" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M25 42 Q18 38 12 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M55 42 Q62 38 68 42" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <circle cx="15" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="40" cy="20" r="7" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="65" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="10" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="70" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"/>
-  <path d="M40 95 Q35 88 32 95" stroke="currentColor" stroke-width="1" fill="none"/>
-  <path d="M40 95 Q45 88 48 95" stroke="currentColor" stroke-width="1" fill="none"/>
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 80 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M40 95 Q40 75 40 55"
+    stroke="currentColor"
+    stroke-width="1.5"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 55 Q25 45 15 35"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 55 Q55 45 65 35"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 55 Q40 40 40 25"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M25 42 Q18 38 12 42"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M55 42 Q62 38 68 42"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <circle cx="15" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="40" cy="20" r="7" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="65" cy="32" r="6" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="10" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="70" cy="42" r="4" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <path d="M40 95 Q35 88 32 95" stroke="currentColor" stroke-width="1" fill="none"></path>
+  <path d="M40 95 Q45 88 48 95" stroke="currentColor" stroke-width="1" fill="none"></path>
 </svg>

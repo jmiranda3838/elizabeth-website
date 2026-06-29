@@ -15,19 +15,16 @@
   border: var(--border-thin);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 /* Specimen Card Styling */
 .specimen-card {
   border: 1px solid var(--dusty-peach);
   border-radius: 0;
-  background: linear-gradient(
-    135deg,
-    var(--warm-paper) 0%,
-    #faf9f8 50%,
-    var(--warm-paper) 100%
-  );
+  background: linear-gradient(135deg, var(--warm-paper) 0%, #faf9f8 50%, var(--warm-paper) 100%);
   box-shadow:
     0 1px 3px rgba(84, 49, 35, 0.04),
     inset 0 0 60px rgba(210, 199, 193, 0.15);
@@ -51,7 +48,7 @@
 
 .specimen-corner::before,
 .specimen-corner::after {
-  content: '';
+  content: "";
   position: absolute;
   background-color: var(--dusty-peach);
 }
@@ -147,7 +144,9 @@
   height: 120px;
   color: var(--sage);
   opacity: 0.85;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .specimen-card:hover .specimen-icon {

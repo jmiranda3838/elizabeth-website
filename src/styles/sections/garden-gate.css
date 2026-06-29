@@ -13,11 +13,7 @@
      Both children (.gate-frame and .gate-content) are absolutely positioned,
      so min-height alone holds the section open. */
   min-height: clamp(600px, 90vh, 960px);
-  background: linear-gradient(
-    to bottom,
-    var(--soft-sand) 0%,
-    var(--warm-paper) 100%
-  );
+  background: linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);
   /* Pointer-parallax inputs, set by garden-gate.js (normalised -1..1). */
   --gx: 0;
   --gy: 0;
@@ -59,13 +55,7 @@
 /* Sunlit warmth up top, cool foliage below — the warm/cool contrast is what
    makes it read as a garden you're looking into rather than a flat backdrop. */
 .gate-sky {
-  background: linear-gradient(
-    to bottom,
-    #fce6d0 0%,
-    #f6cba4 38%,
-    #e5cb98 60%,
-    #b3c79a 100%
-  );
+  background: linear-gradient(to bottom, #fce6d0 0%, #f6cba4 38%, #e5cb98 60%, #b3c79a 100%);
   /* Soft warm inner vignette so the depth reads at the section's edges. */
   box-shadow: inset 0 0 200px 60px rgba(116, 92, 74, 0.18);
   /* Closed = neutral section; warmth floods in only as the doors open. */
@@ -98,7 +88,9 @@
   );
   opacity: 0;
   transform: scale(0.7);
-  transition: opacity 1.1s ease, transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition:
+    opacity 1.1s ease,
+    transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* Faint botanicals receding along the path. */
@@ -107,7 +99,9 @@
   color: var(--sage);
   opacity: 0;
   transform: translateY(14px) scale(0.9);
-  transition: opacity 1.1s ease, transform 1.1s ease;
+  transition:
+    opacity 1.1s ease,
+    transform 1.1s ease;
 }
 .gate-far-1 {
   left: 30%;
@@ -143,8 +137,7 @@
   top: 46%;
   width: min(90vw, 1040px);
   aspect-ratio: 2 / 1; /* matches the doors' 0 0 800 400 viewBox — no letterbox */
-  transform: translate(-50%, -50%)
-    translate3d(calc(var(--gx) * 8px), calc(var(--gy) * 5px), 0);
+  transform: translate(-50%, -50%) translate3d(calc(var(--gx) * 8px), calc(var(--gy) * 5px), 0);
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
 }
@@ -184,8 +177,7 @@
 .gate-foreground {
   position: absolute;
   inset: 0;
-  transform: translateZ(70px)
-    translate3d(calc(var(--gx) * 24px), calc(var(--gy) * 17px), 0);
+  transform: translateZ(70px) translate3d(calc(var(--gx) * 24px), calc(var(--gy) * 17px), 0);
   transition: transform 0.5s ease;
 }
 

@@ -3,16 +3,66 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="22" cy="28" rx="12" ry="16" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-20 22 28)"/>
-  <ellipse cx="38" cy="28" rx="12" ry="16" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(20 38 28)"/>
-  <ellipse cx="24" cy="45" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-15 24 45)"/>
-  <ellipse cx="36" cy="45" rx="6" ry="10" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(15 36 45)"/>
-  <ellipse cx="30" cy="35" rx="3" ry="12" stroke="currentColor" stroke-width="1" fill="none"/>
-  <path d="M28 20 Q25 12 22 6" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-  <path d="M32 20 Q35 12 38 6" stroke="currentColor" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-  <circle cx="22" cy="5" r="1" fill="currentColor"/>
-  <circle cx="38" cy="5" r="1" fill="currentColor"/>
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 60 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <ellipse
+    cx="22"
+    cy="28"
+    rx="12"
+    ry="16"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    transform="rotate(-20 22 28)"></ellipse>
+  <ellipse
+    cx="38"
+    cy="28"
+    rx="12"
+    ry="16"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    transform="rotate(20 38 28)"></ellipse>
+  <ellipse
+    cx="24"
+    cy="45"
+    rx="6"
+    ry="10"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    transform="rotate(-15 24 45)"></ellipse>
+  <ellipse
+    cx="36"
+    cy="45"
+    rx="6"
+    ry="10"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    transform="rotate(15 36 45)"></ellipse>
+  <ellipse cx="30" cy="35" rx="3" ry="12" stroke="currentColor" stroke-width="1" fill="none"
+  ></ellipse>
+  <path
+    d="M28 20 Q25 12 22 6"
+    stroke="currentColor"
+    stroke-width="0.8"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M32 20 Q35 12 38 6"
+    stroke="currentColor"
+    stroke-width="0.8"
+    fill="none"
+    stroke-linecap="round"></path>
+  <circle cx="22" cy="5" r="1" fill="currentColor"></circle>
+  <circle cx="38" cy="5" r="1" fill="currentColor"></circle>
 </svg>

@@ -3,15 +3,18 @@ import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Fees & Insurance | Elizabeth Armstrong Therapy" description="Session fees, sliding-scale availability, and out-of-network insurance information for therapy with Elizabeth Armstrong, LMFT — in Orange County and online across California.">
-
+<BaseLayout
+  title="Fees & Insurance | Elizabeth Armstrong Therapy"
+  description="Session fees, sliding-scale availability, and out-of-network insurance information for therapy with Elizabeth Armstrong, LMFT — in Orange County and online across California."
+>
   <!-- Page Hero -->
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">Investment</p>
       <h1>Fees &amp; Insurance</h1>
       <p class="lead">
-        Clear, honest pricing &mdash; so the only thing left to consider is whether we&rsquo;re the right fit.
+        Clear, honest pricing &mdash; so the only thing left to consider is whether we&rsquo;re the
+        right fit.
       </p>
     </div>
   </section>
@@ -31,7 +34,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="fee-card">
           <p class="fee-amount">$200</p>
           <p class="fee-label">90-minute session</p>
-          <p class="fee-note">A longer session &mdash; well suited to couples or deeper pieces of work.</p>
+          <p class="fee-note">
+            A longer session &mdash; well suited to couples or deeper pieces of work.
+          </p>
         </div>
       </div>
 
@@ -47,38 +52,50 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <div class="fees-detail">
         <h3>Sliding scale</h3>
         <p>
-          I hold a limited number of sliding-scale spots for those for whom the full fee is a barrier. If cost is standing between you and the support you need, please mention it during our consultation &mdash; we&rsquo;ll talk it through together.
+          I hold a limited number of sliding-scale spots for those for whom the full fee is a
+          barrier. If cost is standing between you and the support you need, please mention it
+          during our consultation &mdash; we&rsquo;ll talk it through together.
         </p>
       </div>
 
       <div class="fees-detail">
         <h3>Insurance</h3>
         <p>
-          I&rsquo;m an out-of-network provider, which means I don&rsquo;t bill insurance directly. If you have a PPO plan with out-of-network mental-health benefits, you may be eligible for partial reimbursement. On request, I can provide a superbill (an itemized receipt) to submit to your insurer.
+          I&rsquo;m an out-of-network provider, which means I don&rsquo;t bill insurance directly.
+          If you have a PPO plan with out-of-network mental-health benefits, you may be eligible for
+          partial reimbursement. On request, I can provide a superbill (an itemized receipt) to
+          submit to your insurer.
         </p>
         <p>
-          I&rsquo;d recommend calling the number on your insurance card before we begin and asking about your out-of-network outpatient mental-health coverage.
+          I&rsquo;d recommend calling the number on your insurance card before we begin and asking
+          about your out-of-network outpatient mental-health coverage.
         </p>
       </div>
 
       <div class="fees-detail">
         <h3>Good Faith Estimate</h3>
         <p>
-          Under the No Surprises Act, you have the right to a &ldquo;Good Faith Estimate&rdquo; of what your care will cost. I&rsquo;ll provide one before we begin, and I&rsquo;m always happy to answer questions about it.
+          Under the No Surprises Act, you have the right to a &ldquo;Good Faith Estimate&rdquo; of
+          what your care will cost. I&rsquo;ll provide one before we begin, and I&rsquo;m always
+          happy to answer questions about it.
         </p>
       </div>
 
       <div class="fees-detail">
         <h3>Cancellations</h3>
         <p>
-          Life happens. I just ask for at least 24 hours&rsquo; notice to change or cancel a session, so the time can be offered to someone else. Sessions missed without notice are charged the full fee.
+          Life happens. I just ask for at least 24 hours&rsquo; notice to change or cancel a
+          session, so the time can be offered to someone else. Sessions missed without notice are
+          charged the full fee.
         </p>
       </div>
 
       <div class="fees-detail">
         <h3>A note on Reiki</h3>
         <p>
-          Reiki is a separate, private-pay offering &mdash; its own kind of session, never billed to insurance. You can read more on the <a href={withBase('/reiki.html')}>Reiki page</a>, and we can sort out the details on the same free call.
+          Reiki is a separate, private-pay offering &mdash; its own kind of session, never billed to
+          insurance. You can read more on the <a href={withBase("/reiki.html")}>Reiki page</a>, and
+          we can sort out the details on the same free call.
         </p>
       </div>
     </div>
@@ -89,9 +106,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container">
       <h2>Questions about fees?</h2>
       <p>
-        I&rsquo;m happy to talk through fees and payment options during your free 15-minute consultation. No pressure &mdash; just answers.
+        I&rsquo;m happy to talk through fees and payment options during your free 15-minute
+        consultation. No pressure &mdash; just answers.
       </p>
-      <a href={withBase('/contact.html')} class="btn btn-primary btn-lg">Schedule Your Free Consultation</a>
+      <a href={withBase("/contact.html")} class="btn btn-primary btn-lg"
+        >Schedule Your Free Consultation</a
+      >
     </div>
   </section>
 
@@ -153,5 +173,4 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       }
     }
   </style>
-
 </BaseLayout>

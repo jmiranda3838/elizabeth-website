@@ -1,0 +1,24 @@
+# Build output & deps (also in .gitignore, listed for robustness)
+dist/
+.astro/
+node_modules/
+
+# Tooling artifacts / local reference material
+migration-baselines/
+.playwright-mcp/
+reference/
+
+# Vendored, minified — never reformat
+public/scripts/vendor/
+
+# Generated lockfile
+package-lock.json
+
+# Markdown left to authors (CLAUDE.md is asserted verbatim by check:docs)
+*.md
+
+# Cloudflare feedback worker — formatted separately to avoid touching the overlay
+feedback-worker/
+
+# Claude Code config (hand-authored settings/skills)
+.claude/

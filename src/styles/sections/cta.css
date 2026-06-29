@@ -22,12 +22,7 @@
   position: relative;
   overflow: hidden;
   padding: var(--space-20) 0;
-  background: linear-gradient(
-    180deg,
-    var(--bg-accent) 0%,
-    #fceee9 50%,
-    var(--bg-accent) 100%
-  );
+  background: linear-gradient(180deg, var(--bg-accent) 0%, #fceee9 50%, var(--bg-accent) 100%);
 }
 
 /* Botanical frame elements */

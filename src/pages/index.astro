@@ -1,13 +1,56 @@
 ---
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Wildflower, HerbSprig, LeafBranch, SeedPodCluster, LavenderSprig, InitialFlourish, PageBotanical } from "@illustrations/botanicals";
-import { Garland, BookSpine, RootsSystem, GateFrame, GateDoorLeft, GateDoorRight } from "@illustrations/scenes";
+import {
+  Wildflower,
+  HerbSprig,
+  LeafBranch,
+  SeedPodCluster,
+  LavenderSprig,
+  InitialFlourish,
+  PageBotanical,
+} from "@illustrations/botanicals";
+import {
+  Garland,
+  BookSpine,
+  RootsSystem,
+  GateFrame,
+  GateDoorLeft,
+  GateDoorRight,
+} from "@illustrations/scenes";
 import { LeafDivider, VineDivider, PageDivider } from "@illustrations/dividers";
 import { BloomingFlower, IntertwinedStems, SpreadingTree } from "@illustrations/specimens";
-import { IconCrescentMoon, IconStar, IconSun, IconCrystal, IconShield, IconHeart, IconCrown, IconSeedling, IconCompass } from "@illustrations/icons";
-import { FrameCornerTL, FrameCornerTR, FrameCornerBL, FrameCornerBR, ManuscriptCornerTL, ManuscriptCornerTR, ManuscriptCornerBL, ManuscriptCornerBR } from "@illustrations/frames";
-import { Moth, DroopingFlower, Butterfly, TwoFlowers, KintsugiBowl, WillowBranch, SpectrumArc, Seedling } from "@illustrations/apothecary";
+import {
+  IconCrescentMoon,
+  IconStar,
+  IconSun,
+  IconCrystal,
+  IconShield,
+  IconHeart,
+  IconCrown,
+  IconSeedling,
+  IconCompass,
+} from "@illustrations/icons";
+import {
+  FrameCornerTL,
+  FrameCornerTR,
+  FrameCornerBL,
+  FrameCornerBR,
+  ManuscriptCornerTL,
+  ManuscriptCornerTR,
+  ManuscriptCornerBL,
+  ManuscriptCornerBR,
+} from "@illustrations/frames";
+import {
+  Moth,
+  DroopingFlower,
+  Butterfly,
+  TwoFlowers,
+  KintsugiBowl,
+  WillowBranch,
+  SpectrumArc,
+  Seedling,
+} from "@illustrations/apothecary";
 import { NewMoon, WaxingMoon, FullMoon } from "@illustrations/moon";
 import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illustrations/misc";
 ---
@@ -17,7 +60,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
   description="Collaborative, kind narrative therapy for individuals, couples, and families — in Orange County and online across California. A warm, non-judgmental space where you are the expert on your own life."
 >
   <!-- Hero Section - Full Bleed Photo with Botanicals -->
-  <section class="hero-botanical" style={`background-image: url(${withBase('/images/index-hero.jpg')});`}>
+  <section
+    class="hero-botanical"
+    style={`background-image: url(${withBase("/images/index-hero.jpg")});`}
+  >
     <!-- Overlay for text readability -->
     <div class="hero-overlay"></div>
 
@@ -49,7 +95,8 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <LeafDivider />
         </div>
         <p class="lead container-text mx-auto">
-          Whether you're navigating life on your own, working through challenges with a partner, or seeking support for your family, I offer a collaborative space to explore what's possible.
+          Whether you're navigating life on your own, working through challenges with a partner, or
+          seeking support for your family, I offer a collaborative space to explore what's possible.
         </p>
       </div>
 
@@ -67,7 +114,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <div class="service-card-content">
             <h3>Individual Therapy</h3>
             <p class="specimen-latin">Solus florens</p>
-            <p>A space to slow down and be heard &mdash; to make sense of your experiences and rediscover what you value most. Together, we'll untangle what feels stuck.</p>
+            <p>
+              A space to slow down and be heard &mdash; to make sense of your experiences and
+              rediscover what you value most. Together, we'll untangle what feels stuck.
+            </p>
           </div>
         </article>
 
@@ -84,7 +134,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <div class="service-card-content">
             <h3>Couples Therapy</h3>
             <p class="specimen-latin">Duorum nexus</p>
-            <p>Reconnect with your partner in a space of safety and respect. We'll explore the story you've created together and find new ways forward.</p>
+            <p>
+              Reconnect with your partner in a space of safety and respect. We'll explore the story
+              you've created together and find new ways forward.
+            </p>
           </div>
         </article>
 
@@ -101,7 +154,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <div class="service-card-content">
             <h3>Family Therapy</h3>
             <p class="specimen-latin">Arbor familiae</p>
-            <p>Strengthen the bonds that matter most. Family therapy helps you understand patterns, improve communication, and grow together.</p>
+            <p>
+              Strengthen the bonds that matter most. Family therapy helps you understand patterns,
+              improve communication, and grow together.
+            </p>
           </div>
         </article>
       </div>
@@ -109,9 +165,9 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
       <!-- Walk-and-talk: same therapy, on foot by the ocean -->
       <p class="services-soon-note reveal">
         <span class="soon-badge">Coming soon</span>
-        Walk-and-talk therapy &mdash; the same work we'd do in the office, just on foot
-        along the ocean. We sit so much; sometimes movement and salt air are exactly
-        what the conversation needs. If it calls to you, mention it when we talk.
+        Walk-and-talk therapy &mdash; the same work we'd do in the office, just on foot along the ocean.
+        We sit so much; sometimes movement and salt air are exactly what the conversation needs. If it
+        calls to you, mention it when we talk.
       </p>
     </div>
   </section>
@@ -146,7 +202,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           </div>
           <h3>Free Consultation</h3>
           <p class="moon-phase-label">New Moon</p>
-          <p>We'll have a brief call to discuss what brings you to therapy and answer any questions. This helps us both determine if we're a good fit.</p>
+          <p>
+            We'll have a brief call to discuss what brings you to therapy and answer any questions.
+            This helps us both determine if we're a good fit.
+          </p>
         </div>
 
         <div class="moon-step reveal stagger-2">
@@ -156,7 +215,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           </div>
           <h3>First Session</h3>
           <p class="moon-phase-label">Waxing Moon</p>
-          <p>In our first meeting, we'll explore your story more deeply. I'll get to know you and what matters most. You'll get a sense of how we work together.</p>
+          <p>
+            In our first meeting, we'll explore your story more deeply. I'll get to know you and
+            what matters most. You'll get a sense of how we work together.
+          </p>
         </div>
 
         <div class="moon-step reveal stagger-3">
@@ -166,7 +228,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           </div>
           <h3>Ongoing Work</h3>
           <p class="moon-phase-label">Full Moon</p>
-          <p>We'll meet regularly (typically weekly) to continue our exploration. Each session builds on the last, moving at a pace that feels right for you.</p>
+          <p>
+            We'll meet regularly (typically weekly) to continue our exploration. Each session builds
+            on the last, moving at a pace that feels right for you.
+          </p>
         </div>
       </div>
     </div>
@@ -181,10 +246,12 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
       <div class="beyond-band-text">
         <h2>Beyond the therapy room</h2>
         <p>
-          Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I also offer Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy and honestly explained &mdash; and a small annual retreat is on the way.
+          Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I also offer
+          Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy and
+          honestly explained &mdash; and a small annual retreat is on the way.
         </p>
       </div>
-      <a href={withBase('/reiki.html')} class="btn btn-outline">Learn about Reiki</a>
+      <a href={withBase("/reiki.html")} class="btn btn-outline">Learn about Reiki</a>
     </div>
   </section>
 
@@ -200,13 +267,18 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             <VineDivider />
           </div>
           <p>
-            Therapy is for everyone. We all have concerns, questions, and troubles &mdash; difficult or confusing times. In my practice, you'll be received with warmth, kindness, and genuine concern.
+            Therapy is for everyone. We all have concerns, questions, and troubles &mdash; difficult
+            or confusing times. In my practice, you'll be received with warmth, kindness, and
+            genuine concern.
           </p>
           <p>
-            No one knows your life better than you do. My role isn't to diagnose or fix, but to walk alongside you with curiosity and care. Narrative therapy helps us examine the stories you've been told, the ones you tell yourself, and the ones that haven't yet found voice.
+            No one knows your life better than you do. My role isn't to diagnose or fix, but to walk
+            alongside you with curiosity and care. Narrative therapy helps us examine the stories
+            you've been told, the ones you tell yourself, and the ones that haven't yet found voice.
           </p>
           <p>
-            Together, we'll separate you from the problem, discover the values that guide you, and uncover the "sparkling moments" that point toward your preferred way of living.
+            Together, we'll separate you from the problem, discover the values that guide you, and
+            uncover the "sparkling moments" that point toward your preferred way of living.
           </p>
 
           <div class="values-list magical-values">
@@ -217,7 +289,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="value-content">
                 <h4>Collaborative</h4>
-                <p>We work together as partners. You set the direction; I offer reflection and support.</p>
+                <p>
+                  We work together as partners. You set the direction; I offer reflection and
+                  support.
+                </p>
               </div>
             </div>
 
@@ -228,7 +303,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="value-content">
                 <h4>Respectful & Non-Pathologizing</h4>
-                <p>Problems are problems; you are not the problem. We work with struggles, not labels.</p>
+                <p>
+                  Problems are problems; you are not the problem. We work with struggles, not
+                  labels.
+                </p>
               </div>
             </div>
 
@@ -239,7 +317,9 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="value-content">
                 <h4>Culturally Aware</h4>
-                <p>I honor the cultural, social, and personal contexts that shape your experience.</p>
+                <p>
+                  I honor the cultural, social, and personal contexts that shape your experience.
+                </p>
               </div>
             </div>
 
@@ -264,7 +344,15 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             <FrameCornerBL class="frame-corner frame-bl" />
             <FrameCornerBR class="frame-corner frame-br" />
           </div>
-          <img src={withBase('/images/headshot.jpg')} alt="Elizabeth Armstrong, LMFT" class="approach-headshot" width="1200" height="1800" loading="lazy" decoding="async">
+          <img
+            src={withBase("/images/headshot.jpg")}
+            alt="Elizabeth Armstrong, LMFT"
+            class="approach-headshot"
+            width="1200"
+            height="1800"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
@@ -306,7 +394,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="promise-content">
                 <h4>Unconditional Respect</h4>
-                <p>I will RESPECT and HONOR your thoughts, feelings, opinions, and ideas unconditionally.</p>
+                <p>
+                  I will RESPECT and HONOR your thoughts, feelings, opinions, and ideas
+                  unconditionally.
+                </p>
               </div>
             </div>
 
@@ -317,7 +408,9 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="promise-content">
                 <h4>You Are The Expert</h4>
-                <p>I will not tell you what to do. I believe you are the EXPERT on your own life.</p>
+                <p>
+                  I will not tell you what to do. I believe you are the EXPERT on your own life.
+                </p>
               </div>
             </div>
           </div>
@@ -332,7 +425,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="promise-content">
                 <h4>Facilitator of Growth</h4>
-                <p>I will guide you as you explore what you VALUE&mdash;and how to approach your life in ways that reflect those values.</p>
+                <p>
+                  I will guide you as you explore what you VALUE&mdash;and how to approach your life
+                  in ways that reflect those values.
+                </p>
               </div>
             </div>
 
@@ -343,7 +439,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
               </div>
               <div class="promise-content">
                 <h4>Your Journey</h4>
-                <p>Therapy is all about YOU. I will be open, honest, genuine, and sincere&mdash;still, therapy is about YOUR journey.</p>
+                <p>
+                  Therapy is all about YOU. I will be open, honest, genuine, and
+                  sincere&mdash;still, therapy is about YOUR journey.
+                </p>
               </div>
             </div>
           </div>
@@ -364,14 +463,21 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         <div class="roots-text">
           <p class="roots-eyebrow">Your Hidden Strength</p>
           <h2 class="roots-title">No problem is bigger than your strength</h2>
-          <p class="roots-description">Beneath every struggle lies a root system of resilience you may have forgotten. We will work collaboratively as I guide you&mdash;exploring what troubles you and how problems influence your life, decisions, and relationships.</p>
-          <p class="roots-closing">I will support you as we work together to find relief from whatever weighs on you, so you may live a lighter, brighter, and more joyful life.</p>
+          <p class="roots-description">
+            Beneath every struggle lies a root system of resilience you may have forgotten. We will
+            work collaboratively as I guide you&mdash;exploring what troubles you and how problems
+            influence your life, decisions, and relationships.
+          </p>
+          <p class="roots-closing">
+            I will support you as we work together to find relief from whatever weighs on you, so
+            you may live a lighter, brighter, and more joyful life.
+          </p>
         </div>
 
         <div class="roots-illustration">
           <figure class="roots-figure">
             <img
-              src={withBase('/images/therapy-roots.jpg')}
+              src={withBase("/images/therapy-roots.jpg")}
               alt="Elizabeth Armstrong seated in a garden"
               class="roots-photo-img"
               width="1800"
@@ -396,7 +502,8 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <LeafDivider />
         </div>
         <p class="lead container-text mx-auto">
-          Life presents us with challenges that can feel overwhelming. Here are some of the themes I commonly work with, though your experience is always unique.
+          Life presents us with challenges that can feel overwhelming. Here are some of the themes I
+          commonly work with, though your experience is always unique.
         </p>
       </div>
 
@@ -493,7 +600,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         </div>
 
         <blockquote class="illuminated-quote">
-          <p><span class="quote-hidden-initial">D</span>on't surrender all your joy for an idea you used to have about yourself that isn't true anymore.</p>
+          <p>
+            <span class="quote-hidden-initial">D</span>on't surrender all your joy for an idea you
+            used to have about yourself that isn't true anymore.
+          </p>
           <footer class="quote-attribution">
             <span class="attribution-dash">—</span>
             <cite>Cheryl Strayed</cite>
@@ -529,7 +639,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         <div class="constellation-header">
           <p class="constellation-eyebrow">Guiding Stars</p>
           <h2 class="constellation-title">What we navigate toward</h2>
-          <p class="constellation-subtitle">Struggles may bring you in, but they don't get to steer. These are some of the stars people set their course by &mdash; we'll find the ones that are yours.</p>
+          <p class="constellation-subtitle">
+            Struggles may bring you in, but they don't get to steer. These are some of the stars
+            people set their course by &mdash; we'll find the ones that are yours.
+          </p>
         </div>
 
         <div class="constellation-map">
@@ -615,7 +728,9 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <div class="journal-quote-mark">
             <QuoteMark />
           </div>
-          <p class="journal-text">I want to feel like myself again, but I'm not even sure who that is anymore.</p>
+          <p class="journal-text">
+            I want to feel like myself again, but I'm not even sure who that is anymore.
+          </p>
         </div>
 
         <div class="journal-page reveal stagger-2" style="--rotation: 1.5deg;">
@@ -629,14 +744,18 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <div class="journal-quote-mark">
             <QuoteMark />
           </div>
-          <p class="journal-text">I want to stop having the same argument over and over with my partner.</p>
+          <p class="journal-text">
+            I want to stop having the same argument over and over with my partner.
+          </p>
         </div>
 
         <div class="journal-page reveal stagger-4" style="--rotation: 2deg;">
           <div class="journal-quote-mark">
             <QuoteMark />
           </div>
-          <p class="journal-text">I need a space where I don't have to perform or pretend everything is fine.</p>
+          <p class="journal-text">
+            I need a space where I don't have to perform or pretend everything is fine.
+          </p>
         </div>
 
         <div class="journal-page reveal stagger-5" style="--rotation: -1.5deg;">
@@ -647,9 +766,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         </div>
       </div>
 
-      <p class="journal-closing">
-        If any of these resonate, you're in the right place.
-      </p>
+      <p class="journal-closing">If any of these resonate, you're in the right place.</p>
     </div>
   </section>
 
@@ -697,8 +814,13 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     <div class="gate-content">
       <p class="gate-eyebrow">The Garden Awaits</p>
       <h2 class="gate-title">Ready to step through?</h2>
-      <p class="gate-description">I offer a free 15-minute consultation to answer your questions and see if we're a good fit. There's no pressure&mdash;just a conversation about what you need.</p>
-      <a href={withBase('/contact.html')} class="btn btn-primary btn-lg gate-button">Schedule Your Free Consultation</a>
+      <p class="gate-description">
+        I offer a free 15-minute consultation to answer your questions and see if we're a good fit.
+        There's no pressure&mdash;just a conversation about what you need.
+      </p>
+      <a href={withBase("/contact.html")} class="btn btn-primary btn-lg gate-button"
+        >Schedule Your Free Consultation</a
+      >
     </div>
   </section>
 </BaseLayout>
@@ -719,9 +841,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const section = document.querySelector(".roots-section");
   const svg = section?.querySelector(".roots-svg");
@@ -731,7 +851,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     const tips = svg.querySelectorAll(".roots-below circle");
     const photo = section.querySelector(".roots-photo-img");
     const textBits = section.querySelectorAll(
-      ".roots-eyebrow, .roots-title, .roots-description, .roots-closing"
+      ".roots-eyebrow, .roots-title, .roots-description, .roots-closing",
     );
 
     // Prep each root stroke so it can "draw" from the ground line down.

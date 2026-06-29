@@ -3,12 +3,39 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
-<svg class={className} style={style} viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M40 160 Q38 100 40 40" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-  <path d="M40 130 Q20 115 15 95" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M40 100 Q60 85 65 65" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <path d="M40 70 Q25 55 20 40" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/>
-  <circle cx="40" cy="35" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
+
+<svg
+  class={className}
+  style={style}
+  viewBox="0 0 80 160"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M40 160 Q38 100 40 40"
+    stroke="currentColor"
+    stroke-width="1.2"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 130 Q20 115 15 95"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 100 Q60 85 65 65"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <path
+    d="M40 70 Q25 55 20 40"
+    stroke="currentColor"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"></path>
+  <circle cx="40" cy="35" r="5" stroke="currentColor" stroke-width="1" fill="none"></circle>
 </svg>

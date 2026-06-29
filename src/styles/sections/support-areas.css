@@ -12,12 +12,7 @@
 .apothecary-item {
   position: relative;
   padding: var(--space-8) var(--space-5);
-  background: linear-gradient(
-    180deg,
-    #fdfcfb 0%,
-    var(--warm-paper) 50%,
-    #f5f3f1 100%
-  );
+  background: linear-gradient(180deg, #fdfcfb 0%, var(--warm-paper) 50%, #f5f3f1 100%);
   border: 1px solid var(--soft-sand);
   text-align: center;
   transition: all var(--transition-base);
@@ -29,7 +24,7 @@
 
 /* Decorative top border like a drawer label */
 .apothecary-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 50%;
@@ -64,7 +59,9 @@
   height: 100%;
   color: var(--sage);
   opacity: 0.85;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .apothecary-item:hover .apothecary-icon svg {

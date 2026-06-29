@@ -3,77 +3,113 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
+
 <svg class={className} style={style} viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
   <!-- Left gate post -->
-  <rect x="50" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"/>
-  <circle cx="65" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="65" cy="100" r="3" fill="currentColor" opacity="0.3"/>
+  <rect x="50" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"
+  ></rect>
+  <circle cx="65" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="65" cy="100" r="3" fill="currentColor" opacity="0.3"></circle>
 
   <!-- Right gate post -->
-  <rect x="720" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"/>
-  <circle cx="735" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"/>
-  <circle cx="735" cy="100" r="3" fill="currentColor" opacity="0.3"/>
+  <rect x="720" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"
+  ></rect>
+  <circle cx="735" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
+  <circle cx="735" cy="100" r="3" fill="currentColor" opacity="0.3"></circle>
 
   <!-- Gate arch -->
-  <path d="M80 80 Q400 -20 720 80" stroke="currentColor" stroke-width="1.5" fill="none"/>
-  <path d="M100 90 Q400 10 700 90" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M80 80 Q400 -20 720 80" stroke="currentColor" stroke-width="1.5" fill="none"></path>
+  <path d="M100 90 Q400 10 700 90" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"
+  ></path>
 
   <!-- Left gate door -->
   <g class="gate-door gate-door-left">
-    <rect x="90" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"/>
+    <rect x="90" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"
+    ></rect>
     <!-- Decorative bars -->
-    <line x1="150" y1="100" x2="150" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="210" y1="100" x2="210" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="270" y1="100" x2="270" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="330" y1="100" x2="330" y2="400" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="150" y1="100" x2="150" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="210" y1="100" x2="210" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="270" y1="100" x2="270" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="330" y1="100" x2="330" y2="400" stroke="currentColor" stroke-width="0.8"></line>
     <!-- Horizontal bars -->
-    <line x1="90" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="90" y1="300" x2="380" y2="300" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="90" y1="200" x2="380" y2="200" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="90" y1="300" x2="380" y2="300" stroke="currentColor" stroke-width="0.8"></line>
     <!-- Decorative scrollwork -->
-    <path d="M120 150 Q150 130 180 150 Q210 170 180 190 Q150 210 120 190 Q90 170 120 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <path d="M280 150 Q310 130 340 150 Q370 170 340 190 Q310 210 280 190 Q250 170 280 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <path
+      d="M120 150 Q150 130 180 150 Q210 170 180 190 Q150 210 120 190 Q90 170 120 150"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"></path>
+    <path
+      d="M280 150 Q310 130 340 150 Q370 170 340 190 Q310 210 280 190 Q250 170 280 150"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"></path>
   </g>
 
   <!-- Right gate door -->
   <g class="gate-door gate-door-right">
-    <rect x="420" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"/>
+    <rect
+      x="420"
+      y="100"
+      width="290"
+      height="300"
+      stroke="currentColor"
+      stroke-width="1"
+      fill="none"></rect>
     <!-- Decorative bars -->
-    <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"></line>
     <!-- Horizontal bars -->
-    <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"/>
-    <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"></line>
+    <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"></line>
     <!-- Decorative scrollwork -->
-    <path d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <path d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150" stroke="currentColor" stroke-width="0.8" fill="none"/>
+    <path
+      d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"></path>
+    <path
+      d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150"
+      stroke="currentColor"
+      stroke-width="0.8"
+      fill="none"></path>
   </g>
 
   <!-- Climbing roses on gate -->
   <g class="gate-roses">
     <!-- Left side roses -->
-    <circle cx="100" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="100" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"/>
-    <circle cx="100" cy="150" r="2" fill="currentColor" opacity="0.3"/>
-    <path d="M95 165 Q85 180 90 200" stroke="currentColor" stroke-width="0.6" fill="none"/>
+    <circle cx="100" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    <circle cx="100" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"></circle>
+    <circle cx="100" cy="150" r="2" fill="currentColor" opacity="0.3"></circle>
+    <path d="M95 165 Q85 180 90 200" stroke="currentColor" stroke-width="0.6" fill="none"></path>
 
-    <circle cx="85" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="85" cy="250" r="3" fill="currentColor" opacity="0.3"/>
+    <circle cx="85" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    <circle cx="85" cy="250" r="3" fill="currentColor" opacity="0.3"></circle>
 
     <!-- Right side roses -->
-    <circle cx="700" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="700" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"/>
-    <circle cx="700" cy="150" r="2" fill="currentColor" opacity="0.3"/>
-    <path d="M705 165 Q715 180 710 200" stroke="currentColor" stroke-width="0.6" fill="none"/>
+    <circle cx="700" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    <circle cx="700" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"></circle>
+    <circle cx="700" cy="150" r="2" fill="currentColor" opacity="0.3"></circle>
+    <path d="M705 165 Q715 180 710 200" stroke="currentColor" stroke-width="0.6" fill="none"></path>
 
-    <circle cx="715" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"/>
-    <circle cx="715" cy="250" r="3" fill="currentColor" opacity="0.3"/>
+    <circle cx="715" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    <circle cx="715" cy="250" r="3" fill="currentColor" opacity="0.3"></circle>
 
     <!-- Leaves -->
-    <path d="M80 180 Q70 175 68 185 Q75 188 80 180" stroke="currentColor" stroke-width="0.6" fill="none"/>
-    <path d="M720 180 Q730 175 732 185 Q725 188 720 180" stroke="currentColor" stroke-width="0.6" fill="none"/>
+    <path
+      d="M80 180 Q70 175 68 185 Q75 188 80 180"
+      stroke="currentColor"
+      stroke-width="0.6"
+      fill="none"></path>
+    <path
+      d="M720 180 Q730 175 732 185 Q725 188 720 180"
+      stroke="currentColor"
+      stroke-width="0.6"
+      fill="none"></path>
   </g>
 </svg>

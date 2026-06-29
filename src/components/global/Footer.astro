@@ -1,7 +1,7 @@
 ---
 import { withBase } from "@/lib/withBase";
 // Footer component with navigation and contact info
-import { FooterDivider } from '@illustrations/dividers';
+import { FooterDivider } from "@illustrations/dividers";
 ---
 
 <footer class="footer botanical-footer" role="contentinfo">
@@ -12,34 +12,38 @@ import { FooterDivider } from '@illustrations/dividers';
   <div class="container">
     <div class="footer-top reveal">
       <div class="footer-brand">
-        <a href={withBase('/index.html')} class="logo">
+        <a href={withBase("/index.html")} class="logo">
           Elizabeth Armstrong
           <span>LMFT</span>
         </a>
         <p class="footer-tagline">
-          Collaborative, warm therapy to help you reconnect with your values, rewrite limiting stories, and find your way forward. Serving Orange County and all of California via telehealth.
+          Collaborative, warm therapy to help you reconnect with your values, rewrite limiting
+          stories, and find your way forward. Serving Orange County and all of California via
+          telehealth.
         </p>
       </div>
 
       <div class="footer-col">
         <h4>Navigate</h4>
         <ul class="footer-links">
-          <li><a href={withBase('/index.html')} class="footer-link">Home</a></li>
-          <li><a href={withBase('/about.html')} class="footer-link">About Me</a></li>
-          <li><a href={withBase('/resources.html')} class="footer-link">Resources</a></li>
-          <li><a href={withBase('/fees.html')} class="footer-link">Fees & Insurance</a></li>
-          <li><a href={withBase('/faqs.html')} class="footer-link">FAQs</a></li>
-          <li><a href={withBase('/contact.html')} class="footer-link">Contact</a></li>
+          <li><a href={withBase("/index.html")} class="footer-link">Home</a></li>
+          <li><a href={withBase("/about.html")} class="footer-link">About Me</a></li>
+          <li><a href={withBase("/resources.html")} class="footer-link">Resources</a></li>
+          <li><a href={withBase("/fees.html")} class="footer-link">Fees & Insurance</a></li>
+          <li><a href={withBase("/faqs.html")} class="footer-link">FAQs</a></li>
+          <li><a href={withBase("/contact.html")} class="footer-link">Contact</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Ways to Work Together</h4>
         <ul class="footer-links">
-          <li><a href={withBase('/index.html#individual')} class="footer-link">Individual Therapy</a></li>
-          <li><a href={withBase('/index.html#couples')} class="footer-link">Couples Therapy</a></li>
-          <li><a href={withBase('/index.html#family')} class="footer-link">Family Therapy</a></li>
-          <li><a href={withBase('/reiki.html')} class="footer-link">Reiki</a></li>
+          <li>
+            <a href={withBase("/index.html#individual")} class="footer-link">Individual Therapy</a>
+          </li>
+          <li><a href={withBase("/index.html#couples")} class="footer-link">Couples Therapy</a></li>
+          <li><a href={withBase("/index.html#family")} class="footer-link">Family Therapy</a></li>
+          <li><a href={withBase("/reiki.html")} class="footer-link">Reiki</a></li>
         </ul>
       </div>
 
@@ -47,15 +51,18 @@ import { FooterDivider } from '@illustrations/dividers';
         <h4>Contact</h4>
         <p class="footer-contact-item">elizabetharmstrongtherapy@gmail.com</p>
         <p class="footer-contact-item">(949) 444-3899</p>
-        <p class="footer-contact-item" style="margin-top: var(--space-4); font-size: var(--text-xs); color: var(--text-secondary);">
-          In Orange County or via secure<br>telehealth across California
+        <p
+          class="footer-contact-item"
+          style="margin-top: var(--space-4); font-size: var(--text-xs); color: var(--text-secondary);"
+        >
+          In Orange County or via secure<br />telehealth across California
         </p>
       </div>
     </div>
 
     <div class="footer-bottom">
       <p class="footer-legal">
-        &copy; 2026 Elizabeth Armstrong, LMFT. All rights reserved.<br>
+        &copy; 2026 Elizabeth Armstrong, LMFT. All rights reserved.<br />
         <span style="font-size: 0.7rem;">License #111154 | Licensed in California</span>
       </p>
     </div>

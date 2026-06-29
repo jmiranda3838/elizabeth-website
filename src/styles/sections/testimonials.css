@@ -19,15 +19,12 @@
 .journal-page {
   position: relative;
   padding: var(--space-8) var(--space-6);
-  background: linear-gradient(
-    135deg,
-    #fdfcfa 0%,
-    #f9f7f4 50%,
-    #f5f2ef 100%
-  );
+  background: linear-gradient(135deg, #fdfcfa 0%, #f9f7f4 50%, #f5f2ef 100%);
   border: 1px solid rgba(210, 199, 193, 0.5);
   transform: rotate(var(--rotation, 0deg));
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
   /* Aged paper effect */
   box-shadow:
     0 2px 8px rgba(84, 49, 35, 0.06),
@@ -44,7 +41,7 @@
 
 /* Subtle torn edge effect */
 .journal-page::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -1px;
   left: 10%;
@@ -122,7 +119,7 @@
 }
 
 .testimonial-quote::before {
-  content: '\201C';
+  content: "\201C";
   display: block;
   font-size: var(--text-5xl);
   color: var(--dusty-peach);

@@ -1,22 +1,22 @@
 /* === Tokens (CSS Custom Properties) === */
 :root {
   /* Neutrals / Backgrounds */
-  --warm-paper: #F7F6F5;
-  --soft-sand: #F5F0EE;
-  --blush-wash: #FDF2EF;
+  --warm-paper: #f7f6f5;
+  --soft-sand: #f5f0ee;
+  --blush-wash: #fdf2ef;
 
   /* Typography / Ink */
-  --espresso: #60665A;
-  --slate-olive: #71796E;
+  --espresso: #60665a;
+  --slate-olive: #71796e;
 
   /* Accents */
-  --dusty-peach: #D0B4A6;
-  --warm-clay: #B8817E;
-  --sage: #96ACA0;
-  --sage-warm: #A7A898;
-  --misty-blue: #7D9094;
-  --muted-rose: #C69491;
-  --soft-coral: #F9C8C2;
+  --dusty-peach: #d0b4a6;
+  --warm-clay: #b8817e;
+  --sage: #96aca0;
+  --sage-warm: #a7a898;
+  --misty-blue: #7d9094;
+  --muted-rose: #c69491;
+  --soft-coral: #f9c8c2;
 
   /* Functional Colors */
   --text-primary: var(--espresso);
@@ -28,9 +28,9 @@
   --accent-cool: var(--misty-blue);
 
   /* Typography Scale */
-  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-nav: 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-nav: "Raleway", -apple-system, BlinkMacSystemFont, sans-serif;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

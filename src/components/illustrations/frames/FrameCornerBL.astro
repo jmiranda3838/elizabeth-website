@@ -3,10 +3,13 @@ interface Props {
   class?: string;
   style?: string;
 }
-const { class: className = '', style = '' } = Astro.props;
+const { class: className = "", style = "" } = Astro.props;
 ---
+
 <svg class={className} style={style} viewBox="0 0 40 40" fill="none">
-  <path d="M40 40 L20 40 Q0 40 0 20 L0 0" stroke="currentColor" stroke-width="1" fill="none"/>
-  <path d="M20 32 Q8 32 8 20" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
-  <circle cx="35" cy="5" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <path d="M40 40 L20 40 Q0 40 0 20 L0 0" stroke="currentColor" stroke-width="1" fill="none"></path>
+  <path d="M20 32 Q8 32 8 20" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"
+  ></path>
+  <circle cx="35" cy="5" r="3" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.4"
+  ></circle>
 </svg>
