@@ -727,7 +727,7 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
   const svg = section?.querySelector(".roots-svg");
 
   if (section && svg && !prefersReduced) {
-    const paths = svg.querySelectorAll(".roots-below path");
+    const paths = svg.querySelectorAll<SVGPathElement>(".roots-below path");
     const tips = svg.querySelectorAll(".roots-below circle");
     const photo = section.querySelector(".roots-photo-img");
     const textBits = section.querySelectorAll(

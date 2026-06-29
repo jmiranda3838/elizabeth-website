@@ -14,6 +14,17 @@ This is a therapy practice website built with **Astro** (static site generator).
 
 **Preview production build**: `npm run preview`
 
+## Verification
+
+Run **`npm run check`** before committing — it is the single gate for this repo and runs:
+
+- **`npm run check:types`** — `astro check` (TypeScript strict mode across `.astro`/`.ts`).
+- **`npm run check:docs`** — verifies this file's component/script counts still match the filesystem, so the registry and counts above never drift again. If it fails, it prints the expected numbers; update CLAUDE.md to match.
+- **`npm run check:links`** — offline validator: every `withBase('…')` / `href`/`src` internal path must resolve to a real page in `src/pages/`, a redirect key in `astro.config.mjs`, or an asset under `public/`. Catches broken `.html` links and base-path mistakes before deploy.
+- **`npm run build`** — the production build.
+
+**Visual check (Playwright MCP)**: to confirm a UI change renders, run `npm run preview`, then `browser_navigate` to `http://localhost:4321/elizabeth-website/index.html` (the `/elizabeth-website` base path is required) and `browser_take_screenshot`. Old reference shots live in `migration-baselines/` for ad-hoc comparison.
+
 ## Architecture
 
 ### File Structure
@@ -29,7 +40,9 @@ src/
 │   ├── faqs.astro          # FAQ page (has co-located <style is:global> for FAQ-specific CSS)
 │   └── contact.astro       # Contact page, threshold doorway hero (imports src/styles/pages/contact.css)
 ├── layouts/
-│   └── BaseLayout.astro    # Main HTML wrapper (loads all 9 JS modules)
+│   └── BaseLayout.astro    # Main HTML wrapper (loads all 10 JS modules via withBase())
+├── lib/
+│   └── withBase.ts         # Prefixes internal paths with Astro's base (see "Base path" below)
 ├── components/
 │   ├── global/             # Site-wide components
 │   │   ├── Header.astro
@@ -37,12 +50,12 @@ src/
 │   ├── sections/           # Reusable page sections
 │   │   ├── CTA.astro
 │   │   └── DecorativeDivider.astro
-│   └── illustrations/      # SVG illustration components (79 files, 9 subdirectories)
+│   └── illustrations/      # SVG illustration components (83 files, 9 subdirectories)
 │       ├── icons/           # Small functional icons (23 components)
 │       ├── botanicals/      # Decorative plant elements (11 components)
 │       ├── dividers/        # Section/page dividers (4 components)
 │       ├── frames/          # Corner and border frame elements (10 components)
-│       ├── scenes/          # Large illustrations (6 components)
+│       ├── scenes/          # Large illustrations (10 components)
 │       ├── apothecary/      # Specialty topic icons (8 components)
 │       ├── specimens/       # Service card specimen illustrations (6 components)
 │       ├── moon/            # Moon phase icons (3 components)
@@ -84,7 +97,7 @@ src/
 
 public/
 ├── images/                 # Static image assets
-└── scripts/                # Client-side JavaScript (9 IIFE modules, loaded via is:inline)
+└── scripts/                # Client-side JavaScript (10 IIFE modules, loaded via is:inline)
     ├── mobile-nav.js       # Mobile nav toggle + focus trap
     ├── faq-accordion.js    # FAQ accordion + print handling
     ├── smooth-scroll.js    # Anchor link smooth scrolling
@@ -93,12 +106,17 @@ public/
     ├── scroll-reveal.js    # Reveal animations + service card touch effects
     ├── constellation.js    # Dynamic constellation SVG lines (homepage guiding-stars section)
     ├── conduit.js          # Drifting light motes (reiki page)
-    └── library.js          # Pull-out book spines on the shelf (resources page)
+    ├── library.js          # Pull-out book spines on the shelf (resources page)
+    ├── review-comments.js  # Comment-on-anything review overlay (inert unless ?review=on)
+    └── vendor/
+        └── html2canvas.min.js  # Vendored; used by review-comments.js for screenshots
 ```
 
 ### Key Conventions
 
-**Routing**: Astro config uses `build.format: 'file'`, so routes produce `.html` extensions (e.g., `/about.html`, `/contact.html`). All internal links must use `.html` suffixes. The retired `/therapy.html` and `/ways.html` URLs are kept alive as meta-refresh stubs via the `redirects` option in `astro.config.mjs` (their content was merged into the homepage).
+**Routing**: Astro config uses `build.format: 'file'`, so routes produce `.html` extensions (e.g., `/about.html`, `/contact.html`). All internal links must use `.html` suffixes. The retired `/therapy` and `/ways` URLs are kept alive via the `redirects` option in `astro.config.mjs` (Astro emits meta-refresh stubs): `/therapy → /` and `/ways → /index.html#services` (their content was merged into the homepage).
+
+**Base path & internal links (footgun)**: The site is currently built with `base: '/elizabeth-website'` for the GitHub Pages preview deploy (`astro.config.mjs:6-11`; reverts to `/` at launch). **Every internal link and asset path MUST go through the `withBase()` helper** (`src/lib/withBase.ts`, imported as `@/lib/withBase`): `href={withBase('/about.html')}`, `src={withBase('/images/x.png')}`, `src={withBase('/scripts/x.js')}`. `withBase()` leaves external URLs, anchors (`#…`), `mailto:`/`tel:`, and protocol-relative (`//…`) paths untouched, so it is safe to wrap everything. **Gotcha**: CSS `url()` cannot read Astro's `BASE_URL`, so base-aware backgrounds must use an inline `background-image` style or an imported SVG component (the hero already does this) — never a bare `url(/images/…)` in a `.css` file. `npm run check:links` (see Verification) validates that every `withBase('…')` path resolves.
 
 **Path aliases** (from tsconfig.json):
 - `@/*` → `src/*`
@@ -220,7 +238,7 @@ The codebase uses metaphor-heavy class names. Here's what they map to:
 
 ### Illustration Component Registry
 
-All 79 SVG components organized by subdirectory. Import via barrel files: `import { Name } from "@illustrations/subdir"`.
+All 83 SVG components organized by subdirectory. Import via barrel files: `import { Name } from "@illustrations/subdir"`.
 
 **icons/** (23): ArrowRight, IconChat, IconCheckCircle, IconClock, IconCollaborative, IconCompass, IconCrescentMoon, IconCrown, IconCrystal, IconEmail, IconGraduation, IconHandsOpen, IconHeart, IconImagePlaceholder, IconLicense, IconLocation, IconPhone, IconSeedling, IconShield, IconStar, IconSun, IconTraining, PlusExpand
 
@@ -234,7 +252,7 @@ All 79 SVG components organized by subdirectory. Import via barrel files: `impor
 
 **misc/** (8): CatalogPull, Clothespin, ConstellationStar, ManuscriptMargin, MoonPath, QuoteMark, SpecimenDivider, TagString
 
-**scenes/** (6): BookSpine, DoorwayFrame, GardenGate, Garland, LightChannel, RootsSystem
+**scenes/** (10): BookSpine, DoorwayFrame, GardenGate, Garland, GateFrame, GateDoorLeft, GateDoorRight, HandsCupped, LightChannel, RootsSystem
 
 **dividers/** (4): FooterDivider, LeafDivider, PageDivider, VineDivider
 
@@ -255,7 +273,7 @@ Classes apply `transition-delay` from 0.1s to 0.8s in 0.1s increments.
 
 ### JavaScript (public/scripts/)
 
-Nine IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout. Page-specific modules query their page's selectors and bail when absent, so they are inert everywhere else:
+Ten IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout (each `src` wrapped in `withBase()`). Page-specific modules query their page's selectors and bail when absent, so they are inert everywhere else:
 
 | Module | Functionality |
 |--------|--------------|
@@ -268,8 +286,19 @@ Nine IIFE-wrapped modules loaded via `<script is:inline>` in BaseLayout. Page-sp
 | `constellation.js` | Dynamic SVG lines connecting constellation stars (homepage guiding-stars section) |
 | `conduit.js` | Drifting light-mote particles in the hero (reiki page) |
 | `library.js` | Pull-out lendable book spines with note slips (resources page) |
+| `review-comments.js` | Comment-on-anything review overlay; inert unless `?review=on` (or device-remembered). See "Review & feedback overlay" below |
+
+Plus a vendored dependency: `public/scripts/vendor/html2canvas.min.js` (used by `review-comments.js` to screenshot the page when a comment is submitted).
 
 **Note**: Scripts use `is:inline` to prevent Astro/Vite bundling.
+
+### Review & feedback overlay
+
+The site ships a "comment on anything" overlay so Elizabeth (or any reviewer) can leave feedback without GitHub:
+
+- **Client**: `public/scripts/review-comments.js` is inert by default. It activates with `?review=on` in the URL (then remembers the device via `localStorage`). When active, the reviewer hovers/clicks any element, types a comment, and submits; the script screenshots the page (via vendored `html2canvas`) and captures element metadata (CSS selector, text, viewport).
+- **Server**: `feedback-worker/` is a Cloudflare Worker (`POST /comments` rate-limited + origin/key-gated, `GET /comments` lists). Each submission commits the screenshot to a `feedback-assets` branch and opens a GitHub issue labelled `site-feedback`.
+- **Operating / rotating the key / removing it**: deployed out-of-band via `npx wrangler deploy` (not in CI). See the `review-comment-overlay` entry in Claude's memory for the full operate/rotate/remove runbook. Do **not** change the overlay's behavior as a side effect of unrelated edits.
 
 ### Accessibility
 
@@ -293,4 +322,6 @@ Media queries at: 480px, 600px, 768px, 900px, 1024px (mobile-first approach)
 
 **To modify CTA sections**: Use the `<CTA>` component with props, or edit `src/components/sections/CTA.astro` for the template
 
-**To add a new illustration**: Create an `.astro` file in the appropriate `src/components/illustrations/` subdirectory, then add it to that subdirectory's `index.ts` barrel file
+**To add a new illustration**: Run the `/new-illustration` skill (`.claude/skills/new-illustration/`), which creates the `.astro` file in the right subdirectory, updates that subdirectory's `index.ts` barrel, and bumps the counts in this file. (Manual path: create the `.astro` file, add it to the barrel, then run `npm run check:docs` to confirm the counts here are still correct.)
+
+**To add a new page**: Run the `/new-page` skill (`.claude/skills/new-page/`), which scaffolds `src/pages/<name>.astro` on `BaseLayout` (plus a `src/styles/pages/<name>.css` for complex pages) and reminds you to wire nav links through `withBase()`.

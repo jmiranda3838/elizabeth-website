@@ -1,5 +1,9 @@
 .DS_Store
 
+# Claude Code local config (shared .claude/settings.json + .claude/skills/ are committed)
+.claude/settings.local.json
+.claude/scratchpad/
+
 # Dependencies
 node_modules/
 
