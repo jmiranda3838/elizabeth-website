@@ -1,0 +1,46 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 100 120"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Prickly pear: four stacked pads with areoles, and one bloom -->
+  <g stroke="currentColor" stroke-width="1.1" stroke-linejoin="round">
+    <ellipse cx="50" cy="92" rx="19" ry="23"></ellipse>
+    <ellipse cx="35" cy="56" rx="13" ry="17" transform="rotate(-18 35 56)"></ellipse>
+    <ellipse cx="66" cy="60" rx="12" ry="16" transform="rotate(20 66 60)"></ellipse>
+    <ellipse cx="30" cy="26" rx="8.5" ry="11.5" transform="rotate(-8 30 26)"></ellipse>
+  </g>
+  <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <path
+      d="M44 82 h0.1 M56 80 h0.1 M50 94 h0.1 M42 102 h0.1 M58 104 h0.1 M32 50 h0.1 M40 60 h0.1 M30 64 h0.1 M64 52 h0.1 M70 64 h0.1 M62 68 h0.1 M29 22 h0.1 M32 32 h0.1"
+    ></path>
+  </g>
+  <g stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.75">
+    <path
+      d="M44 82 l-3 -3 M56 80 l3 -3 M42 102 l-3 2 M58 104 l3 2 M32 50 l-3 -2 M64 52 l3 -2 M70 64 l3 1"
+    ></path>
+  </g>
+  <!-- Bloom on the right pad -->
+  <g stroke="currentColor" stroke-width="1" stroke-linejoin="round">
+    <path d="M72 44 C68 38 68 32 72 30 C74 34 76 34 78 30 C82 32 82 38 78 44 Z"></path>
+    <path d="M71 34 C70 30 72 27 75 28 C77 27 79 30 78 34"></path>
+  </g>
+  <path
+    d="M24 115 Q50 118 76 115"
+    stroke="currentColor"
+    stroke-width="1"
+    stroke-linecap="round"
+    opacity="0.6"></path>
+</svg>

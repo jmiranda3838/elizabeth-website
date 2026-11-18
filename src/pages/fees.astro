@@ -10,11 +10,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <!-- Page Hero -->
   <section class="page-hero">
     <div class="container">
-      <p class="eyebrow">Investment</p>
       <h1>Fees &amp; Insurance</h1>
       <p class="lead">
-        Clear, honest pricing &mdash; so the only thing left to consider is whether we&rsquo;re the
-        right fit.
+        Here&rsquo;s what a session costs, how insurance works with my practice, and what to do if
+        the cost is a concern.
       </p>
     </div>
   </section>
@@ -27,27 +26,33 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <div class="fees-grid">
         <div class="fee-card">
-          <p class="fee-amount">$150</p>
-          <p class="fee-label">55-minute session</p>
+          <p class="fee-amount">$185</p>
+          <p class="fee-label">50-minute individual session</p>
           <p class="fee-note">The standard session length for individual therapy.</p>
         </div>
         <div class="fee-card">
-          <p class="fee-amount">$200</p>
+          <p class="fee-amount">$225</p>
+          <p class="fee-label">50-minute couple or family session</p>
+          <p class="fee-note">The standard session length for couples and families.</p>
+        </div>
+        <div class="fee-card">
+          <p class="fee-amount">$300</p>
           <p class="fee-label">90-minute session</p>
           <p class="fee-note">
-            A longer session &mdash; well suited to couples or deeper pieces of work.
+            Individual, couple, or family &mdash; a longer session for deeper pieces of work.
           </p>
         </div>
       </div>
 
       <p class="fees-fineprint text-center">
-        Payment is due at the time of each session. I accept cash, check, and major credit cards.
+        Payment is due at the time of each session. I accept cash, check, major credit cards, and
+        HSA cards.
       </p>
     </div>
   </section>
 
   <!-- Details -->
-  <section class="section bg-blush">
+  <section class="section bg-sand">
     <div class="container container-narrow">
       <div class="fees-detail">
         <h3>Sliding scale</h3>
@@ -94,8 +99,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <h3>A note on Reiki</h3>
         <p>
           Reiki is a separate, private-pay offering &mdash; its own kind of session, never billed to
-          insurance. You can read more on the <a href={withBase("/reiki.html")}>Reiki page</a>, and
-          we can sort out the details on the same free call.
+          insurance: $100 for 60 minutes, or $125 for 75 minutes. You can read more on the <a
+            href={withBase("/reiki.html")}>Reiki page</a
+          >, and we can sort out the details on the same free call.
         </p>
       </div>
     </div>
@@ -118,9 +124,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <style>
     .fees-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--space-6);
-      max-width: 640px;
       margin: var(--space-10) auto 0;
     }
     .fee-card {
@@ -167,7 +172,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       text-decoration: underline;
       text-underline-offset: 2px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       .fees-grid {
         grid-template-columns: 1fr;
       }

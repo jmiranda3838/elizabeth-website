@@ -10,7 +10,7 @@ import {
   IconHeart,
 } from "@illustrations/icons";
 import { HandsCupped } from "@illustrations/scenes";
-import { QuoteMark, ConstellationStar } from "@illustrations/misc";
+import { ConstellationStar } from "@illustrations/misc";
 import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
 import {
   FrameCornerTL,
@@ -20,14 +20,13 @@ import {
   CtaVineLeft,
   CtaVineRight,
 } from "@illustrations/frames";
-import { LeafDivider } from "@illustrations/dividers";
 import { FullMoon } from "@illustrations/moon";
 import { Seedling } from "@illustrations/apothecary";
 ---
 
 <BaseLayout
   title="Reiki in Orange County | Elizabeth Armstrong Therapy"
-  description="Gentle Reiki energy work in Orange County, offered by Elizabeth Armstrong — certified Reiki Master and licensed therapist. A separate, private-pay hour of rest: you stay fully clothed while your own system settles. Not psychotherapy — and honestly explained."
+  description="Gentle Reiki energy work in Orange County, offered by Elizabeth Armstrong — certified Reiki Master and licensed therapist. A separate, private-pay hour of rest: you stay fully clothed while your own system settles. Not psychotherapy."
 >
   <div class="reiki-page">
     <!-- Daybreak: a single sun climbs the sky as you scroll (GSAP-scrubbed),
@@ -78,32 +77,27 @@ import { Seedling } from "@illustrations/apothecary";
                 loading="lazy"
               />
             </figure>
-            <p class="eyebrow">The honest part, first</p>
-            <h2>What Reiki is &mdash; and what it isn't</h2>
+            <p class="eyebrow">My Practice</p>
+            <h2>How I work with Reiki</h2>
             <p>
-              Reiki is a gentle energy practice with Japanese roots. You rest, fully clothed and
-              comfortable, while I place my hands lightly on or just above you &mdash; and that's
-              really the whole mechanism. Yes, I know how that sounds. I'd rather undersell this
-              than oversell it, so let me be plain first: this is energy work &mdash; its own kind
-              of session, with its own purpose and fee, never psychotherapy and never billed to
-              insurance. I take that line seriously, because taking it seriously is part of how I
-              keep you safe. And many people simply find it deeply relaxing &mdash; that alone is
-              worth quite a lot.
+              Reiki is a gentle energy practice with Japanese roots. It moves stuck energy and
+              brings the chakras back into balance. You rest, fully clothed and comfortable, while I
+              place my hands lightly on or just above you. Along with light touch, I work with
+              crystal placement, essential oils, tuning forks, and drumming.
             </p>
           </div>
 
           <div class="essence-spread reveal-right">
             <div class="spread-pane is-pane lit-card">
               <span class="spread-icon" aria-hidden="true"><IconHandsOpen /></span>
-              <h3>Reiki is</h3>
+              <h3>What Reiki is</h3>
               <ul>
-                <li>A calm, restful hour of energy work</li>
-                <li>An invitation to your own body's way of settling</li>
+                <li>Energy work that clears blocks and restores balance</li>
+                <li>Your own healing at work, with me as the conduit</li>
                 <li>
-                  Offered by a certified Reiki Master &mdash; energy work since 2020, Master level
-                  since 2021
+                  Offered by a certified Reiki Master: certified in 2020, Master level since 2021
                 </li>
-                <li>Held lightly, warmly, and on its own terms</li>
+                <li>A full session of deep rest, fully clothed</li>
               </ul>
             </div>
 
@@ -111,12 +105,11 @@ import { Seedling } from "@illustrations/apothecary";
 
             <div class="spread-pane isnt-pane lit-card">
               <span class="spread-icon" aria-hidden="true"><IconShield /></span>
-              <h3>Reiki isn't</h3>
+              <h3>What to know before you book</h3>
               <ul>
-                <li>Not psychotherapy, and not a therapy session</li>
-                <li>Not a cure or treatment for any condition</li>
-                <li>Not a substitute for medical or psychological care</li>
-                <li>Not billed to insurance &mdash; a separate, private offering</li>
+                <li>Reiki is separate from psychotherapy, with its own sessions and fee.</li>
+                <li>Sessions are private-pay and not billed to insurance.</li>
+                <li>Reiki works alongside medical and mental health care, never in place of it.</li>
               </ul>
             </div>
           </div>
@@ -125,29 +118,35 @@ import { Seedling } from "@illustrations/apothecary";
     </section>
 
     <!-- ============================================================
-         4. THE CONDUIT QUOTE — her own words, as a resonance chamber
+         4. THE CONDUIT QUOTE — her own words beside a lit, arched portrait
          ============================================================ -->
     <section class="section section-lg conduit-quote-section">
-      <img
-        class="quote-photo"
-        src={withBase("/images/reiki-quote.jpg")}
-        alt=""
-        width="1600"
-        height="1066"
-        loading="lazy"
-        aria-hidden="true"
-      />
-      <span class="candle-glow candle-glow-1" aria-hidden="true"></span>
-      <span class="candle-glow candle-glow-2" aria-hidden="true"></span>
+      <div class="container conduit-quote-inner">
+        <div class="conduit-quote-portrait reveal">
+          <div class="conduit-quote-door">
+            <img
+              class="conduit-quote-photo"
+              src={withBase("/images/reiki-quote.jpg")}
+              alt="Elizabeth smiling in a tan hat, standing in a sunlit garden"
+              width="1600"
+              height="1066"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-      <div class="container">
-        <span class="quote-divider reveal" aria-hidden="true"><LeafDivider /></span>
-        <figure class="conduit-quote reveal">
-          <span class="conduit-quote-mark" aria-hidden="true"><QuoteMark /></span>
+        <figure class="conduit-quote reveal stagger-1">
           <blockquote>
             <p>
-              I'm not healing you &mdash; you're healing you. I'm just being a conduit, like a
-              straw.
+              <span class="conduit-quote-line">
+                <span class="conduit-quote-open" aria-hidden="true">&ldquo;</span>I'm not healing
+                you &mdash;
+              </span>
+              <span class="conduit-quote-line">you're healing you.</span>
+              <span class="conduit-quote-line conduit-quote-gap">I'm just being a conduit,</span>
+              <span class="conduit-quote-line"
+                >like a straw.<span aria-hidden="true">&rdquo;</span></span
+              >
             </p>
           </blockquote>
           <figcaption>Elizabeth</figcaption>
@@ -173,8 +172,9 @@ import { Seedling } from "@illustrations/apothecary";
             <span class="light-step-label">first light</span>
             <h3>Settle</h3>
             <p>
-              You arrive, kick off your shoes, and get comfortable. We talk for a moment about what
-              brought you in &mdash; then you let your shoulders drop.
+              You arrive, kick off your shoes, and get comfortable. We talk briefly about what
+              brought you in and, if you like, set an intention for the session &mdash; some people
+              like to choose an oracle card to be guided by. Then you let your shoulders drop.
             </p>
           </div>
           <div class="light-step reveal stagger-2">
@@ -192,7 +192,8 @@ import { Seedling } from "@illustrations/apothecary";
             <span class="light-step-label">full morning</span>
             <h3>Glow</h3>
             <p>
-              We ease back out gently &mdash; a breath, a sip of water, no rush. Many people say
+              We ease back out gently &mdash; a breath, a sip of water, no rush. Then we spend a few
+              minutes debriefing: what you may have felt, and what I picked up on. Many people say
               they leave feeling softer than they came in.
             </p>
           </div>
@@ -307,9 +308,9 @@ import { Seedling } from "@illustrations/apothecary";
               <div class="reiki-fees-note">
                 <span class="fees-label">About the fee</span>
                 <p>
-                  A private-pay offering, never billed to insurance. Rather than post numbers, I'd
-                  rather walk you through it in a free 15-minute call &mdash; the same easy
-                  conversation whether you're curious about Reiki, therapy, or both.
+                  <strong>$100 for 60 minutes, or $125 for 75 minutes.</strong> A private-pay offering,
+                  never billed to insurance. If you'd like to talk it through first, the free 15-minute
+                  call is the same easy conversation whether you're curious about Reiki, therapy, or both.
                 </p>
               </div>
             </div>
@@ -319,9 +320,9 @@ import { Seedling } from "@illustrations/apothecary";
     </section>
 
     <!-- ============================================================
-         9. ON THE HORIZON — one offering, on its way
+         9. ON THE HORIZON — the annual Sedona retreat
          ============================================================ -->
-    <section class="section horizon-section">
+    <section class="section horizon-section" id="retreat">
       <span class="horizon-line" aria-hidden="true"></span>
       <span class="horizon-sun" aria-hidden="true"></span>
       <div class="container">
@@ -330,8 +331,9 @@ import { Seedling } from "@illustrations/apothecary";
           <h2>On the horizon</h2>
         </div>
         <p class="horizon-intro reveal">
-          Reiki is one of the more embodied ways I work, beyond the therapy room. One more is on the
-          way &mdash; if it calls to you, mention it when we talk.
+          Reiki is one of the more embodied ways I work, beyond the therapy room. Once a year, I
+          also guide a retreat with my colleague &mdash; if it calls to you, mention it when we
+          talk.
         </p>
 
         <div class="horizon-card reveal">
@@ -340,12 +342,15 @@ import { Seedling } from "@illustrations/apothecary";
           <span class="horizon-corner horizon-corner-bl" aria-hidden="true"><FrameCornerBL /></span>
           <span class="horizon-corner horizon-corner-br" aria-hidden="true"><FrameCornerBR /></span>
           <span class="horizon-card-icon" aria-hidden="true"><Seedling /></span>
-          <span class="soon-chip">Coming soon</span>
+          <span class="soon-chip">March 18&ndash;20, 2027</span>
           <h3>Annual Retreat</h3>
-          <p class="horizon-card-nature">A small yearly gathering</p>
+          <p class="horizon-card-nature">Sedona, Arizona &middot; our fifth year</p>
           <p>
-            Once a year, a few days to step away, rest, and renew. Intimate by design, and always a
-            little magical.
+            Beyond talk therapy, these retreats explore our relationships with ourselves and one
+            another in nature &mdash; with a big dose of Sedona magic, and a connection to energies
+            bigger than ourselves.
+            <br />
+            <a href={withBase("/retreat.html")} class="bridge-link">See the retreat details</a>
           </p>
         </div>
       </div>

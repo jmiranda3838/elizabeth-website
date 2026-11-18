@@ -27,27 +27,38 @@
       }
     });
 
+    var closeMenu = function () {
+      mobileNav.classList.remove("open");
+      menuToggle.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      body.style.overflow = "";
+    };
+
     // Close menu when clicking a link
     var mobileNavLinks = mobileNav.querySelectorAll(".mobile-nav-link");
     mobileNavLinks.forEach(function (link) {
-      link.addEventListener("click", function () {
-        mobileNav.classList.remove("open");
-        menuToggle.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        body.style.overflow = "";
-      });
+      link.addEventListener("click", closeMenu);
     });
 
     // Close menu on escape key
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && mobileNav.classList.contains("open")) {
-        mobileNav.classList.remove("open");
-        menuToggle.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        body.style.overflow = "";
+        closeMenu();
         menuToggle.focus();
       }
     });
+
+    // Close menu when the window grows past the mobile breakpoint (rotation, resize),
+    // so the scroll lock is never left on behind the desktop nav
+    var desktopQuery = window.matchMedia("(min-width: 901px)");
+    var onDesktopChange = function (e) {
+      if (e.matches && mobileNav.classList.contains("open")) {
+        closeMenu();
+      }
+    };
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener("change", onDesktopChange);
+    }
 
     // Focus trap for accessibility
     var focusableElements = mobileNav.querySelectorAll(

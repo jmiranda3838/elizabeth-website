@@ -179,7 +179,8 @@
 @media (max-width: 768px) {
   .constellation-map {
     height: auto;
-    min-height: 500px;
+    /* Size to the star list; a fixed 500px left an empty band below it. */
+    min-height: 0;
   }
 
   .constellation-stars {

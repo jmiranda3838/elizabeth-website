@@ -1,0 +1,364 @@
+---
+import { withBase } from "@/lib/withBase";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "@styles/pages/retreat.css";
+import { RedRockHorizon } from "@illustrations/scenes";
+import { Cairn, VortexSpiral } from "@illustrations/misc";
+import { DesertAgave, JuniperSprig, PricklyPear } from "@illustrations/botanicals";
+
+// The six things the flyer lists as included, in the flyer's own wording.
+// Each gloss restates the item; none adds a fact.
+const stops: { title: string; gloss: string; variant: 1 | 2 | 3 }[] = [
+  {
+    title: "Transformative Workshops",
+    gloss: "Time to explore our relationships with ourselves and one another.",
+    variant: 1,
+  },
+  {
+    title: "Zen Meditation & Gentle Yoga",
+    gloss: "Stillness for the mind, easy movement for the body.",
+    variant: 2,
+  },
+  {
+    title: "Group Hike to Vortex",
+    gloss: "We head out together to one of Sedona's vortexes.",
+    variant: 3,
+  },
+  {
+    title: "Sound Bath for Deep Relaxation",
+    gloss: "Nothing to do but rest and let the sound wash over you.",
+    variant: 1,
+  },
+  {
+    title: "Plant-Based Meals & Refreshments",
+    gloss: "Good food and something to sip, all of it plant-based.",
+    variant: 2,
+  },
+  {
+    title: "E's Famous Gift Bags",
+    gloss: "They're famous for a reason.",
+    variant: 1,
+  },
+];
+
+// Prayer-flag string the group photo hangs from. The cord is the quadratic
+// M0 18 Q600 69 1200 18, so y(t) = 18 + 102·t(1−t). The print spans x 300–900
+// (the middle half), so flags hang only on the two outer stretches.
+// Above 900px the dotted trail crosses the cord at x 980, so that flag is left out
+// there (.flagline-trail-gap) and the trail passes through a gap in the flags.
+const cordY = (t: number) => 18 + 102 * t * (1 - t);
+const flagXs = [20, 60, 100, 140, 180, 220, 260, 940, 980, 1020, 1060, 1100, 1140, 1180];
+const trailGapX = 980;
+const flags = flagXs.map((x, i) => {
+  const t = x / 1200;
+  const angle = (Math.atan((102 * (1 - 2 * t)) / 1200) * 180) / Math.PI;
+  return {
+    x: x.toFixed(1),
+    y: cordY(t).toFixed(1),
+    angle: angle.toFixed(1),
+    tone: i % 5,
+    trailGap: x === trailGapX,
+  };
+});
+
+const email = "elizabetharmstrongtherapy@gmail.com";
+const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit V registration")}`;
+---
+
+<BaseLayout
+  title="Sedona Retreat | Elizabeth Armstrong Therapy"
+  description="The Matter of Us, Relational Summit V: the fifth annual Sedona retreat Elizabeth Armstrong guides with a colleague, March 18–20, 2027. Workshops, Zen meditation and gentle yoga, a group hike to a vortex, a sound bath and plant-based meals."
+>
+  <div class="retreat-page">
+    <!-- The trail: one dotted path from the trailhead in the hero down to the
+         summit cairn. retreat-trail.js draws it through every [data-trail-point]
+         and reveals it as you scroll. -->
+    <svg class="trail-svg" aria-hidden="true" focusable="false">
+      <defs>
+        <mask id="trail-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+          <path class="trail-reveal" d=""></path>
+        </mask>
+      </defs>
+      <g mask="url(#trail-mask)">
+        <path class="trail-bed" d=""></path>
+        <path class="trail-dots" d=""></path>
+      </g>
+    </svg>
+
+    <!-- ============================================================
+         1. HERO: a red-rock horizon under a wide desert sky
+         ============================================================ -->
+    <section class="retreat-hero">
+      <div class="retreat-hero-content">
+        <p class="eyebrow retreat-eyebrow">March 18&ndash;20, 2027 in Sedona, Arizona</p>
+        <h1 class="retreat-title">The Matter of Us</h1>
+        <p class="retreat-subtitle">Relational Summit V: On Mattering, Belonging, and Becoming</p>
+        <p class="retreat-lead">
+          Three days in Sedona's red-rock country, for our fifth annual retreat.
+        </p>
+        <a href="#register" class="btn btn-lg retreat-btn">How to register</a>
+      </div>
+
+      <RedRockHorizon class="mesa-scene" aria-hidden="true" />
+      <Cairn class="retreat-trailhead" variant={2} aria-hidden="true" />
+      <span class="trail-point trail-start" data-trail-point aria-hidden="true"></span>
+    </section>
+
+    <!-- ============================================================
+         2. WHAT THIS IS: in her words, beside a snapshot from the trail
+         ============================================================ -->
+    <section class="retreat-intro">
+      <span class="retreat-sprig" aria-hidden="true"><JuniperSprig /></span>
+      <div class="container retreat-intro-grid">
+        <div class="retreat-intro-text reveal">
+          <h2>A few days in the red rocks</h2>
+          <p>
+            Beyond talk therapy, this retreat is a chance to explore our relationships with
+            ourselves and one another, out in nature, with a big dose of Sedona magic and a
+            connection to energies bigger than ourselves.
+          </p>
+          <p>
+            My colleague and I guide it together every year. This one is called The Matter of Us: a
+            summit on mattering, belonging, and becoming.
+          </p>
+          <p>If it calls to you, I would love to have you there.</p>
+        </div>
+
+        <div class="retreat-gutter" aria-hidden="true">
+          <span class="trail-point trail-bend trail-bend-a" data-trail-point></span>
+          <span class="trail-point trail-bend trail-bend-b" data-trail-point></span>
+        </div>
+
+        <figure class="retreat-snapshot reveal stagger-2">
+          <span class="snapshot-tape" aria-hidden="true"></span>
+          <img
+            src={withBase("/images/retreat-trail.jpg")}
+            alt="Elizabeth and her colleague smiling on a red-dirt trail under a string of colorful prayer flags, with trees behind them"
+            width="780"
+            height="975"
+            loading="lazy"
+          />
+          <figcaption>out on the red dirt</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. THE TRAIL: six cairns, one for each thing that's included
+         ============================================================ -->
+    <section class="trail-section" aria-labelledby="trail-heading">
+      <div class="container">
+        <div class="trail-heading reveal">
+          <h2 id="trail-heading">What's included</h2>
+          <p>Everything along this trail comes with your spot.</p>
+        </div>
+
+        <ul class="trail-stops">
+          {
+            stops.map((stop, i) => (
+              <li class={`trail-stop ${i % 2 === 0 ? "trail-stop-left" : "trail-stop-right"}`}>
+                <span class="cairn-marker" aria-hidden="true">
+                  <Cairn class="cairn-svg" variant={stop.variant} />
+                  <span class="trail-point" data-trail-point data-trail-cairn />
+                </span>
+                <div class={`trail-stop-text reveal stagger-${(i % 2) + 1}`}>
+                  <h3>{stop.title}</h3>
+                  <p>{stop.gloss}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. ON BELONGING: a print from a past summit, hung on prayer flags
+         ============================================================ -->
+    <section class="flagline-section">
+      <div class="container flagline-grid">
+        <div class="flagline-hang reveal">
+          <svg
+            class="flagline-cord"
+            viewBox="0 0 1200 90"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path class="flagline-string" d="M0 18 Q600 69 1200 18"></path>
+            {
+              flags.map((f) => (
+                <g
+                  class={f.trailGap ? "flagline-trail-gap" : undefined}
+                  transform={`translate(${f.x} ${f.y}) rotate(${f.angle})`}
+                >
+                  <path
+                    class={`flagline-flag flagline-tone-${f.tone}`}
+                    d="M-15 0 H15 V34 C9 35.5 5 33.5 0 35 C-5 36.5 -9 34.5 -15 36 Z"
+                  />
+                  <path class="flagline-glyph" d="M-6 14 Q0 8 6 14 Q0 20 -6 14 Z" />
+                </g>
+              ))
+            }
+          </svg>
+          <figure class="flagline-print">
+            <span class="flagline-clip flagline-clip-left" aria-hidden="true"></span>
+            <span class="flagline-clip flagline-clip-right" aria-hidden="true"></span>
+            <img
+              src={withBase("/images/retreat-circle.jpg")}
+              alt="Elizabeth and her colleague sitting on the wooden floor in front of a smiling group of guests from a past summit, in a bright studio with tall plants behind them"
+              width="1056"
+              height="752"
+              loading="lazy"
+            />
+            <figcaption>a circle from a past summit</figcaption>
+          </figure>
+        </div>
+
+        <div class="retreat-gutter flagline-gutter" aria-hidden="true">
+          <span class="trail-point trail-bend trail-bend-c" data-trail-point></span>
+          <span class="trail-point trail-bend trail-bend-d" data-trail-point></span>
+        </div>
+
+        <div class="flagline-text reveal stagger-2">
+          <span class="flagline-spiral" aria-hidden="true"><VortexSpiral /></span>
+          <h2>On belonging</h2>
+          <p>Belonging is easier to feel than to explain.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. THE DETAILS: a trail permit with a tear-off stub
+         ============================================================ -->
+    <section class="permit-section" aria-labelledby="permit-heading">
+      <span class="permit-agave" aria-hidden="true"><DesertAgave /></span>
+      <div class="container">
+        <div class="permit-wrap">
+          <span class="trail-point trail-bend permit-bend-top" data-trail-point aria-hidden="true"
+          ></span>
+          <span
+            class="trail-point trail-bend permit-bend-bottom"
+            data-trail-point
+            aria-hidden="true"></span>
+
+          <h2 id="permit-heading" class="permit-heading reveal">The details</h2>
+
+          <div class="permit reveal stagger-1">
+            <div class="permit-main">
+              <p class="permit-kind">Summit pass</p>
+              <p class="permit-title">The Matter of Us</p>
+              <p class="permit-sub">Relational Summit V</p>
+              <dl class="permit-fields">
+                <div class="permit-field">
+                  <dt>Place</dt>
+                  <dd>Sedona, Arizona</dd>
+                </div>
+                <div class="permit-field">
+                  <dt>Per guest</dt>
+                  <dd>$649</dd>
+                </div>
+                <div class="permit-field">
+                  <dt>Early bird</dt>
+                  <dd>$549 if you register by January&nbsp;1, 2027</dd>
+                </div>
+                <div class="permit-field">
+                  <dt>On your own</dt>
+                  <dd>Transportation and lodging</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="permit-stub">
+              <span class="permit-stamp-wrap" aria-hidden="true">
+                <svg class="permit-stamp" viewBox="0 0 120 120" focusable="false">
+                  <defs>
+                    <path id="permit-ring" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"
+                    ></path>
+                  </defs>
+                  <circle cx="60" cy="60" r="56"></circle>
+                  <circle cx="60" cy="60" r="33"></circle>
+                  <text>
+                    <textPath
+                      href="#permit-ring"
+                      startOffset="0"
+                      textLength="272"
+                      lengthAdjust="spacing"
+                      >Relational Summit V &#10022; Sedona, Arizona &#10022;</textPath
+                    >
+                  </text>
+                </svg>
+                <span class="permit-stamp-spiral"><VortexSpiral /></span>
+              </span>
+              <p class="permit-valid">
+                <span>Valid</span>
+                March 18&ndash;20, 2027
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. THE SUMMIT: how to register, at golden hour
+         ============================================================ -->
+    <section class="summit-section" id="register" aria-labelledby="summit-heading">
+      <svg
+        class="summit-ridge"
+        viewBox="0 0 1440 200"
+        preserveAspectRatio="xMidYMax slice"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M0 150 C80 148 140 140 180 128 L196 112 C200 106 208 104 220 104 L380 102 C392 102 398 108 402 116 L414 132 C470 142 540 146 600 146 C660 146 700 140 730 130 C744 124 752 112 758 98 L766 80 C770 72 776 70 780 78 L788 96 C796 88 804 76 812 70 C816 66 820 68 822 74 L832 104 C844 124 880 136 930 142 C1000 148 1060 144 1100 134 L1116 120 C1120 114 1126 112 1136 112 L1268 110 C1280 110 1286 116 1290 124 L1300 138 C1340 146 1400 148 1440 148"
+        ></path>
+        <path
+          class="summit-ridge-strata"
+          d="M206 120 C260 118 340 118 396 122 M760 104 C780 102 806 102 826 106 M1124 126 C1170 124 1240 124 1284 128"
+        ></path>
+      </svg>
+      <span class="summit-flora summit-flora-left" aria-hidden="true"><PricklyPear /></span>
+      <span class="summit-flora summit-flora-right" aria-hidden="true"><DesertAgave /></span>
+
+      <div class="container summit-inner">
+        <span class="summit-cairn" aria-hidden="true">
+          <Cairn class="cairn-svg" variant={3} />
+          <span class="trail-point trail-end" data-trail-point></span>
+        </span>
+        <h2 id="summit-heading">Save your spot</h2>
+        <p class="summit-lead">
+          To register, send me an email or a text, and I'll take it from there.
+        </p>
+        <p class="summit-early">
+          Register by January&nbsp;1, 2027 for the early bird rate of $549.
+        </p>
+        <div class="summit-actions">
+          <a href={mailto} class="btn btn-lg retreat-btn">Email me to register</a>
+          <a href="sms:+19494443899" class="btn btn-lg retreat-btn-outline">Text me to register</a>
+        </div>
+        <p class="summit-contact">
+          <a href={mailto}>{email}</a>
+          <span class="summit-contact-alt">
+            <span class="summit-contact-or">or</span>
+            <a href="sms:+19494443899">(949) 444-3899</a>
+          </span>
+        </p>
+        <p class="summit-more">
+          Curious about the other ways I work beyond the therapy room? Read about <a
+            href={withBase("/reiki.html")}>Reiki</a
+          >, or <a href={withBase("/contact.html")}>get in touch</a> with any questions.
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<!-- The trail draws itself as you scroll, and the hero's rock strata drift
+     apart (parallax) while the low sun settles. Static under reduced motion. -->
+<script>
+  import { initRetreatTrail } from "../scripts/retreat-trail.js";
+  initRetreatTrail();
+</script>

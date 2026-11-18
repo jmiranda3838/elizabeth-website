@@ -22,17 +22,38 @@
   border-bottom: var(--border-thin);
 }
 
-.header.scrolled .nav-link {
-  color: var(--text-primary);
+/* Light text over the home page's photo hero. Every other page has a pale hero and keeps
+   the dark default; reiki and retreat restyle the unscrolled header in their own sheets. */
+body:has(.hero-botanical) .header:not(.scrolled) .nav-link,
+body:has(.hero-botanical) .header:not(.scrolled) .nav-contact-link {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.header.scrolled .nav-cta.btn-outline {
-  color: var(--espresso);
-  border-color: var(--espresso);
+body:has(.hero-botanical) .header:not(.scrolled) .nav-contact-link:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.header.scrolled .menu-toggle span {
-  background-color: var(--espresso);
+body:has(.hero-botanical) .header:not(.scrolled) .menu-toggle span {
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body:has(.hero-botanical) .header:not(.scrolled) .nav-contact {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: var(--shadow-soft);
+}
+
+body:has(.hero-botanical) .header:not(.scrolled) .nav-contact-heart {
+  color: #fff;
+  opacity: 0.85;
+}
+
+body:has(.hero-botanical) .header:not(.scrolled) .nav-contact-divider {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .header-inner {
@@ -55,6 +76,7 @@
 .logo img {
   height: 160px;
   width: auto;
+  max-width: none; /* base.css caps img at 100%, which let the grid squeeze the logo to nothing */
   display: block;
 }
 
@@ -77,10 +99,9 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--text-primary);
   position: relative;
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: color var(--transition-base);
 }
 
@@ -91,7 +112,7 @@
   left: 0;
   width: 0;
   height: 1px;
-  background-color: #fff;
+  background-color: currentColor;
   transition: width var(--transition-base);
 }
 
@@ -129,8 +150,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background-color: var(--espresso);
   transition: all var(--transition-fast);
 }
 
@@ -149,10 +169,20 @@
 @media (max-width: 900px) {
   .header-inner {
     grid-template-columns: 1fr auto 1fr;
+    padding: 0 var(--space-4);
   }
 
   .nav-left {
     display: none;
+  }
+
+  /* With the nav hidden, pin the logo to the middle column and the toggle to the last */
+  .logo {
+    grid-column: 2;
+  }
+
+  .nav-right {
+    grid-column: 3;
   }
 
   .menu-toggle {
@@ -164,7 +194,7 @@
 .mobile-nav {
   display: none;
   position: fixed;
-  top: 120px;
+  top: 161px; /* header: 160px + its 1px border */
   left: 0;
   right: 0;
   bottom: 0;
@@ -176,6 +206,12 @@
 
 .mobile-nav.open {
   display: block;
+}
+
+@media (min-width: 901px) {
+  .mobile-nav.open {
+    display: none;
+  }
 }
 
 .mobile-nav-links {
@@ -200,20 +236,17 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-2) var(--space-5);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(139, 126, 116, 0.1);
+  border: 1px solid rgba(139, 126, 116, 0.2);
   border-radius: var(--radius-full);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-subtle);
   transition: all var(--transition-base);
 }
 
 .nav-contact-heart {
   font-size: 15px;
-  color: #fff;
+  color: var(--muted-rose);
   line-height: 1;
-  opacity: 0.85;
 }
 
 .nav-contact-link {
@@ -222,53 +255,51 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  color: var(--espresso);
   transition: color var(--transition-fast);
   white-space: nowrap;
 }
 
 .nav-contact-link:hover {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--warm-clay);
 }
 
 .nav-contact-divider {
   width: 4px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(139, 126, 116, 0.4);
   border-radius: 50%;
 }
 
-/* Scrolled state - adapt pill to light background */
-.header.scrolled .nav-contact {
-  background: rgba(139, 126, 116, 0.1);
-  border-color: rgba(139, 126, 116, 0.2);
-  box-shadow: var(--shadow-subtle);
-  backdrop-filter: none;
-}
-
-.header.scrolled .nav-contact-link {
-  color: var(--espresso);
-}
-
-.header.scrolled .nav-contact-link:hover {
-  color: var(--warm-clay);
-}
-
-.header.scrolled .nav-contact-heart {
-  color: var(--muted-rose);
-  opacity: 1;
-}
-
-.header.scrolled .nav-contact-divider {
-  background: rgba(139, 126, 116, 0.4);
-}
-
-/* On narrower screens, hide email and divider - show only phone */
-@media (max-width: 1100px) {
+/* Below the width where the full pill and the nav both fit beside a centred logo,
+   hide email and divider - show only phone */
+@media (max-width: 1420px) {
   .nav-contact-email,
   .nav-contact-divider {
     display: none;
+  }
+}
+
+/* Tighten the desktop nav so five links, the logo and the phone pill fit down to
+   901px without touching (the logo stays centred down to ~1230px) */
+@media (max-width: 1340px) {
+  .header-inner {
+    padding: 0 var(--space-6);
+  }
+
+  .logo {
+    padding: 0 var(--space-4);
+  }
+
+  .nav-links {
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 1100px) {
+  .nav-link {
+    font-size: 0.8125rem; /* 13px: between --text-xs and --text-sm */
+    letter-spacing: 0.05em;
   }
 }
 

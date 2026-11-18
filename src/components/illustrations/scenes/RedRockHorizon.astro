@@ -1,0 +1,183 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 1440 560"
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Sedona red-rock horizon in five strata, far to near. Every layer is a
+       <g> whose CSS `color` sets its fill (currentColor), so the page themes it;
+       .mesa-strata / .mesa-edge inside each layer take a deeper shade from CSS.
+       Each layer runs to the bottom edge so it can drift (parallax) without gaps. -->
+  <defs>
+    <radialGradient id="rr-sun-glow" cx="50%" cy="50%" r="50%">
+      <stop class="mesa-sun-core" offset="0%"></stop>
+      <stop class="mesa-sun-mid" offset="22%"></stop>
+      <stop class="mesa-sun-halo" offset="52%"></stop>
+      <stop class="mesa-sun-fade" offset="100%"></stop>
+    </radialGradient>
+    <path
+      id="rr-far"
+      d="M0 560 V352 C18 351 34 349 46 347 L62 336 C66 331 70 329 78 328 L148 327 C156 327 160 330 163 336 L171 346 C200 349 222 349 238 347 L252 330 C256 324 262 321 272 320 L404 318 C414 318 420 322 424 329 L432 341 C452 345 470 346 488 349 C540 352 590 352 618 350 L632 337 C636 332 642 330 650 330 L742 331 C752 331 757 335 760 341 L768 349 C800 353 836 352 868 349 C884 347 896 344 904 338 L918 326 C922 322 928 320 936 320 L1086 319 C1096 319 1102 323 1106 330 L1114 342 C1140 347 1176 349 1210 348 C1226 347 1238 344 1246 338 L1258 329 C1262 325 1268 324 1276 324 L1366 325 C1374 325 1380 329 1384 336 L1392 345 C1408 348 1424 349 1440 349 V560 Z"
+    ></path>
+    <path
+      id="rr-buttes"
+      d="M0 560 V420 C30 418 52 414 70 408 L92 396 C100 384 104 374 108 366 L116 360 C140 358 170 357 200 357 L282 356 C292 352 298 344 304 338 C308 334 314 334 318 338 L326 350 C332 358 342 364 356 370 C380 380 410 392 450 400 C520 410 600 414 660 414 C720 414 780 412 820 410 C860 408 890 404 912 396 C928 390 938 378 946 362 L956 336 C960 324 962 312 964 302 L966 296 L971 283 L977 296 L982 312 C986 322 990 326 994 322 L1002 300 C1006 284 1010 270 1013 262 L1018 252 L1023 264 L1028 282 C1032 292 1036 296 1040 290 L1048 270 L1055 256 L1062 270 L1066 284 C1070 296 1076 304 1084 302 L1092 292 L1097 282 L1103 295 L1110 318 C1118 340 1132 356 1150 368 C1180 386 1220 398 1270 404 C1330 410 1390 412 1440 412 V560 Z"
+    ></path>
+    <path
+      id="rr-bell"
+      d="M0 560 V476 C60 474 120 470 180 468 C260 466 340 466 400 470 C420 471 436 470 448 466 C470 458 490 446 506 432 C514 424 518 418 522 410 C526 404 532 400 538 394 C546 384 550 376 554 368 C560 360 568 354 578 351 L586 344 C588 341 592 341 594 344 L598 350 C610 353 618 360 624 368 C628 376 632 384 640 394 C646 400 652 404 656 410 C660 418 664 424 672 432 C688 446 708 458 732 466 C760 474 800 476 840 474 C900 470 960 470 1010 466 C1040 462 1056 452 1066 444 L1076 432 C1080 428 1086 426 1094 426 L1240 424 C1250 424 1256 428 1260 434 L1270 446 C1300 458 1360 464 1440 466 V560 Z"
+    ></path>
+    <path
+      id="rr-near"
+      d="M0 560 V420 C24 416 44 414 60 418 L78 410 C90 404 102 404 112 410 C130 420 146 432 160 448 C180 470 210 486 250 496 C320 512 420 518 520 520 C640 522 800 522 920 520 C1010 518 1090 512 1150 498 C1200 486 1240 466 1268 444 C1282 432 1290 420 1300 410 L1312 396 C1318 390 1326 388 1334 392 L1360 394 C1380 394 1396 398 1410 404 C1424 410 1432 412 1440 412 V560 Z"
+    ></path>
+    <clipPath id="rr-clip-far"><use href="#rr-far"></use></clipPath>
+    <clipPath id="rr-clip-buttes"><use href="#rr-buttes"></use></clipPath>
+    <clipPath id="rr-clip-bell"><use href="#rr-bell"></use></clipPath>
+    <clipPath id="rr-clip-near"><use href="#rr-near"></use></clipPath>
+  </defs>
+
+  <!-- Low sun, cradled in the gap between the far mesas -->
+  <g class="mesa-sun">
+    <circle cx="806" cy="346" r="190" fill="url(#rr-sun-glow)"></circle>
+    <circle class="mesa-sun-disc" cx="806" cy="346" r="30" fill="currentColor"></circle>
+  </g>
+
+  <!-- 1. Far mesas: long flat tops, the palest stratum -->
+  <g class="mesa-far">
+    <use href="#rr-far" fill="currentColor"></use>
+    <g class="mesa-strata" clip-path="url(#rr-clip-far)" stroke="currentColor" stroke-width="1">
+      <path d="M250 334 C300 333 360 333 430 336" stroke-dasharray="60 8 24 10"></path>
+      <path d="M900 333 C960 331 1040 331 1110 334" stroke-dasharray="44 10 70 6"></path>
+      <path d="M1250 337 C1290 336 1340 336 1390 339" stroke-dasharray="30 8"></path>
+    </g>
+  </g>
+
+  <!-- 2. Buttes and spires (a cathedral of rock on the right) -->
+  <g class="mesa-buttes">
+    <use href="#rr-buttes" fill="currentColor"></use>
+    <g
+      class="mesa-strata"
+      clip-path="url(#rr-clip-buttes)"
+      stroke="currentColor"
+      stroke-width="1.1"
+      stroke-linecap="round"
+    >
+      <path d="M100 372 C170 369 250 369 340 374" stroke-dasharray="70 9 30 12"></path>
+      <path d="M92 388 C180 385 290 386 400 394" stroke-dasharray="40 10 90 8"></path>
+      <path d="M80 404 C200 401 320 403 440 410" stroke-dasharray="110 14 36 10"></path>
+      <path d="M950 318 C990 316 1060 316 1110 320" stroke-dasharray="26 7 40 9"></path>
+      <path d="M940 340 C1000 337 1080 338 1124 344" stroke-dasharray="50 8 30 12"></path>
+      <path d="M926 364 C1000 361 1090 362 1150 370" stroke-dasharray="80 10 40 8"></path>
+      <path d="M900 388 C1000 385 1120 386 1220 396" stroke-dasharray="60 12 110 9"></path>
+    </g>
+    <use class="mesa-edge" href="#rr-buttes" stroke="currentColor" stroke-width="1.2"></use>
+  </g>
+
+  <!-- 3. Bell-shaped dome, and a low mesa to the right -->
+  <g class="mesa-bell">
+    <use href="#rr-bell" fill="currentColor"></use>
+    <g
+      class="mesa-strata"
+      clip-path="url(#rr-clip-bell)"
+      stroke="currentColor"
+      stroke-width="1.2"
+      stroke-linecap="round"
+    >
+      <path d="M560 366 C576 362 604 362 620 366" stroke-dasharray="18 5"></path>
+      <path d="M540 386 C566 381 614 381 640 386"></path>
+      <path d="M520 406 C556 400 624 400 660 406" stroke-dasharray="48 6 30 8"></path>
+      <path d="M498 428 C548 421 632 421 682 428"></path>
+      <path d="M462 452 C530 444 650 444 720 452" stroke-dasharray="90 10 40 12"></path>
+      <path d="M1080 438 C1130 435 1200 435 1256 440" stroke-dasharray="40 8 60 10"></path>
+      <path d="M1070 454 C1150 450 1240 451 1300 458" stroke-dasharray="70 9"></path>
+    </g>
+    <use class="mesa-edge" href="#rr-bell" stroke="currentColor" stroke-width="1.3"></use>
+  </g>
+
+  <!-- 4. Near red rock, framing the view at both edges -->
+  <g class="mesa-near">
+    <use href="#rr-near" fill="currentColor"></use>
+    <g
+      class="mesa-strata"
+      clip-path="url(#rr-clip-near)"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+    >
+      <path d="M0 434 C40 430 90 428 130 432" stroke-dasharray="40 8 22 10"></path>
+      <path d="M0 452 C60 448 120 448 170 456"></path>
+      <path d="M0 472 C80 468 150 470 210 482" stroke-dasharray="70 12 30 9"></path>
+      <path d="M1290 414 C1340 410 1400 410 1440 414" stroke-dasharray="36 8"></path>
+      <path d="M1262 440 C1330 436 1400 436 1440 440"></path>
+      <path d="M1220 466 C1300 462 1380 462 1440 466" stroke-dasharray="80 10 30 12"></path>
+    </g>
+    <use class="mesa-edge" href="#rr-near" stroke="currentColor" stroke-width="1.4"></use>
+  </g>
+
+  <!-- 5. Desert floor (the colour of the trail section below), with line-art flora -->
+  <g class="mesa-floor">
+    <path
+      d="M0 560 V520 C90 512 200 508 320 512 C460 517 580 528 720 527 C860 526 990 512 1130 512 C1250 512 1360 518 1440 516 V560 Z"
+      fill="currentColor"></path>
+  </g>
+  <g
+    class="mesa-flora"
+    stroke="currentColor"
+    stroke-width="1.3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <!-- Juniper on the near rock, left: a twisted trunk and cloud-clumped foliage -->
+    <g class="mesa-juniper" transform="translate(-58 -36)">
+      <path d="M150 446 C152 432 146 424 150 412 C153 404 160 400 158 390"></path>
+      <path d="M151 420 C140 414 132 410 124 400"></path>
+      <path d="M154 404 C164 398 172 392 178 382"></path>
+      <path
+        d="M110 402 C104 394 110 384 120 386 C122 376 136 374 140 382 C146 374 160 376 160 386 C170 382 180 388 176 398 C184 402 180 414 170 412 C164 420 150 418 146 412 C138 418 124 416 122 408 C112 412 104 408 110 402 Z"
+      ></path>
+      <path
+        d="M160 380 C158 370 168 364 176 368 C182 360 196 364 194 374 C202 376 202 388 192 388 C188 394 176 392 174 386 C166 390 158 386 160 380 Z"
+      ></path>
+      <path d="M128 396 L134 392 M146 398 L152 394 M164 400 L170 396 M178 376 L184 372"></path>
+    </g>
+    <!-- Prickly pear on the floor, left of centre -->
+    <path d="M352 514 C346 504 346 492 354 486 C362 480 372 486 372 498 C372 506 366 512 360 514"
+    ></path>
+    <path d="M356 488 C350 478 352 466 360 462 C368 458 376 466 374 476 C372 484 366 488 360 488"
+    ></path>
+    <path d="M370 494 C374 486 384 484 390 490 C396 498 390 508 380 508 C376 508 372 504 372 500"
+    ></path>
+    <path d="M358 498 h0.1 M364 474 h0.1 M382 496 h0.1 M362 506 h0.1 M368 468 h0.1"></path>
+    <path d="M364 460 C362 454 366 450 370 452 C372 448 378 450 376 456"></path>
+    <!-- Agave rosette on the floor, right -->
+    <path d="M1180 514 C1172 500 1158 490 1140 486"></path>
+    <path d="M1184 514 C1180 496 1172 482 1160 470"></path>
+    <path d="M1190 514 C1190 494 1192 478 1196 462"></path>
+    <path d="M1196 514 C1202 498 1214 486 1228 478"></path>
+    <path d="M1200 514 C1210 504 1226 498 1244 498"></path>
+    <path d="M1176 514 C1164 508 1150 506 1134 508"></path>
+    <!-- Yucca stalk rising behind the agave -->
+    <path d="M1214 498 C1215 470 1216 444 1218 420"></path>
+    <path
+      d="M1218 426 c-4 -2 -6 2 -4 5 M1218 436 c4 -2 6 2 4 5 M1217 446 c-4 -2 -6 2 -4 5 M1217 456 c4 -2 6 2 4 5"
+    ></path>
+    <!-- Grass tufts along the floor -->
+    <path d="M520 524 l-4 -10 M524 524 l0 -12 M528 524 l4 -9"></path>
+    <path d="M912 524 l-3 -9 M916 524 l1 -11 M920 524 l4 -8"></path>
+    <path d="M1010 516 l-3 -8 M1013 516 l1 -10 M1016 516 l4 -7"></path>
+    <path d="M250 512 l-3 -8 M253 512 l1 -10 M256 512 l3 -7"></path>
+  </g>
+</svg>

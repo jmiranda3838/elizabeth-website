@@ -8,6 +8,7 @@ import { withBase } from "@/lib/withBase";
     <nav class="nav-left" role="navigation" aria-label="Main navigation">
       <ul class="nav-links">
         <li><a href={withBase("/reiki.html")} class="nav-link">Reiki</a></li>
+        <li><a href={withBase("/retreat.html")} class="nav-link">Retreat</a></li>
         <li><a href={withBase("/about.html")} class="nav-link">About Me</a></li>
         <li><a href={withBase("/resources.html")} class="nav-link">Resources</a></li>
         <li><a href={withBase("/fees.html")} class="nav-link">Fees & Insurance</a></li>
@@ -40,24 +41,26 @@ import { withBase } from "@/lib/withBase";
       </button>
     </div>
   </div>
-
-  <!-- Mobile Navigation -->
-  <nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
-    <ul class="mobile-nav-links">
-      <li><a href={withBase("/reiki.html")} class="mobile-nav-link">Reiki</a></li>
-      <li><a href={withBase("/about.html")} class="mobile-nav-link">About Me</a></li>
-      <li><a href={withBase("/resources.html")} class="mobile-nav-link">Resources</a></li>
-      <li><a href={withBase("/fees.html")} class="mobile-nav-link">Fees & Insurance</a></li>
-    </ul>
-    <div class="mobile-nav-contact">
-      <p class="mobile-nav-contact-label">
-        <span class="mobile-nav-heart">&#9829;</span>
-        Get in touch
-      </p>
-      <a href="tel:+19494443899" class="mobile-nav-contact-link">(949) 444-3899</a>
-      <a href="mailto:elizabetharmstrongtherapy@gmail.com" class="mobile-nav-contact-link"
-        >elizabetharmstrongtherapy@gmail.com</a
-      >
-    </div>
-  </nav>
 </header>
+
+<!-- Mobile navigation: a sibling of the header, not a child. The header has a
+     backdrop-filter, which would make it the containing block for this fixed panel. -->
+<nav class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+  <ul class="mobile-nav-links">
+    <li><a href={withBase("/reiki.html")} class="mobile-nav-link">Reiki</a></li>
+    <li><a href={withBase("/retreat.html")} class="mobile-nav-link">Retreat</a></li>
+    <li><a href={withBase("/about.html")} class="mobile-nav-link">About Me</a></li>
+    <li><a href={withBase("/resources.html")} class="mobile-nav-link">Resources</a></li>
+    <li><a href={withBase("/fees.html")} class="mobile-nav-link">Fees & Insurance</a></li>
+  </ul>
+  <div class="mobile-nav-contact">
+    <p class="mobile-nav-contact-label">
+      <span class="mobile-nav-heart">&#9829;</span>
+      Get in touch
+    </p>
+    <a href="tel:+19494443899" class="mobile-nav-contact-link">(949) 444-3899</a>
+    <a href="mailto:elizabetharmstrongtherapy@gmail.com" class="mobile-nav-contact-link"
+      >elizabetharmstrongtherapy@gmail.com</a
+    >
+  </div>
+</nav>

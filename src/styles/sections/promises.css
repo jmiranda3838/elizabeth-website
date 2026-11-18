@@ -144,6 +144,11 @@
 }
 
 @media (max-width: 768px) {
+  /* Match the 48px .section padding the neighbouring sections use here. */
+  .promises-section {
+    padding: var(--space-12) var(--space-4);
+  }
+
   .promises-book {
     flex-direction: column;
   }

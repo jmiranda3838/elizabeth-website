@@ -8,6 +8,9 @@
   background-position: center 20%;
   background-repeat: no-repeat;
   overflow: visible;
+  /* The swaying botanicals can drift past the screen edge on phones; clip-path
+     hides that visually, this keeps it out of the page's scroll width too. */
+  overflow-x: clip;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -116,6 +119,8 @@
   line-height: 1.1;
   color: #fff;
   margin-bottom: var(--space-4);
+  /* Even out the lines so "healing" never sits alone on the last one. */
+  text-wrap: balance;
   text-shadow:
     0 2px 12px rgba(0, 0, 0, 0.55),
     0 4px 24px rgba(0, 0, 0, 0.35),
@@ -148,11 +153,34 @@
 
   .hero-text-content {
     padding: var(--space-12) var(--space-6);
-    padding-bottom: var(--space-16);
+    /* Keep the text above the bottom ~15% of the hero, where the overlay fades
+       to paper and white text loses its contrast (hero height is in vh). */
+    padding-bottom: calc(14vh + var(--space-6));
   }
 
   .hero-tagline {
     font-size: 3.5rem;
+  }
+
+  /* Below desktop the credentials sit over the pale blouse; a soft dark scrim
+     centred on them keeps the small white text legible. */
+  .hero-name {
+    position: relative;
+  }
+
+  .hero-name::before {
+    content: "";
+    position: absolute;
+    inset: -70% -12%;
+    z-index: -1;
+    background: radial-gradient(
+      closest-side,
+      rgba(45, 35, 28, 0.5) 0%,
+      rgba(45, 35, 28, 0.4) 45%,
+      rgba(45, 35, 28, 0.18) 72%,
+      transparent 100%
+    );
+    pointer-events: none;
   }
 
   .botanical-1,
@@ -179,7 +207,7 @@
   .hero-text-content {
     text-align: center;
     padding: var(--space-8);
-    padding-bottom: 5rem;
+    padding-bottom: calc(14vh + var(--space-6));
     max-width: 100%;
   }
 
@@ -193,6 +221,7 @@
 
   .hero-name {
     font-size: 0.85rem;
+    text-wrap: balance;
     text-shadow:
       0 1px 3px rgba(0, 0, 0, 0.6),
       0 0 12px rgba(0, 0, 0, 0.3);
@@ -234,7 +263,7 @@
   }
 
   .hero-name {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
   .botanical-1,

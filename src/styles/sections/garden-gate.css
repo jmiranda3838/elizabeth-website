@@ -405,6 +405,12 @@
     min-height: clamp(520px, 80vh, 780px);
     perspective: 1300px;
   }
+  /* The shorter perspective shrinks the far-back garden to ~0.98x, leaving bare
+     strips at the edges; scale it up so it still covers the section (~1.1x). */
+  .gate-garden {
+    transform: translateZ(-420px) scale(1.45)
+      translate3d(calc(var(--gx) * -16px), calc(var(--gy) * -11px), 0);
+  }
   .gate-doors {
     top: 44%;
     width: 92vw;

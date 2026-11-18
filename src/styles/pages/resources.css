@@ -65,6 +65,9 @@
   height: 100%;
   background: linear-gradient(115deg, transparent 8%, var(--sun-pool) 42%, transparent 78%);
   transform: skewX(-12deg);
+  /* Fade the pool out before the hero's bottom edge (no hard seam) */
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
   pointer-events: none;
 }
 
@@ -139,6 +142,7 @@
   line-height: 1.6;
   max-width: 460px;
   margin: 0 auto var(--space-2);
+  text-wrap: balance;
 }
 
 .library-epigraph cite {
@@ -742,7 +746,7 @@
 .bookmark-ribbon {
   position: absolute;
   top: 0;
-  left: 16%;
+  left: max(16%, calc(50% - 435px));
   width: 48px;
   height: 130px;
   background: linear-gradient(
@@ -757,7 +761,7 @@
 
 .bookmark-flower {
   position: absolute;
-  right: 14%;
+  right: max(14%, calc(50% - 461px));
   bottom: var(--space-6);
   width: 54px;
   color: var(--sage);
@@ -796,7 +800,7 @@
 
 .bookmark-band--alt .bookmark-ribbon {
   left: auto;
-  right: 16%;
+  right: max(16%, calc(50% - 435px));
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--sage) 88%, white) 0%,
@@ -806,7 +810,7 @@
 
 .bookmark-band--alt .bookmark-flower {
   right: auto;
-  left: 14%;
+  left: max(14%, calc(50% - 461px));
   color: var(--muted-rose);
   transform: rotate(-14deg);
 }
@@ -945,7 +949,6 @@
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: var(--space-3);
-  padding-right: 92px; /* room for the ON ORDER chip */
 }
 
 .catalog-download {
@@ -960,27 +963,10 @@
   padding-bottom: 2px;
 }
 
-/* Placeholder downloads: visible but inert until the PDFs arrive */
-.catalog-download.is-placeholder {
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.catalog-soon-stamp {
-  position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
-  padding: 2px var(--space-2);
-  border: 1.5px solid var(--stamp-ink);
-  border-radius: 2px;
-  font-family: var(--font-nav);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--stamp-ink);
-  transform: rotate(6deg);
-  opacity: 0.8;
+.catalog-download:hover,
+.catalog-download:focus-visible {
+  color: var(--text-primary);
+  border-bottom-style: solid;
 }
 
 .catalog-footnote {
@@ -1122,12 +1108,13 @@
 .lending-cta-card h2 {
   font-size: clamp(1.7rem, 3.2vw, 2.3rem);
   margin-bottom: var(--space-4);
+  text-wrap: balance;
 }
 
-.lending-cta-card > p {
+.lending-cta-card > p:not(.eyebrow) {
   color: var(--text-secondary);
   max-width: 480px;
-  margin: 0 auto var(--space-7);
+  margin: 0 auto var(--space-8);
   line-height: 1.8;
 }
 
@@ -1162,7 +1149,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-5);
-  margin-top: var(--space-7);
+  margin-top: var(--space-8);
 }
 
 .lending-signoff .lending-signature {
@@ -1304,6 +1291,31 @@
     font-size: var(--text-xs);
   }
 
+  /* The bookends no longer fit beside the row, and the books
+     slim down with the shelf so the row stays on the plank */
+  .shelf-bookend {
+    display: none;
+  }
+
+  .shelf-book {
+    width: calc(var(--book-w, 38px) * var(--shelf-scale, 1));
+  }
+
+  /* Keep the lent note on screen: centre it over the whole row,
+     just above the tallest book */
+  .shelf-row {
+    position: relative;
+  }
+
+  .shelf-lend-wrap {
+    position: static;
+  }
+
+  .shelf-slip {
+    --slip-shift: 0px;
+    bottom: calc(222px * var(--shelf-scale, 1) + 28px);
+  }
+
   .welcome-desk-row {
     flex-direction: column;
     gap: var(--space-6);
@@ -1330,30 +1342,37 @@
     font-size: var(--text-xs);
     letter-spacing: 0.1em;
   }
-
-  .catalog-card p {
-    padding-right: 0;
-  }
-
-  .catalog-soon-stamp {
-    position: static;
-    display: inline-block;
-    margin-left: var(--space-3);
-  }
 }
 
 @media (max-width: 480px) {
+  .shelf {
+    padding: 0;
+  }
+
   .shelf-row {
     --shelf-scale: 0.72;
     gap: 4px;
   }
 
-  .shelf-bookend {
-    display: none;
-  }
-
   .checkout-card-inner {
     padding: var(--space-6) var(--space-5) var(--space-5);
+  }
+
+  /* Pocket follows the slimmer card padding */
+  .checkout-pocket::after {
+    left: calc(-1 * var(--space-5));
+    right: calc(-1 * var(--space-5));
+    bottom: calc(-1 * var(--space-5));
+  }
+
+  /* Keep the bookmark decorations clear of the text */
+  .bookmark-ribbon {
+    height: 72px;
+  }
+
+  .bookmark-flower {
+    width: 40px;
+    bottom: var(--space-2);
   }
 
   .helpdesk-lines li {
@@ -1384,6 +1403,13 @@
 
   .lending-patron {
     width: 88px;
+  }
+}
+
+/* The smallest phones: two leaning volumes retire so the row fits */
+@media (max-width: 380px) {
+  .shelf-book--spare {
+    display: none;
   }
 }
 

@@ -5,6 +5,9 @@
 
 .grimoire-section {
   overflow: visible;
+  /* The reveal-left/right columns start 40px off to the side; clip-path only
+     hides that visually, so also clip it out of the page's scroll width. */
+  overflow-x: clip;
   clip-path: inset(0);
 }
 
@@ -142,23 +145,23 @@
 }
 
 .frame-tl {
-  top: 0;
-  left: 0;
+  top: var(--space-3);
+  left: var(--space-3);
 }
 
 .frame-tr {
-  top: 0;
-  right: 0;
+  top: var(--space-3);
+  right: var(--space-3);
 }
 
 .frame-bl {
-  bottom: 0;
-  left: 0;
+  bottom: var(--space-3);
+  left: var(--space-3);
 }
 
 .frame-br {
-  bottom: 0;
-  right: 0;
+  bottom: var(--space-3);
+  right: var(--space-3);
 }
 
 .approach-image-placeholder {
@@ -207,8 +210,13 @@
     gap: var(--space-10);
   }
 
+  /* Single column: cap the framed photo so it doesn't fill more than a whole
+     screen on tablets. */
   .approach-image {
     order: -1;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
   }
 
   .vine-divider {

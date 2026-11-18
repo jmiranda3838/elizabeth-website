@@ -10,7 +10,7 @@
  *   POST   /comments     -> commit screenshot to feedback-assets branch + create issue
  *   GET    /comments     -> list all `site-feedback` issues (open + closed) as comments[]
  *
- * Secret: GITHUB_TOKEN  (set via `gh auth token | wrangler secret put GITHUB_TOKEN`)
+ * Secret: GITHUB_TOKEN  (a fine-grained token for this repo only, set via `wrangler secret put GITHUB_TOKEN`)
  */
 
 const GH_API = "https://api.github.com";

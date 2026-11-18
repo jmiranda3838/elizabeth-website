@@ -14,13 +14,42 @@
 
   var notice = document.getElementById("form-notice");
 
-  function setError(field, on) {
-    if (on) {
+  // Our own messages replace the browser's validation bubbles. Set here, not
+  // in the markup, so a visitor without JS still gets native validation.
+  contactForm.noValidate = true;
+
+  var messages = {
+    "first-name": "Please enter your first name.",
+    "last-name": "Please enter your last name.",
+    email: "Please enter your email address.",
+    message: "Please tell me a little about what brings you here.",
+    privacy: "Please check this box to continue.",
+  };
+  var invalidEmailMessage = "Please enter a valid email address, like name@example.com.";
+
+  // Shows (msg is a string) or clears (msg is falsy) a field's error: the
+  // class and aria-invalid on the field, plus a visible message beneath it
+  // tied to the field with aria-describedby.
+  function setError(field, msg) {
+    var errorId = field.id + "-error";
+    var errorEl = document.getElementById(errorId);
+    if (msg) {
       field.classList.add("error");
       field.setAttribute("aria-invalid", "true");
+      if (!errorEl) {
+        errorEl = document.createElement("p");
+        errorEl.id = errorId;
+        errorEl.className = "form-error";
+        field.parentNode.appendChild(errorEl);
+      }
+      errorEl.textContent = msg;
+      errorEl.hidden = false;
+      field.setAttribute("aria-describedby", errorId);
     } else {
       field.classList.remove("error");
       field.removeAttribute("aria-invalid");
+      field.removeAttribute("aria-describedby");
+      if (errorEl) errorEl.hidden = true;
     }
   }
 
@@ -32,16 +61,16 @@
 
     requiredFields.forEach(function (field) {
       var empty = field.type === "checkbox" ? !field.checked : !field.value.trim();
-      setError(field, empty);
+      setError(field, empty && (messages[field.id] || "Please fill in this field."));
       if (empty) isValid = false;
     });
 
     // Email format check
     var emailField = contactForm.querySelector("#email");
-    if (emailField && emailField.value) {
+    if (emailField && emailField.value.trim()) {
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(emailField.value)) {
-        setError(emailField, true);
+      if (!emailPattern.test(emailField.value.trim())) {
+        setError(emailField, invalidEmailMessage);
         isValid = false;
       }
     }
@@ -73,7 +102,7 @@
   formFields.forEach(function (field) {
     var evt = field.type === "checkbox" ? "change" : "input";
     field.addEventListener(evt, function () {
-      setError(field, false);
+      if (field.classList.contains("error")) setError(field, "");
     });
   });
 })();

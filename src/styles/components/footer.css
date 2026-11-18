@@ -42,6 +42,7 @@
 
 .footer-brand .logo {
   margin-bottom: var(--space-4);
+  padding: 0; /* header.css pads .logo for the nav grid */
 }
 
 .footer-tagline {

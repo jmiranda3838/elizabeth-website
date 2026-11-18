@@ -64,6 +64,9 @@
 .illuminated-initial {
   position: relative;
   flex-shrink: 0;
+  /* Own stacking context, so the flourish's z-index: -1 tucks it behind the
+     letter instead of behind the section's background. */
+  isolation: isolate;
 }
 
 .initial-letter {
@@ -154,10 +157,15 @@
     padding: var(--space-10) var(--space-6);
   }
 
+  /* Classic floated drop cap, so the "D" stays beside the start of its word
+     and the quote wraps around it. */
   .illuminated-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: block;
+  }
+
+  .illuminated-initial {
+    float: left;
+    margin-right: var(--space-3);
   }
 
   .initial-letter {

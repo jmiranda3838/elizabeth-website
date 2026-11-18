@@ -263,3 +263,13 @@
     margin: 0 auto;
   }
 }
+
+/* Narrow phones: give the badge its own line so the note's first line isn't a
+   lone fragment beside it. */
+@media (max-width: 480px) {
+  .soon-badge {
+    display: block;
+    width: fit-content;
+    margin: 0 auto var(--space-2);
+  }
+}

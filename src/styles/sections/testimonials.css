@@ -21,7 +21,9 @@
   padding: var(--space-8) var(--space-6);
   background: linear-gradient(135deg, #fdfcfa 0%, #f9f7f4 50%, #f5f2ef 100%);
   border: 1px solid rgba(210, 199, 193, 0.5);
-  transform: rotate(var(--rotation, 0deg));
+  /* rotate/translate (not transform), so the scroll-reveal's transform reset
+     can't wipe out the tilt or the hover lift. */
+  rotate: var(--rotation, 0deg);
   transition:
     transform var(--transition-base),
     box-shadow var(--transition-base);
@@ -32,7 +34,8 @@
 }
 
 .journal-page:hover {
-  transform: rotate(0deg) translateY(-4px);
+  rotate: 0deg;
+  translate: 0 -4px;
   box-shadow:
     0 8px 24px rgba(84, 49, 35, 0.1),
     inset 0 0 40px rgba(210, 199, 193, 0.1);
@@ -94,7 +97,7 @@
   }
 
   .journal-page {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
 }
 

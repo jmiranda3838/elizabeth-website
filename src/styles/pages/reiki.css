@@ -6,12 +6,22 @@
    Daybreak counterpart to the homepage's constellation night sky.
    ============================================================================ */
 
-.reiki-page {
+/* The page's tokens sit on body, not .reiki-page, so the header (rendered outside
+   .reiki-page) can use them in the page-scoped header rules below */
+body:has(.reiki-page) {
   /* Daylight ramp — widened ~32pts of value so the progression actually reads */
   --dawn-1: #fcf4e6; /* lit vellum cream (full day) */
   --dawn-2: #f4e2c0; /* pale wheat */
   --dawn-3: #e8c9a0; /* honey (mid-page) */
   --dawn-4: #dca877; /* deeper amber (lower-mid / CTA sky) */
+
+  /* The one arc below the dawn: up to noon, then down into golden hour. Each seam
+     colour is named once so the two sections that meet on it can never drift apart. */
+  --noon: #fffaf0; /* brightest point of the page ("What it can feel like") */
+  --noon-edge: #fdf6ea; /* feel -> photo band seam */
+  --warm-1: #fbf1e0; /* photo band -> bridge seam (the warm-down begins) */
+  --gold-hour: #d49a6a; /* horizon -> closing CTA seam */
+  --ink-warm: #555b4f; /* deeper secondary ink, holds 4.5:1 on the cream-to-amber grounds */
 
   /* The night the page rises out of */
   --dusk-1: #7a5a66; /* mauve-plum transition */
@@ -38,7 +48,9 @@
   --shadow-lift:
     0 1px 2px rgba(74, 46, 38, 0.12), 0 8px 18px -6px rgba(74, 46, 38, 0.2),
     0 26px 44px -22px rgba(46, 32, 48, 0.32);
+}
 
+.reiki-page {
   position: relative;
   background-color: var(--dusk-anchor);
 }
@@ -100,6 +112,12 @@
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
+}
+
+/* The footer (already position: relative, with a solid ground) rises above the fixed
+   sun, so the sun's end position never glows over the footer links on phones */
+body:has(.reiki-page) .footer {
+  z-index: 2;
 }
 
 /* Warm directional atmosphere, lit from the sun's corner — air full of light */
@@ -243,8 +261,10 @@
       transparent 90%
     );
   clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 66%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 66%, transparent 100%);
+  /* Fully faded by 92%: the hero's bottom edge falls at ~93% of the beam's height, so
+     nothing reaches the clipped edge */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 92%);
   mix-blend-mode: screen;
   filter: blur(4px) brightness(1.08);
   opacity: 0;
@@ -389,10 +409,20 @@
   margin-bottom: var(--space-2);
 }
 
+/* The eyebrow and script line sit in the beam, so they get the cream ink and a dark
+   halo that holds them off the light */
+.conduit-hero .eyebrow {
+  color: var(--ink-cream-strong);
+  text-shadow: 0 1px 8px rgba(46, 32, 48, 0.7);
+}
+
 .conduit-script {
   font-family: "Great Vibes", cursive;
   font-size: clamp(1.7rem, 3.5vw, 2.2rem);
-  color: var(--dusty-peach);
+  color: var(--amber-light);
+  text-shadow:
+    0 1px 2px rgba(46, 32, 48, 0.55),
+    0 1px 12px rgba(46, 32, 48, 0.75);
   margin-bottom: var(--space-6);
 }
 
@@ -413,7 +443,9 @@
   position: relative;
   z-index: 2;
   overflow: hidden;
-  background: linear-gradient(180deg, #4a3543 0%, var(--dusk-1) 50%, #6b5466 100%);
+  /* Second step of the climb: picks up the plum the hero ends on and lifts,
+     without dipping, to the mauve the quote section starts on */
+  background: linear-gradient(180deg, #4a3543 0%, #5b4354 52%, #6b5466 100%);
   color: var(--ink-cream);
 }
 
@@ -544,13 +576,15 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: var(--space-4);
+  text-wrap: balance;
 }
 
+/* Each pane keeps its own hue, deepened so the small caps hold 4.5:1 on the vellum */
 .is-pane h3 {
-  color: var(--sage);
+  color: color-mix(in srgb, var(--sage) 55%, black);
 }
 .isnt-pane h3 {
-  color: var(--misty-blue);
+  color: color-mix(in srgb, var(--misty-blue) 60%, black);
 }
 
 .spread-pane ul {
@@ -563,7 +597,7 @@
   position: relative;
   padding-left: var(--space-6);
   margin-bottom: var(--space-3);
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.6;
 }
 
@@ -586,161 +620,180 @@
 }
 
 /* ============================================================
-   3. THE CONDUIT QUOTE — darkest before dawn, a resonance chamber
+   3. THE CONDUIT QUOTE — first light: a lit, arched portrait beside her
+      own words, with the horizon warming underneath
    ============================================================ */
 .conduit-quote-section {
   position: relative;
   z-index: 2;
   overflow: hidden;
-  background: linear-gradient(180deg, #6b5466 0%, #3f2d3c 55%, var(--dusk-anchor) 100%);
+  /* Extra room at the foot so the horizon glow sits below the words, never under them */
+  padding-bottom: calc(var(--space-24) + var(--space-20));
   color: var(--ink-cream);
+  /* Last step of the climb out of the night. The mauve carries on from the section
+     above; a fixed-height band of rose, then amber, rises from the bottom edge and
+     lands on the exact amber the dawn section below opens with. */
+  background:
+    linear-gradient(
+      0deg,
+      var(--dawn-4) 0,
+      #d6a078 40px,
+      #c88f7a 92px,
+      rgba(184, 128, 124, 0.8) 146px,
+      rgba(160, 114, 118, 0.48) 206px,
+      rgba(140, 102, 112, 0.2) 268px,
+      transparent 350px
+    ),
+    linear-gradient(180deg, #6b5466 0%, var(--dusk-1) 100%);
 }
 
-.quote-photo {
+.conduit-quote-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-20);
+}
+
+/* The lit doorway */
+.conduit-quote-portrait {
+  position: relative;
+  width: 100%;
+}
+
+.conduit-quote-door {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5.4;
+  border-radius: 999px 999px var(--radius-sm) var(--radius-sm);
+  overflow: hidden;
+  /* Rim of light, then the glow the open doorway throws into the dark room */
+  box-shadow:
+    0 0 0 1px rgba(251, 227, 179, 0.35),
+    0 0 70px 6px rgba(251, 227, 179, 0.14),
+    0 0 180px 40px rgba(240, 200, 140, 0.08);
+}
+
+/* Door frame: a hairline arch standing just outside the photo */
+.conduit-quote-portrait::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  z-index: 1;
+  inset: -14px;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px 999px calc(var(--radius-sm) + 4px) calc(var(--radius-sm) + 4px);
+  pointer-events: none;
+}
+
+.conduit-quote-photo {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
-  opacity: 0.34;
+  object-position: 45% 42%;
 }
 
-/* Darkest-before-dawn: keep it deep, the photo a faint warm presence, the
-   candles and cream words the only real light */
-.conduit-quote-section::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(46, 32, 48, 0.52) 0%,
-    rgba(46, 32, 48, 0.44) 32%,
-    rgba(46, 32, 48, 0.72) 76%,
-    rgba(46, 32, 48, 0.92) 100%
-  );
-  pointer-events: none;
-}
-
-.candle-glow {
-  position: absolute;
-  z-index: 1;
-  width: 380px;
-  height: 380px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 226, 170, 0.85) 0%,
-    rgba(244, 206, 140, 0.35) 40%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  animation: candleFlicker 5s ease-in-out infinite;
-}
-
-.candle-glow-1 {
-  top: 16%;
-  left: 10%;
-  animation-delay: 0s;
-}
-.candle-glow-2 {
-  bottom: 12%;
-  right: 10%;
-  animation-delay: 2.4s;
-}
-
-@keyframes candleFlicker {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scale(1.06);
-  }
-}
-
-.quote-divider {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: 120px;
-  margin: 0 auto var(--space-6);
-  color: var(--dusty-peach);
-  opacity: 0.7;
-}
-
-.quote-divider svg {
-  width: 100%;
-  height: auto;
-}
-
+/* The words */
 .conduit-quote {
   position: relative;
-  z-index: 2;
-  margin: 0 auto;
-  max-width: 660px;
-  text-align: center;
-}
-
-/* A vertical beam passing through the quote mark — the straw made visual */
-.conduit-quote::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130px;
-  height: 200px;
-  background: linear-gradient(180deg, rgba(255, 226, 170, 0.85), transparent 80%);
-  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
-  mask-image: linear-gradient(180deg, #000, transparent);
-  filter: blur(10px);
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.conduit-quote-mark {
-  display: inline-flex;
-  width: 58px;
-  height: 58px;
-  color: var(--amber-light);
-  opacity: 0.85;
-  margin-bottom: var(--space-4);
-}
-
-.conduit-quote-mark svg {
-  width: 100%;
-  height: 100%;
-}
-
-.conduit-quote blockquote {
-  margin: 0 0 var(--space-5);
-}
-
-.conduit-quote blockquote p {
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.7rem, 3.8vw, 2.4rem);
-  font-style: italic;
-  line-height: 1.5;
-  color: var(--ink-cream-strong);
   margin: 0;
 }
 
+.conduit-quote blockquote {
+  margin: 0;
+}
+
+.conduit-quote blockquote p {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2rem, 3.6vw, 3.05rem);
+  line-height: 1.22;
+  letter-spacing: 0.002em;
+  color: var(--ink-cream-strong);
+}
+
+.conduit-quote-line {
+  display: block;
+}
+
+.conduit-quote-gap {
+  margin-top: 0.5em;
+}
+
+/* Hung opening mark, so the text edge stays clean */
+.conduit-quote-open {
+  margin-left: -0.42em;
+  color: var(--amber-light);
+}
+
 .conduit-quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
   font-family: "Great Vibes", cursive;
-  font-size: var(--text-2xl);
-  color: var(--dusty-peach);
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--ink-cream-strong);
 }
 
 .conduit-quote figcaption::before {
-  content: "\2014\00a0";
+  content: "";
+  width: var(--space-10);
+  height: 1px;
+  background: var(--caramel);
+}
+
+@media (max-width: 1024px) {
+  .conduit-quote-inner {
+    grid-template-columns: minmax(0, 320px) minmax(0, max-content);
+    gap: var(--space-12);
+  }
+}
+
+@media (max-width: 900px) {
+  .conduit-quote-inner {
+    grid-template-columns: minmax(0, 270px) minmax(0, max-content);
+    gap: var(--space-10);
+  }
+}
+
+@media (max-width: 768px) {
+  .conduit-quote-inner {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--space-16);
+  }
+
+  .conduit-quote-portrait {
+    max-width: 260px;
+  }
+
+  .conduit-quote {
+    text-align: center;
+  }
+
+  .conduit-quote blockquote p {
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+  }
+
+  .conduit-quote-open {
+    margin-left: 0;
+  }
+
+  .conduit-quote figcaption {
+    justify-content: center;
+  }
+
+  .conduit-quote figcaption::after {
+    content: "";
+    width: var(--space-10);
+    height: 1px;
+    background: var(--caramel);
+  }
 }
 
 /* ============================================================
@@ -753,23 +806,52 @@
   background: linear-gradient(118deg, var(--dawn-4) 0%, var(--dawn-2) 52%, var(--dawn-1) 100%);
 }
 
-/* The horizon glow that eases the hard cut up from the dark quote */
+/* The amber the quote section's horizon ends on, carried across the full width and
+   let go, so the seam between the two sections disappears */
 .light-steps-section::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 160px;
-  background: linear-gradient(180deg, rgba(255, 234, 196, 0.7) 0%, transparent 100%);
-  mix-blend-mode: screen;
+  height: 220px;
+  background: linear-gradient(180deg, var(--dawn-4) 0%, transparent 100%);
   pointer-events: none;
+}
+
+/* The diagonal leaves amber in the lower-left corner; this settles the whole bottom
+   edge to the cream the next section opens with */
+.light-steps-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 300px;
+  background: linear-gradient(
+    180deg,
+    rgba(252, 244, 230, 0) 0%,
+    rgba(252, 244, 230, 0.55) 45%,
+    rgba(252, 244, 230, 0.88) 75%,
+    var(--dawn-1) 100%
+  );
+  pointer-events: none;
+}
+
+.light-steps-section > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .light-steps-section .section-heading {
   position: relative;
   text-align: center;
   margin-bottom: var(--space-12);
+}
+
+/* Small caps on the amber band need a deeper ink than --ink-warm to hold 4.5:1 */
+.light-steps-section .eyebrow {
+  color: color-mix(in srgb, var(--ink-warm) 75%, black);
 }
 
 .light-steps {
@@ -864,7 +946,7 @@
 }
 
 .light-step p {
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.7;
   font-size: var(--text-sm);
   margin: 0;
@@ -876,7 +958,14 @@
 .feel-section {
   position: relative;
   z-index: 2;
-  background: linear-gradient(180deg, var(--dawn-1) 0%, var(--dawn-3) 100%);
+  /* The climb finishes here: the brightest cream on the page */
+  background: linear-gradient(
+    180deg,
+    var(--dawn-1) 0%,
+    var(--noon) 45%,
+    var(--noon) 80%,
+    var(--noon-edge) 100%
+  );
 }
 
 .feel-section .section-heading {
@@ -888,7 +977,7 @@
   max-width: 600px;
   margin: 0 auto var(--space-12);
   text-align: center;
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.8;
 }
 
@@ -944,7 +1033,7 @@
 
 .feel-card p {
   font-size: var(--text-sm);
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.65;
   margin: 0;
 }
@@ -997,9 +1086,11 @@
 .atmos-band {
   position: relative;
   z-index: 2;
-  min-height: 58vh;
+  /* Tall enough for the sky, the horizon and her whole figure, with the line of
+     text sitting in the sky above her */
+  min-height: max(58vh, 700px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
 }
@@ -1011,22 +1102,42 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 22%;
+  /* Warm the cool pink-grey sky toward noon cream so the band is light, not a box */
+  filter: sepia(0.2) saturate(1.08) brightness(1.03);
 }
 
-/* Graded scrim — clears toward the figure, holds at the edges for text */
+/* Scrim: the top melts out of the section above, the bottom into the one below
+   (fixed-pixel bands so they hold on tall phone layouts), and the sides are washed
+   so the photo never shows a hard corner. The middle stays clear. */
 .atmos-scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    180deg,
-    var(--dawn-3) 0%,
-    rgba(248, 236, 213, 0.34) 22%,
-    rgba(248, 236, 213, 0.12) 50%,
-    rgba(243, 221, 180, 0.4) 80%,
-    var(--dawn-2) 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      var(--noon-edge) 0,
+      rgba(253, 246, 234, 0.82) 70px,
+      rgba(253, 246, 234, 0.4) 160px,
+      rgba(253, 246, 234, 0) 260px
+    ),
+    linear-gradient(
+      0deg,
+      var(--warm-1) 0,
+      rgba(251, 241, 224, 0.8) 50px,
+      rgba(251, 241, 224, 0.3) 110px,
+      rgba(251, 241, 224, 0) 170px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(253, 246, 234, 0.4) 0%,
+      rgba(253, 246, 234, 0) 16%,
+      rgba(253, 246, 234, 0) 70%,
+      rgba(253, 244, 228, 0.34) 88%,
+      rgba(253, 244, 228, 0.6) 100%
+    ),
+    rgba(255, 246, 228, 0.12);
   pointer-events: none;
 }
 
@@ -1034,16 +1145,21 @@
   position: relative;
   z-index: 2;
   max-width: 720px;
-  padding: var(--space-16) var(--space-6);
+  padding: var(--space-12) var(--space-6);
   text-align: center;
 }
 
 .atmos-content::before {
   content: "";
   position: absolute;
-  inset: 5% -6%;
+  inset: 0 -10%;
   z-index: -1;
-  background: radial-gradient(ellipse at center, rgba(255, 253, 247, 0.72) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 250, 240, 0.7) 0%,
+    rgba(255, 250, 240, 0.35) 45%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -1054,6 +1170,7 @@
   line-height: 1.6;
   color: var(--espresso);
   margin: 0;
+  text-wrap: pretty;
 }
 
 /* ============================================================
@@ -1062,12 +1179,17 @@
 .bridge-section {
   position: relative;
   z-index: 2;
-  background: linear-gradient(180deg, var(--dawn-3) 0%, var(--dawn-2) 100%);
+  /* The warm-down begins */
+  background: linear-gradient(180deg, var(--warm-1) 0%, var(--dawn-2) 100%);
 }
 
 .bridge-section .section-heading {
   text-align: center;
   margin-bottom: var(--space-10);
+}
+
+.bridge-section .section-heading h2 {
+  text-wrap: balance;
 }
 
 .bridge-spread {
@@ -1110,7 +1232,7 @@
 }
 
 .bridge-panel > p {
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.75;
   margin: 0;
 }
@@ -1205,7 +1327,7 @@
 
 .reiki-fees-note p {
   font-size: var(--text-sm);
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.7;
   margin: 0;
 }
@@ -1222,9 +1344,10 @@
   background: linear-gradient(
     180deg,
     var(--dawn-2) 0%,
-    var(--dawn-3) 42%,
-    var(--dawn-4) 72%,
-    #d49a6a 100%
+    #efd6b0 30%,
+    var(--dawn-3) 50%,
+    var(--dawn-4) 78%,
+    var(--gold-hour) 100%
   );
   text-align: center;
 }
@@ -1275,7 +1398,7 @@
   position: relative;
   max-width: 600px;
   margin: 0 auto var(--space-10);
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.8;
 }
 
@@ -1322,12 +1445,13 @@
   right: 10px;
 }
 
+/* Block-level, so it stacks centred above the date chip instead of sharing its line */
 .horizon-card-icon {
-  display: inline-flex;
+  display: flex;
   width: 46px;
   height: 46px;
   color: var(--sage-warm);
-  margin-bottom: var(--space-3);
+  margin: 0 auto var(--space-3);
 }
 
 .horizon-card-icon svg {
@@ -1362,6 +1486,7 @@
   text-transform: uppercase;
   color: var(--slate-olive);
   margin-bottom: var(--space-4);
+  text-wrap: balance;
 }
 
 .horizon-card > p:last-child {
@@ -1379,8 +1504,37 @@
   z-index: 2;
   overflow: hidden;
   padding: var(--space-32) 0 var(--space-24);
-  background: linear-gradient(180deg, #c98e50 0%, var(--dawn-4) 42%, #f4d9a8 100%);
+  /* Deepest golden hour, then a long eased landing on the footer's own colour */
+  background: linear-gradient(
+    180deg,
+    var(--gold-hour) 0%,
+    #d09663 26%,
+    #d6a171 calc(100% - 240px),
+    #e3bb90 calc(100% - 150px),
+    #efd8bd calc(100% - 70px),
+    var(--bg-secondary) 100%
+  );
   text-align: center;
+}
+
+/* Footer landing: sits above the vines and the sunrise drawing so their bases
+   dissolve into the footer instead of being cut off at the section edge */
+.bloom-cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 130px;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--bg-secondary) 40%, transparent) 40%,
+    color-mix(in srgb, var(--bg-secondary) 82%, transparent) 75%,
+    var(--bg-secondary) 100%
+  );
+  pointer-events: none;
 }
 
 /* Giant blurred sun-bloom rising out of the deeper sky */
@@ -1388,7 +1542,8 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -120px;
+  /* Sits low, so its glow is never clipped by the section's top edge */
+  bottom: -470px;
   transform: translateX(-50%);
   width: 980px;
   max-width: 150vw;
@@ -1397,6 +1552,9 @@
   background: radial-gradient(circle, #fff7e6 0%, rgba(255, 224, 170, 0.6) 22%, transparent 60%);
   mix-blend-mode: screen;
   filter: blur(22px);
+  /* Fades out before the bottom edge so it never burns lighter than the footer */
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 380px, transparent 505px);
+  mask-image: linear-gradient(180deg, #000 0, #000 380px, transparent 505px);
   z-index: 0;
   pointer-events: none;
 }
@@ -1409,6 +1567,8 @@
   z-index: 0;
   width: 100%;
   height: 360px;
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
   pointer-events: none;
 }
 
@@ -1480,11 +1640,13 @@
   width: 680px;
   max-width: 94vw;
   height: 116%;
+  /* closest-side: reaches zero inside its own box, so it leaves no edges */
   background: radial-gradient(
-    ellipse at center,
-    rgba(252, 244, 228, 0.82) 0%,
-    rgba(252, 244, 228, 0.36) 50%,
-    transparent 74%
+    closest-side,
+    rgba(252, 244, 228, 0.76) 0%,
+    rgba(252, 244, 228, 0.56) 42%,
+    rgba(252, 244, 228, 0.24) 72%,
+    transparent 100%
   );
   pointer-events: none;
 }
@@ -1495,7 +1657,7 @@
 }
 
 .bloom-cta p {
-  color: var(--text-secondary);
+  color: var(--ink-warm);
   line-height: 1.8;
   margin-bottom: var(--space-8);
 }
@@ -1514,10 +1676,13 @@
   pointer-events: none;
 }
 
+/* Sized from the section's height (width follows the drawing's 80:200 ratio) so the
+   whole vine, bud included, fits inside the section with --space-6 to spare */
 .bloom-vine {
   position: absolute;
   bottom: -10px;
-  width: 250px;
+  height: calc(100% - var(--space-6));
+  aspect-ratio: 80 / 200;
   color: var(--sage);
   opacity: 0.9;
   pointer-events: none;
@@ -1638,6 +1803,21 @@
     max-width: 380px;
     margin: 0 auto;
   }
+
+  /* Narrower screens: a short vine that stays in the corner gutter, and two smaller
+     sprigs that sit above the heading, all clear of the copy */
+  .bloom-vine {
+    height: auto;
+    width: 120px;
+  }
+  .bloom-botanical-1 {
+    top: var(--space-6);
+    width: 48px;
+  }
+  .bloom-botanical-2 {
+    top: var(--space-6);
+    width: 42px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1657,6 +1837,38 @@
     height: 220px;
     opacity: 0.7;
     right: -4%;
+  }
+  .atmos-band {
+    min-height: 600px;
+  }
+  .atmos-content {
+    padding-top: var(--space-10);
+  }
+  /* The CTA is tall on phones, so lift the glow to sit behind the copy. Lifted, its
+     top passes the section's top edge, so the mask fades it in from below that edge */
+  .bloom-cta::before {
+    bottom: -300px;
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 210px,
+      #000 400px,
+      #000 540px,
+      transparent 675px
+    );
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 210px,
+      #000 400px,
+      #000 540px,
+      transparent 675px
+    );
+  }
+
+  /* No gutter beside the copy at this width, so the vines go */
+  .bloom-vine {
+    display: none;
   }
 }
 
@@ -1686,7 +1898,6 @@
     clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
   }
   .conduit-orb,
-  .candle-glow,
   .cta-sun-disc {
     animation: none;
   }
@@ -1709,8 +1920,9 @@
   .light-beam,
   .conduit-hero::before,
   .conduit-motes,
-  .candle-glow,
   .bloom-cta::before,
+  .bloom-cta::after,
+  .light-steps-section::after,
   .cta-sunrise {
     display: none !important;
   }

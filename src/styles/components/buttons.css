@@ -55,3 +55,13 @@
   padding: var(--space-5) var(--space-10);
   font-size: var(--text-base);
 }
+
+/* Long labels ("Schedule Your Free Consultation") wrap instead of running off a phone screen */
+@media (max-width: 540px) {
+  .btn-lg {
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+    padding: var(--space-4) var(--space-6);
+  }
+}

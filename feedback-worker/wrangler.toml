@@ -4,7 +4,7 @@ compatibility_date = "2025-06-01"
 workers_dev = true
 
 # Non-secret config (safe to commit). The GitHub token is NOT here — it is set with
-#   gh auth token | npx wrangler secret put GITHUB_TOKEN
+#   npx wrangler secret put GITHUB_TOKEN   (a fine-grained token for this repo only; see README)
 [vars]
 GH_OWNER = "jmiranda3838"
 GH_REPO = "elizabeth-website"

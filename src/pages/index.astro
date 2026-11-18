@@ -77,7 +77,9 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     <!-- Text Content -->
     <div class="hero-text-content">
       <h1 class="hero-tagline">Collaborative, kind therapy to promote growth and healing</h1>
-      <p class="hero-name">Elizabeth Armstrong, LMFT</p>
+      <p class="hero-name">
+        Elizabeth Armstrong, LMFT #111154<br />Clinical Supervisor, California Family Institute
+      </p>
     </div>
     <!-- Hanging Botanical Garland - extends past hero edge -->
     <div class="hero-garland">
@@ -164,10 +166,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
 
       <!-- Walk-and-talk: same therapy, on foot by the ocean -->
       <p class="services-soon-note reveal">
-        <span class="soon-badge">Coming soon</span>
-        Walk-and-talk therapy &mdash; the same work we'd do in the office, just on foot along the ocean.
-        We sit so much; sometimes movement and salt air are exactly what the conversation needs. If it
-        calls to you, mention it when we talk.
+        <span class="soon-badge">Available by request</span>
+        Walk-and-talk therapy&nbsp;&mdash; the same work we'd do in the office, just on foot along the
+        ocean. We sit so much; sometimes movement and salt air are exactly what the conversation needs.
+        If it calls to you, mention it when we talk.
       </p>
     </div>
   </section>
@@ -247,11 +249,18 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         <h2>Beyond the therapy room</h2>
         <p>
           Talk therapy is the heart of what I do &mdash; but it isn't the only door in. I also offer
-          Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy and
-          honestly explained &mdash; and a small annual retreat is on the way.
+          Reiki &mdash; a gentle, hands-light hour of energy work, separate from therapy.
+        </p>
+        <p>
+          Once a year, my colleague and I also guide a retreat in Sedona, Arizona. We spend a few
+          days in nature, exploring our relationships with ourselves and one another, with a big
+          dose of Sedona magic.
         </p>
       </div>
-      <a href={withBase("/reiki.html")} class="btn btn-outline">Learn about Reiki</a>
+      <div class="beyond-band-actions">
+        <a href={withBase("/reiki.html")} class="btn btn-outline">Learn about Reiki</a>
+        <a href={withBase("/retreat.html")} class="btn btn-outline">Learn about the retreat</a>
+      </div>
     </div>
   </section>
 
@@ -478,10 +487,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
           <figure class="roots-figure">
             <img
               src={withBase("/images/therapy-roots.jpg")}
-              alt="Elizabeth Armstrong seated in a garden"
+              alt="Elizabeth in a brimmed hat, sitting cross-legged on the ground and smiling"
               class="roots-photo-img"
-              width="1800"
-              height="1200"
+              width="1100"
+              height="1100"
               loading="lazy"
               decoding="async"
             />
@@ -763,6 +772,16 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             <QuoteMark />
           </div>
           <p class="journal-text">I want to understand why I keep getting in my own way.</p>
+        </div>
+
+        <div class="journal-page reveal stagger-6" style="--rotation: 1deg;">
+          <div class="journal-quote-mark">
+            <QuoteMark />
+          </div>
+          {/* TODO(elizabeth): drafted by us for the 6th box; needs her approval */}
+          <p class="journal-text">
+            My life is changing in big ways, and I'm not sure what comes next.
+          </p>
         </div>
       </div>
 

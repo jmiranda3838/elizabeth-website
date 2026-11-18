@@ -1,7 +1,9 @@
 /* === Sections: How It Works === */
 .moon-journey-section {
   position: relative;
-  overflow: visible;
+  /* The vine bands below overhang 30px each side; clip them sideways so the
+     page never gets wider than the screen (vertical overhang stays visible). */
+  overflow-x: clip;
   /* Light section: gentle sand-to-paper wash that settles into the
      testimonials (warm-paper) below, restoring the page's light/dark rhythm. */
   background: linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);

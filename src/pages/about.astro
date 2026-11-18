@@ -38,34 +38,54 @@ import "@styles/pages/about.css";
           </div>
         </div>
 
-        <!-- Fence photo -->
-        <div class="board-item bi-fence" style="--delay: 0.25s;">
+        <!-- Park photo (large, top right) -->
+        <div class="board-item bi-park" style="--delay: 0.25s;">
           <div class="board-item-inner" style="--tilt: 4deg;">
             <figure class="polaroid">
               <span class="board-pin pin-clay" aria-hidden="true"></span>
               <img
-                src={withBase("/images/about-hero-fence.jpg")}
-                alt="Elizabeth in a wide-brimmed hat, looking down and smiling near a wooden fence"
-                width="1600"
-                height="1066"
+                src={withBase("/images/about-board-park.jpg")}
+                alt="Elizabeth in a tan hat and white blouse, leaning on a wooden fence post among green shrubs and smiling at the camera"
+                width="1400"
+                height="933"
               />
               <figcaption class="polaroid-caption">slow mornings</figcaption>
             </figure>
           </div>
         </div>
 
-        <!-- Couch photo -->
-        <div class="board-item bi-couch" style="--delay: 0.4s;">
+        <!-- Home photo with the dogs (small portrait, lower right, on top) -->
+        <div class="board-item bi-home" style="--delay: 0.4s;">
           <div class="board-item-inner" style="--tilt: -5deg;">
             <figure class="polaroid">
               <span class="washi-tape washi-top" aria-hidden="true"></span>
-              <img
-                src={withBase("/images/about-hero-couch.jpg")}
-                alt="Elizabeth seated on a couch in warm lamplight, relaxed and smiling"
-                width="1066"
-                height="1600"
-              />
+              <span class="bi-crop">
+                <img
+                  src={withBase("/images/about-board-home.jpg")}
+                  alt="Elizabeth kneeling on a rug at home, laughing as a greyhound nuzzles her hand, with two dachshunds beside her"
+                  width="933"
+                  height="1400"
+                />
+              </span>
               <figcaption class="polaroid-caption">at home in the heart</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- Beach photo (small portrait, lower right, tucked under home) -->
+        <div class="board-item bi-beach" style="--delay: 0.5s;">
+          <div class="board-item-inner" style="--tilt: 6deg;">
+            <figure class="polaroid">
+              <span class="board-pin pin-sage" aria-hidden="true"></span>
+              <span class="bi-crop">
+                <img
+                  src={withBase("/images/about-board-beach.jpg")}
+                  alt="Elizabeth standing on the sand by the ocean in a green leaf-print dress, holding the brim of her hat and smiling at the camera"
+                  width="933"
+                  height="1400"
+                />
+              </span>
+              <figcaption class="polaroid-caption">salt &amp; sunshine</figcaption>
             </figure>
           </div>
         </div>
@@ -172,8 +192,8 @@ import "@styles/pages/about.css";
             <div class="letter-quote">
               <span class="washi-tape washi-top" aria-hidden="true"></span>
               <p>
-                "I will not tell you what to do. I view problems as separate from people — and my
-                work is simply to make room while you do yours."
+                "I believe in the power of a good question. My work is to be a conversational
+                partner for you that shines light on solutions to problems through good questions."
               </p>
             </div>
           </div>
@@ -293,16 +313,18 @@ import "@styles/pages/about.css";
     <img
       class="photo-band-img"
       src={withBase("/images/about-band-eucalyptus.jpg")}
+      srcset={`${withBase("/images/about-band-eucalyptus.jpg")} 1600w, ${withBase("/images/about-band-eucalyptus-2560.jpg")} 2560w`}
+      sizes="100vw"
       alt=""
-      width="2000"
-      height="1333"
+      width="2560"
+      height="1706"
       loading="lazy"
       decoding="async"
     />
     <div class="photo-band-content reveal">
       <span class="photo-band-quotemark" aria-hidden="true"><QuoteMark /></span>
       <p class="band-quote">toward a lighter, brighter, more joyful life</p>
-      <p class="band-attribution">Elizabeth Armstrong, MA, LMFT</p>
+      <p class="band-attribution">Elizabeth Armstrong, MA, LMFT #111154</p>
     </div>
   </section>
 
@@ -318,25 +340,27 @@ import "@styles/pages/about.css";
             <span class="board-pin pin-sage" aria-hidden="true"></span>
             <div class="cert-seal"><IconGraduation aria-hidden="true" /></div>
             <h4>MA, Clinical Psychology · BS, Family Service</h4>
-            <p>Pepperdine University, 2016</p>
+            <p>MA: Pepperdine University, 2016 · BS: Eastern Illinois University, 2002</p>
           </div>
         </div>
         <div class="pinned-card reveal-scale stagger-2">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
             <span class="board-pin pin-clay" aria-hidden="true"></span>
             <div class="cert-seal"><IconLicense aria-hidden="true" /></div>
-            <h4>Licensed Marriage &amp; Family Therapist (LMFT)</h4>
-            <p>California Board of Behavioral Sciences, License #111154 · since 2019</p>
+            <h4>Licensed Marriage &amp; Family Therapist</h4>
+            <p>
+              CA License #111154, since 2019 · Clinical Supervisor at California Family Institute
+            </p>
           </div>
         </div>
         <div class="pinned-card reveal-scale stagger-3">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
             <span class="board-pin pin-rose" aria-hidden="true"></span>
             <div class="cert-seal"><IconTraining aria-hidden="true" /></div>
-            <h4>AAMFT-Certified · Clinical Supervisor</h4>
+            <h4>Specialty Certifications</h4>
             <p>
-              Substance Misuse and LGBTQIA Affirmative Therapy; supervisor at California Family
-              Institute
+              AAMFT-certified in Substance Misuse and LGBTQIA Affirmative Therapy; Certified Pet
+              Grief Counselor
             </p>
           </div>
         </div>
@@ -344,11 +368,8 @@ import "@styles/pages/about.css";
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: -1deg;">
             <span class="board-pin pin-peach" aria-hidden="true"></span>
             <div class="cert-seal"><IconHeart aria-hidden="true" /></div>
-            <h4>Reiki Master · Certified Pet Grief Counselor</h4>
-            <p>
-              Certified in Reiki since 2020, a Reiki Master since 2021; trained to companion you
-              through pet loss
-            </p>
+            <h4>Reiki Master</h4>
+            <p>Certified in Reiki since 2020, a Reiki Master since 2021</p>
           </div>
         </div>
       </div>
@@ -371,7 +392,7 @@ import "@styles/pages/about.css";
         <p>
           I'm a longtime yogi, a lover of woo-woo things, and a maker of vision boards. Every New
           Year I choose a word to grow toward — peace, release, joy. In 2025 it was warmth, and
-          honestly? I think I've arrived.
+          honestly? I think I've arrived. For 2026, it's two words: run free.
         </p>
       </div>
 

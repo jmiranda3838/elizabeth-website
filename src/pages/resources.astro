@@ -81,7 +81,7 @@ import { ArrowRight } from "@illustrations/icons";
           </div>
 
           <div
-            class="shelf-book"
+            class="shelf-book shelf-book--spare"
             style="--book-w: 34px; --book-h: 186px; --book-c: var(--dusty-peach); --book-lean: -5deg;"
             aria-hidden="true"
           >
@@ -142,7 +142,7 @@ import { ArrowRight } from "@illustrations/icons";
           </div>
 
           <div
-            class="shelf-book"
+            class="shelf-book shelf-book--spare"
             style="--book-w: 34px; --book-h: 180px; --book-c: var(--muted-rose); --book-lean: 4deg;"
             aria-hidden="true"
           >
@@ -298,12 +298,6 @@ import { ArrowRight } from "@illustrations/icons";
     </section>
 
     <!-- Card Catalog: forms & documents -->
-    <!--
-      TODO: When Elizabeth provides the PDFs, place them in /public/forms/,
-      point each .catalog-download at /forms/<name>.pdf, add the `download`
-      attribute, and remove is-placeholder / aria-disabled / tabindex="-1"
-      and the ON ORDER stamp from that drawer.
-    -->
     <section class="section section-lg catalog-section">
       <div class="container">
         <div class="section-heading reveal">
@@ -327,14 +321,11 @@ import { ArrowRight } from "@illustrations/icons";
                   Tell me a little about you before we meet, so our first session can begin where it
                   matters.
                 </p>
-                <!-- TODO(elizabeth): real file expected at /forms/intake-information.pdf -->
                 <a
-                  class="catalog-download is-placeholder"
-                  href="#"
-                  aria-disabled="true"
-                  tabindex="-1">Download PDF</a
+                  class="catalog-download"
+                  href={withBase("/forms/intake-information.pdf")}
+                  download>Download PDF</a
                 >
-                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
               </div>
             </div>
           </details>
@@ -350,14 +341,9 @@ import { ArrowRight } from "@illustrations/icons";
                   What therapy is, what it isn&rsquo;t, and your rights inside it &mdash; all in
                   plain language.
                 </p>
-                <!-- TODO(elizabeth): real file expected at /forms/informed-consent.pdf -->
-                <a
-                  class="catalog-download is-placeholder"
-                  href="#"
-                  aria-disabled="true"
-                  tabindex="-1">Download PDF</a
+                <a class="catalog-download" href={withBase("/forms/informed-consent.pdf")} download
+                  >Download PDF</a
                 >
-                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
               </div>
             </div>
           </details>
@@ -370,14 +356,11 @@ import { ArrowRight } from "@illustrations/icons";
             <div class="catalog-drawer-inner">
               <div class="catalog-card">
                 <p>The simple card-on-file form for session fees.</p>
-                <!-- TODO(elizabeth): real file expected at /forms/credit-card-authorization.pdf -->
                 <a
-                  class="catalog-download is-placeholder"
-                  href="#"
-                  aria-disabled="true"
-                  tabindex="-1">Download PDF</a
+                  class="catalog-download"
+                  href={withBase("/forms/credit-card-authorization.pdf")}
+                  download>Download PDF</a
                 >
-                <span class="catalog-soon-stamp" aria-hidden="true">On Order</span>
               </div>
             </div>
           </details>

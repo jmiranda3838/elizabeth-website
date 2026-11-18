@@ -1,0 +1,37 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 120 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Agave rosette: seven pointed leaves fanning from one base, with a ground line -->
+  <g stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M56 95 C40 86 24 74 10 62 C28 68 46 78 60 93 Z"></path>
+    <path d="M57 94 C44 76 32 56 24 32 C38 52 50 72 61 92 Z"></path>
+    <path d="M58 94 C52 70 46 44 44 14 C54 40 60 66 62 92 Z"></path>
+    <path d="M59 94 C60 66 62 36 66 6 C70 36 68 66 63 94 Z"></path>
+    <path d="M60 94 C66 70 74 44 86 16 C80 44 72 70 64 95 Z"></path>
+    <path d="M61 95 C72 76 86 56 102 36 C92 60 78 80 64 96 Z"></path>
+    <path d="M62 96 C78 84 94 72 112 62 C98 76 82 88 65 97 Z"></path>
+  </g>
+  <g stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.7">
+    <path d="M60 93 C58 82 54 64 52 46 M62 92 C64 80 66 60 66 40 M63 93 C70 80 78 62 84 46"></path>
+  </g>
+  <path
+    d="M2 97 Q60 101 118 97"
+    stroke="currentColor"
+    stroke-width="1"
+    stroke-linecap="round"
+    opacity="0.6"></path>
+</svg>

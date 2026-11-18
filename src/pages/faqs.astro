@@ -11,7 +11,6 @@ import { PlusExpand } from "@illustrations/icons";
   <!-- Page Hero -->
   <section class="page-hero">
     <div class="container">
-      <p class="eyebrow">Questions & Answers</p>
       <h1>Frequently Asked Questions</h1>
       <p class="lead">
         Everything you might want to know about working together. If you don't see your question
@@ -109,9 +108,9 @@ import { PlusExpand } from "@illustrations/icons";
             <div class="faq-answer">
               <div class="faq-answer-content">
                 <p>
-                  Standard sessions are 55 minutes. A longer 90-minute session is also available
-                  &mdash; helpful for couples or for deeper pieces of work. We&rsquo;ll decide
-                  together what fits.
+                  Standard sessions are 50 minutes. A longer 90-minute session is also available for
+                  individuals, couples, or families &mdash; helpful for deeper pieces of work.
+                  We&rsquo;ll decide together what fits.
                 </p>
               </div>
             </div>
@@ -189,8 +188,9 @@ import { PlusExpand } from "@illustrations/icons";
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                <p>55-minute session: $150</p>
-                <p>90-minute session: $200</p>
+                <p>50-minute individual session: $185</p>
+                <p>50-minute couple or family session: $225</p>
+                <p>90-minute session (individual, couple, or family): $300</p>
                 <p>
                   I offer a limited number of sliding-scale spots for those who need them. If cost
                   is a barrier, please mention it during our consultation and we can discuss
@@ -232,8 +232,8 @@ import { PlusExpand } from "@illustrations/icons";
             <div class="faq-answer">
               <div class="faq-answer-content">
                 <p>
-                  I accept cash, check, and major credit cards. Payment is due at the time of each
-                  session.
+                  I accept cash, check, major credit cards, and HSA cards. Payment is due at the
+                  time of each session.
                 </p>
               </div>
             </div>
@@ -346,8 +346,9 @@ import { PlusExpand } from "@illustrations/icons";
                   or psychological care.
                 </p>
                 <p>
-                  Walk-and-talk therapy sessions by the ocean and a small annual retreat are on the
-                  way, too &mdash; if either calls to you, mention it when we talk.
+                  Walk-and-talk therapy sessions by the ocean are available by request, and once a
+                  year I guide <a href={withBase("/retreat.html")}>a retreat in Sedona</a> with my colleague
+                  &mdash; if either calls to you, mention it when we talk.
                 </p>
               </div>
             </div>
@@ -363,9 +364,10 @@ import { PlusExpand } from "@illustrations/icons";
           experiencing a mental health emergency, please take one of the following steps:
         </p>
         <p>
-          <strong>Call 988</strong> (Suicide & Crisis Lifeline, available 24/7)<br />
-          <strong>Call 911</strong> or go to your nearest emergency room<br />
-          <strong>Text HOME to 741741</strong> (Crisis Text Line)
+          <a href="tel:988"><strong>Call 988</strong></a> (Suicide & Crisis Lifeline, available 24/7)<br
+          />
+          <a href="tel:911"><strong>Call 911</strong></a> or go to your nearest emergency room<br />
+          <a href="sms:741741"><strong>Text HOME to 741741</strong></a> (Crisis Text Line)
         </p>
         <p>
           Please do not use email or my contact form to communicate urgent matters, as I may not see
@@ -420,6 +422,7 @@ import { PlusExpand } from "@illustrations/icons";
       font-size: var(--text-base);
       font-weight: 500;
       text-align: left;
+      color: var(--text-primary);
       background-color: var(--warm-paper);
       cursor: pointer;
       transition: background-color var(--transition-fast);
@@ -441,14 +444,26 @@ import { PlusExpand } from "@illustrations/icons";
       transform: rotate(45deg);
     }
 
+    /* Closed panels are also hidden from keyboard focus. A transitioning
+       visibility stays visible until the close animation has finished */
     .faq-answer {
       max-height: 0;
       overflow: hidden;
-      transition: max-height var(--transition-base);
+      visibility: hidden;
+      transition:
+        max-height var(--transition-base),
+        visibility var(--transition-base);
     }
 
     .faq-item.open .faq-answer {
       max-height: 1000px;
+      visibility: visible;
+    }
+
+    .faq-answer-content a {
+      color: var(--warm-clay);
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .faq-answer-content {
@@ -480,6 +495,25 @@ import { PlusExpand } from "@illustrations/icons";
 
     .crisis-callout p:last-child {
       margin-bottom: 0;
+    }
+
+    .crisis-callout a:hover {
+      color: var(--warm-clay);
+    }
+
+    .crisis-callout a:focus-visible {
+      outline: 2px solid var(--misty-blue);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* Every answer prints, with or without the beforeprint script */
+    @media print {
+      .faq-answer {
+        max-height: none;
+        visibility: visible;
+        transition: none;
+      }
     }
   </style>
 </BaseLayout>
