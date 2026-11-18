@@ -40,15 +40,15 @@ export interface GarlandArt {
 const TONE = {
   twine: "#e9dcc9",
   twineDark: "#9c876f",
-  rose: ["#f9e9e3", "#f4d9d1", "#efc8c0", "#e9b9b1", "#e0a49e", "#d5928d", "#c98381", "#bd7675"],
-  roseLine: "#a8686a",
+  rose: ["#f5e4dc", "#f0d9d0", "#ebccc3", "#e5bfb6", "#deb1a9", "#d6a39c", "#cd9690", "#c48a85"],
+  roseLine: "#b07f7c",
   cream: "#fdf8ef",
   creamShade: "#e6d3bb",
   ochre: "#d7ad78",
-  berry: "#bf8582",
-  berryDeep: "#9c625f",
-  sepal: "#93a58f",
-  sepalLine: "#55665a",
+  berry: "#cfa29b",
+  berryDeep: "#b98a84",
+  sepal: "#a9b59a",
+  sepalLine: "#6f7c66",
 };
 
 /* ---------- small helpers */
@@ -285,7 +285,7 @@ function roseDef(rnd: Rand, id: string, shadeId: string): string {
     { r: R * 0.56, n: 5, tint: 4, half: 52 },
     { r: R * 0.36, n: 3, tint: 6, half: 70 },
   ];
-  let out = `<g id="${id}" stroke="${TONE.roseLine}" stroke-opacity=".42" stroke-width=".8" stroke-linejoin="round">`;
+  let out = `<g id="${id}" stroke="${TONE.roseLine}" stroke-opacity=".3" stroke-width=".6" stroke-linejoin="round">`;
   rings.forEach((ring, k) => {
     const turn = k * 0.7 + rnd() * 2;
     for (let i = 0; i < ring.n; i++) {
@@ -440,8 +440,8 @@ function outward(s: Swag, u: number, a: number, tilt: number, down: boolean): nu
 /** The body of the swag: single leaves laid along the twine like shingles, in
     interleaved coats (dark to light) so no leaf crosses another of its own coat */
 function swagCore(rnd: Rand, s: Swag, k: number): string {
-  const coats: PaintName[] = ["back", "mid", "warm", "soft", "mid"];
-  const count = Math.round(spanOf(s) / (9.5 * k));
+  const coats: PaintName[] = ["mid", "warm", "soft", "mid"];
+  const count = Math.round(spanOf(s) / (13 * k));
   const sets: Leaf[][] = coats.map(() => []);
   for (let i = 0; i < count; i++) {
     const u = (i + 0.5 + (rnd() - 0.5) * 0.6) / count;
@@ -452,7 +452,7 @@ function swagCore(rnd: Rand, s: Swag, k: number): string {
     const down = (i >> 1) % 2 === 0 ? rnd() < 0.8 : rnd() < 0.2;
     const tilt = rad((6 + rnd() * 36 + near * 36) * (0.3 + 0.7 * full));
     // (thin near the ties, so the leaves there hug the twine)
-    const L = (19 + 34 * full) * k * (0.82 + 0.36 * rnd()) * (coat === 0 ? 1.25 : 1);
+    const L = (17 + 25 * full) * k * (0.82 + 0.36 * rnd());
     const off = (down ? 1 : -1) * (1 + 6 * full * rnd()) * k;
     sets[coat]?.push(
       leaf(p[0], p[1] + off, outward(s, u, a, tilt, down), L, L * (0.15 + 0.08 * rnd()), {
@@ -488,8 +488,8 @@ interface Layer {
 function swagSprigs(rnd: Rand, s: Swag, k: number, which: "behind" | "over"): string {
   const behind: Layer[] = [
     {
-      step: 70 * k,
-      len: 128 * k,
+      step: 110 * k,
+      len: 92 * k,
       tilt: [30, 64],
       paints: ["back"],
       minFull: 0.3,
@@ -506,8 +506,8 @@ function swagSprigs(rnd: Rand, s: Swag, k: number, which: "behind" | "over"): st
   ];
   const over: Layer[] = [
     {
-      step: 62 * k,
-      len: 106 * k,
+      step: 84 * k,
+      len: 84 * k,
       tilt: [20, 54],
       paints: ["mid", "warm", "soft"],
       minFull: 0.36,
@@ -533,8 +533,8 @@ function swagSprigs(rnd: Rand, s: Swag, k: number, which: "behind" | "over"): st
             },
     },
     {
-      step: 80 * k,
-      len: 80 * k,
+      step: 104 * k,
+      len: 66 * k,
       tilt: [6, 38],
       paints: ["pale", "frost", "pale"],
       minFull: 0.4,
@@ -819,8 +819,8 @@ const CONFIG: Record<GarlandVariant, Config> = {
   wide: {
     width: 1440,
     height: 440,
-    k: 1,
-    bloom: 1,
+    k: 0.74,
+    bloom: 0.92,
     seed: 11,
     swags: [
       {
@@ -828,11 +828,11 @@ const CONFIG: Record<GarlandVariant, Config> = {
         ay: 10,
         bx: 744,
         by: 14,
-        depth: 96,
+        depth: 70,
         focal: 0.46,
-        endA: 0.42,
+        endA: 0.34,
         endB: 0.03,
-        reach: 172,
+        reach: 132,
         tieX: 744,
       },
       {
@@ -840,11 +840,11 @@ const CONFIG: Record<GarlandVariant, Config> = {
         ay: 14,
         bx: 1408,
         by: 8,
-        depth: 116,
+        depth: 82,
         focal: 0.57,
         endA: 0.03,
-        endB: 0.45,
-        reach: 290,
+        endB: 0.36,
+        reach: 200,
         tieX: 744,
       },
     ],
@@ -852,8 +852,8 @@ const CONFIG: Record<GarlandVariant, Config> = {
   narrow: {
     width: 600,
     height: 420,
-    k: 0.96,
-    bloom: 0.8,
+    k: 0.74,
+    bloom: 0.86,
     seed: 23,
     swags: [
       {
@@ -861,11 +861,11 @@ const CONFIG: Record<GarlandVariant, Config> = {
         ay: 10,
         bx: 312,
         by: 14,
-        depth: 58,
+        depth: 46,
         focal: 0.42,
-        endA: 0.45,
+        endA: 0.36,
         endB: 0.05,
-        reach: 150,
+        reach: 118,
         tieX: 312,
       },
       {
@@ -873,11 +873,11 @@ const CONFIG: Record<GarlandVariant, Config> = {
         ay: 14,
         bx: 580,
         by: 8,
-        depth: 64,
+        depth: 50,
         focal: 0.6,
         endA: 0.05,
-        endB: 0.48,
-        reach: 160,
+        endB: 0.38,
+        reach: 124,
         tieX: 312,
       },
     ],
@@ -898,7 +898,7 @@ export function buildGarland(variant: GarlandVariant): GarlandArt {
 
   const defs =
     `<radialGradient id="${ids.shade}" cx=".55" cy=".57" r=".5">` +
-    `<stop offset="0" stop-color="#9c5257" stop-opacity=".46"/><stop offset=".5" stop-color="#a65d60" stop-opacity=".16"/><stop offset="1" stop-color="#a65d60" stop-opacity="0"/>` +
+    `<stop offset="0" stop-color="#b06a68" stop-opacity=".3"/><stop offset=".5" stop-color="#b87572" stop-opacity=".1"/><stop offset="1" stop-color="#a65d60" stop-opacity="0"/>` +
     `</radialGradient>` +
     ids.rose.map((id) => roseDef(rnd, id, ids.shade)).join("") +
     blossomDef(ids.blossom);
@@ -955,12 +955,12 @@ export function buildGarland(variant: GarlandVariant): GarlandArt {
   const vineR = on(right, wide ? right.focal - 0.1 : 0.84, 14);
   const lav = on(right, wide ? right.focal + 0.15 : 0.74, 6);
   const bunches: GarlandBunch[] = [
-    { n: 1, x: left.ax, y: left.ay + 6, html: tail(rnd, k, wide ? 150 : 270, -4, ids) },
-    { n: 2, x: vineL[0], y: vineL[1], html: vine(rnd, k, wide ? 84 : 76, 1, ids) },
+    { n: 1, x: left.ax, y: left.ay + 6, html: tail(rnd, k, wide ? 120 : 170, -4, ids) },
+    { n: 2, x: vineL[0], y: vineL[1], html: vine(rnd, k, wide ? 70 : 60, 1, ids) },
     { n: 3, x: left.bx, y: left.by, html: bow(k) },
-    { n: 4, x: vineR[0], y: vineR[1], html: vine(rnd, k, wide ? 150 : 96, -1, ids) },
-    { n: 5, x: lav[0], y: lav[1], html: lavenderBunch(rnd, k, wide ? 118 : 86) },
-    { n: 6, x: right.bx, y: right.by + 6, html: tail(rnd, k, wide ? 310 : 330, 5, ids) },
+    { n: 4, x: vineR[0], y: vineR[1], html: vine(rnd, k, wide ? 110 : 74, -1, ids) },
+    { n: 5, x: lav[0], y: lav[1], html: lavenderBunch(rnd, k, wide ? 96 : 76) },
+    { n: 6, x: right.bx, y: right.by + 6, html: tail(rnd, k, wide ? 210 : 210, 5, ids) },
   ];
 
   return { width: cfg.width, height: cfg.height, defs, shadow, twine, body, bunches };

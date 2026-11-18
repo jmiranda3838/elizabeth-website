@@ -62,7 +62,7 @@
   right: calc(5% + var(--stand) * 0.4);
   bottom: 7.5%;
   color: #d4cdee;
-  opacity: 0.7;
+  opacity: 0.95;
   --base-rotate: -3deg;
 }
 
@@ -72,7 +72,7 @@
   right: 5%;
   bottom: 7%;
   color: #f4d3cc;
-  opacity: 0.7;
+  opacity: 0.95;
   --base-rotate: 6deg;
   animation-delay: -3s;
 }
@@ -83,7 +83,7 @@
   right: calc(5% + var(--stand) * 0.78);
   bottom: 6.5%;
   color: #e9efe2;
-  opacity: 0.68;
+  opacity: 0.92;
   --base-rotate: -5deg;
   animation-delay: -6s;
 }
@@ -235,10 +235,6 @@
   right: 0;
   z-index: 3;
   pointer-events: none;
-  /* Held back so the photo stays the subject: the garland reads as a soft
-     wash over the trees, not a solid band across them. */
-  opacity: 0.7;
-  filter: saturate(0.85);
 }
 
 .garland-svg {
@@ -252,64 +248,65 @@
   display: none;
 }
 
-/* Leaves: six tones, darkest at the back */
+/* Leaves: six tones, darkest at the back. They are kept warm and close in value
+   to the trees behind them, so the garland belongs to the photo. */
 .garland-svg [class^="garland-leaf"] {
-  stroke-width: 0.7;
+  stroke-width: 0.5;
   stroke-linejoin: round;
 }
 .garland-leaf-deep {
-  fill: #5f6f5c;
-  stroke: rgba(46, 58, 46, 0.45);
+  fill: #86917a;
+  stroke: rgba(84, 94, 74, 0.35);
 }
 .garland-leaf-mid {
-  fill: #8fa28b;
-  stroke: rgba(66, 84, 70, 0.6);
+  fill: #a3ae93;
+  stroke: rgba(92, 104, 82, 0.4);
 }
 .garland-leaf-warm {
-  fill: #adae96;
-  stroke: rgba(94, 98, 76, 0.6);
+  fill: #bcb99f;
+  stroke: rgba(112, 110, 86, 0.4);
 }
 .garland-leaf-soft {
-  fill: #aabda6;
-  stroke: rgba(70, 88, 74, 0.6);
+  fill: #b8c3aa;
+  stroke: rgba(96, 108, 86, 0.4);
 }
 .garland-leaf-pale {
-  fill: #cad6c3;
-  stroke: rgba(82, 101, 86, 0.55);
+  fill: #d3d9c6;
+  stroke: rgba(108, 120, 98, 0.4);
 }
 .garland-leaf-frost {
-  fill: #e2e9da;
-  stroke: rgba(96, 116, 98, 0.55);
+  fill: #e5e9db;
+  stroke: rgba(118, 130, 106, 0.4);
 }
 /* The lit upper half of the front leaves */
 .garland-lit {
   fill: #fff;
-  fill-opacity: 0.32;
+  fill-opacity: 0.26;
 }
 /* Stems and midribs */
 .garland-svg [class^="garland-vein"] {
   fill: none;
   stroke-linecap: round;
-  stroke-width: 0.9;
+  stroke-width: 0.7;
 }
 .garland-vein-deep {
-  stroke: #4c5f52;
+  stroke: #717d68;
 }
 .garland-vein {
-  stroke: rgba(72, 90, 80, 0.75);
+  stroke: rgba(98, 110, 90, 0.6);
 }
 .garland-vein-pale {
-  stroke: rgba(104, 126, 110, 0.8);
+  stroke: rgba(124, 138, 114, 0.65);
 }
 /* Lavender florets */
 .garland-floret {
-  fill: #c5c0df;
-  stroke: rgba(127, 122, 166, 0.45);
+  fill: #c6c0d6;
+  stroke: rgba(150, 144, 172, 0.4);
   stroke-width: 0.4;
 }
 .garland-floret-deep {
-  fill: #9f9ac4;
-  stroke: rgba(127, 122, 166, 0.5);
+  fill: #aaa3c0;
+  stroke: rgba(150, 144, 172, 0.45);
   stroke-width: 0.4;
 }
 

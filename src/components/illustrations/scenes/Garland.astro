@@ -28,7 +28,7 @@ const blurId = `garland-blur-${variant}`;
        groups (tails, vines, lavender, the bow) are swayed from hero.css. -->
   <defs>
     <filter id={blurId} x="-10%" y="-40%" width="120%" height="200%">
-      <feGaussianBlur stdDeviation={variant === "wide" ? 14 : 9}></feGaussianBlur>
+      <feGaussianBlur stdDeviation={variant === "wide" ? 10 : 7}></feGaussianBlur>
     </filter>
     <Fragment set:html={art.defs} />
   </defs>
@@ -36,7 +36,7 @@ const blurId = `garland-blur-${variant}`;
     class="garland-shadow"
     d={art.shadow}
     fill="#2b221b"
-    fill-opacity="0.42"
+    fill-opacity="0.24"
     filter={`url(#${blurId})`}
     transform="translate(0 14)"></path>
   <g class="garland-string" stroke-linecap="round" set:html={art.twine} />
