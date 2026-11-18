@@ -62,7 +62,7 @@
   right: calc(5% + var(--stand) * 0.4);
   bottom: 7.5%;
   color: #d4cdee;
-  opacity: 0.95;
+  opacity: 0.7;
   --base-rotate: -3deg;
 }
 
@@ -72,7 +72,7 @@
   right: 5%;
   bottom: 7%;
   color: #f4d3cc;
-  opacity: 0.95;
+  opacity: 0.7;
   --base-rotate: 6deg;
   animation-delay: -3s;
 }
@@ -83,7 +83,7 @@
   right: calc(5% + var(--stand) * 0.78);
   bottom: 6.5%;
   color: #e9efe2;
-  opacity: 0.92;
+  opacity: 0.68;
   --base-rotate: -5deg;
   animation-delay: -6s;
 }
@@ -235,6 +235,10 @@
   right: 0;
   z-index: 3;
   pointer-events: none;
+  /* Held back so the photo stays the subject: the garland reads as a soft
+     wash over the trees, not a solid band across them. */
+  opacity: 0.7;
+  filter: saturate(0.85);
 }
 
 .garland-svg {
