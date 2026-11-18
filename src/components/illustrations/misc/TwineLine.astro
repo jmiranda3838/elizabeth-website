@@ -1,0 +1,192 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  /** "pair": a long line carrying two pegs (at 25% and 75%); "single": a short line for one peg (at 50%) */
+  variant?: "pair" | "single";
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", variant = "pair", ...rest } = Astro.props;
+
+// Each variant: the line itself (tied off at both ends, sagging where a peg loads it),
+// the turns of twine round each end pin, the loose tails with their frayed tips, and a
+// few stray fibres standing off the ply.
+const shapes = {
+  pair: {
+    viewBox: "0 0 820 72",
+    line: "M14 12 C70 25 138 36 205 40 C330 50 492 51 615 41 C684 37 750 25 806 12",
+    knots: [
+      "M8.4 13.6 C7.6 9 11 5.6 15.2 6 C19.6 6.4 21.8 10.4 20 14.2 C18.4 17.6 13.6 18.4 10.6 16.2",
+      "M811.4 14 C812.6 9.4 809.4 5.8 805.2 6 C800.8 6.2 798.4 10.2 800 14 C801.6 17.6 806.4 18.6 809.4 16.4",
+    ],
+    tails: [
+      "M11.6 16.6 C8.6 24 13 31 9.4 40 C8.6 42 8.4 43.6 8.6 45",
+      "M808.6 17 C811.4 23 807.4 28 809.6 34.6",
+    ],
+    frays: [
+      "M8.6 45 C7.4 47.6 6 49.4 4.4 50.6 M8.6 45 C8.8 48 8.6 50.4 7.8 52.6 M8.6 45 C10 47.4 11.4 49 13 50",
+      "M809.6 34.6 C808.6 37 807.2 38.8 805.6 39.8 M809.6 34.6 C810 37.4 810 39.6 809.4 41.6 M809.6 34.6 C811.2 36.6 812.8 38 814.4 38.6",
+    ],
+    hairs:
+      "M58 22.2 l2.6 -3.4 M96 29.4 l-2.8 2.6 M151 36.2 l3 -2.6 M262 44.4 l-2.2 3.2 M301 46.4 l2.8 -2.6 M388 48 l1 3.4 M457 47.8 l-3 -2.4 M534 45.6 l2.6 2.8 M588 42.8 l-2.4 -3 M668 37.4 l3 2 M722 30.6 l-1.6 -3.4 M771 21.6 l3.2 1.2",
+  },
+  single: {
+    viewBox: "0 0 340 72",
+    line: "M13 12 C62 24 118 35 170 38 C224 35 280 23 327 12",
+    knots: [
+      "M7.4 13.6 C6.6 9 10 5.6 14.2 6 C18.6 6.4 20.8 10.4 19 14.2 C17.4 17.6 12.6 18.4 9.6 16.2",
+      "M332.4 14 C333.6 9.4 330.4 5.8 326.2 6 C321.8 6.2 319.4 10.2 321 14 C322.6 17.6 327.4 18.6 330.4 16.4",
+    ],
+    tails: [
+      "M10.6 16.6 C8.2 22 11.4 27 9.2 33.6",
+      "M329.6 17 C332.6 24 328.2 31 331.4 39.6 C332 41.4 332.2 42.8 332 44",
+    ],
+    frays: [
+      "M9.2 33.6 C8 36 6.6 37.8 5 38.8 M9.2 33.6 C9.4 36.4 9.2 38.6 8.6 40.6 M9.2 33.6 C10.6 35.6 12.2 37 13.8 37.6",
+      "M332 44 C330.8 46.6 329.4 48.4 327.8 49.6 M332 44 C332.4 47 332.2 49.4 331.4 51.6 M332 44 C333.6 46.4 335 48 336.6 49",
+    ],
+    hairs:
+      "M44 19.6 l2.6 -3.4 M88 29 l-2.8 2.6 M131 35.2 l1.2 3.2 M214 35.4 l-2.6 -3 M252 29.6 l3 2 M296 20.4 l-1.6 -3.4",
+  },
+};
+const s = shapes[variant] ?? shapes.pair;
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox={s.viewBox}
+  preserveAspectRatio="none"
+  fill="none"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A length of jute twine, tied off round a pin at each end and pulled into a
+       shallow sag by what hangs from it. The svg stretches sideways to fit its box
+       (preserveAspectRatio none), so every stroke is non-scaling: the ply keeps its
+       thickness and twist at any width. Layers, back to front: cast shadow, the ply,
+       its shaded underside, the twist (three rows of ticks, each a step along from
+       the last, so they read as a slant), and a thin highlight along the top. No ids, so several
+       instances (even hidden ones) cannot collide. -->
+
+  <!-- stray fibres, behind the ply -->
+  <path
+    d={s.hairs}
+    stroke="#b08e6c"
+    stroke-width="0.7"
+    stroke-opacity="0.8"
+    vector-effect="non-scaling-stroke"></path>
+
+  <!-- loose tails with frayed tips -->
+  {
+    s.tails.map((d) => (
+      <>
+        <path
+          d={d}
+          stroke="#60665a"
+          stroke-opacity="0.14"
+          stroke-width="3"
+          transform="translate(1.6 2)"
+          vector-effect="non-scaling-stroke"
+        />
+        <path d={d} stroke="#c7a98b" stroke-width="2.6" vector-effect="non-scaling-stroke" />
+        <path
+          d={d}
+          stroke="#8a6646"
+          stroke-opacity="0.55"
+          stroke-width="2.6"
+          stroke-dasharray="0.8 2.9"
+          stroke-linecap="butt"
+          vector-effect="non-scaling-stroke"
+        />
+      </>
+    ))
+  }
+  {
+    s.frays.map((d) => (
+      <path d={d} stroke="#b08e6c" stroke-width="0.9" vector-effect="non-scaling-stroke" />
+    ))
+  }
+
+  <!-- the line -->
+  <path
+    d={s.line}
+    stroke="#60665a"
+    stroke-opacity="0.13"
+    stroke-width="4.1"
+    transform="translate(1.5 3.4)"
+    vector-effect="non-scaling-stroke"></path>
+  <path d={s.line} stroke="#c7a98b" stroke-width="3.9" vector-effect="non-scaling-stroke"></path>
+  <path
+    d={s.line}
+    stroke="#9c7a58"
+    stroke-opacity="0.6"
+    stroke-width="1.5"
+    transform="translate(0 1.25)"
+    vector-effect="non-scaling-stroke"></path>
+  {
+    [
+      [-1.3, 0],
+      [0, -0.8],
+      [1.3, -1.6],
+    ].map(([dy, off]) => (
+      <path
+        d={s.line}
+        stroke="#7d5c3e"
+        stroke-opacity="0.46"
+        stroke-width="1.35"
+        stroke-dasharray="1 3.2"
+        stroke-dashoffset={off}
+        stroke-linecap="butt"
+        transform={`translate(0 ${dy})`}
+        vector-effect="non-scaling-stroke"
+      />
+    ))
+  }
+  <path
+    d={s.line}
+    stroke="#f6e9d6"
+    stroke-opacity="0.55"
+    stroke-width="0.7"
+    transform="translate(0 -1.4)"
+    vector-effect="non-scaling-stroke"></path>
+
+  <!-- the turns round each end pin (the pin head itself is drawn by the page) -->
+  {
+    s.knots.map((d) => (
+      <>
+        <path
+          d={d}
+          stroke="#60665a"
+          stroke-opacity="0.16"
+          stroke-width="3.4"
+          transform="translate(1.2 2)"
+          vector-effect="non-scaling-stroke"
+        />
+        <path d={d} stroke="#c7a98b" stroke-width="3.2" vector-effect="non-scaling-stroke" />
+        <path
+          d={d}
+          stroke="#7d5c3e"
+          stroke-opacity="0.55"
+          stroke-width="3.2"
+          stroke-dasharray="0.8 2.6"
+          stroke-linecap="butt"
+          vector-effect="non-scaling-stroke"
+        />
+        <path
+          d={d}
+          stroke="#f3e4cf"
+          stroke-opacity="0.7"
+          stroke-width="0.7"
+          stroke-dasharray="2 2.2"
+          stroke-linecap="butt"
+          transform="translate(-0.5 -0.8)"
+          vector-effect="non-scaling-stroke"
+        />
+      </>
+    ))
+  }
+</svg>

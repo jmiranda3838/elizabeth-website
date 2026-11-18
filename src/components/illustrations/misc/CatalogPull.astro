@@ -2,48 +2,132 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
-  viewBox="0 0 120 60"
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 100 48"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- label frame -->
-  <rect
-    x="10"
-    y="6"
-    width="100"
-    height="30"
-    rx="3"
-    stroke="currentColor"
-    stroke-width="1.5"
-    fill="none"></rect>
-  <rect
-    x="16"
-    y="11"
-    width="88"
-    height="20"
-    rx="1.5"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="currentColor"
-    fill-opacity="0.08"></rect>
-  <!-- frame screws -->
-  <circle cx="13.5" cy="21" r="1.4" fill="currentColor"></circle>
-  <circle cx="106.5" cy="21" r="1.4" fill="currentColor"></circle>
-  <!-- bow handle below -->
-  <path d="M42 42 L78 42" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+  <!-- A card-catalog bin pull: a domed brass cup under a screwed flange, lit from the
+       upper right. It themes through CSS `color` (the brass); the polish, the shade under
+       the dome and its shadow on the drawer are white and ink laid over it at low opacity.
+       No gradients or ids, so the three on the Resources cabinet cannot collide. The
+       label holder above it is CSS on the page, because it has to stretch round its label. -->
+
+  <!-- Shadow on the wood, down and to the left -->
+  <path d="M10 17 C10 37 28 47.6 47 47.6 C67 47.6 82 39 84 20 Z" fill="#3c2c1e" fill-opacity="0.2"
+  ></path>
   <path
-    d="M44 42 Q60 56 76 42"
-    stroke="currentColor"
-    stroke-width="2.5"
-    fill="none"
+    d="M2 8.6 C2 6 3.6 4.6 6 4.6 H92 V17.4 H6 C3.6 17.4 2 16 2 13.6 Z"
+    fill="#3c2c1e"
+    fill-opacity="0.16"></path>
+
+  <!-- Flange -->
+  <path
+    d="M8 2.6 H92 C95 2.6 97 4.6 97 7.4 V10.2 C97 13 95 15 92 15 H8 C5 15 3 13 3 10.2 V7.4 C3 4.6 5 2.6 8 2.6 Z"
+    fill="currentColor"></path>
+  <path
+    d="M8 2.6 H92 C95 2.6 97 4.6 97 7.4 V8 C97 5.6 95 4 92 4 H8 C5 4 3 5.6 3 8 V7.4 C3 4.6 5 2.6 8 2.6 Z"
+    fill="#ffffff"
+    fill-opacity="0.55"></path>
+  <path
+    d="M3 10.2 C3 13 5 15 8 15 H92 C95 15 97 13 97 10.2 V9 C97 11.8 95 13.4 92 13.4 H8 C5 13.4 3 11.8 3 9 Z"
+    fill="#3c2c1e"
+    fill-opacity="0.28"></path>
+  <path d="M3 7.4 C3 4.6 5 2.6 8 2.6 H30 C22 4.6 12 8 3 12 Z" fill="#3c2c1e" fill-opacity="0.1"
+  ></path>
+
+  <!-- The cup -->
+  <path d="M15 12.4 H85 C85 31 70.4 42.6 50 42.6 C29.6 42.6 15 31 15 12.4 Z" fill="currentColor"
+  ></path>
+  <!-- its underside turns away from the light -->
+  <path
+    d="M15 12.4 C15 31 29.6 42.6 50 42.6 C70.4 42.6 85 31 85 12.4 C83.6 27 69 35.6 50 35.6 C31 35.6 16.4 27 15 12.4 Z"
+    fill="#3c2c1e"
+    fill-opacity="0.3"></path>
+  <path
+    d="M15 12.4 C15 31 29.6 42.6 50 42.6 C38 39 27.6 29 25.6 12.4 Z"
+    fill="#3c2c1e"
+    fill-opacity="0.16"></path>
+  <!-- polish across the shoulder, and one bright glint -->
+  <path
+    d="M36 14.6 C50 13.4 68 13.8 81 15.4 C79.4 22.6 73 27.6 64 29 C52 29 41 23.6 36 14.6 Z"
+    fill="#ffffff"
+    fill-opacity="0.3"></path>
+  <path
+    d="M52 16.2 C60 15.6 70 16 77.4 17.2 C76 20.6 73 23 69 24.2 C62 23.6 56 20.6 52 16.2 Z"
+    fill="#ffffff"
+    fill-opacity="0.32"></path>
+  <path
+    d="M61 17.6 C66 17.4 70.6 17.8 74.4 18.6"
+    stroke="#ffffff"
+    stroke-opacity="0.9"
+    stroke-width="1.3"
     stroke-linecap="round"></path>
-  <circle cx="42" cy="42" r="2.2" fill="currentColor"></circle>
-  <circle cx="78" cy="42" r="2.2" fill="currentColor"></circle>
+  <!-- the rolled lip -->
+  <path
+    d="M19.6 26 C24.6 36 36 41 50 41 C64 41 75.4 36 80.4 26"
+    stroke="#ffffff"
+    stroke-opacity="0.4"
+    stroke-width="0.9"
+    stroke-linecap="round"></path>
+  <path
+    d="M15 12.4 C15 31 29.6 42.6 50 42.6 C70.4 42.6 85 31 85 12.4"
+    stroke="#3c2c1e"
+    stroke-opacity="0.45"
+    stroke-width="0.7"></path>
+  <!-- the flange shades the top of the cup -->
+  <path
+    d="M15 12.4 H85 C85 13.6 84.9 14.8 84.7 16 C62 17.6 38 17.6 15.3 16 C15.1 14.8 15 13.6 15 12.4 Z"
+    fill="#3c2c1e"
+    fill-opacity="0.22"></path>
+  <path
+    d="M8 2.6 H92 C95 2.6 97 4.6 97 7.4 V10.2 C97 13 95 15 92 15 H8 C5 15 3 13 3 10.2 V7.4 C3 4.6 5 2.6 8 2.6 Z"
+    stroke="#3c2c1e"
+    stroke-opacity="0.4"
+    stroke-width="0.6"></path>
+
+  <!-- Slotted screws -->
+  <g>
+    <circle cx="9.6" cy="8.8" r="3" fill="currentColor"></circle>
+    <circle cx="9.6" cy="8.8" r="3" fill="#3c2c1e" fill-opacity="0.16"></circle>
+    <circle cx="9.6" cy="8.8" r="3" stroke="#3c2c1e" stroke-opacity="0.5" stroke-width="0.6"
+    ></circle>
+    <path
+      d="M7.6 10.2 L11.6 7.4"
+      stroke="#3c2c1e"
+      stroke-opacity="0.65"
+      stroke-width="0.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M9.4 6.6 A2.4 2.4 0 0 1 11.9 8.4"
+      stroke="#ffffff"
+      stroke-opacity="0.75"
+      stroke-width="0.6"
+      stroke-linecap="round"></path>
+    <circle cx="90.4" cy="8.8" r="3" fill="currentColor"></circle>
+    <circle cx="90.4" cy="8.8" r="3" fill="#3c2c1e" fill-opacity="0.1"></circle>
+    <circle cx="90.4" cy="8.8" r="3" stroke="#3c2c1e" stroke-opacity="0.5" stroke-width="0.6"
+    ></circle>
+    <path
+      d="M88.8 7.2 L92 10.4"
+      stroke="#3c2c1e"
+      stroke-opacity="0.65"
+      stroke-width="0.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M90.2 6.6 A2.4 2.4 0 0 1 92.7 8.4"
+      stroke="#ffffff"
+      stroke-opacity="0.8"
+      stroke-width="0.6"
+      stroke-linecap="round"></path>
+  </g>
 </svg>

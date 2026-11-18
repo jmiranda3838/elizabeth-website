@@ -5,10 +5,11 @@
   margin: var(--space-4) 0 var(--space-6);
 }
 
+/* The sprig is a leaf, so it takes a deep sage; --dusty-peach washed out on paper */
 .decorative-divider svg {
-  width: 200px;
-  height: 20px;
-  color: var(--dusty-peach);
+  width: 240px;
+  height: 24px;
+  color: color-mix(in srgb, var(--sage) 50%, var(--espresso));
 }
 
 /* === Sections: CTA Band === */

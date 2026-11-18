@@ -35,71 +35,50 @@
   z-index: 1;
 }
 
-/* Botanical line art elements - now white */
+/* A stand of three plants in pale ink at the lower right: lavender, a poppy and
+   poppy seed heads, rooted where the photo fades to paper so their stems rise
+   out of the mist. They balance the text block and stay clear of the face. */
 .botanical {
   position: absolute;
   pointer-events: none;
   z-index: 3;
-  color: rgba(255, 255, 255, 0.6);
-  animation:
-    scaleInOnly 0.8s ease-out both,
-    sway 7s ease-in-out infinite;
+  color: #fdf8ef;
+  filter: drop-shadow(0 1px 5px rgba(38, 30, 22, 0.45));
+  transform-origin: 50% 100%;
+  transform: rotate(var(--base-rotate, 0deg));
+  animation: sway 9s ease-in-out infinite;
+  /* the foot of each stem dissolves into the fade */
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 22%);
+  mask-image: linear-gradient(to top, transparent 0%, #000 22%);
 }
 
 .botanical-1 {
-  width: 120px;
-  height: 200px;
-  left: 22%;
-  top: 28%;
-  opacity: 0.55;
-  --base-rotate: -15deg;
-  transform: rotate(-15deg);
-  animation-delay: 0.4s, 0s;
+  width: 104px;
+  height: 208px;
+  right: 11.5%;
+  bottom: 7%;
+  opacity: 0.9;
+  --base-rotate: -3deg;
 }
 
 .botanical-2 {
-  width: 100px;
-  height: 180px;
-  right: 5%;
-  top: 22%;
-  opacity: 0.55;
-  --base-rotate: 10deg;
-  transform: rotate(10deg);
-  animation-delay: 0.5s, 0.8s;
+  width: 96px;
+  height: 160px;
+  right: 5.5%;
+  bottom: 7.5%;
+  opacity: 0.85;
+  --base-rotate: 5deg;
+  animation-delay: -3s;
 }
 
 .botanical-3 {
-  display: none;
-  width: 80px;
-  height: 160px;
-  left: 3%;
-  bottom: 14%;
-  opacity: 0.5;
-  --base-rotate: 20deg;
-  transform: rotate(20deg);
-  animation-delay: 0.6s, 1.5s;
-}
-
-.botanical-4 {
-  width: 140px;
-  height: 100px;
-  right: 4%;
-  bottom: 18%;
-  opacity: 0.5;
-  --base-rotate: -5deg;
-  transform: rotate(-5deg);
-  animation-delay: 0.7s, 2.2s;
-}
-
-.botanical-5 {
-  width: 90px;
-  height: 180px;
-  right: 18%;
-  top: 50%;
-  opacity: 0.5;
-  --base-rotate: -8deg;
-  transform: rotate(-8deg);
-  animation-delay: 0.8s, 3s;
+  width: 126px;
+  height: 90px;
+  right: 17%;
+  bottom: 8%;
+  opacity: 0.8;
+  --base-rotate: -4deg;
+  animation-delay: -6s;
 }
 
 /* Text content */
@@ -180,15 +159,19 @@
     font-size: 3.5rem;
   }
 
-  .botanical-1,
-  .botanical-2,
-  .botanical-4,
-  .botanical-5 {
-    opacity: 0.4;
+  .botanical-1 {
+    width: 84px;
+    height: 168px;
   }
 
-  .botanical {
-    transform: scale(0.8);
+  .botanical-2 {
+    width: 78px;
+    height: 130px;
+  }
+
+  .botanical-3 {
+    width: 104px;
+    height: 74px;
   }
 }
 
@@ -224,27 +207,8 @@
       0 0 12px rgba(0, 0, 0, 0.3);
   }
 
-  .botanical-1,
-  .botanical-2 {
-    top: 10%;
-    opacity: 0.3;
-  }
-
-  .botanical-1 {
-    left: 1%;
-  }
-
-  .botanical-3 {
-    display: block;
-  }
-
-  .botanical-3,
-  .botanical-4 {
-    bottom: 20%;
-    opacity: 0.25;
-  }
-
-  .botanical-5 {
+  /* The text is centred across the lower hero here, so the plants step aside */
+  .botanical {
     display: none;
   }
 }
@@ -262,136 +226,146 @@
   .hero-name {
     font-size: 0.8rem;
   }
-
-  .botanical-1,
-  .botanical-2,
-  .botanical-3,
-  .botanical-4 {
-    opacity: 0.2;
-    transform: scale(0.6);
-  }
 }
 
-/* === Sections: Garland === */
+/* === Sections: Garland ===
+   A festoon of foliage and garden roses hung just under the header (Garland.astro,
+   drawn by garlandArt.ts). It is tied up in the middle, above Elizabeth's head,
+   and sags to either side of her; the tone classes below colour its parts. */
 .hero-garland {
   position: absolute;
-  bottom: -50px;
+  top: calc(var(--header-h) - 12px);
   left: 0;
   right: 0;
-  height: 180px;
-  z-index: 6;
+  z-index: 3;
   pointer-events: none;
-  overflow: visible;
 }
 
 .garland-svg {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: visible;
 }
 
-.garland-string {
-  stroke: rgba(255, 255, 255, 0.35);
-  stroke-width: 1.5;
+.garland-narrow {
+  display: none;
+}
+
+/* Leaves: six tones, darkest at the back */
+.garland-svg [class^="garland-leaf"] {
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+}
+.garland-leaf-deep {
+  fill: #5f6f5c;
+  stroke: rgba(46, 58, 46, 0.45);
+}
+.garland-leaf-mid {
+  fill: #8fa28b;
+  stroke: rgba(66, 84, 70, 0.6);
+}
+.garland-leaf-warm {
+  fill: #adae96;
+  stroke: rgba(94, 98, 76, 0.6);
+}
+.garland-leaf-soft {
+  fill: #aabda6;
+  stroke: rgba(70, 88, 74, 0.6);
+}
+.garland-leaf-pale {
+  fill: #cad6c3;
+  stroke: rgba(82, 101, 86, 0.55);
+}
+.garland-leaf-frost {
+  fill: #e2e9da;
+  stroke: rgba(96, 116, 98, 0.55);
+}
+/* The lit upper half of the front leaves */
+.garland-lit {
+  fill: #fff;
+  fill-opacity: 0.32;
+}
+/* Stems and midribs */
+.garland-svg [class^="garland-vein"] {
   fill: none;
   stroke-linecap: round;
+  stroke-width: 0.9;
+}
+.garland-vein-deep {
+  stroke: #4c5f52;
+}
+.garland-vein {
+  stroke: rgba(72, 90, 80, 0.75);
+}
+.garland-vein-pale {
+  stroke: rgba(104, 126, 110, 0.8);
+}
+/* Lavender florets */
+.garland-floret {
+  fill: #c5c0df;
+  stroke: rgba(127, 122, 166, 0.45);
+  stroke-width: 0.4;
+}
+.garland-floret-deep {
+  fill: #9f9ac4;
+  stroke: rgba(127, 122, 166, 0.5);
+  stroke-width: 0.4;
 }
 
+/* The hanging pieces swing from where they are tied */
 .hanging-bunch {
-  color: rgba(255, 255, 255, 0.55);
-  animation:
-    slideIn 0.7s ease-out both,
-    garlandSway 4s ease-in-out infinite;
+  transform-origin: 0 0;
+  animation: garlandSwing 7s ease-in-out infinite;
 }
-
-.hanging-bunch .ribbon {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Vary opacity and animation timing for depth */
-/* garlandSway delay = slideIn delay + 0.7s (slideIn duration) to prevent override */
 .bunch-1 {
-  opacity: 0.65;
-  animation-delay: 0.5s, 1.2s;
+  animation-duration: 8s;
+  animation-delay: -2s;
 }
 .bunch-2 {
-  opacity: 0.7;
-  animation-delay: 0.6s, 1.3s;
+  animation-duration: 6s;
+  animation-delay: -1s;
 }
 .bunch-3 {
-  opacity: 0.55;
-  animation-delay: 0.7s, 1.4s;
+  animation: none;
 }
 .bunch-4 {
-  opacity: 0.75;
-  animation-delay: 0.8s, 1.5s;
+  animation-duration: 6.5s;
+  animation-delay: -3.5s;
 }
 .bunch-5 {
-  opacity: 0.6;
-  animation-delay: 0.9s, 1.6s;
+  animation-duration: 7.5s;
+  animation-delay: -5s;
 }
 .bunch-6 {
-  opacity: 0.65;
-  animation-delay: 1s, 1.7s;
-}
-.bunch-7 {
-  opacity: 0.6;
-  animation-delay: 1.1s, 1.8s;
+  animation-duration: 9s;
+  animation-delay: -4s;
 }
 
-/* Responsive adjustments for garland */
-@media (max-width: 1024px) {
-  .hero-garland {
-    height: 150px;
-    bottom: -40px;
+@keyframes garlandSwing {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
   }
-
-  .bunch-3,
-  .bunch-5 {
-    opacity: 0.35;
+  50% {
+    transform: rotate(1.6deg);
   }
 }
 
+/* The narrower drawing takes over where the hero text centres, so its long side
+   tails never hang beside left-aligned text */
 @media (max-width: 768px) {
-  .hero-garland {
-    height: 120px;
-    bottom: -30px;
-  }
-
-  .garland-string {
-    stroke-width: 1.2;
-  }
-
-  .bunch-1,
-  .bunch-3,
-  .bunch-5,
-  .bunch-7 {
+  .garland-wide {
     display: none;
   }
 
-  .bunch-2,
-  .bunch-4,
-  .bunch-6 {
-    opacity: 0.6;
+  .garland-narrow {
+    display: block;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-garland {
-    height: 100px;
-    bottom: -25px;
-  }
-
-  .bunch-2,
-  .bunch-6 {
-    display: none;
-  }
-
-  .bunch-4 {
-    opacity: 0.5;
-  }
-
-  .garland-string {
-    opacity: 0.5;
+@media (prefers-reduced-motion: reduce) {
+  .hanging-bunch {
+    animation: none;
   }
 }

@@ -1,0 +1,196 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 440 170"
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A postcard of the Sedona retreat for the Reiki page's teaser card: the retreat
+       page's red-rock horizon (far mesas, a cathedral of spires, a bell-shaped dome,
+       near rock at both edges, a cairn and the dotted trail) redrawn small in the Reiki
+       page's dawn colours. The desert floor at the bottom is the card's own cream, so
+       the scene opens into the card instead of ending at a line. -->
+  <defs>
+    <linearGradient id="sv-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6e1c1"></stop>
+      <stop offset="0.45" stop-color="#f6d0a4"></stop>
+      <stop offset="0.72" stop-color="#f9ddb2"></stop>
+      <stop offset="1" stop-color="#fbe6c4"></stop>
+    </linearGradient>
+    <radialGradient id="sv-glow" gradientUnits="userSpaceOnUse" cx="224" cy="106" r="96">
+      <stop offset="0" stop-color="#fffaf0" stop-opacity="0.98"></stop>
+      <stop offset="0.2" stop-color="#fff0cd" stop-opacity="0.82"></stop>
+      <stop offset="0.52" stop-color="#fbdcae" stop-opacity="0.4"></stop>
+      <stop offset="1" stop-color="#f6cfa0" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="sv-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6e6d2"></stop>
+      <stop offset="1" stop-color="#fffdf7"></stop>
+    </linearGradient>
+    <path
+      id="sv-far"
+      d="M0 184V108C10 107 18 106 24 103L29 98C31 96 33 95 36 95L84 94C87 94 89 95 91 98L95 104C106 106 118 106 128 105L133 100C135 98 137 97 140 97L176 96.5C179 96.5 181 98 183 100L187 105C204 107 222 107 240 106C262 105 282 106 300 104L305 98C307 96 309 95 312 95L372 94C375 94 377 96 379 98L383 104C398 106 420 107 440 106V184Z"
+    ></path>
+    <path
+      id="sv-spires"
+      d="M0 184V131C40 130 90 130 150 128C180 127 204 126 224 124C244 122 258 119 268 113C276 108 280 100 284 90L288 78C289 73 290 69 291 66L293 60L295.5 66L298 75C299.5 80 301 82 303 80L307 68C309 61 311 55 312.5 51L315 45L317.5 51L320 61C321.5 66 323 68 325 65L329 55L332 49L335 55L337 62C339 68 341 72 344 71L348 66L350.5 61L353 67L356 78C360 90 366 99 375 106C388 115 406 120 440 122V184Z"
+    ></path>
+    <path
+      id="sv-bell"
+      d="M0 184V141C20 140 44 139 60 137C72 135 80 131 87 125C91 121 93 118 95 114C97 111 100 109 103 106C106 102 108 99 110 95C112 92 115 90 119 89L122 86C123 85 124.5 85 125.5 86L127.5 89C132 90 135 93 137 96C139 99 141 102 144 106C147 109 150 111 152 114C154 118 156 121 160 125C167 131 176 135 190 138C210 141 240 142 270 141C300 140 330 140 350 138C362 136 368 132 372 128L376 123C378 121 380 120 384 120L424 119.5C428 119.5 430 121 432 123L436 128C438 130 439 131 440 131V184Z"
+    ></path>
+    <path
+      id="sv-near"
+      d="M0 184V123C8 121 15 120 21 122L28 119C33 117 38 117 42 119C49 123 55 128 60 134C68 143 80 149 96 153C124 159 164 161 204 161C250 162 300 162 340 161C372 160 398 157 412 151C420 147 425 141 429 135L433 129C435 126 438 125 440 125V184Z"
+    ></path>
+    <clipPath id="sv-clip-spires"><use href="#sv-spires"></use></clipPath>
+    <clipPath id="sv-clip-bell"><use href="#sv-bell"></use></clipPath>
+    <clipPath id="sv-clip-near"><use href="#sv-near"></use></clipPath>
+  </defs>
+
+  <rect width="440" height="170" fill="url(#sv-sky)"></rect>
+
+  <!-- Low sun in the gap between the far mesas, with a few long rays -->
+  <circle cx="224" cy="106" r="96" fill="url(#sv-glow)"></circle>
+  <path
+    d="M224 92L225 40L223 40ZM214 94L190 52L188.4 53ZM234 94L258 52L259.6 53ZM206 99L160 76L159.2 77.6ZM242 99L288 76L288.8 77.6Z"
+    fill="#fff6de"
+    fill-opacity="0.36"></path>
+  <circle cx="224" cy="106" r="10.5" fill="#fffaf0"></circle>
+  <circle cx="224" cy="106" r="10.5" stroke="#f6d39b" stroke-opacity="0.8" stroke-width="0.7"
+  ></circle>
+
+  <!-- Two birds, high and far off -->
+  <path
+    d="M118 44q4 -3.6 7 0q3.4 -3.2 7 -0.6M138 54q3 -2.6 5.2 0q2.6 -2.4 5.2 -0.4"
+    stroke="#a9787a"
+    stroke-opacity="0.6"
+    stroke-width="0.9"
+    stroke-linecap="round"></path>
+
+  <!-- 1. Far mesas: long flat tops, hazed -->
+  <use href="#sv-far" fill="#e6bd9c"></use>
+  <path
+    d="M40 100C56 99.4 70 99.4 84 100M314 100C332 99.4 352 99.4 370 100M144 102C154 101.4 166 101.4 176 102"
+    stroke="#d7a482"
+    stroke-width="0.8"
+    stroke-linecap="round"
+    stroke-dasharray="14 3 7 4"></path>
+
+  <!-- 2. A cathedral of spires -->
+  <use href="#sv-spires" fill="#d39d84"></use>
+  <g
+    clip-path="url(#sv-clip-spires)"
+    stroke="#bd826e"
+    stroke-width="0.85"
+    stroke-linecap="round"
+    stroke-opacity="0.8"
+  >
+    <path d="M286 82C300 81 330 81 352 83" stroke-dasharray="9 3 14 4"></path>
+    <path d="M280 96C300 94.6 338 94.8 364 98" stroke-dasharray="16 3 8 4"></path>
+    <path d="M270 110C300 108 350 108.6 384 114" stroke-dasharray="24 4 12 3"></path>
+    <path d="M150 131C200 128.6 240 127 262 122" stroke-dasharray="30 5 12 4"></path>
+  </g>
+  <use href="#sv-spires" stroke="#bd826e" stroke-opacity="0.55" stroke-width="0.8"></use>
+
+  <!-- 3. The bell-shaped dome, and a low mesa on the right -->
+  <use href="#sv-bell" fill="#c08672"></use>
+  <g
+    clip-path="url(#sv-clip-bell)"
+    stroke="#a36a62"
+    stroke-width="0.9"
+    stroke-linecap="round"
+    stroke-opacity="0.75"
+  >
+    <path d="M112 94C118 92.6 130 92.6 136 94" stroke-dasharray="7 2"></path>
+    <path d="M104 104C114 102 134 102 144 104"></path>
+    <path d="M96 114C110 111.6 138 111.6 152 114" stroke-dasharray="18 3 12 3"></path>
+    <path d="M86 125C106 122 142 122 162 125"></path>
+    <path d="M70 136C100 132.6 150 132.6 182 137" stroke-dasharray="34 4 16 5"></path>
+    <path d="M378 127C394 126 414 126 430 127.6" stroke-dasharray="14 3 20 4"></path>
+  </g>
+  <use href="#sv-bell" stroke="#a36a62" stroke-opacity="0.5" stroke-width="0.8"></use>
+
+  <!-- 4. Near rock at both edges, in the plum of the page's first light -->
+  <use href="#sv-near" fill="#9c6a70"></use>
+  <g
+    clip-path="url(#sv-clip-near)"
+    stroke="#7d5262"
+    stroke-width="1"
+    stroke-linecap="round"
+    stroke-opacity="0.75"
+  >
+    <path d="M0 131C14 129.6 30 129.4 44 131" stroke-dasharray="14 3 8 4"></path>
+    <path d="M0 141C20 139.4 40 139.6 58 143"></path>
+    <path d="M0 152C28 150 58 151 84 156" stroke-dasharray="26 4 12 3"></path>
+    <path d="M414 144C424 142.4 432 142 440 142.4" stroke-dasharray="10 3"></path>
+    <path d="M396 156C412 153.6 428 153 440 153.4"></path>
+  </g>
+  <use href="#sv-near" stroke="#7d5262" stroke-opacity="0.5" stroke-width="0.9"></use>
+
+  <!-- A juniper on the left ledge: twisted trunk, cloud-clumped crown -->
+  <g fill="#6f7f76">
+    <path
+      d="M30.4 119.6C30.8 115.6 29.2 113.2 30.2 109.8C31 107.4 33 106.2 32.6 103.4L34 103.6C34.6 106.6 32.6 108 32 110.4C31.2 113.4 32.4 116 32 119.4Z"
+      fill="#5b5560"></path>
+    <path
+      d="M19.6 106.4C17.6 104 19.4 100.8 22.6 101.4C23.2 98.2 27.6 97.4 29 100C30.8 97.2 35.4 98 35.6 101.2C38.8 100 41.8 102 40.6 105C43 106.4 41.8 110 38.6 109.4C36.6 112 32.4 111.4 31.2 109.4C28.6 111.4 24.2 110.8 23.6 108.2C20.4 109.4 17.8 108.2 19.6 106.4Z"
+    ></path>
+    <path
+      d="M33.4 99.4C32.8 96.2 36 94.2 38.6 95.6C40.4 93 45 94.2 44.4 97.4C47 98 47 101.8 43.8 101.8C42.6 103.8 38.8 103.2 38 101.2C35.6 102.4 33 101.2 33.4 99.4Z"
+      fill-opacity="0.88"></path>
+  </g>
+
+  <!-- 5. Desert floor, the card's own cream -->
+  <path
+    d="M0 174V159C30 156 70 154 110 155C160 157 200 161 240 161C290 161 330 155 380 155C405 155 425 157 440 157V174H0Z"
+    fill="url(#sv-floor)"></path>
+
+  <!-- The dotted trail, a cairn beside it, and an agave -->
+  <path
+    d="M196 170C204 166 222 165 236 162.6C250 160 258 156.6 252 153.4C246 150.6 230 150 222 147"
+    stroke="#a8736a"
+    stroke-opacity="0.8"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-dasharray="0.1 4.6"></path>
+  <g
+    transform="translate(274 163.4) scale(1.32) translate(-274 -163.4)"
+    stroke="#7d5262"
+    stroke-width="0.6"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M264.6 161.4C264.2 158.6 267.6 157 274 157C280.4 157 283.8 158.4 283.4 161C283 163 279 163.8 274 163.8C268.4 163.8 265 163.2 264.6 161.4Z"
+      fill="#b9806f"></path>
+    <path
+      d="M267 156C266.8 153.6 269.8 152.2 274 152.2C278.6 152.2 281.4 153.4 281 155.8C280.6 157.2 277.8 157.8 274 157.8C270 157.8 267.2 157.4 267 156Z"
+      fill="#c9917c"></path>
+    <path
+      d="M269.2 151.2C269.2 149.2 271.4 147.8 274.4 147.8C277.6 147.8 279.4 149.2 279 151C278.6 152.4 276.6 152.8 274 152.8C271.2 152.8 269.4 152.4 269.2 151.2Z"
+      fill="#b9806f"></path>
+    <path
+      d="M271.4 147C271.4 145.2 272.8 144 274.6 144C276.4 144 277.6 145.2 277.2 146.8C276.8 148 275.8 148.4 274.4 148.4C272.8 148.4 271.4 148 271.4 147Z"
+      fill="#d4a088"></path>
+  </g>
+  <path
+    d="M392 159C389 154 384 150.4 377.6 149C383 151.4 386.6 155 388.6 159ZM393.6 159C392.6 152.6 389.6 147.4 385 143.4C388.6 148.2 390.6 153.4 391 159ZM395.6 159C396 152 397.2 146.2 399 140.6C396.4 146.4 394.8 152.4 394.2 159ZM397.6 159C400 153.4 404.2 149 409.6 146C405.2 149.8 401.8 154 400 159ZM399.4 159.4C403.4 156 408.8 154.2 415 154.2C409.6 155.2 405 157 401.6 159.6ZM390.6 159.4C386.4 157.2 381.2 156.4 375.6 157.2C380.6 157.4 385 158.4 388.6 160Z"
+    fill="#74857b"></path>
+  <path
+    d="M150 160.6l-1.6 -4.4M152 160.6l0.2 -5.6M154 160.6l2 -4M330 158.4l-1.4 -4M332 158.4l0.4 -5M334 158.4l1.8 -3.6M62 158l-1.4 -3.8M64 158l0.4 -4.8M66 158l1.6 -3.4"
+    stroke="#8b9a8f"
+    stroke-width="0.8"
+    stroke-linecap="round"></path>
+</svg>

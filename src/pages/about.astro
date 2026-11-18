@@ -11,7 +11,7 @@ import {
   IconHeart,
 } from "@illustrations/icons";
 import { HerbSprig, LavenderSprig, Wildflower, LeafBranch } from "@illustrations/botanicals";
-import { QuoteMark, Clothespin } from "@illustrations/misc";
+import { QuoteMark, Clothespin, TwineLine, WaxSeal } from "@illustrations/misc";
 import "@styles/pages/about.css";
 ---
 
@@ -124,39 +124,39 @@ import "@styles/pages/about.css";
           </div>
         </div>
 
-        <!-- Botanical sprigs -->
+        <!-- Pressed sprigs: rosemary taped down along the bottom, lavender tucked
+             behind the title card, a California poppy slipped behind the beach print.
+             The poppy is inked twice (leaf green, and the bloom's own colour through
+             a <use> copy); CSS masks decide which ink shows where. -->
         <div class="board-item bi-sprig-1" aria-hidden="true" style="--delay: 0.3s;">
-          <div class="board-item-inner" style="--tilt: -15deg;">
-            <HerbSprig class="board-sprig" />
+          <div class="board-item-inner">
+            <span class="sprig-ink"><HerbSprig width="100%" /></span>
+            <span class="washi-tape washi-short washi-peach sprig-tape"></span>
           </div>
         </div>
         <div class="board-item bi-sprig-2" aria-hidden="true" style="--delay: 0.5s;">
-          <div class="board-item-inner" style="--tilt: 12deg;">
-            <LavenderSprig class="board-sprig" />
+          <div class="board-item-inner" style="--tilt: -9deg;">
+            <span class="sprig-ink"><LavenderSprig width="100%" /></span>
           </div>
         </div>
         <div class="board-item bi-sprig-3" aria-hidden="true" style="--delay: 0.7s;">
-          <div class="board-item-inner" style="--tilt: -8deg;">
-            <Wildflower class="board-sprig" />
+          <div class="board-item-inner">
+            <span class="sprig-duo">
+              <span class="sprig-ink sprig-ink-leaf"
+                ><Wildflower id="about-board-poppy" width="100%" /></span
+              >
+              <span class="sprig-ink sprig-ink-bloom">
+                <svg viewBox="0 0 120 200" width="100%" fill="none"
+                  ><use href="#about-board-poppy"></use></svg
+                >
+              </span>
+            </span>
           </div>
         </div>
 
-        <!-- Loose washi + a spare pin for texture -->
+        <!-- A spare pin for texture -->
         <div class="board-item bi-pin-spare" aria-hidden="true" style="--delay: 1.1s;">
           <span class="board-pin pin-sage"></span>
-        </div>
-        <div class="board-item bi-washi-1" aria-hidden="true" style="--delay: 0.9s;">
-          <div class="board-item-inner">
-            <span class="washi-tape" style="--tape-rot: -22deg; position: static; display: block;"
-            ></span>
-          </div>
-        </div>
-        <div class="board-item bi-washi-2" aria-hidden="true" style="--delay: 1s;">
-          <div class="board-item-inner">
-            <span
-              class="washi-tape washi-sage"
-              style="--tape-rot: 14deg; position: static; display: block;"></span>
-          </div>
         </div>
       </div>
     </div>
@@ -190,7 +190,7 @@ import "@styles/pages/about.css";
               someone through a season of change.
             </p>
             <div class="letter-quote">
-              <span class="washi-tape washi-top" aria-hidden="true"></span>
+              <span class="washi-tape washi-top washi-short" aria-hidden="true"></span>
               <p>
                 "I believe in the power of a good question. My work is to be a conversational
                 partner for you that shines light on solutions to problems through good questions."
@@ -201,7 +201,7 @@ import "@styles/pages/about.css";
 
         <div class="story-polaroid-wrap reveal-right">
           <figure class="polaroid story-polaroid" style="--tilt: 3deg;">
-            <span class="washi-tape washi-top" aria-hidden="true"></span>
+            <span class="washi-tape washi-top washi-long washi-peach" aria-hidden="true"></span>
             <img
               src={withBase("/images/about-story-bench.jpg")}
               alt="Elizabeth sitting on a park bench outdoors with a warm smile"
@@ -257,7 +257,7 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal stagger-1">
           <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: -2deg;">
             <span class="board-pin pin-sage" aria-hidden="true"></span>
-            <IconCollaborative aria-hidden="true" />
+            <span class="index-card-icon" aria-hidden="true"><IconCollaborative /></span>
             <h4>Collaborative</h4>
             <p>
               We're partners in this. I bring my training and a curious presence; you bring lived
@@ -268,7 +268,7 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal stagger-2">
           <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: 1.5deg;">
             <span class="board-pin pin-clay" aria-hidden="true"></span>
-            <IconSeedling aria-hidden="true" />
+            <span class="index-card-icon" aria-hidden="true"><IconSeedling /></span>
             <h4>Strengths-based</h4>
             <p>
               Let's harvest your strengths and capabilities. I start from what's already working in
@@ -279,7 +279,7 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal stagger-3">
           <div class="pinned-card-inner paper-card index-card-inner" style="--tilt: -1deg;">
             <span class="board-pin pin-rose" aria-hidden="true"></span>
-            <IconCompass aria-hidden="true" />
+            <span class="index-card-icon" aria-hidden="true"><IconCompass /></span>
             <h4>Curious</h4>
             <p>
               I ask, listen, and look at things from fresh angles with you — the questions matter
@@ -308,13 +308,15 @@ import "@styles/pages/about.css";
     </div>
   </section>
 
-  <!-- 4. Photo Band: golden quote -->
+  <!-- 4. Photo Band: golden quote. On phones the band (500px) is taller than the
+       photo's 3:2, so `cover` scales it to 750px wide: `sizes` says so, or a 3x
+       screen would be handed the 1600px file and upscale it. -->
   <section class="photo-band">
     <img
       class="photo-band-img"
       src={withBase("/images/about-band-eucalyptus.jpg")}
       srcset={`${withBase("/images/about-band-eucalyptus.jpg")} 1600w, ${withBase("/images/about-band-eucalyptus-2560.jpg")} 2560w`}
-      sizes="100vw"
+      sizes="(max-width: 600px) 750px, 100vw"
       alt=""
       width="2560"
       height="1706"
@@ -338,7 +340,10 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal-scale stagger-1">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: -1.5deg;">
             <span class="board-pin pin-sage" aria-hidden="true"></span>
-            <div class="cert-seal"><IconGraduation aria-hidden="true" /></div>
+            <div class="cert-seal" aria-hidden="true">
+              <WaxSeal variant={1} />
+              <span class="cert-seal-emblem"><IconGraduation /></span>
+            </div>
             <h4>MA, Clinical Psychology · BS, Family Service</h4>
             <p>MA: Pepperdine University, 2016 · BS: Eastern Illinois University, 2002</p>
           </div>
@@ -346,7 +351,10 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal-scale stagger-2">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
             <span class="board-pin pin-clay" aria-hidden="true"></span>
-            <div class="cert-seal"><IconLicense aria-hidden="true" /></div>
+            <div class="cert-seal" aria-hidden="true">
+              <WaxSeal variant={2} />
+              <span class="cert-seal-emblem"><IconLicense /></span>
+            </div>
             <h4>Licensed Marriage &amp; Family Therapist</h4>
             <p>
               CA License #111154, since 2019 · Clinical Supervisor at California Family Institute
@@ -356,7 +364,10 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal-scale stagger-3">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: 1deg;">
             <span class="board-pin pin-rose" aria-hidden="true"></span>
-            <div class="cert-seal"><IconTraining aria-hidden="true" /></div>
+            <div class="cert-seal" aria-hidden="true">
+              <WaxSeal variant={3} />
+              <span class="cert-seal-emblem"><IconTraining /></span>
+            </div>
             <h4>Specialty Certifications</h4>
             <p>
               AAMFT-certified in Substance Misuse and LGBTQIA Affirmative Therapy; Certified Pet
@@ -367,7 +378,10 @@ import "@styles/pages/about.css";
         <div class="pinned-card reveal-scale stagger-4">
           <div class="pinned-card-inner paper-card cert-card-inner" style="--tilt: -1deg;">
             <span class="board-pin pin-peach" aria-hidden="true"></span>
-            <div class="cert-seal"><IconHeart aria-hidden="true" /></div>
+            <div class="cert-seal" aria-hidden="true">
+              <WaxSeal variant={4} />
+              <span class="cert-seal-emblem"><IconHeart /></span>
+            </div>
             <h4>Reiki Master</h4>
             <p>Certified in Reiki since 2020, a Reiki Master since 2021</p>
           </div>
@@ -397,11 +411,22 @@ import "@styles/pages/about.css";
       </div>
 
       <div class="twine-wrap">
-        <div class="twine-line" aria-hidden="true"></div>
+        <div class="twine-line" aria-hidden="true">
+          <TwineLine variant="pair" />
+          <span class="board-pin pin-sage twine-pin"></span>
+          <span class="board-pin pin-rose twine-pin twine-pin-end"></span>
+        </div>
         <div class="twine-photos">
           <div class="hung-photo reveal stagger-1">
-            <figure class="polaroid" style="--tilt: -3deg; --sway-delay: 0s;">
-              <span class="clothespin" aria-hidden="true"><Clothespin /></span>
+            <span class="twine-seg" aria-hidden="true">
+              <TwineLine variant="single" />
+              <span class="board-pin pin-sage twine-pin"></span>
+              <span class="board-pin pin-rose twine-pin twine-pin-end"></span>
+            </span>
+            <figure class="polaroid" style="--tilt: 2.5deg; --sway-delay: 0s;">
+              <span class="clothespin" aria-hidden="true" style="--pin-tilt: -5deg;"
+                ><Clothespin variant={1} /></span
+              >
               <img
                 src={withBase("/images/about-dogs-greyhound.jpg")}
                 alt="Elizabeth at home on the rug with Leonard Sprinkles, Meatie, and Otis — her greyhound and two dachshunds"
@@ -414,8 +439,15 @@ import "@styles/pages/about.css";
             </figure>
           </div>
           <div class="hung-photo reveal stagger-2">
-            <figure class="polaroid photo-warmed" style="--tilt: 4deg; --sway-delay: 2.2s;">
-              <span class="clothespin" aria-hidden="true"><Clothespin /></span>
+            <span class="twine-seg" aria-hidden="true">
+              <TwineLine variant="single" />
+              <span class="board-pin pin-clay twine-pin"></span>
+              <span class="board-pin pin-peach twine-pin twine-pin-end"></span>
+            </span>
+            <figure class="polaroid photo-warmed" style="--tilt: -3deg; --sway-delay: 2.2s;">
+              <span class="clothespin" aria-hidden="true" style="--pin-tilt: 4deg;"
+                ><Clothespin variant={2} /></span
+              >
               <img
                 src={withBase("/images/about-dogs-couch.jpg")}
                 alt="Elizabeth laughing on the couch while hugging a dachshund"
@@ -448,8 +480,11 @@ import "@styles/pages/about.css";
             >Schedule Your Free Consultation</a
           >
           <span class="cta-signature">&mdash; Elizabeth</span>
+          <span class="cta-sprig" aria-hidden="true">
+            <span class="sprig-ink"><LeafBranch width="100%" /></span>
+            <span class="washi-tape washi-short sprig-tape"></span>
+          </span>
         </div>
-        <span class="cta-sprig" aria-hidden="true"><LeafBranch /></span>
       </div>
     </div>
   </section>

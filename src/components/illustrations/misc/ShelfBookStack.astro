@@ -1,0 +1,139 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* Two books lying flat at the end of the Resources shelf (the right bookend; the jar of
+   lavender stands on top). The drawing is 126 x 60 and the plank begins at y = 60.
+
+   The lower book shows us its spine, the upper one its fore-edge: boards above and below
+   a block of pages, with a ribbon marker hanging out. Light comes from the upper right. */
+
+// Page edges: fine broken lines, no two alike
+const pages = [11.2, 13.1, 14.7, 16.6, 18.2, 20.1, 21.9, 23.8, 25.4].map((y, i) => {
+  const dash = ["38 3 20 5", "12 4 46 3 18", "52 5 9 3", "26 3 30 4", "44 4 14 6"][i % 5];
+  return { y, dash, o: i % 2 ? 0.34 : 0.22 };
+});
+// Cloth weave on the spine: short horizontal threads
+const weave = Array.from({ length: 9 }, (_, i) => 35.5 + i * 2.5);
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 126 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="bookstack-spine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9aabad"></stop>
+      <stop offset="0.3" stop-color="#8799a0"></stop>
+      <stop offset="0.8" stop-color="#70848a"></stop>
+      <stop offset="1" stop-color="#5f7379"></stop>
+    </linearGradient>
+    <linearGradient id="bookstack-pages" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9cbb2"></stop>
+      <stop offset="0.22" stop-color="#f3ead8"></stop>
+      <stop offset="0.7" stop-color="#fbf5e8"></stop>
+      <stop offset="1" stop-color="#e9dec8"></stop>
+    </linearGradient>
+    <linearGradient id="bookstack-board" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b98480"></stop>
+      <stop offset="0.6" stop-color="#cf9f9b"></stop>
+      <stop offset="1" stop-color="#c08d89"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Lower book, spine toward us -->
+  <path
+    d="M5.4 32.4 C5.4 31 6.6 30.2 8 30.2 H118 C119.6 30.2 120.8 31 120.8 32.6 V57.4 C120.8 59 119.6 60 118 60 H8 C6.4 60 5.4 59 5.4 57.6 Z"
+    fill="url(#bookstack-spine)"></path>
+  <!-- the joints where spine meets boards -->
+  <path
+    d="M6.4 33.4 H119.8 M6.4 56.8 H119.8"
+    stroke="#4f6268"
+    stroke-opacity="0.45"
+    stroke-width="0.7"></path>
+  <path d="M7 31 H119" stroke="#c6d2d2" stroke-opacity="0.8" stroke-width="0.8"></path>
+  <g stroke="#f4f7f5" stroke-opacity="0.09" stroke-width="0.5">
+    {weave.map((y) => <path d={`M7 ${y} H119`} stroke-dasharray="5 1.4 9 1.2 3 1" />)}
+  </g>
+  <!-- gilt rules across the spine, and a title panel with a tooled leaf -->
+  <path
+    d="M17 34 V56.4 M19.4 34 V56.4 M104.6 34 V56.4 M107 34 V56.4 M30 34 V56.4 M94 34 V56.4"
+    stroke="#ecd9aa"
+    stroke-opacity="0.85"
+    stroke-width="0.7"></path>
+  <rect x="38" y="37.2" width="48" height="16" rx="1" fill="#566a70" fill-opacity="0.55"></rect>
+  <rect
+    x="39.2"
+    y="38.4"
+    width="45.6"
+    height="13.6"
+    rx="0.6"
+    stroke="#ecd9aa"
+    stroke-opacity="0.8"
+    stroke-width="0.5"></rect>
+  <path
+    d="M47 45.4 H77 M62 45.4 C59.6 42.4 56 42 53.6 43.6 C56.2 45.8 59.6 46.2 62 45.4 Z M62 45.4 C64.4 48.4 68 48.8 70.4 47.2 C67.8 45 64.4 44.6 62 45.4 Z"
+    stroke="#ecd9aa"
+    stroke-opacity="0.9"
+    stroke-width="0.55"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="#ecd9aa"
+    fill-opacity="0.25"></path>
+  <path
+    d="M24.6 45 l1.6 -2 l1.6 2 l-1.6 2 Z M98 45 l1.6 -2 l1.6 2 l-1.6 2 Z"
+    fill="#ecd9aa"
+    fill-opacity="0.75"></path>
+  <!-- the shadow the upper book lays on it, and its own on the plank -->
+  <path d="M10 30.2 H112 V33.2 C80 34.6 40 34.6 10 33.2 Z" fill="#3f4f54" opacity="0.3"></path>
+  <path d="M6 59.6 H120.4" stroke="#4a3a2e" stroke-opacity="0.4" stroke-width="0.9"></path>
+
+  <!-- Upper book, fore-edge toward us: pages between two boards -->
+  <path d="M13.6 9.4 H108 V27 H13.6 Z" fill="url(#bookstack-pages)"></path>
+  {
+    pages.map((p) => (
+      <path
+        d={`M14 ${p.y} H107.6`}
+        stroke="#b7a68a"
+        stroke-opacity={p.o}
+        stroke-width="0.45"
+        stroke-dasharray={p.dash}
+      />
+    ))
+  }
+  <path d="M13.6 9.4 V27 M108 9.4 V27" stroke="#c9b99c" stroke-opacity="0.7" stroke-width="0.6"
+  ></path>
+  <!-- boards -->
+  <path
+    d="M11 6 H110.4 C111.6 6 112.2 6.8 112.2 7.8 C112.2 8.8 111.6 9.6 110.4 9.6 H11 C9.8 9.6 9.2 8.8 9.2 7.8 C9.2 6.8 9.8 6 11 6 Z"
+    fill="url(#bookstack-board)"></path>
+  <path d="M11 6.5 H110.4" stroke="#ecc9c4" stroke-width="0.7" stroke-linecap="round"></path>
+  <path
+    d="M11 26.8 H110.4 C111.6 26.8 112.2 27.6 112.2 28.6 C112.2 29.6 111.6 30.2 110.4 30.2 H11 C9.8 30.2 9.2 29.6 9.2 28.6 C9.2 27.6 9.8 26.8 11 26.8 Z"
+    fill="url(#bookstack-board)"></path>
+  <path d="M11 29.9 H110.4" stroke="#9c6763" stroke-opacity="0.6" stroke-width="0.6"></path>
+  <!-- a ribbon marker left hanging from the pages -->
+  <path
+    d="M79 21 C79.6 27 78.2 34 79.6 43 L82.6 40.4 L85.4 43.6 C84.4 34 85.6 27 85 21 Z"
+    fill="#2f3b3f"
+    opacity="0.18"></path>
+  <path
+    d="M80.6 20.4 C81.2 26 80 33 81.2 42.4 L84 39.6 L86.8 42.8 C85.8 33 87 26 86.4 20.4 Z"
+    fill="#f3e9d6"></path>
+  <path
+    d="M80.6 20.4 C81.2 26 80 33 81.2 42.4 M86.4 20.4 C87 26 85.8 33 86.8 42.8"
+    stroke="#cdbb9b"
+    stroke-width="0.5"
+    stroke-linecap="round"></path>
+  <path d="M83.4 21 C84 27 83 33 83.8 39" stroke="#fffdf6" stroke-width="0.8" stroke-opacity="0.8"
+  ></path>
+</svg>

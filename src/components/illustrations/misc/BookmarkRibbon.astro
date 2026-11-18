@@ -1,0 +1,146 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* A grosgrain ribbon marker hanging out of a book: ribbed weave, a woven selvedge down
+   each side, one soft crease where it was folded into the pages, and a swallowtail end
+   with a few loose threads. The Resources page hangs one from the top of each bookmark band.
+
+   It themes through CSS `color`: the ribbon is currentColor, and its light, shade and
+   weave are white and ink laid over it at low opacity. No gradients or clips, so two
+   on a page cannot collide. The drawing is 60 x 176; the ribbon leaves the book at y = 0. */
+
+const f = (n: number) => Math.round(n * 10) / 10;
+const HALF = 15;
+const END = 160;
+const NOTCH = 145;
+// the ribbon does not hang dead straight: it sways a little and settles to one side
+const mid = (y: number) => 30 + 2.4 * Math.sin(y / 44) + y * 0.006;
+const left = (y: number) => mid(y) - HALF;
+const right = (y: number) => mid(y) + HALF;
+
+const ys: number[] = [];
+for (let y = 0; y <= END; y += 5) ys.push(y);
+const down = (edge: (y: number) => number, dx = 0) =>
+  ys.map((y) => `${f(edge(y) + dx)} ${y}`).join("L");
+const up = (edge: (y: number) => number, dx = 0) =>
+  [...ys]
+    .reverse()
+    .map((y) => `${f(edge(y) + dx)} ${y}`)
+    .join("L");
+
+// The tail: left point hangs a touch lower than the right
+const tail = `L${f(left(END) + 0.4)} ${END + 3.4}L${f(mid(NOTCH) + 0.6)} ${NOTCH}L${f(right(END) - 0.2)} ${END + 1}`;
+const body = `M${down(left)}${tail}L${up(right)}Z`;
+/** How far the notch has opened, each side of the centre line, at height y */
+const gap = (y: number) => (y <= NOTCH ? 0 : ((y - NOTCH) / (END - NOTCH)) * HALF * 0.97);
+/** A strip of the ribbon between two offsets from the centre line. A strip that lies on
+    one side of centre follows that prong of the tail and stays out of the notch. */
+const strip = (a: number, b: number, y0 = 0, y1 = END) => {
+  const side = a <= 0 && b <= 0 ? -1 : a >= 0 && b >= 0 ? 1 : 0;
+  const off = (v: number, y: number) =>
+    side < 0 ? Math.min(v, -gap(y)) : side > 0 ? Math.max(v, gap(y)) : v;
+  const pts = ys.filter((y) => y >= y0 && y <= y1);
+  const go = pts.map((y) => `${f(mid(y) + off(a, y))} ${y}`).join("L");
+  const back = [...pts]
+    .reverse()
+    .map((y) => `${f(mid(y) + off(b, y))} ${y}`)
+    .join("L");
+  return `M${go}L${back}Z`;
+};
+// Selvedges run all the way into the two tail points
+const selvedgeL = `M${down(left)}L${f(left(END) + 0.4)} ${END + 3.4}L${f(left(END) + 2.9)} ${END + 0.6}L${up(left, 2.3)}Z`;
+const selvedgeR = `M${down(right)}L${f(right(END) - 0.2)} ${END + 1}L${f(right(END) - 2.7)} ${END - 1.6}L${up(right, -2.3)}Z`;
+const stitchL = `M${down(left, 1.15)}`;
+const stitchR = `M${down(right, -1.15)}`;
+
+// Ribs of the weave: each sags a hair in the middle. They stop where the notch opens.
+let ribs = "";
+for (let y = 3; y < END; y += 2.5) {
+  const l = left(y) + 2.6;
+  const r = right(y) - 2.6;
+  if (y <= NOTCH) {
+    ribs += `M${f(l)} ${f(y)}Q${f(mid(y))} ${f(y + 0.5)} ${f(r)} ${f(y)}`;
+  } else {
+    // either side of the notch
+    const open = ((y - NOTCH) / (END - NOTCH)) * (HALF - 1.5);
+    ribs += `M${f(l)} ${f(y)}L${f(mid(y) - open)} ${f(y + 0.2)}M${f(mid(y) + open + 0.8)} ${f(y + 0.2)}L${f(r)} ${f(y)}`;
+  }
+}
+
+// The crease: a shallow diagonal fold two thirds of the way down
+const creaseY = 106;
+const crease = (dy: number, t: number) =>
+  `M${f(left(creaseY))} ${creaseY + dy}L${f(right(creaseY + 5))} ${creaseY + 5 + dy}L${f(right(creaseY + 5 + t))} ${creaseY + 5 + dy + t}L${f(left(creaseY + t))} ${creaseY + dy + t}Z`;
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 60 176"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Its shadow on the paper, falling down and to the left -->
+  <path d={body} fill="#3c3028" fill-opacity="0.1" transform="translate(-3.4 2.6)"></path>
+  <path d={body} fill="#3c3028" fill-opacity="0.07" transform="translate(-1.6 1.2)"></path>
+
+  <!-- The ribbon -->
+  <path d={body} fill="currentColor"></path>
+
+  <!-- It curves away from us at the left and catches the light right of centre -->
+  <path d={strip(-HALF, -6)} fill="#3c3028" fill-opacity="0.11"></path>
+  <path d={strip(-HALF, -10.5)} fill="#3c3028" fill-opacity="0.08"></path>
+  <path d={strip(1.5, 10)} fill="#ffffff" fill-opacity="0.16"></path>
+  <path d={strip(4, 7.5)} fill="#ffffff" fill-opacity="0.14"></path>
+
+  <!-- Ribbed weave -->
+  <path d={ribs} stroke="#ffffff" stroke-opacity="0.2" stroke-width="0.55"></path>
+  <path
+    d={ribs}
+    stroke="#3c3028"
+    stroke-opacity="0.1"
+    stroke-width="0.4"
+    transform="translate(0 0.9)"></path>
+
+  <!-- The fold it kept from being shut in the book -->
+  <path d={crease(0, 2.4)} fill="#3c3028" fill-opacity="0.16"></path>
+  <path d={crease(2.4, 3.6)} fill="#ffffff" fill-opacity="0.2"></path>
+  <path d={crease(-7, 7)} fill="#3c3028" fill-opacity="0.05"></path>
+
+  <!-- Woven selvedges with their stitching -->
+  <path d={selvedgeL} fill="#3c3028" fill-opacity="0.2"></path>
+  <path d={selvedgeR} fill="#3c3028" fill-opacity="0.13"></path>
+  <path
+    d={stitchL}
+    stroke="#ffffff"
+    stroke-opacity="0.55"
+    stroke-width="0.5"
+    stroke-dasharray="1.5 1.7"></path>
+  <path
+    d={stitchR}
+    stroke="#ffffff"
+    stroke-opacity="0.65"
+    stroke-width="0.5"
+    stroke-dasharray="1.5 1.7"></path>
+
+  <!-- Shade where it comes out from between the pages -->
+  <path d={strip(-HALF, HALF, 0, 5)} fill="#3c3028" fill-opacity="0.2"></path>
+  <path d={strip(-HALF, HALF, 0, 15)} fill="#3c3028" fill-opacity="0.08"></path>
+
+  <!-- Loose threads at the cut end -->
+  <g stroke="currentColor" stroke-width="0.5" stroke-linecap="round">
+    <path
+      d={`M${f(left(END) + 0.6)} ${END + 3.2}q-0.8 2.6 -0.2 5 M${f(left(END) + 2)} ${END + 1.8}q0.4 2.4 1.6 4 M${f(left(END) + 5)} ${END - 1.4}q0.2 1.8 -0.4 3.2`}
+    ></path>
+    <path
+      d={`M${f(right(END) - 0.4)} ${END + 0.8}q0.9 2.2 0.3 4.6 M${f(right(END) - 2.4)} ${END - 1}q-0.2 2.2 -1.4 3.8 M${f(right(END) - 6)} ${END - 4}q0 1.6 0.6 2.8`}
+    ></path>
+  </g>
+</svg>

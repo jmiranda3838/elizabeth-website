@@ -93,40 +93,42 @@
     transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Faint botanicals receding along the path. */
+/* Garden plants flanking the sunlit path: a poppy and a lavender on the left, a
+   rosemary and a poppy on the right, the nearer ones larger. They stand outside
+   the text block and below the open doors, in a sage deep enough for the glow. */
 .gate-far {
   position: absolute;
-  color: var(--sage);
+  color: color-mix(in srgb, var(--sage) 42%, var(--espresso));
   opacity: 0;
   transform: translateY(14px) scale(0.9);
+  transform-origin: 50% 100%;
   transition:
     opacity 1.1s ease,
     transform 1.1s ease;
 }
+/* Kept short enough that their heads clear the foot of the open doors */
 .gate-far-1 {
-  left: 30%;
+  left: 17%;
   bottom: 6%;
-  width: 86px;
+  width: 66px;
   height: auto;
 }
 .gate-far-2 {
-  left: 39%;
-  bottom: 22%;
-  width: 48px;
+  left: 24.5%;
+  bottom: 9.5%;
+  width: 50px;
   height: auto;
-  color: var(--sage-warm);
 }
 .gate-far-3 {
-  right: 38%;
-  bottom: 20%;
+  right: 24.5%;
+  bottom: 10%;
   width: 54px;
   height: auto;
-  color: var(--sage-warm);
 }
 .gate-far-4 {
-  right: 29%;
-  bottom: 5%;
-  width: 92px;
+  right: 16.5%;
+  bottom: 5.5%;
+  width: 70px;
   height: auto;
 }
 
@@ -268,25 +270,34 @@
   height: 6px;
 }
 
+/* Two bay branches hanging in from the top corners, outside the posts. They are
+   children of the section, not of the 3D stage (the open doors' planes cut across
+   anything in there). The drawing grows upward in its box, so it is turned over
+   about its foot: the box is lifted by its own height and rotated half a turn
+   round its bottom edge, which leaves the branch hanging in the box's place and
+   swaying from its stalk. */
 .gate-petal {
   position: absolute;
-  width: 78px;
+  top: -10px;
+  z-index: 1;
+  width: 108px;
   height: auto;
-  color: var(--dusty-peach);
-  opacity: 0.5;
-  transform-origin: top center;
+  color: color-mix(in srgb, var(--sage) 72%, var(--espresso));
+  opacity: 0.8;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  translate: 0 -100%;
+  rotate: 180deg;
+  overflow: visible;
 }
-/* Kept outside the posts, clear of the climbing rose on the frame */
 .gate-petal-1 {
-  left: 3%;
-  top: 9%;
+  left: 2.5%;
   animation: gate-sway 7s ease-in-out infinite;
 }
 .gate-petal-2 {
   right: 3%;
-  top: 13%;
-  width: 64px;
-  color: var(--muted-rose);
+  width: 88px;
+  color: color-mix(in srgb, var(--sage-warm) 72%, var(--espresso));
   animation: gate-sway 9s ease-in-out infinite reverse;
 }
 
@@ -463,10 +474,32 @@
     width: 92vw;
   }
   .gate-petal-1 {
-    width: 58px;
+    width: 62px;
+    left: 0;
   }
   .gate-petal-2 {
-    width: 48px;
+    width: 52px;
+    right: 0;
+  }
+  .gate-far-1 {
+    left: 3%;
+    bottom: 3%;
+    width: 68px;
+  }
+  .gate-far-2 {
+    left: 19%;
+    bottom: 7%;
+    width: 42px;
+  }
+  .gate-far-3 {
+    right: 19%;
+    bottom: 7%;
+    width: 42px;
+  }
+  .gate-far-4 {
+    right: 3%;
+    bottom: 3%;
+    width: 72px;
   }
 }
 

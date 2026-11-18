@@ -15,6 +15,15 @@
    1. BOARD HERO - The Framed Collage
    ============================================ */
 
+/* Inks for the pressed sprigs and the inked doodles: a sage deeper than the
+   UI one, so it holds on linen and paper, plus the two flower colours the
+   palette has no token for */
+:root {
+  --board-leaf: #7c9a86;
+  --board-lavender: #a48a9e;
+  --board-poppy: #dd9670;
+}
+
 .board-hero {
   padding: calc(var(--header-h) + var(--space-12)) var(--space-4) var(--space-20);
   background: linear-gradient(135deg, var(--warm-paper) 0%, var(--soft-sand) 55%, #efe7e1 100%);
@@ -214,50 +223,95 @@
   line-height: 1.5;
 }
 
-/* -- Botanical sprigs tucked on the board -- */
-.bi-sprig-1 {
-  bottom: -4%;
-  left: 1.5%;
-  width: 140px;
-  z-index: 1;
-}
-.bi-sprig-2 {
-  top: 2%;
-  left: 8%;
-  width: 92px;
-  z-index: 1;
-}
-.bi-sprig-3 {
-  top: 70%;
-  left: 90%;
-  width: 96px;
-  z-index: 1;
-}
-
-.board-sprig {
+/* -- Pressed sprigs on the board --
+   Sized in % of the board so they keep their place as it scales. Each is a
+   .sprig-ink (sets the ink colour; the svg inside is currentColor) with a
+   faint contact shadow, so it lies on the linen rather than being printed
+   on it. */
+.sprig-ink {
   display: block;
-  width: 100%;
-  height: auto;
-  color: var(--sage);
-  opacity: 0.85;
+  line-height: 0;
+  color: var(--board-leaf);
+  filter: drop-shadow(0 1px 1px rgba(96, 102, 90, 0.2));
 }
 
-.bi-sprig-2 .board-sprig {
-  color: var(--warm-clay);
-  opacity: 0.75;
+/* Rosemary, laid along the bottom edge with its tip to the left and its
+   stem taped down. The rotation is fixed (not --tilt): it is the pose,
+   not a jaunty angle */
+.bi-sprig-1 {
+  top: 71.5%;
+  left: 9.6%;
+  width: 13%;
+  z-index: 1;
 }
 
-/* -- Loose washi pieces + a spare pin for texture -- */
-.bi-washi-1 {
-  top: 12%;
-  left: 18%;
-  z-index: 2;
+.bi-sprig-1 .board-item-inner {
+  transform: rotate(-79deg);
 }
-.bi-washi-2 {
-  top: 91%;
-  left: 27%;
-  z-index: 2;
+
+/* Lavender, tucked behind the title card: the card hides the stems */
+.bi-sprig-2 {
+  top: 1%;
+  left: 4.6%;
+  width: 15%;
+  z-index: 1;
 }
+
+.bi-sprig-2 .sprig-ink {
+  color: var(--board-lavender);
+}
+
+/* California poppy, slipped behind the beach print: the bloom and buds
+   stand clear above it, the print holds the rest */
+.bi-sprig-3 {
+  top: 25%;
+  left: 80.2%;
+  width: 15.4%;
+  z-index: 1;
+}
+
+.bi-sprig-3 .board-item-inner {
+  transform: rotate(12deg);
+}
+
+/* Two inks for one drawing: both layers are the same svg, masked by the
+   same ellipse over the bloom (one keeps the inside, one the outside), and
+   added together so the join stays as dense as the rest */
+.sprig-duo {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  filter: drop-shadow(0 1px 1px rgba(96, 102, 90, 0.2));
+}
+
+.sprig-duo .sprig-ink {
+  filter: none;
+}
+
+.sprig-ink-leaf {
+  -webkit-mask-image: radial-gradient(ellipse 36% 16.5% at 65% 17%, transparent 84%, #000 100%);
+  mask-image: radial-gradient(ellipse 36% 16.5% at 65% 17%, transparent 84%, #000 100%);
+}
+
+.sprig-ink-bloom {
+  position: absolute;
+  inset: 0;
+  color: var(--board-poppy);
+  -webkit-mask-image: radial-gradient(ellipse 36% 16.5% at 65% 17%, #000 84%, transparent 100%);
+  mask-image: radial-gradient(ellipse 36% 16.5% at 65% 17%, #000 84%, transparent 100%);
+  mix-blend-mode: plus-lighter;
+}
+
+/* Tape across a sprig's stem (placed in the sprig's own frame, so it
+   turns with it) */
+.sprig-tape {
+  top: 86%;
+  left: 52%;
+  margin-left: calc(var(--tape-w) / -2);
+  --tape-rot: 8deg;
+}
+
+/* -- A spare pin for texture -- */
 .bi-pin-spare {
   top: 9%;
   left: 47%;
@@ -326,27 +380,83 @@
   margin-left: 0;
 }
 
-/* Washi tape strip */
+/* Washi tape. The span is only a holder (size, angle, drop shadow); the
+   paper itself is its ::before, so the torn ends can be clipped without
+   clipping the shadow. Thin, slightly see-through paper with a printed
+   pattern, a soft sheen along its length and a paler deckle at each edge.
+   Colourways set --tape-print; lengths set --tape-w. */
 .washi-tape {
-  position: absolute;
-  width: 88px;
-  height: 26px;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(208, 180, 166, 0.55) 0 8px,
-    rgba(198, 148, 145, 0.45) 8px 16px
+  --tape-w: 88px;
+  --tape-base: rgba(226, 190, 181, 0.74);
+  --tape-print: repeating-linear-gradient(
+    -52deg,
+    transparent 0 5px,
+    rgba(255, 255, 255, 0.5) 5px 6.5px,
+    transparent 6.5px 9px,
+    rgba(184, 129, 126, 0.42) 9px 14px,
+    transparent 14px 16.5px,
+    rgba(255, 255, 255, 0.5) 16.5px 18px
   );
-  opacity: 0.85;
-  box-shadow: 0 1px 4px rgba(96, 102, 90, 0.15);
+  --tape-tear: polygon(
+    3.4% 0,
+    0.6% 8%,
+    3% 17%,
+    1% 27%,
+    4.2% 37%,
+    0 47%,
+    2.6% 57%,
+    0.8% 68%,
+    3.8% 79%,
+    1.2% 90%,
+    3.2% 100%,
+    96.4% 100%,
+    99.4% 91%,
+    96.6% 82%,
+    98.8% 72%,
+    95.8% 62%,
+    100% 51%,
+    97.2% 41%,
+    99.2% 31%,
+    96% 20%,
+    98.6% 10%,
+    97% 0
+  );
+  position: absolute;
+  width: var(--tape-w);
+  height: 26px;
+  filter: drop-shadow(0 1px 1.5px rgba(96, 102, 90, 0.24));
   transform: rotate(var(--tape-rot, -4deg));
   z-index: 7;
+}
+
+.washi-tape::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.5) 0,
+      rgba(255, 255, 255, 0) 12%,
+      rgba(255, 255, 255, 0) 86%,
+      rgba(96, 102, 90, 0.1) 100%
+    ),
+    linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 12%,
+      rgba(255, 255, 255, 0.3) 34%,
+      rgba(255, 255, 255, 0.06) 52%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    var(--tape-print), var(--tape-base);
+  clip-path: var(--tape-tear);
 }
 
 /* Default: across the top edge of whatever it's taping */
 .washi-top {
   top: -12px;
   left: 50%;
-  margin-left: -44px;
+  margin-left: calc(var(--tape-w) / -2);
 }
 
 .washi-corner {
@@ -355,13 +465,51 @@
   --tape-rot: -38deg;
 }
 
-/* Sage colorway */
+/* Lengths: nobody tears two strips alike */
+.washi-short {
+  --tape-w: 70px;
+}
+
+.washi-long {
+  --tape-w: 104px;
+}
+
+/* Sage colourway: a scatter of pale dots, torn the other way */
 .washi-sage {
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(150, 172, 160, 0.5) 0 8px,
-    rgba(167, 168, 152, 0.42) 8px 16px
+  --tape-base: rgba(168, 190, 177, 0.76);
+  --tape-print:
+    radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 1.5px, transparent 2px) 0 0 / 10px 10px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 1.5px, transparent 2px) 5px 5px / 10px 10px;
+  --tape-tear: polygon(
+    1% 0,
+    3.6% 11%,
+    0.4% 21%,
+    3% 32%,
+    1.4% 43%,
+    4% 54%,
+    0.6% 64%,
+    2.8% 75%,
+    0 86%,
+    2.4% 100%,
+    98.8% 100%,
+    96% 89%,
+    99.4% 78%,
+    97% 67%,
+    100% 56%,
+    96.4% 45%,
+    98.6% 34%,
+    95.8% 23%,
+    99% 12%,
+    97.4% 0
   );
+}
+
+/* Peach colourway: a fine gingham */
+.washi-peach {
+  --tape-base: rgba(232, 208, 192, 0.8);
+  --tape-print:
+    repeating-linear-gradient(0deg, rgba(190, 142, 122, 0.3) 0 3px, transparent 3px 8px),
+    repeating-linear-gradient(90deg, rgba(190, 142, 122, 0.3) 0 3px, transparent 3px 8px);
 }
 
 /* Polaroid photo frame */
@@ -429,23 +577,51 @@
   transform: rotate(0deg);
 }
 
-/* Twine line (off-the-clock gallery) */
-.twine-line {
-  height: 2px;
-  background: var(--dusty-peach);
-  border-radius: 1px;
-  box-shadow: 0 1px 2px rgba(96, 102, 90, 0.15);
+/* Twine (off-the-clock gallery): a TwineLine svg stretched to its box,
+   with a pushpin over the knot at each end */
+.twine-line,
+.twine-seg {
+  position: absolute;
+  top: 0;
+  height: 72px;
+  pointer-events: none;
 }
 
-/* Clothespin SVG holder */
+.twine-line {
+  left: 0;
+  right: 0;
+}
+
+.twine-line svg,
+.twine-seg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* End pins sit on the knots (x 14 and 806 of the 820-wide line, y 12) */
+.twine-pin {
+  top: 5px;
+  left: 1.7%;
+}
+
+.twine-pin-end {
+  left: 98.3%;
+}
+
+/* Wooden clothespin: 30px wide, pegged where the twine passes (its notch
+   is 51px down), jaws closing over the top 16px of the print */
 .clothespin {
   position: absolute;
-  top: -34px;
+  top: -55px;
   left: 50%;
-  margin-left: -10px;
-  width: 20px;
-  height: 28px;
-  color: var(--warm-clay);
+  margin-left: -15px;
+  width: 30px;
+  height: 75px;
+  color: #e2c9a9;
+  transform: rotate(var(--pin-tilt, 0deg));
+  transform-origin: 50% 68%;
   z-index: 3;
 }
 
@@ -453,6 +629,7 @@
   display: block;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 /* ============================================
@@ -521,31 +698,59 @@
   margin: var(--space-10) auto 0;
 }
 
-/* Ruled lines layered over the paper-card gradient
-   (background-image here intentionally overrides .paper-card's
-   shorthand, so both layers are declared together) */
+/* A page torn from a spiral pad. The paper is the ::before (so the bitten
+   top edge can be masked without clipping the pins): misty-blue rules on the
+   32px line pitch, set so each rule runs just under a baseline; a double rose
+   margin rule; and a row of half-holes where it came off the wire.
+   --notes-pad is the top padding the rules are measured from, --notes-margin
+   the x of the margin rule. */
 .session-notes-inner {
-  padding: var(--space-10) var(--space-10) var(--space-8);
-  background-image:
-    repeating-linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 31px,
-      rgba(150, 172, 160, 0.16) 31px,
-      rgba(150, 172, 160, 0.16) 32px
-    ),
-    linear-gradient(
-      135deg,
-      rgba(253, 242, 239, 0.4) 0%,
-      rgba(253, 252, 250, 0.95) 50%,
-      rgba(247, 246, 245, 0.9) 100%
-    );
+  --notes-pad: var(--space-12);
+  --notes-margin: 54px;
+  padding: var(--notes-pad) var(--space-10) var(--space-8) calc(var(--notes-margin) + 22px);
+  background: none;
+  border: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 0 0.6px rgba(150, 120, 105, 0.85))
+    drop-shadow(0 5px 10px rgba(96, 102, 90, 0.1));
 }
 
-/* A full 32px rule between paragraphs keeps every paragraph on the lines */
+.session-notes-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 2px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent calc(var(--notes-margin) - 3px),
+      rgba(198, 148, 145, 0.55) calc(var(--notes-margin) - 3px),
+      rgba(198, 148, 145, 0.55) calc(var(--notes-margin) - 2px),
+      transparent calc(var(--notes-margin) - 2px),
+      transparent var(--notes-margin),
+      rgba(198, 148, 145, 0.4) var(--notes-margin),
+      rgba(198, 148, 145, 0.4) calc(var(--notes-margin) + 1px),
+      transparent calc(var(--notes-margin) + 1px)
+    ),
+    repeating-linear-gradient(
+        180deg,
+        transparent 0,
+        transparent 31px,
+        rgba(125, 144, 148, 0.24) 31px,
+        rgba(125, 144, 148, 0.24) 32px
+      )
+      0 calc(var(--notes-pad) - 6px),
+    linear-gradient(100deg, rgba(255, 255, 255, 0) 55%, rgba(96, 102, 90, 0.035) 100%),
+    linear-gradient(135deg, #fdf8f5 0%, #fdfcfa 50%, #f8f6f4 100%);
+  -webkit-mask: radial-gradient(circle at 10px 0, transparent 4.4px, #000 5.1px) 0 0 / 20px 100%;
+  mask: radial-gradient(circle at 10px 0, transparent 4.4px, #000 5.1px) 0 0 / 20px 100%;
+}
+
+/* One line of text per rule, and a full empty rule between paragraphs */
 .session-notes p {
-  line-height: 2;
-  margin-bottom: var(--space-8);
+  line-height: 32px;
+  margin-bottom: 32px;
 }
 
 .session-notes p:last-child {
@@ -566,12 +771,58 @@
   height: 100%;
 }
 
-.index-card-inner svg {
-  width: 44px;
-  height: 44px;
-  color: var(--sage);
-  margin: 0 auto var(--space-4);
+/* Each icon is an inked doodle over a dab of watercolour: an uneven wash,
+   a little darker at the rim where the pigment pooled */
+.index-card-icon {
+  --wash: 150, 172, 160;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 62px;
+  margin: 0 auto var(--space-3);
+  color: var(--board-leaf);
+}
+
+/* The dab sits low and a little to one side, so the drawing breaks out of
+   it instead of sitting in a badge */
+.index-card-icon::before {
+  content: "";
+  position: absolute;
+  inset: 16px 12px -2px 0;
+  border-radius: 58% 42% 54% 46% / 47% 60% 40% 53%;
+  background: rgba(var(--wash), 0.17);
+  box-shadow:
+    inset 0 0 0 1px rgba(var(--wash), 0.14),
+    inset 0 0 9px rgba(var(--wash), 0.3);
+  transform: rotate(-9deg);
+}
+
+.index-card-icon svg {
+  position: relative;
   display: block;
+  width: 48px;
+  height: 48px;
+}
+
+.index-cards-grid > :nth-child(2) .index-card-icon {
+  --wash: 208, 180, 166;
+}
+
+.index-cards-grid > :nth-child(2) .index-card-icon::before {
+  inset: 20px 2px -2px 8px;
+  border-radius: 45% 55% 43% 57% / 58% 44% 56% 42%;
+  transform: rotate(7deg);
+}
+
+.index-cards-grid > :nth-child(3) .index-card-icon {
+  --wash: 198, 148, 145;
+}
+
+.index-cards-grid > :nth-child(3) .index-card-icon::before {
+  inset: 12px 0 0 14px;
+  border-radius: 52% 48% 60% 40% / 42% 52% 48% 58%;
+  transform: rotate(-3deg);
 }
 
 .index-card-inner h4 {
@@ -660,12 +911,16 @@
   padding: var(--space-16) var(--space-8);
 }
 
+/* The open quote hangs just above the first word, a blush accent beside
+   the cream script, and carries the same soft shadow */
 .photo-band-quotemark {
   display: block;
-  width: 38px;
-  height: 30px;
-  color: rgba(251, 250, 248, 0.7);
-  margin-bottom: var(--space-4);
+  width: 58px;
+  height: 46px;
+  color: #fbe3dc;
+  margin: 0 0 var(--space-1) -6px;
+  transform: rotate(-5deg);
+  filter: drop-shadow(0 2px 6px rgba(60, 48, 40, 0.5));
 }
 
 .photo-band-quotemark svg {
@@ -723,22 +978,57 @@
   pointer-events: none;
 }
 
+/* Wax seal with ribbon tails (WaxSeal svg), the credential's emblem pressed
+   into its face. Each card's seal sits at its own angle with its own ribbon */
 .cert-seal {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto var(--space-4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--blush-wash);
-  border: 1px solid rgba(198, 148, 145, 0.5);
-  border-radius: 50%;
-  color: var(--warm-clay);
+  --seal-wax: #b97f7a;
+  --seal-ribbon: #a9bdb1;
+  position: relative;
+  width: 76px;
+  margin: calc(-1 * var(--space-3)) auto var(--space-2);
+  color: var(--seal-wax);
+  transform: rotate(var(--seal-turn, -5deg));
+  filter: drop-shadow(0 2px 2px rgba(96, 102, 90, 0.3));
 }
 
-.cert-seal svg {
-  width: 22px;
-  height: 22px;
+.cert-seal > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Centred on the stamped face (32,31 of the seal's 64x80 box). Pale, with a
+   hairline of shade beneath each stroke so it reads as raised from the wax */
+.cert-seal-emblem {
+  position: absolute;
+  top: 38.75%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  color: #fff6f0;
+  filter: drop-shadow(0.4px 0.8px 0 rgba(74, 42, 38, 0.5));
+}
+
+.cert-seal-emblem svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.certs-grid > :nth-child(2) .cert-seal {
+  --seal-turn: 4deg;
+  --seal-ribbon: #dcc0b0;
+}
+
+.certs-grid > :nth-child(3) .cert-seal {
+  --seal-turn: 7deg;
+  --seal-ribbon: #e3c3bf;
+}
+
+.certs-grid > :nth-child(4) .cert-seal {
+  --seal-turn: -8deg;
+  --seal-ribbon: #b3c2b0;
 }
 
 .cert-card-inner h4 {
@@ -763,25 +1053,57 @@
 }
 
 .twine-wrap {
+  position: relative;
   max-width: 820px;
-  margin: var(--space-12) auto 0;
+  margin: var(--space-10) auto 0;
 }
 
+/* Two equal columns, so the pegs sit at 25% and 75% of the line whatever
+   its width. The 44px top padding hangs each print 4px below the twine */
 .twine-photos {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 320px));
-  justify-content: center;
-  gap: var(--space-16);
-  padding-top: var(--space-8);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+  padding-top: 44px;
 }
 
 .hung-photo {
   position: relative;
+  width: 100%;
+  max-width: 320px;
 }
 
-/* Hanging polaroids sway from the clothespin */
+/* The second peg hangs a hair lower, where the line dips */
+.hung-photo + .hung-photo {
+  margin-top: 1px;
+}
+
+/* Per-photo twine (phones and tablets); the shared line serves wide screens */
+.twine-seg {
+  display: none;
+  top: -42px;
+  left: 50%;
+  width: min(100%, 380px);
+  transform: translateX(-50%);
+}
+
+.twine-seg .twine-pin {
+  left: 3.8%;
+}
+
+.twine-seg .twine-pin-end {
+  left: 96.2%;
+}
+
+/* The second length is the first one turned over, so its tails differ */
+.hung-photo + .hung-photo .twine-seg svg {
+  transform: scaleX(-1);
+}
+
+/* Hanging polaroids pivot and sway from the peg, a little above their top edge */
 .hung-photo .polaroid {
-  transform-origin: top center;
+  transform-origin: 50% -4px;
   animation: vbSway 7s ease-in-out infinite;
   animation-delay: var(--sway-delay, 0s);
 }
@@ -803,8 +1125,6 @@
   position: relative;
   max-width: 640px;
   margin: 0 auto;
-  /* New stacking context so the z:-1 sprig stays above the section bg */
-  isolation: isolate;
 }
 
 .cta-note-inner {
@@ -831,22 +1151,21 @@
   margin-top: var(--space-6);
 }
 
-/* Sprig peeking from behind the note */
+/* A bay sprig taped across the note's bottom corner, its tip leaning out
+   past the edge (in front of the paper, clear of the text) */
 .cta-sprig {
   position: absolute;
-  bottom: -26px;
-  right: -34px;
-  width: 84px;
-  color: var(--sage);
-  opacity: 0.7;
-  transform: rotate(24deg);
-  z-index: -1;
+  right: 64px;
+  bottom: 22px;
+  width: 104px;
+  transform: rotate(54deg);
+  transform-origin: 50% 100%;
+  z-index: 2;
 }
 
-.cta-sprig svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.cta-sprig .sprig-tape {
+  top: 80%;
+  --tape-rot: 12deg;
 }
 
 /* ============================================
@@ -900,6 +1219,14 @@
   }
   .bi-word-1 {
     left: 30%;
+  }
+
+  /* The quote scrap wraps to two lines here and would bury the rosemary:
+     slide the sprig out to its right, so only the tip stays tucked */
+  .bi-sprig-1 {
+    top: 73.5%;
+    left: 22.5%;
+    width: 12%;
   }
 }
 
@@ -976,12 +1303,30 @@
     width: auto;
   }
 
-  /* Sprigs and loose tape retire on small boards */
-  .bi-sprig-1,
+  /* On the unwound board the rosemary keeps a row of its own at the foot,
+     still lying on its side and taped; the two tucked sprigs (which need
+     something to tuck behind) retire */
+  .bi-sprig-1 {
+    grid-column: 1 / -1;
+    justify-self: center;
+    order: 3;
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 190px;
+    height: 78px;
+  }
+
+  .bi-sprig-1 .board-item-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 92px;
+    margin: -83px 0 0 -46px;
+  }
+
   .bi-sprig-2,
-  .bi-sprig-3,
-  .bi-washi-1,
-  .bi-washi-2 {
+  .bi-sprig-3 {
     display: none;
   }
 
@@ -997,16 +1342,22 @@
     padding: 0;
   }
 
+  /* Tablets still have room for two cards abreast: the three index cards
+     sit two over one, the third centred. (The four certificates keep their
+     two columns until 768.) */
   .index-cards-grid {
-    grid-template-columns: 1fr;
-    max-width: 440px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  .certs-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
+  .index-cards-grid > * {
+    grid-column: span 2;
+  }
+
+  .index-cards-grid > :nth-child(3) {
+    grid-column: 2 / span 2;
   }
 }
 
@@ -1040,39 +1391,58 @@
   }
 
   .session-notes-inner {
-    padding: var(--space-8) var(--space-6) var(--space-6);
+    --notes-pad: var(--space-10);
+    --notes-margin: 22px;
+    padding: var(--notes-pad) var(--space-5) var(--space-6) calc(var(--notes-margin) + 14px);
+  }
+
+  /* One column of cards */
+  .index-cards-grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 440px;
+  }
+
+  .index-cards-grid > *,
+  .index-cards-grid > :nth-child(3) {
+    grid-column: auto;
+  }
+
+  .certs-grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 480px;
   }
 
   .draw-from-inner {
     padding: var(--space-6);
   }
 
-  /* One column: each photo after the first hangs from its own twine,
-     the full width of the shared line above the first */
+  /* One column: the shared line retires and each print hangs from its
+     own short length of twine */
+  .twine-line {
+    display: none;
+  }
+
+  .twine-seg {
+    display: block;
+  }
+
   .twine-photos {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-12);
+    row-gap: var(--space-20);
   }
 
+  .hung-photo {
+    max-width: none;
+  }
+
+  .hung-photo + .hung-photo {
+    margin-top: 0;
+  }
+
+  /* Narrower than the twine, so the end pins clear the print */
   .hung-photo .polaroid {
-    max-width: 300px;
+    max-width: min(300px, 100% - 44px);
     margin: 0 auto;
-  }
-
-  .hung-photo + .hung-photo::before {
-    content: "";
-    position: absolute;
-    top: calc(-1 * var(--space-8) - 2px);
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--dusty-peach);
-    border-radius: 1px;
-    box-shadow: 0 1px 2px rgba(96, 102, 90, 0.15);
-  }
-
-  .cta-sprig {
-    right: -10px;
   }
 }
 
@@ -1096,6 +1466,24 @@
   .photo-band-content {
     padding-top: var(--space-8);
     padding-bottom: var(--space-8);
+  }
+
+  /* No spare corner on a phone-width note: the paper grows a little at
+     the foot and the bay sprig lies along it, under the signature */
+  .cta-note-inner {
+    padding-bottom: calc(var(--space-10) + 38px);
+  }
+
+  .cta-sprig {
+    right: 96px;
+    bottom: 22px;
+    width: 66px;
+    transform: rotate(77deg);
+  }
+
+  .cta-sprig .sprig-tape {
+    --tape-w: 46px;
+    height: 22px;
   }
 }
 
@@ -1144,13 +1532,10 @@
     font-size: 1.9rem;
   }
 
-  .hung-photo .polaroid {
-    max-width: 86vw;
-  }
-
-  /* Long button label must wrap inside the note card */
+  /* Long button label must wrap inside the note card (the foot keeps its
+     band for the sprig) */
   .cta-note-inner {
-    padding: var(--space-8) var(--space-5);
+    padding: var(--space-8) var(--space-5) calc(var(--space-8) + 42px);
   }
 
   .cta-note-inner .btn {

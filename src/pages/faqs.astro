@@ -647,4 +647,17 @@ import { FernBank, MeadowHorizon } from "@illustrations/scenes";
       }
     }
   </style>
+
+  <!-- Without JavaScript the accordion cannot open, so show every answer -->
+  <noscript>
+    <style is:inline>
+      .faq-answer {
+        max-height: none !important;
+        visibility: visible !important;
+      }
+      .faq-icon {
+        display: none;
+      }
+    </style>
+  </noscript>
 </BaseLayout>

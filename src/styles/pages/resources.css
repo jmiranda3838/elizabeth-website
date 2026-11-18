@@ -23,6 +23,17 @@
   --ribbon-rose: var(--muted-rose);
   --spine-ink: #2f332c; /* dark ink for lendable spine titles (AA on their colors) */
   --brass: #a98f62; /* catalog drawer hardware */
+  --gilt: rgba(243, 226, 178, 0.92); /* tooling on the book spines */
+  --gilt-soft: rgba(243, 226, 178, 0.5);
+  /* Uneven ink for the rubber stamps (a mask), kraft-paper fibres, and the mark printed
+     on the card pockets */
+  --ink-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='60'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.4 2.75'/%3E%3C/filter%3E%3Crect width='150' height='60' filter='url(%23w)'/%3E%3C/svg%3E");
+  --kraft-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cfilter id='k' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.09 .5' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .34 0 0 0 0 .22 0 0 0 .9 -.37'/%3E%3C/filter%3E%3Crect width='300' height='120' filter='url(%23k)'/%3E%3C/svg%3E");
+  --pocket-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 24' fill='none' stroke='%238a6848' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 6.5C19 4 13 3.4 7 4.6V18.6C13 17.4 19 18 23 20.5C27 18 33 17.4 39 18.6V4.6C33 3.4 27 4 23 6.5ZM23 6.5V20.5'/%3E%3Cpath d='M10.5 8.4C14 8 17.4 8.4 20 9.6M10.5 11.6C14 11.2 17.4 11.6 20 12.8M10.5 14.8C14 14.4 17.4 14.8 20 16M26 9.6C28.6 8.4 32 8 35.5 8.4M26 12.8C28.6 11.6 32 11.2 35.5 11.6M26 16C28.6 14.8 32 14.4 35.5 14.8' stroke-width='.6' stroke-opacity='.75'/%3E%3Cpath d='M4 21.4C10 20 17 20.4 23 22.6C29 20.4 36 20 42 21.4' stroke-opacity='.6'/%3E%3C/svg%3E");
+  /* Wood grain, drawn as inline SVG so no file path (and no base path) is involved */
+  --grain-plank: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='22' viewBox='0 0 520 22' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%236f4e33' stroke-linecap='round'%3E%3Cpath d='M0 4.5C70 3 150 6.5 240 4.6S420 3 520 4.5' stroke-opacity='.22' stroke-width='.7'/%3E%3Cpath d='M0 8.6C90 10.4 170 7 250 8.8S430 10.2 520 8.6' stroke-opacity='.16' stroke-width='.6'/%3E%3Cpath d='M0 13C60 11.6 120 12.4 150 13.2C170 9.8 214 9.8 232 13.4C300 14.6 420 11.8 520 13' stroke-opacity='.2' stroke-width='.7'/%3E%3Cpath d='M158 13.6C174 11.6 208 11.6 224 13.8C208 15.8 174 15.8 158 13.6Z' stroke-opacity='.2' stroke-width='.6'/%3E%3Cpath d='M0 17.4C110 18.8 150 17 190 17.8S400 16.2 520 17.4' stroke-opacity='.18' stroke-width='.6'/%3E%3Cpath d='M300 6.4C340 5.6 380 6.8 430 6.2M40 15.4C70 15 96 15.8 120 15.4M330 19.6C370 19 410 20 450 19.4' stroke-opacity='.14' stroke-width='.5'/%3E%3C/g%3E%3C/svg%3E");
+  --grain-frame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='160' viewBox='0 0 240 160' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%236f4e33' stroke-linecap='round' stroke-width='.7'%3E%3Cpath d='M0 3C60 2 150 4.4 240 3M0 6C80 7 170 5 240 6' stroke-opacity='.2'/%3E%3Cpath d='M0 154C70 153 160 155.4 240 154M0 157.4C90 158 150 156.6 240 157.4' stroke-opacity='.2'/%3E%3Cpath d='M3 0C2 50 4.4 110 3 160M6.4 0C7 60 5.4 100 6.4 160M234 0C233 40 235 120 234 160M237.4 0C238 70 236.6 90 237.4 160' stroke-opacity='.16'/%3E%3C/g%3E%3C/svg%3E");
+  --grain-drawer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='620' height='120' viewBox='0 0 620 120' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%236f4e33' stroke-linecap='round'%3E%3Cpath d='M0 10C120 6 260 14 400 9S560 7 620 10' stroke-opacity='.17' stroke-width='.8'/%3E%3Cpath d='M0 24C100 28 220 20 330 25S520 28 620 24' stroke-opacity='.13' stroke-width='.7'/%3E%3Cpath d='M0 40C70 38 130 42 180 44C220 30 330 28 372 46C440 50 540 38 620 40' stroke-opacity='.16' stroke-width='.8'/%3E%3Cpath d='M0 54C80 52 150 56 196 58C232 44 320 42 356 60C430 66 540 52 620 54' stroke-opacity='.13' stroke-width='.7'/%3E%3Cpath d='M214 60C240 52 312 52 338 62C312 70 240 70 214 60Z' stroke-opacity='.15' stroke-width='.7'/%3E%3Cpath d='M0 72C90 70 160 74 206 72C244 82 310 82 348 74C430 80 540 68 620 72' stroke-opacity='.13' stroke-width='.7'/%3E%3Cpath d='M0 88C130 92 250 84 380 89S560 92 620 88' stroke-opacity='.16' stroke-width='.8'/%3E%3Cpath d='M0 104C110 100 240 108 360 103S540 100 620 104' stroke-opacity='.13' stroke-width='.7'/%3E%3Cpath d='M440 16C480 15 520 17.4 570 16M30 32C60 31 100 33 130 32M470 96C500 95 540 97 580 96M60 114C100 113 150 115 200 114' stroke-opacity='.1' stroke-width='.6'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Screen-reader-only helper (not in global utilities yet) */
@@ -50,24 +61,54 @@
 .library-hero {
   position: relative;
   overflow: hidden;
-  padding: calc(140px + var(--space-10)) var(--space-4) 0;
+  padding: calc(var(--header-h) + var(--space-5)) var(--space-4) 0;
   background: linear-gradient(180deg, var(--blush-wash) 0%, var(--warm-paper) 100%);
   text-align: center;
 }
 
-/* Diagonal pool of window light */
+/* Window light: two tall panes with the shadow of a glazing bar between them and a
+   transom across, falling from the upper right. Blurred, and faded out well before
+   the hero's bottom edge, so there is no seam anywhere. */
 .library-hero::before {
   content: "";
   position: absolute;
-  top: 0;
-  right: 4%;
-  width: 58%;
-  height: 100%;
-  background: linear-gradient(115deg, transparent 8%, var(--sun-pool) 42%, transparent 78%);
-  transform: skewX(-12deg);
-  /* Fade the pool out before the hero's bottom edge (no hard seam) */
-  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  top: -4%;
+  right: 3%;
+  width: 56%;
+  height: 104%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sun-pool) 9%,
+    var(--sun-pool) 45%,
+    rgba(243, 220, 173, 0.1) 48.5%,
+    rgba(243, 220, 173, 0.1) 51.5%,
+    var(--sun-pool) 55%,
+    var(--sun-pool) 91%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 29%,
+    rgba(0, 0, 0, 0.6) 32.5%,
+    rgba(0, 0, 0, 0.6) 34.5%,
+    #000 38%,
+    rgba(0, 0, 0, 0.85) 58%,
+    transparent 94%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 29%,
+    rgba(0, 0, 0, 0.6) 32.5%,
+    rgba(0, 0, 0, 0.6) 34.5%,
+    #000 38%,
+    rgba(0, 0, 0, 0.85) 58%,
+    transparent 94%
+  );
+  transform: skewX(-14deg);
+  filter: blur(14px);
   pointer-events: none;
 }
 
@@ -80,45 +121,67 @@
 
 .library-mote {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: var(--mote-size, 6px);
+  height: var(--mote-size, 6px);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fbeed9, var(--dusty-peach) 75%, transparent);
-  box-shadow: 0 0 8px 2px rgba(238, 196, 134, 0.35);
-  opacity: 0.55;
-  animation: moteDrift 16s ease-in-out infinite alternate;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #fffaf0 0%,
+    rgba(248, 222, 176, 0.9) 38%,
+    rgba(238, 196, 134, 0) 72%
+  );
+  box-shadow: 0 0 10px 3px rgba(240, 205, 148, 0.32);
+  opacity: 0.8;
+  animation: moteDrift 18s ease-in-out infinite alternate;
   animation-delay: var(--mote-delay, 0s);
 }
 
 .library-mote:nth-child(1) {
-  top: 22%;
-  left: 58%;
+  top: 21%;
+  left: 60%;
+  --mote-size: 8px;
 }
 .library-mote:nth-child(2) {
-  top: 38%;
-  left: 70%;
-  width: 3px;
-  height: 3px;
+  top: 39%;
+  left: 71%;
+  --mote-size: 5px;
 }
 .library-mote:nth-child(3) {
-  top: 16%;
-  left: 78%;
-  width: 4px;
-  height: 4px;
+  top: 15%;
+  left: 79%;
+  --mote-size: 6px;
 }
 .library-mote:nth-child(4) {
-  top: 48%;
-  left: 64%;
-  width: 3px;
-  height: 3px;
+  top: 50%;
+  left: 62%;
+  --mote-size: 5px;
+}
+.library-mote:nth-child(5) {
+  top: 30%;
+  left: 86%;
+  --mote-size: 9px;
+  opacity: 0.55;
+}
+.library-mote:nth-child(6) {
+  top: 60%;
+  left: 51%;
+  --mote-size: 7px;
+}
+.library-mote:nth-child(7) {
+  top: 68%;
+  left: 68%;
+  --mote-size: 4px;
 }
 
 @keyframes moteDrift {
-  from {
+  0% {
     transform: translate3d(0, 0, 0);
   }
-  to {
-    transform: translate3d(22px, 30px, 0);
+  45% {
+    transform: translate3d(-14px, 16px, 0);
+  }
+  100% {
+    transform: translate3d(-30px, 34px, 0);
   }
 }
 
@@ -164,62 +227,129 @@
   margin: var(--space-6) auto 0;
 }
 
-/* ---- The shelf itself ---- */
+/* ---- The shelf itself ----
+   Everything standing on the plank is sized in --u, one "shelf pixel". It is 1px on a
+   wide screen; each narrower tier (section 9) drops a few volumes and sets --u from the
+   viewport, so the whole row scales to fit instead of being cropped. Books carry their
+   width, height and colour inline as plain numbers: --book-w, --book-h, --book-c. */
 .shelf {
   position: relative;
   z-index: 2;
-  max-width: 880px;
-  margin: var(--space-16) auto 0;
+  max-width: 920px;
+  margin: var(--space-10) auto 0;
   padding: 0 var(--space-4);
 }
 
 .shelf-row {
+  --u: 1px;
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 5px;
+  gap: calc(5 * var(--u));
   /* Room for slips to float above the tallest book */
-  padding-top: var(--space-20);
+  padding-top: var(--space-16);
 }
 
-/* A single book spine, built in CSS.
-   Inline per book: --book-w, --book-h, --book-c, --book-lean */
+/* A single book spine, built in CSS: cloth weave, a rounded back that is dark at the
+   hinge on its shadow side and sheened where the window light lands, a headcap crease,
+   and a shadow thrown left onto its neighbour and the wall. */
 .shelf-book {
   position: relative;
   flex: 0 0 auto;
-  width: var(--book-w, 38px);
-  height: calc(var(--book-h, 200px) * var(--shelf-scale, 1));
+  width: calc(var(--book-w, 38) * var(--u));
+  height: calc(var(--book-h, 200) * var(--u));
   background-color: var(--book-c, var(--sage));
-  background-image: linear-gradient(
-    90deg,
-    rgba(60, 48, 40, 0.18) 0%,
-    rgba(255, 255, 255, 0.14) 16%,
-    rgba(255, 255, 255, 0) 55%,
-    rgba(60, 48, 40, 0.14) 100%
-  );
-  border-radius: 3px 3px 1px 1px;
-  box-shadow: inset 0 -3px 6px rgba(60, 48, 40, 0.12);
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.26) 0,
+      rgba(255, 255, 255, 0) 5px,
+      rgba(52, 40, 34, 0.2) 5px,
+      rgba(52, 40, 34, 0) 7px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(52, 40, 34, 0.36) 0%,
+      rgba(52, 40, 34, 0.14) 9%,
+      rgba(52, 40, 34, 0) 30%,
+      rgba(255, 250, 240, 0.22) 60%,
+      rgba(255, 250, 240, 0.08) 82%,
+      rgba(52, 40, 34, 0.18) 100%
+    ),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 2px),
+    repeating-linear-gradient(90deg, rgba(40, 30, 24, 0.035) 0 1px, transparent 1px 2px);
+  border-radius: 4px 4px 1px 1px / 5px 5px 1px 1px;
+  box-shadow:
+    inset 0 -5px 6px -2px rgba(60, 48, 40, 0.22),
+    -7px 3px 9px -3px rgba(70, 56, 44, 0.34);
   transform: rotate(var(--book-lean, 0deg));
   transform-origin: bottom center;
 }
 
-/* Gilded bands near head and tail */
+/* Default binding: a pair of gilt rules at head and tail */
 .shelf-book::before,
 .shelf-book::after {
   content: "";
   position: absolute;
-  left: 4px;
-  right: 4px;
+  left: 3px;
+  right: 3px;
   height: 1px;
-  background: rgba(253, 250, 242, 0.55);
-  box-shadow: 0 3px 0 rgba(253, 250, 242, 0.35);
+  background: var(--gilt);
+  box-shadow:
+    0 3px 0 var(--gilt-soft),
+    0 1px 0 rgba(52, 40, 34, 0.16);
 }
 
 .shelf-book::before {
-  top: 12px;
+  top: calc(15 * var(--u));
 }
 .shelf-book::after {
-  bottom: 14px;
+  bottom: calc(17 * var(--u));
+}
+
+/* Raised bands: two cords under the cloth at head and tail, lit from above */
+.shelf-book--banded::before,
+.shelf-book--banded::after {
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(40, 30, 24, 0.3) 100%
+  );
+  box-shadow:
+    0 calc(15 * var(--u)) 0 -1px rgba(40, 30, 24, 0.26),
+    0 calc(15 * var(--u) - 2px) 0 -1px rgba(255, 255, 255, 0.36);
+}
+
+.shelf-book--banded::before {
+  top: calc(13 * var(--u));
+}
+.shelf-book--banded::after {
+  bottom: calc(27 * var(--u));
+}
+
+/* Quarter binding: head and tail wrapped in a darker cloth, edged in gilt */
+.shelf-book--capped::before,
+.shelf-book--capped::after {
+  left: 0;
+  right: 0;
+  height: calc(22 * var(--u));
+  background: rgba(60, 46, 38, 0.24);
+  box-shadow: none;
+}
+
+.shelf-book--capped::before {
+  top: 0;
+  border-radius: 4px 4px 0 0 / 5px 5px 0 0;
+  border-bottom: 1px solid var(--gilt);
+}
+.shelf-book--capped::after {
+  bottom: 0;
+  border-top: 1px solid var(--gilt);
 }
 
 .shelf-book-title {
@@ -232,11 +362,30 @@
   text-orientation: mixed;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: var(--text-sm);
+  font-size: clamp(0.72rem, calc(14 * var(--u)), var(--text-sm));
   letter-spacing: 0.06em;
-  color: rgba(253, 250, 242, 0.95);
+  color: rgba(253, 250, 242, 0.96);
+  text-shadow: 0 1px 1px rgba(52, 40, 34, 0.28);
   white-space: nowrap;
   pointer-events: none;
+}
+
+/* Gilt lozenges tooled above and below each title (the flex axis runs down the spine) */
+.shelf-book-title::before,
+.shelf-book-title::after {
+  content: "";
+  flex: 0 0 auto;
+  width: calc(5 * var(--u));
+  height: calc(5 * var(--u));
+  margin-inline: calc(11 * var(--u));
+  background: var(--gilt);
+  box-shadow: 0 1px 0 rgba(52, 40, 34, 0.2);
+  transform: rotate(45deg);
+}
+
+.shelf-book--lend .shelf-book-title::before,
+.shelf-book--lend .shelf-book-title::after {
+  content: none;
 }
 
 /* ---- Lendable books (real buttons) ---- */
@@ -256,24 +405,35 @@
   transition: transform var(--transition-base);
 }
 
+/* The lendable ones wear a pasted paper label, the way library books do */
 .shelf-book--lend .shelf-book-title {
+  inset: 21% calc(4 * var(--u)) 19%;
   color: var(--spine-ink);
   font-style: normal;
   font-weight: 500;
+  text-shadow: none;
+  background: linear-gradient(90deg, #efe6d3 0%, #fdfaf2 55%, #f5eddc 100%);
+  border-radius: 1.5px;
+  box-shadow:
+    0 1px 2px rgba(52, 40, 34, 0.3),
+    inset 0 0 0 2px #fdfaf2,
+    inset 0 0 0 3px rgba(184, 129, 126, 0.55);
 }
 
-/* A little ribbon tab peeking from the head: "pull me" */
+/* A ribbon marker peeking from the head: "pull me" */
 .shelf-book--lend .shelf-book-ribbon {
   position: absolute;
-  top: -9px;
+  top: -10px;
   left: 50%;
   margin-left: -5px;
   width: 10px;
-  height: 16px;
-  background: var(--library-cream);
-  border: 1px solid rgba(96, 102, 90, 0.25);
-  border-bottom: none;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  height: 18px;
+  background:
+    linear-gradient(90deg, rgba(52, 40, 34, 0.2) 0, rgba(255, 255, 255, 0.2) 55%, transparent 100%),
+    var(--tab-c, var(--ribbon-rose));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 76%, 0 100%);
+  transform: rotate(4deg);
+  transform-origin: bottom center;
 }
 
 .shelf-book--lend:hover,
@@ -336,14 +496,17 @@
   z-index: 5;
 }
 
-/* The pressed flower tucked between two books */
+/* A pressed cosmos propped against the picture frame */
 .shelf-flower {
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
-  width: 26px;
+  width: calc(40 * var(--u));
   align-self: flex-end;
-  margin: 0 -2px;
-  color: var(--warm-clay);
-  opacity: 0.75;
+  margin: 0 calc(-9 * var(--u)) 0 0;
+  color: var(--clay-deep);
+  transform: rotate(9deg);
+  transform-origin: bottom center;
 }
 
 .shelf-flower svg {
@@ -352,45 +515,73 @@
   height: auto;
 }
 
-/* Botanical bookends */
+/* Bookends: things with weight that stand on the plank and hold the row up.
+   Left, a potted philodendron whose longest vine hangs over the plank's edge;
+   right, two books lying flat with a bottle of dried lavender on top. */
 .shelf-bookend {
+  position: relative;
+  z-index: 3;
   flex: 0 0 auto;
-  width: 54px;
   align-self: flex-end;
-  margin-bottom: -4px;
-  color: var(--sage);
-  opacity: 0.8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
 }
 
 .shelf-bookend svg {
   display: block;
-  width: 100%;
   height: auto;
+  overflow: visible;
 }
 
+/* The drawing is 124 x 236; its last 36 units hang below the plank's top edge,
+   and its right-hand leaves reach across the first book */
 .shelf-bookend-left {
-  margin-right: var(--space-3);
+  margin-right: calc(-10 * var(--u));
 }
+
+.shelf-bookend-left svg {
+  width: calc(138 * var(--u));
+  margin-bottom: calc(-40 * var(--u));
+  filter: drop-shadow(-5px 3px 5px rgba(70, 56, 44, 0.2));
+}
+
 .shelf-bookend-right {
-  margin-left: var(--space-3);
+  margin-left: calc(2 * var(--u));
+}
+
+.shelf-stack {
+  width: calc(126 * var(--u));
+  filter: drop-shadow(-5px 2px 4px rgba(70, 56, 44, 0.22));
+}
+
+.shelf-jar {
+  width: calc(64 * var(--u));
+  margin: 0 0 calc(-0.5 * var(--u)) calc(8 * var(--u));
+  filter: drop-shadow(-4px 2px 4px rgba(70, 56, 44, 0.16));
 }
 
 /* A framed photo of Elizabeth standing among the books,
    in the same wood as the plank. Static lean follows the
    --book-lean precedent (no .reveal here, so no tilt conflict). */
 .shelf-frame {
+  position: relative;
   flex: 0 0 auto;
   align-self: flex-end;
-  width: calc(122px * var(--shelf-scale, 1));
-  margin: 0 var(--space-2);
-  padding: 7px 7px 9px;
+  width: calc(122 * var(--u));
+  margin: 0 calc(8 * var(--u));
+  padding: calc(8 * var(--u)) calc(8 * var(--u)) calc(9 * var(--u));
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 9px),
-    linear-gradient(160deg, var(--shelf-wood) 0%, var(--shelf-wood-deep) 100%);
+    var(--grain-frame) 0 0 / 240px 100%,
+    linear-gradient(160deg, #d6b999 0%, var(--shelf-wood) 40%, var(--shelf-wood-deep) 100%);
   border-radius: 2px;
   box-shadow:
-    0 2px 5px rgba(96, 102, 90, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    -7px 3px 9px -3px rgba(70, 56, 44, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset -1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 -2px 2px rgba(80, 56, 36, 0.3),
+    inset 2px 0 2px rgba(80, 56, 36, 0.18);
   transform: rotate(-1.5deg);
   transform-origin: bottom center;
 }
@@ -402,36 +593,59 @@
   object-fit: cover;
   object-position: 50% 28%;
   border-radius: 1px;
+  /* the rebate: the frame's inner edge shades the picture */
+  box-shadow:
+    0 0 0 1px rgba(96, 70, 50, 0.4),
+    0 0 0 2px rgba(255, 244, 228, 0.35);
 }
 
-/* The wooden plank everything stands on */
+/* The wooden plank everything stands on: long grain, a lit top arris, a shaded
+   underside, two turned brackets and its shadow on the wall */
 .shelf-plank {
   position: relative;
-  height: 16px;
-  max-width: 920px;
-  margin: 0 auto;
+  height: 22px;
+  margin: 0 calc(-1 * var(--space-3));
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 9px),
-    linear-gradient(180deg, var(--shelf-wood) 0%, var(--shelf-wood-deep) 100%);
-  border-radius: 2px;
+    var(--grain-plank) 0 0 / 520px 100%,
+    linear-gradient(
+      180deg,
+      #e0c5a7 0%,
+      #d0b192 16%,
+      var(--shelf-wood) 46%,
+      #bb9a7c 82%,
+      var(--shelf-wood-deep) 100%
+    );
+  border-radius: 3px;
   box-shadow:
-    0 2px 4px rgba(96, 102, 90, 0.18),
-    0 14px 22px -10px rgba(96, 102, 90, 0.3);
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 2px rgba(80, 56, 36, 0.28),
+    inset 2px 0 2px rgba(80, 56, 36, 0.14),
+    0 3px 5px rgba(96, 80, 60, 0.24),
+    -10px 24px 26px -14px rgba(96, 80, 60, 0.4);
 }
 
+/* Brackets, seen end on: a corbel that narrows to a chamfered foot */
+.shelf-plank::before,
 .shelf-plank::after {
   content: "";
   position: absolute;
-  left: 6px;
-  right: 6px;
-  bottom: -7px;
-  height: 7px;
-  background: linear-gradient(180deg, var(--shelf-wood-deep), rgba(176, 143, 115, 0));
-  border-radius: 0 0 3px 3px;
-  opacity: 0.7;
+  top: 100%;
+  width: 26px;
+  height: 34px;
+  background:
+    linear-gradient(180deg, rgba(60, 44, 30, 0.5) 0, rgba(60, 44, 30, 0) 14px),
+    linear-gradient(90deg, #a3846a 0%, #b99878 22%, #cdae8f 60%, #c2a183 80%, #a98a6e 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 46%, 86% 62%, 74% 100%, 26% 100%, 14% 62%, 0 46%);
 }
 
-/* Hero bottom breathing room below the shelf */
+.shelf-plank::before {
+  left: 13%;
+}
+.shelf-plank::after {
+  right: 13%;
+}
+
+/* Hero bottom breathing room below the shelf and its brackets */
 .library-hero .shelf-plank {
   margin-bottom: var(--space-20);
 }
@@ -455,11 +669,12 @@
   margin: 0 auto var(--space-8);
 }
 
+/* LeafDivider is a leaf sprig between two hairlines: big enough, and deep enough a
+   sage, for the leaves to read as leaves */
 .welcome-desk-divider {
-  width: 130px;
+  width: 190px;
   margin: 0 auto;
-  color: var(--sage);
-  opacity: 0.8;
+  color: #7f978a;
 }
 
 .welcome-desk-divider svg {
@@ -553,40 +768,61 @@
   position: relative;
 }
 
+/* A date-due card. Everything below the printed heading is set on one 28px pitch:
+   the ruled lines are anchored to the card's bottom edge, and the description, the
+   stamp and the pocket are whole rows tall, so the text always sits on the lines.
+   The heading takes up whatever height is left over. */
 .checkout-card-inner {
+  --pitch: 28px;
+  --pad-x: var(--space-6);
+  --pad-b: var(--space-6);
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-image:
-    repeating-linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 27px,
-      var(--card-rule) 27px,
-      var(--card-rule) 28px
-    ),
-    linear-gradient(135deg, var(--library-cream) 0%, #faf5ea 100%);
+  background: linear-gradient(180deg, var(--library-cream) 0%, #fbf6ea 100%);
   border: 1px solid rgba(208, 180, 166, 0.55);
   border-radius: 3px;
   box-shadow:
     var(--shadow-subtle),
-    0 8px 20px rgba(96, 102, 90, 0.09),
-    inset 0 0 36px rgba(208, 180, 166, 0.07);
-  padding: var(--space-8) var(--space-6) var(--space-6);
+    0 1px 0 #f3ead9,
+    0 8px 20px rgba(96, 102, 90, 0.1),
+    inset 0 0 36px rgba(208, 180, 166, 0.08);
+  padding: 0 var(--pad-x) var(--pad-b);
   transform: rotate(calc(var(--tilt, 0deg) * var(--tilt-scale, 1)));
   transition: transform var(--transition-base);
+}
+
+.checkout-card-inner::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 calc(var(--pad-b) - 12px);
+  background: repeating-linear-gradient(
+    0deg,
+    var(--card-rule) 0,
+    var(--card-rule) 1px,
+    transparent 1px,
+    transparent var(--pitch)
+  );
 }
 
 .checkout-card:hover .checkout-card-inner {
   transform: rotate(0deg);
 }
 
+/* The printed heading: plain stock, closed by a double rule in stamp-pad red */
 .checkout-head {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 calc(-1 * var(--pad-x));
+  padding: var(--space-8) var(--pad-x) var(--space-4);
+  background: var(--library-cream);
+  border-radius: 3px 3px 0 0;
+  border-bottom: 3px double rgba(184, 129, 126, 0.6);
   text-align: center;
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid rgba(96, 102, 90, 0.25);
-  margin-bottom: var(--space-3);
 }
 
 .checkout-title {
@@ -602,47 +838,86 @@
 .checkout-catalogued {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--slate-olive);
   margin-bottom: 0;
 }
 
-/* The institutional DATE DUE / BORROWER row */
+/* The institutional DATE DUE / BORROWER row: a printed table head, one row tall */
 .checkout-rule-row {
   display: flex;
-  justify-content: space-between;
+  box-sizing: border-box;
+  height: var(--pitch);
+  margin: 0 calc(-1 * var(--pad-x));
+  padding: 0 var(--pad-x);
+  background: var(--library-cream);
+  border-bottom: 1px solid rgba(125, 144, 148, 0.6);
   font-family: var(--font-nav);
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: calc(var(--pitch) - 1px);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(113, 121, 110, 0.75);
-  margin-bottom: var(--space-4);
+  color: var(--slate-olive);
+}
+
+.checkout-rule-row span:first-child {
+  flex: 0 0 auto;
+  padding-right: var(--space-4);
+  border-right: 1px solid rgba(125, 144, 148, 0.6);
+}
+
+.checkout-rule-row span:last-child {
+  flex: 1;
+  text-align: right;
 }
 
 .checkout-desc {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  line-height: 1.9;
-  margin-bottom: var(--space-5);
+  line-height: var(--pitch);
+  padding-top: 4px;
+  margin-bottom: 0;
 }
 
-/* Rubber stamp; thumps in when the card reveals */
+/* Rubber stamp, one row tall with a blank row either side: a heavy border with a
+   hairline inside it, and ink that did not take evenly. Thumps in when the card reveals. */
 .checkout-stamp {
   align-self: center;
-  display: inline-block;
-  padding: var(--space-1) var(--space-3);
-  margin-bottom: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--pitch);
+  padding: 0 var(--space-4);
+  margin: var(--pitch) 0;
   border: 2px solid var(--stamp-ink);
-  border-radius: 3px;
+  border-radius: 4px;
+  outline: 1px solid var(--stamp-ink);
+  outline-offset: -5px;
   font-family: var(--font-nav);
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--stamp-ink);
   transform: rotate(-6deg);
-  opacity: 0.85;
+  opacity: 0.9;
   mix-blend-mode: multiply;
+  -webkit-mask: var(--ink-wear) 0 0 / 150px 60px;
+  mask: var(--ink-wear) 0 0 / 150px 60px;
+}
+
+.checkout-card:nth-child(2) .checkout-stamp {
+  transform: rotate(3.5deg);
+  -webkit-mask-position: -40px -22px;
+  mask-position: -40px -22px;
+}
+
+.checkout-card:nth-child(3) .checkout-stamp {
+  transform: rotate(-3deg);
+  -webkit-mask-position: -90px -8px;
+  mask-position: -90px -8px;
 }
 
 .reveal.visible .checkout-stamp {
@@ -652,40 +927,40 @@
 @keyframes stampIn {
   0% {
     opacity: 0;
-    transform: rotate(-6deg) scale(1.7);
+    scale: 1.7;
   }
   70% {
-    opacity: 0.9;
-    transform: rotate(-6deg) scale(0.94);
+    opacity: 0.95;
+    scale: 0.94;
   }
   100% {
-    opacity: 0.85;
-    transform: rotate(-6deg) scale(1);
+    opacity: 0.9;
+    scale: 1;
   }
 }
 
 /* Kraft card pocket; the checkout card peeks out of it */
 .checkout-pocket {
   position: relative;
-  margin-top: auto;
   height: 96px;
 }
 
 /* The card sticking out of the pocket (the link itself) */
 .checkout-link {
   position: absolute;
-  top: -6px;
+  top: -8px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-5) var(--space-10);
-  background: #fffdf8;
-  border: 1px solid rgba(150, 172, 160, 0.4);
-  border-radius: 2px 2px 0 0;
-  box-shadow: 0 2px 6px rgba(96, 102, 90, 0.12);
+  padding: var(--space-3) var(--space-5) var(--space-12);
+  background: linear-gradient(180deg, #fffdf8 0, #fffdf8 38px, #f7f0e2 100%);
+  border: 1px solid rgba(150, 172, 160, 0.5);
+  border-top: 3px solid rgba(184, 129, 126, 0.55);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 2px 6px rgba(96, 102, 90, 0.14);
   font-family: var(--font-nav);
   font-size: var(--text-sm);
   font-weight: 600;
@@ -708,7 +983,7 @@
 .checkout-card:hover .checkout-link,
 .checkout-link:focus-visible {
   transform: translateX(-50%) translateY(-6px);
-  color: var(--warm-clay);
+  color: var(--clay-deep);
 }
 
 .checkout-link:focus-visible {
@@ -716,63 +991,183 @@
   outline-offset: 2px;
 }
 
-/* Pocket front, drawn over the card's lower half */
+/* Pocket front, drawn over the card's lower half: kraft paper with its fibres showing,
+   the mouth folded over into a hem with a thumb notch cut in it, and the two side
+   flaps glued down underneath */
 .checkout-pocket::after {
   content: "";
   position: absolute;
-  left: calc(-1 * var(--space-6));
-  right: calc(-1 * var(--space-6));
-  top: 34px;
-  bottom: calc(-1 * var(--space-6));
+  left: calc(-1 * var(--pad-x));
+  right: calc(-1 * var(--pad-x));
+  top: 38px;
+  bottom: calc(-1 * var(--pad-b));
   z-index: 2;
-  background: linear-gradient(180deg, var(--pocket-kraft) 0%, #e3d2b8 100%);
-  clip-path: polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%);
-  box-shadow: inset 0 4px 6px -3px rgba(96, 102, 90, 0.3);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.34) 0,
+      rgba(255, 255, 255, 0.1) 8px,
+      rgba(110, 84, 56, 0.3) 8px,
+      rgba(110, 84, 56, 0) 12px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(110, 84, 56, 0.1) 0,
+      rgba(110, 84, 56, 0) 17px,
+      rgba(110, 84, 56, 0.24) 17px,
+      rgba(110, 84, 56, 0) 18px,
+      rgba(110, 84, 56, 0) calc(100% - 18px),
+      rgba(110, 84, 56, 0.24) calc(100% - 18px),
+      rgba(110, 84, 56, 0) calc(100% - 17px),
+      rgba(110, 84, 56, 0.08) 100%
+    ),
+    var(--kraft-fibre) 0 0 / 300px 120px,
+    linear-gradient(180deg, var(--pocket-kraft) 0%, #dfcbac 100%);
+  border-radius: 0 0 3px 3px;
+  -webkit-mask: radial-gradient(52px 16px at 50% 0, transparent 96%, #000 100%);
+  mask: radial-gradient(52px 16px at 50% 0, transparent 96%, #000 100%);
+  pointer-events: none;
+}
+
+/* What is printed on the pocket: a ruled frame and a small open book */
+.checkout-pocket::before {
+  content: "";
+  position: absolute;
+  left: calc(34px - var(--pad-x));
+  right: calc(34px - var(--pad-x));
+  top: 62px;
+  bottom: calc(12px - var(--pad-b));
+  z-index: 3;
+  background: var(--pocket-mark) center / 46px 24px no-repeat;
+  border: 1px solid rgba(138, 104, 72, 0.4);
+  border-radius: 2px;
+  opacity: 0.85;
   pointer-events: none;
 }
 
 /* ============================================
    5. BOOKMARK BANDS - Notes from the Margins
+   A book lies shut across the top of each band: we see the edges of its pages and
+   the board under them. A ribbon marker hangs out of it, and a handmade bookmark
+   (a pressed plant on a card, with a thread through the hole) rests beside the note.
    ============================================ */
 .bookmark-band {
   position: relative;
   overflow: hidden;
-  padding: var(--space-20) var(--space-4);
+  --band-book-inset: max(5%, calc(50% - 560px));
+  padding: calc(var(--space-20) + var(--space-4)) var(--space-4) var(--space-20);
   background: var(--warm-paper);
   text-align: center;
 }
 
-/* The ribbon left hanging in a book */
-.bookmark-ribbon {
+/* The book: its page edges (::before), and under them the lower board, a little
+   longer than the pages at both ends (::after) */
+.bookmark-band::before,
+.bookmark-band::after {
+  content: "";
   position: absolute;
+  left: var(--band-book-inset);
+  right: var(--band-book-inset);
+}
+
+.bookmark-band::before {
   top: 0;
-  left: max(16%, calc(50% - 435px));
-  width: 48px;
-  height: 130px;
+  height: 17px;
+  margin: 0 9px;
+  background:
+    linear-gradient(90deg, rgba(120, 96, 70, 0.3) 0, transparent 10px),
+    linear-gradient(270deg, rgba(120, 96, 70, 0.22) 0, transparent 10px),
+    linear-gradient(180deg, rgba(120, 96, 70, 0.28) 0, transparent 7px),
+    repeating-linear-gradient(
+      180deg,
+      #fbf6ea 0,
+      #fbf6ea 1.6px,
+      rgba(176, 143, 115, 0.45) 1.6px,
+      rgba(176, 143, 115, 0.45) 2.4px
+    );
+}
+
+.bookmark-band::after {
+  top: 17px;
+  height: 7px;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--ribbon-rose) 88%, white) 0%,
-    var(--ribbon-rose) 100%
+    var(--band-board-light, #d3aaa6) 0,
+    var(--band-board, #c0908c) 2px,
+    var(--band-board-deep, #a67571) 100%
   );
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), 50% 100%, 0 calc(100% - 16px));
-  box-shadow: 0 4px 10px rgba(96, 102, 90, 0.18);
-  opacity: 0.9;
+  border-radius: 0 0 5px 5px / 0 0 6px 6px;
+  box-shadow:
+    0 1px 0 rgba(60, 48, 40, 0.2),
+    -3px 6px 9px rgba(96, 80, 60, 0.22);
 }
 
-.bookmark-flower {
+/* The ribbon left hanging in the book (BookmarkRibbon, coloured by `color`) */
+.bookmark-ribbon {
   position: absolute;
-  right: max(14%, calc(50% - 461px));
-  bottom: var(--space-6);
-  width: 54px;
-  color: var(--sage);
-  opacity: 0.4;
-  transform: rotate(14deg);
+  z-index: 1;
+  top: 9px;
+  left: max(15%, calc(50% - 445px));
+  width: 50px;
+  color: var(--ribbon-rose);
 }
 
+.bookmark-ribbon svg,
 .bookmark-flower svg {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* The pressed-flower bookmark */
+.bookmark-flower {
+  position: absolute;
+  right: max(12%, calc(50% - 478px));
+  top: calc(50% + 6px);
+  box-sizing: border-box;
+  width: 78px;
+  padding: 30px 12px 12px;
+  background: linear-gradient(165deg, #fffdf7 0%, #f9f2e3 100%);
+  border: 1px solid rgba(208, 180, 166, 0.7);
+  border-radius: 7px;
+  box-shadow:
+    -5px 6px 12px rgba(96, 80, 60, 0.16),
+    inset 0 0 0 4px #fffdf7,
+    inset 0 0 0 5px rgba(184, 129, 126, 0.28);
+  color: var(--clay-deep);
+  transform: translateY(-50%) rotate(8deg);
+}
+
+/* the punched hole, showing the band's paper through it */
+.bookmark-flower::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--band-paper, var(--warm-paper));
+  box-shadow:
+    inset 1px 1px 2px rgba(96, 80, 60, 0.4),
+    0 0 0 1px rgba(208, 180, 166, 0.6);
+}
+
+/* a loop of thread through it */
+.bookmark-flower::after {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  width: 15px;
+  height: 40px;
+  margin-left: -10px;
+  border: 1.5px solid var(--band-thread, #b8998a);
+  border-bottom-color: transparent;
+  border-radius: 50% 50% 46% 54% / 42% 42% 58% 58%;
+  transform: rotate(-13deg);
+  transform-origin: bottom center;
 }
 
 .bookmark-quote {
@@ -793,26 +1188,39 @@
   margin-bottom: 0;
 }
 
-/* Alternate band: mirrored, sage ribbon */
+/* Alternate band: mirrored. A sage book and ribbon, and pressed lavender on the card */
 .bookmark-band--alt {
+  --band-paper: var(--blush-wash);
+  --band-board-light: #b9c9be;
+  --band-board: #9fb3a7;
+  --band-board-deep: #859c8f;
+  --band-thread: #9fb3a7;
   background: var(--blush-wash);
 }
 
 .bookmark-band--alt .bookmark-ribbon {
   left: auto;
-  right: max(16%, calc(50% - 435px));
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--sage) 88%, white) 0%,
-    var(--sage) 100%
-  );
+  right: max(15%, calc(50% - 445px));
+  color: var(--sage);
+  transform: scaleX(-1);
 }
 
 .bookmark-band--alt .bookmark-flower {
   right: auto;
-  left: max(14%, calc(50% - 461px));
-  color: var(--muted-rose);
-  transform: rotate(-14deg);
+  left: max(12%, calc(50% - 478px));
+  padding: 28px 16px 10px;
+  color: #6f7f8f;
+  box-shadow:
+    5px 6px 12px rgba(96, 80, 60, 0.16),
+    inset 0 0 0 4px #fffdf7,
+    inset 0 0 0 5px rgba(125, 144, 148, 0.3);
+  transform: translateY(-50%) rotate(-7deg);
+}
+
+/* LavenderSprig leaves wide margins inside its viewBox; fill the card with it */
+.bookmark-band--alt .bookmark-flower svg {
+  transform: scale(1.1);
+  transform-origin: 50% 64%;
 }
 
 .bookmark-band--alt .bookmark-quote {
@@ -832,37 +1240,104 @@
   color: var(--text-secondary);
 }
 
+/* The cabinet: a darker carcass that shows between the drawers, a cornice on top
+   and a plinth underneath */
 .catalog-cabinet {
-  max-width: 620px;
-  margin: 0 auto;
-  padding: var(--space-5);
+  position: relative;
+  max-width: 600px;
+  margin: 14px auto 18px;
+  padding: var(--space-4);
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 8px),
-    linear-gradient(160deg, var(--shelf-wood) 0%, var(--shelf-wood-deep) 100%);
-  border-radius: var(--radius-md);
+    var(--grain-drawer) 40px 0 / 620px 100%,
+    linear-gradient(180deg, #a98a6e 0%, #9c7d62 100%);
+  border-radius: 2px;
   box-shadow:
-    0 2px 6px rgba(96, 102, 90, 0.16),
-    0 18px 38px -14px rgba(96, 102, 90, 0.4);
+    inset 0 0 0 1px rgba(60, 44, 30, 0.28),
+    inset 0 8px 10px -5px rgba(60, 44, 30, 0.4),
+    inset 6px 0 8px -5px rgba(60, 44, 30, 0.25),
+    inset -6px 0 8px -5px rgba(60, 44, 30, 0.2),
+    0 26px 40px -18px rgba(96, 80, 60, 0.5);
+}
+
+.catalog-cabinet::before,
+.catalog-cabinet::after {
+  content: "";
+  position: absolute;
+  background:
+    var(--grain-plank) 0 0 / 520px 100%,
+    linear-gradient(180deg, #dcc0a1 0%, var(--shelf-wood) 40%, var(--shelf-wood-deep) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 2px rgba(80, 56, 36, 0.28),
+    0 3px 5px rgba(96, 80, 60, 0.28);
+}
+
+.catalog-cabinet::before {
+  top: -14px;
+  left: -10px;
+  right: -10px;
+  height: 14px;
+  border-radius: 3px 3px 1px 1px;
+}
+
+.catalog-cabinet::after {
+  bottom: -18px;
+  left: -6px;
+  right: -6px;
+  height: 18px;
+  background-position: -200px 0;
+  border-radius: 1px 1px 3px 3px;
 }
 
 .catalog-drawer + .catalog-drawer {
   margin-top: var(--space-3);
 }
 
+/* A drawer front: flat-sawn grain, a lit top edge and a routed line round the face.
+   The brass holder frames its label; the bin pull hangs centred below. */
 .catalog-drawer-face {
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
-  background: linear-gradient(180deg, #d5b898 0%, #c7a685 100%);
-  border: 1px solid rgba(96, 70, 50, 0.25);
-  border-radius: var(--radius-sm);
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  background:
+    var(--grain-drawer) 0 0 / 620px 100%,
+    linear-gradient(180deg, #dcc1a2 0%, #d0b192 30%, #c5a585 100%);
+  border-radius: 3px;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 2px 4px rgba(60, 48, 40, 0.15);
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 0 rgba(96, 70, 50, 0.28),
+    inset 1px 0 0 rgba(96, 70, 50, 0.16),
+    inset -1px 0 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(70, 50, 32, 0.35),
+    0 4px 5px rgba(50, 36, 24, 0.4);
   cursor: pointer;
   list-style: none;
   transition: transform var(--transition-fast);
+}
+
+.catalog-drawer:nth-child(2) .catalog-drawer-face {
+  background-position:
+    -210px 0,
+    0 0;
+}
+
+.catalog-drawer:nth-child(3) .catalog-drawer-face {
+  background-position:
+    -430px 0,
+    0 0;
+}
+
+.catalog-drawer-face::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(96, 70, 50, 0.2);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
+  pointer-events: none;
 }
 
 .catalog-drawer-face::-webkit-details-marker {
@@ -878,25 +1353,55 @@
   transform: translateY(3px);
 }
 
-.catalog-pull {
-  flex: 0 0 auto;
-  width: 64px;
-  color: var(--brass);
+/* Brass label holder: a cast frame with a lug at each end for its rivet */
+.catalog-holder {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%, 410px);
+  padding: 6px 27px;
+  background: linear-gradient(176deg, #e2cb9a 0%, #c4a872 36%, #a98c57 70%, #8d7242 100%);
+  border-radius: 5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 247, 219, 0.85),
+    inset 0 -1px 0 rgba(70, 50, 24, 0.5),
+    inset -1px 0 0 rgba(255, 247, 219, 0.3),
+    0 0 0 1px rgba(90, 66, 36, 0.4),
+    -2px 3px 4px rgba(50, 36, 24, 0.4);
 }
 
-.catalog-pull svg {
-  display: block;
-  width: 100%;
-  height: auto;
+.catalog-holder::before,
+.catalog-holder::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 62% 34%, #fbeec6 0%, #c9ab71 42%, #7d6338 100%);
+  box-shadow:
+    0 0 0 1px rgba(70, 50, 24, 0.4),
+    -1px 1px 1px rgba(50, 36, 24, 0.45);
 }
 
+.catalog-holder::before {
+  left: 9px;
+}
+.catalog-holder::after {
+  right: 9px;
+}
+
+/* The label card slid into the holder, shaded by the frame's upper edge */
 .catalog-label {
-  flex: 1;
-  display: inline-block;
-  padding: var(--space-2) var(--space-4);
-  background: var(--library-cream);
-  border: 1px solid rgba(96, 70, 50, 0.2);
-  border-radius: 2px;
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  background: linear-gradient(180deg, #f6efdf 0%, var(--library-cream) 30%);
+  border-radius: 1px;
+  box-shadow:
+    inset 0 2px 3px rgba(60, 44, 30, 0.35),
+    inset 2px 0 2px -1px rgba(60, 44, 30, 0.2),
+    0 0 0 1px rgba(70, 50, 24, 0.45),
+    0 1px 0 1px rgba(255, 247, 219, 0.5);
   font-family: var(--font-nav);
   font-size: var(--text-sm);
   font-weight: 600;
@@ -904,6 +1409,18 @@
   text-transform: uppercase;
   color: var(--text-primary);
   text-align: center;
+}
+
+.catalog-pull {
+  flex: 0 0 auto;
+  width: 86px;
+  color: #c2a56c;
+}
+
+.catalog-pull svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .catalog-drawer-inner {
@@ -925,7 +1442,7 @@
   }
 }
 
-/* The index card found inside the drawer */
+/* The index card found inside the drawer: its text is set on the card's 26px rules */
 .catalog-card {
   position: relative;
   margin: var(--space-3) var(--space-2) var(--space-2);
@@ -939,34 +1456,39 @@
       var(--card-rule) 26px
     ),
     linear-gradient(135deg, var(--library-cream), #faf5e9);
+  background-position:
+    0 -8px,
+    0 0;
   border: 1px solid rgba(208, 180, 166, 0.5);
+  border-top: 2px solid rgba(184, 129, 126, 0.5);
   border-radius: 2px;
-  box-shadow: 0 3px 10px rgba(60, 48, 40, 0.14);
+  box-shadow: 0 3px 10px rgba(60, 48, 40, 0.3);
 }
 
 .catalog-card p {
   font-size: var(--text-sm);
   color: var(--text-secondary);
-  line-height: 1.8;
-  margin-bottom: var(--space-3);
+  line-height: 26px;
+  margin-bottom: 0;
 }
 
 .catalog-download {
+  display: inline-block;
   font-family: var(--font-nav);
   font-size: var(--text-xs);
   font-weight: 600;
+  line-height: 26px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--slate-olive);
-  text-decoration: none;
-  border-bottom: 1px dashed rgba(113, 121, 110, 0.5);
-  padding-bottom: 2px;
+  color: var(--text-primary);
+  text-decoration: underline dashed rgba(113, 121, 110, 0.6) 1px;
+  text-underline-offset: 4px;
 }
 
 .catalog-download:hover,
 .catalog-download:focus-visible {
-  color: var(--text-primary);
-  border-bottom-style: solid;
+  color: var(--clay-deep);
+  text-decoration-style: solid;
 }
 
 .catalog-footnote {
@@ -1073,7 +1595,7 @@
    ============================================ */
 .lending-cta {
   position: relative;
-  padding: var(--space-24) var(--space-4);
+  padding: var(--space-32) var(--space-4) var(--space-24);
   background: linear-gradient(180deg, var(--warm-paper) 0%, var(--blush-wash) 100%);
   overflow: hidden;
 }
@@ -1085,24 +1607,32 @@
   isolation: isolate;
 }
 
+/* Her own library card: rounded stock with a printed hairline frame. The body is left
+   plain so the heading and paragraph are not fighting ruled lines they cannot sit on;
+   the only rule is the one she signs on. */
 .lending-cta-card {
   position: relative;
   padding: var(--space-12) var(--space-10) var(--space-10);
-  background-image:
-    repeating-linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 31px,
-      var(--card-rule) 31px,
-      var(--card-rule) 32px
-    ),
-    linear-gradient(135deg, var(--library-cream) 0%, #faf5ea 100%);
-  border: 1px solid rgba(208, 180, 166, 0.55);
-  border-radius: 3px;
+  background: linear-gradient(170deg, #fffcf5 0%, var(--library-cream) 45%, #faf4e6 100%);
+  border: 1px solid rgba(208, 180, 166, 0.65);
+  border-radius: 12px;
   box-shadow:
     var(--shadow-soft),
-    0 14px 34px rgba(96, 102, 90, 0.12);
+    0 1px 0 #f1e7d5,
+    0 16px 34px rgba(96, 102, 90, 0.14);
   text-align: center;
+}
+
+.lending-cta-card::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(184, 129, 126, 0.4);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 3px var(--library-cream),
+    inset 0 0 0 4px rgba(184, 129, 126, 0.18);
+  pointer-events: none;
 }
 
 .lending-cta-card h2 {
@@ -1122,51 +1652,104 @@
   position: absolute;
   top: var(--space-5);
   right: var(--space-5);
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-1) var(--space-4);
   border: 2px solid var(--stamp-ink);
-  border-radius: 3px;
+  border-radius: 4px;
+  outline: 1px solid var(--stamp-ink);
+  outline-offset: -5px;
   font-family: var(--font-nav);
-  font-size: 0.62rem;
-  font-weight: 600;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 2;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--stamp-ink);
   transform: rotate(7deg);
-  opacity: 0.8;
+  opacity: 0.9;
   mix-blend-mode: multiply;
-}
-
-.lending-signature {
-  display: block;
-  font-family: "Great Vibes", cursive;
-  font-size: 1.9rem;
-  color: var(--warm-clay);
-  margin-top: var(--space-6);
+  -webkit-mask: var(--ink-wear) -60px -30px / 150px 60px;
+  mask: var(--ink-wear) -60px -30px / 150px 60px;
 }
 
 .lending-signoff {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  gap: var(--space-5);
-  margin-top: var(--space-8);
+  gap: var(--space-6);
+  margin-top: var(--space-10);
 }
 
-.lending-signoff .lending-signature {
-  margin-top: 0;
+/* She signs on the card's one ruled line */
+.lending-signature {
+  display: block;
+  min-width: 150px;
+  margin-bottom: var(--space-5);
+  padding: 0 var(--space-4) 2px;
+  border-bottom: 1px solid rgba(125, 144, 148, 0.5);
+  font-family: "Great Vibes", cursive;
+  font-size: 1.9rem;
+  line-height: 1.3;
+  color: var(--warm-clay);
+  text-align: left;
+  white-space: nowrap;
 }
 
-/* The patron photo on her own library card; paper mount
-   matches the .checkout-link card stock */
+/* The patron photo, standing in a kraft pocket like the checkout cards' */
+.lending-pocket {
+  position: relative;
+  padding: 0 16px 8px;
+}
+
+.lending-pocket::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 52px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.34) 0,
+      rgba(255, 255, 255, 0.1) 7px,
+      rgba(110, 84, 56, 0.3) 7px,
+      rgba(110, 84, 56, 0) 11px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(110, 84, 56, 0.1) 0,
+      rgba(110, 84, 56, 0) 9px,
+      rgba(110, 84, 56, 0.24) 9px,
+      rgba(110, 84, 56, 0) 10px,
+      rgba(110, 84, 56, 0) calc(100% - 10px),
+      rgba(110, 84, 56, 0.24) calc(100% - 10px),
+      rgba(110, 84, 56, 0) calc(100% - 9px),
+      rgba(110, 84, 56, 0.08) 100%
+    ),
+    var(--pocket-mark) 50% 68% / 34px 18px no-repeat,
+    var(--kraft-fibre) -80px -20px / 300px 120px,
+    linear-gradient(180deg, var(--pocket-kraft) 0%, #dfcbac 100%);
+  border-radius: 0 0 4px 4px;
+  filter: drop-shadow(0 2px 3px rgba(96, 80, 60, 0.22));
+  -webkit-mask: radial-gradient(30px 11px at 50% 0, transparent 95%, #000 100%);
+  mask: radial-gradient(30px 11px at 50% 0, transparent 95%, #000 100%);
+}
+
+/* Paper mount matches the .checkout-link card stock; its "patron" line is printed
+   along the top, where the pocket cannot hide it */
 .lending-patron {
-  width: 108px;
+  display: flex;
+  flex-direction: column-reverse;
+  width: 112px;
   margin: 0;
-  padding: 6px 6px 4px;
+  padding: 3px 6px 6px;
   background: #fffdf8;
-  border: 1px solid rgba(150, 172, 160, 0.4);
-  border-radius: 2px;
+  border: 1px solid rgba(150, 172, 160, 0.45);
+  border-top: 3px solid rgba(184, 129, 126, 0.55);
+  border-radius: 3px;
   box-shadow: 0 2px 6px rgba(96, 102, 90, 0.18);
   transform: rotate(calc(var(--tilt, 0deg) * var(--tilt-scale, 1)));
+  transform-origin: 50% 80%;
 }
 
 .lending-patron img {
@@ -1174,26 +1757,26 @@
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center 16%;
+  object-position: center 12%;
 }
 
 .lending-patron-label {
-  padding-top: 4px;
+  padding: 2px 0 4px;
   font-family: var(--font-nav);
-  font-size: 0.6rem;
+  font-size: 0.62rem;
+  font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   text-align: center;
-  color: rgba(113, 121, 110, 0.75);
+  color: var(--slate-olive);
 }
 
-/* Sprigs leaning against the big card */
+/* A poppy and a bay branch tucked behind the card: they stand up above its top edge,
+   where there is room for them at every width */
 .lending-sprig {
   position: absolute;
-  width: 90px;
-  color: var(--sage);
-  opacity: 0.6;
   z-index: -1;
+  transform-origin: bottom center;
 }
 
 .lending-sprig svg {
@@ -1203,16 +1786,19 @@
 }
 
 .lending-sprig-left {
-  bottom: -20px;
-  left: -54px;
-  transform: rotate(-18deg);
+  top: -118px;
+  left: 7%;
+  width: 104px;
+  color: var(--clay-deep);
+  transform: rotate(-9deg);
 }
 
 .lending-sprig-right {
-  bottom: -26px;
-  right: -50px;
-  transform: rotate(22deg);
-  color: var(--warm-clay);
+  top: -96px;
+  left: calc(7% + 78px);
+  width: 62px;
+  color: #6f8779;
+  transform: rotate(13deg);
 }
 
 /* ============================================
@@ -1224,13 +1810,19 @@
   }
 }
 
-@media (max-width: 900px) {
-  /* The shelf row still runs at full scale here; slim the frame
-     so the extras don't push the row past the viewport */
-  .shelf-frame {
-    width: calc(104px * var(--shelf-scale, 1));
+/* The shelf, tier 2: three volumes retire and the row scales with the viewport.
+   Each divisor is that tier's row width in shelf pixels (see .shelf-row). */
+@media (max-width: 980px) {
+  .shelf-book--extra {
+    display: none;
   }
 
+  .shelf-row {
+    --u: min(1px, calc((100vw - 3.5rem) / 752));
+  }
+}
+
+@media (max-width: 900px) {
   .checkout-grid {
     grid-template-columns: 1fr;
     max-width: 400px;
@@ -1259,60 +1851,21 @@
     padding-top: calc(var(--header-h) + var(--space-8));
   }
 
-  .shelf-row {
-    --shelf-scale: 0.85;
-    padding-top: var(--space-16);
-  }
-
-  /* A few decorative volumes retire from small shelves */
-  .shelf-book--extra {
-    display: none;
-  }
-
-  .shelf-bookend {
-    width: 42px;
-  }
-
   .helpdesk-card {
     padding: var(--space-8) var(--space-6) var(--space-6);
-  }
-
-  .lending-sprig-left {
-    left: -18px;
-  }
-  .lending-sprig-right {
-    right: -16px;
   }
 }
 
 @media (max-width: 600px) {
-  .shelf-book-title {
-    font-size: var(--text-xs);
-  }
-
-  /* The bookends no longer fit beside the row, and the books
-     slim down with the shelf so the row stays on the plank */
-  .shelf-bookend {
-    display: none;
-  }
-
-  .shelf-book {
-    width: calc(var(--book-w, 38px) * var(--shelf-scale, 1));
-  }
-
   /* Keep the lent note on screen: centre it over the whole row,
      just above the tallest book */
-  .shelf-row {
-    position: relative;
-  }
-
   .shelf-lend-wrap {
     position: static;
   }
 
   .shelf-slip {
     --slip-shift: 0px;
-    bottom: calc(222px * var(--shelf-scale, 1) + 28px);
+    bottom: calc(222 * var(--u) + 28px);
   }
 
   .welcome-desk-row {
@@ -1329,49 +1882,108 @@
   }
 
   .catalog-drawer-face {
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4) var(--space-3);
+  }
+
+  .catalog-holder {
+    padding: 5px 22px;
+  }
+
+  .catalog-holder::before {
+    left: 7px;
+  }
+  .catalog-holder::after {
+    right: 7px;
   }
 
   .catalog-pull {
-    width: 48px;
+    width: 68px;
   }
 
   .catalog-label {
+    padding: var(--space-2);
     font-size: var(--text-xs);
     letter-spacing: 0.1em;
   }
+
+  /* Bookmark bands on a phone: a shorter ribbon, and the handmade bookmark laid on
+     its side under the note, clear of the text */
+  .bookmark-band {
+    padding-bottom: 116px;
+  }
+
+  .bookmark-ribbon {
+    width: 36px;
+  }
+
+  .bookmark-flower,
+  .bookmark-band--alt .bookmark-flower {
+    top: auto;
+    bottom: 4px;
+    left: auto;
+    right: calc(50% - 31px);
+    width: 62px;
+    padding: 25px 10px 9px;
+    transform: rotate(83deg);
+  }
+
+  .bookmark-band--alt .bookmark-flower {
+    padding: 24px 14px 8px;
+    transform: rotate(-83deg);
+  }
 }
 
-@media (max-width: 480px) {
+/* The shelf, tier 3 (phones): two more plain volumes and the flat books retire; the
+   bottle of lavender stands on the plank instead */
+@media (max-width: 560px) {
   .shelf {
     padding: 0;
   }
 
+  .shelf-book--roomy,
+  .shelf-bookend .shelf-stack {
+    display: none;
+  }
+
+  /* The plant gives a little room back to the lendable books, which are widened
+     so they stay comfortable to tap; the bottle grows now that it stands alone */
+  .shelf-bookend-left svg {
+    width: calc(116 * var(--u));
+    margin-bottom: calc(-33.7 * var(--u));
+  }
+
+  .shelf-book--lend {
+    width: calc((var(--book-w, 38) + 8) * var(--u));
+  }
+
+  .shelf-jar {
+    width: calc(74 * var(--u));
+    margin-left: 0;
+  }
+
   .shelf-row {
-    --shelf-scale: 0.72;
-    gap: 4px;
+    --u: min(0.9px, calc((100vw - 2.5rem) / 628));
   }
 
+  .shelf-plank {
+    margin: 0;
+  }
+
+  .library-hero .shelf-plank {
+    margin-bottom: var(--space-16);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Slimmer card padding; the head, rules and pocket all follow these two */
   .checkout-card-inner {
-    padding: var(--space-6) var(--space-5) var(--space-5);
+    --pad-x: var(--space-5);
+    --pad-b: var(--space-5);
   }
 
-  /* Pocket follows the slimmer card padding */
-  .checkout-pocket::after {
-    left: calc(-1 * var(--space-5));
-    right: calc(-1 * var(--space-5));
-    bottom: calc(-1 * var(--space-5));
-  }
-
-  /* Keep the bookmark decorations clear of the text */
-  .bookmark-ribbon {
-    height: 72px;
-  }
-
-  .bookmark-flower {
-    width: 40px;
-    bottom: var(--space-2);
+  .checkout-head {
+    padding-top: var(--space-6);
   }
 
   .helpdesk-lines li {
@@ -1397,18 +2009,61 @@
   }
 
   .lending-signoff {
-    gap: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .lending-signature {
+    min-width: 0;
+    padding: 0 var(--space-2) 2px;
   }
 
   .lending-patron {
+    width: 96px;
+  }
+
+  .lending-sprig-left {
+    top: -100px;
     width: 88px;
+  }
+
+  .lending-sprig-right {
+    top: -82px;
+    left: calc(7% + 66px);
+    width: 52px;
   }
 }
 
-/* The smallest phones: two leaning volumes retire so the row fits */
+/* The shelf, tier 4 (the smallest phones): the two leaning volumes retire too, so the
+   three lendable books stay wide enough to tap */
 @media (max-width: 380px) {
   .shelf-book--spare {
     display: none;
+  }
+
+  .shelf-row {
+    --u: calc((100vw - 2.5rem) / 550);
+  }
+
+  /* A shorter ribbon, so its tail stays clear of the note's first word */
+  .bookmark-ribbon {
+    left: 5%;
+    width: 28px;
+  }
+
+  .bookmark-band--alt .bookmark-ribbon {
+    right: 5%;
+  }
+
+  .lending-pocket {
+    padding: 0 11px 8px;
+  }
+
+  .lending-patron {
+    width: 84px;
+  }
+
+  .lending-signature {
+    font-size: 1.6rem;
   }
 }
 

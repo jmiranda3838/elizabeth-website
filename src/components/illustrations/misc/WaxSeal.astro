@@ -1,0 +1,235 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  /** Which pour of wax: each has its own squeezed-out edge and off-centre stamp. Also keys the gradient ids. */
+  variant?: 1 | 2 | 3 | 4;
+  /** Two ribbon tails under the seal */
+  ribbons?: boolean;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", variant = 1, ribbons = true, ...rest } = Astro.props;
+
+// The edge of the wax is drawn from a wobbling radius, not typed by hand: a few
+// slow waves for the uneven pour, plus one or two lobes where it squeezed out
+// from under the stamp. Each variant has its own phases and lobes.
+const pours: Record<
+  number,
+  { ph: number[]; lobes: [number, number, number][]; stamp: [number, number] }
+> = {
+  1: {
+    ph: [0.4, 2.1, 5.0],
+    lobes: [
+      [2.3, 2.6, 0.3],
+      [5.4, 1.5, 0.24],
+    ],
+    stamp: [0.5, -0.5],
+  },
+  2: {
+    ph: [3.3, 0.7, 1.9],
+    lobes: [
+      [0.7, 2.3, 0.28],
+      [3.9, 1.8, 0.3],
+    ],
+    stamp: [-0.6, 0.3],
+  },
+  3: {
+    ph: [1.6, 4.4, 0.3],
+    lobes: [
+      [4.6, 2.7, 0.26],
+      [1.5, 1.3, 0.3],
+    ],
+    stamp: [0.3, 0.6],
+  },
+  4: {
+    ph: [5.2, 3.0, 2.6],
+    lobes: [
+      [3.1, 2.2, 0.32],
+      [6.0, 1.9, 0.22],
+    ],
+    stamp: [-0.4, -0.6],
+  },
+};
+const pour = pours[variant] ?? pours[1];
+const CX = 32;
+const CY = 31;
+const radius = (t: number) => {
+  let r = 24.4 + 0.9 * Math.sin(3 * t + pour.ph[0]) + 0.6 * Math.sin(5 * t + pour.ph[1]);
+  r += 0.35 * Math.sin(9 * t + pour.ph[2]);
+  for (const [at, amp, width] of pour.lobes) {
+    let d = Math.abs(t - at) % (2 * Math.PI);
+    if (d > Math.PI) d = 2 * Math.PI - d;
+    r += amp * Math.exp(-(d * d) / (2 * width * width));
+  }
+  return r;
+};
+const N = 44;
+const pts = Array.from({ length: N }, (_, i) => {
+  const t = (i / N) * 2 * Math.PI;
+  const r = radius(t);
+  return [CX + r * Math.cos(t), CY + r * Math.sin(t)];
+});
+const f = (n: number) => n.toFixed(2);
+// Closed Catmull-Rom spline through the points, written as cubic Béziers
+let edge = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+for (let i = 0; i < N; i++) {
+  const p0 = pts[(i - 1 + N) % N];
+  const p1 = pts[i];
+  const p2 = pts[(i + 1) % N];
+  const p3 = pts[(i + 2) % N];
+  edge += ` C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)} ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
+}
+edge += " Z";
+
+const sx = CX + pour.stamp[0];
+const sy = CY + pour.stamp[1];
+const R = 18.4; // the stamped face
+const arc = (r: number, a0: number, a1: number) => {
+  const x0 = sx + r * Math.cos(a0);
+  const y0 = sy + r * Math.sin(a0);
+  const x1 = sx + r * Math.cos(a1);
+  const y1 = sy + r * Math.sin(a1);
+  return `M${f(x0)} ${f(y0)} A${r} ${r} 0 0 1 ${f(x1)} ${f(y1)}`;
+};
+const id = `wax-seal-${variant}`;
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox={ribbons ? "0 0 64 80" : "0 0 64 62"}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A wax seal: a pour of sealing wax with an uneven squeezed-out edge, a round
+       stamped face pressed into it (dark on the wall facing the light, bright on the
+       far lip), a ring of beading and a soft gloss. The wax is currentColor; light
+       and shade are white and umber laid over it. The stamped face is left plain so
+       a page can set an emblem on it (centre 32,31 of the 64-wide box, about 30 across).
+       Ribbon tails take --seal-ribbon (falls back to the wax colour). -->
+  <defs>
+    <radialGradient id={`${id}-light`} cx="34%" cy="26%" r="80%">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.42"></stop>
+      <stop offset="0.45" stop-color="#fff" stop-opacity="0.06"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id={`${id}-shade`} cx="36%" cy="30%" r="78%">
+      <stop offset="0.5" stop-color="#4a2a26" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#4a2a26" stop-opacity="0.42"></stop>
+    </radialGradient>
+    <radialGradient id={`${id}-face`} cx="62%" cy="68%" r="75%">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.16"></stop>
+      <stop offset="0.6" stop-color="#4a2a26" stop-opacity="0.04"></stop>
+      <stop offset="1" stop-color="#4a2a26" stop-opacity="0.24"></stop>
+    </radialGradient>
+  </defs>
+
+  {
+    ribbons && (
+      <g stroke-linejoin="round">
+        <path
+          d="M23.4 44 L12.4 70.8 L19.2 68.6 L22.4 75.8 L33.6 49 Z"
+          style="fill: var(--seal-ribbon, currentColor)"
+        />
+        <path
+          d="M41.6 44 L52.4 69.6 L45.8 67.8 L42.8 75 L30.6 49 Z"
+          style="fill: var(--seal-ribbon, currentColor)"
+        />
+        {/* the left tail lies over the right; shade where they cross and along each fold */}
+        <path
+          d="M41.6 44 L52.4 69.6 L45.8 67.8 L42.8 75 L30.6 49 Z"
+          fill="#4a2a26"
+          fill-opacity="0.16"
+        />
+        <path d="M23.4 44 L12.4 70.8 L19.2 68.6 L28.6 46.4 Z" fill="#fff" fill-opacity="0.2" />
+        <path
+          d="M28.6 46.6 L19.2 68.6 M36.6 46.8 L45.8 67.8"
+          stroke="#4a2a26"
+          stroke-opacity="0.22"
+          stroke-width="0.5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M14.6 67 L20.4 65.2 M50.2 66 L45 64.6"
+          stroke="#fff"
+          stroke-opacity="0.4"
+          stroke-width="0.5"
+          stroke-linecap="round"
+        />
+      </g>
+    )
+  }
+
+  <!-- the pour -->
+  <path d={edge} fill="#4a2a26" fill-opacity="0.2" transform="translate(0.7 1.5)"></path>
+  <path d={edge} fill="currentColor"></path>
+  <path d={edge} fill={`url(#${id}-shade)`}></path>
+  <path d={edge} fill={`url(#${id}-light)`}></path>
+  <path d={edge} stroke="#4a2a26" stroke-opacity="0.28" stroke-width="0.6"></path>
+
+  <!-- the raised collar the stamp pushed up, then the stamped face sunk inside it -->
+  <circle cx={sx} cy={sy} r={R + 2.6} stroke="#fff" stroke-opacity="0.16" stroke-width="2.2"
+  ></circle>
+  <path
+    d={arc(R + 3.6, Math.PI * 0.95, Math.PI * 1.75)}
+    stroke="#fff"
+    stroke-opacity="0.38"
+    stroke-width="0.9"
+    stroke-linecap="round"></path>
+  <path
+    d={arc(R + 3.7, Math.PI * 0.05, Math.PI * 0.7)}
+    stroke="#4a2a26"
+    stroke-opacity="0.24"
+    stroke-width="1"
+    stroke-linecap="round"></path>
+  <circle cx={sx} cy={sy} r={R} fill="currentColor"></circle>
+  <circle cx={sx} cy={sy} r={R} fill={`url(#${id}-face)`}></circle>
+  <path
+    d={arc(R - 0.3, Math.PI * 0.85, Math.PI * 1.9)}
+    stroke="#4a2a26"
+    stroke-opacity="0.5"
+    stroke-width="1.3"
+    stroke-linecap="round"></path>
+  <path
+    d={arc(R - 0.2, Math.PI * 0.0, Math.PI * 0.75)}
+    stroke="#fff"
+    stroke-opacity="0.5"
+    stroke-width="0.9"
+    stroke-linecap="round"></path>
+
+  <!-- beading round the face -->
+  <circle
+    cx={sx + 0.25}
+    cy={sy + 0.35}
+    r={R - 2.2}
+    stroke="#4a2a26"
+    stroke-opacity="0.3"
+    stroke-width="0.9"
+    stroke-linecap="round"
+    stroke-dasharray="0.01 2.42"></circle>
+  <circle
+    cx={sx}
+    cy={sy}
+    r={R - 2.2}
+    stroke="#fff"
+    stroke-opacity="0.5"
+    stroke-width="0.9"
+    stroke-linecap="round"
+    stroke-dasharray="0.01 2.42"></circle>
+
+  <!-- gloss on the shoulder of the pour -->
+  <path
+    d={arc(22.4, Math.PI * 1.12, Math.PI * 1.42)}
+    stroke="#fff"
+    stroke-opacity="0.55"
+    stroke-width="1.5"
+    stroke-linecap="round"></path>
+  <path
+    d={arc(22.6, Math.PI * 1.5, Math.PI * 1.56)}
+    stroke="#fff"
+    stroke-opacity="0.45"
+    stroke-width="1.2"
+    stroke-linecap="round"></path>
+</svg>

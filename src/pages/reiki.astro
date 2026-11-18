@@ -5,23 +5,21 @@ import "@styles/pages/reiki.css";
 import {
   IconSun,
   IconCrescentMoon,
+  IconFullMoon,
+  IconStar,
   IconHandsOpen,
-  IconShield,
+  IconCompass,
   IconHeart,
 } from "@illustrations/icons";
-import { HandsCupped } from "@illustrations/scenes";
-import { ConstellationStar } from "@illustrations/misc";
-import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
 import {
-  FrameCornerTL,
-  FrameCornerTR,
-  FrameCornerBL,
-  FrameCornerBR,
-  CtaVineLeft,
-  CtaVineRight,
-} from "@illustrations/frames";
-import { FullMoon } from "@illustrations/moon";
-import { Seedling } from "@illustrations/apothecary";
+  HandsCupped,
+  DaybreakSun,
+  RisingSun,
+  DawnHills,
+  SedonaVignette,
+} from "@illustrations/scenes";
+import { HerbSprig, LavenderSprig } from "@illustrations/botanicals";
+import { CtaVineLeft, CtaVineRight } from "@illustrations/frames";
 ---
 
 <BaseLayout
@@ -29,10 +27,11 @@ import { Seedling } from "@illustrations/apothecary";
   description="Gentle Reiki energy work in Orange County, offered by Elizabeth Armstrong — certified Reiki Master and licensed therapist. A separate, private-pay hour of rest: you stay fully clothed while your own system settles. Not psychotherapy."
 >
   <div class="reiki-page">
-    <!-- Daybreak: a single sun climbs the sky as you scroll (GSAP-scrubbed),
-         turning the whole page into one continuous dawn. -->
+    <!-- Daybreak: a single sun climbs the page's right edge as you scroll (GSAP-scrubbed),
+         turning the whole page into one continuous dawn. It sits between each section's
+         ground and its content (see "Layering" in reiki.css). -->
     <div class="daybreak" aria-hidden="true">
-      <span class="daybreak-sun"></span>
+      <span class="daybreak-sun"><DaybreakSun class="daybreak-sun-art" /></span>
     </div>
 
     <!-- ============================================================
@@ -104,7 +103,7 @@ import { Seedling } from "@illustrations/apothecary";
             <span class="spread-seam" aria-hidden="true"></span>
 
             <div class="spread-pane isnt-pane lit-card">
-              <span class="spread-icon" aria-hidden="true"><IconShield /></span>
+              <span class="spread-icon" aria-hidden="true"><IconCompass /></span>
               <h3>What to know before you book</h3>
               <ul>
                 <li>Reiki is separate from psychotherapy, with its own sessions and fee.</li>
@@ -221,12 +220,12 @@ import { Seedling } from "@illustrations/apothecary";
             <p>A soft, spreading warmth where my hands rest, like sun through a window.</p>
           </div>
           <div class="feel-card feel-heavy lit-card reveal stagger-2">
-            <span class="feel-glyph" aria-hidden="true"><FullMoon /></span>
+            <span class="feel-glyph" aria-hidden="true"><IconFullMoon /></span>
             <h3>Heaviness</h3>
             <p>A pleasant heaviness, the way your body feels in the minutes before sleep.</p>
           </div>
           <div class="feel-card feel-quiet lit-card reveal stagger-3">
-            <span class="feel-glyph" aria-hidden="true"><ConstellationStar /></span>
+            <span class="feel-glyph" aria-hidden="true"><IconStar /></span>
             <h3>A quiet mind</h3>
             <p>The mental chatter going unusually still, even if just for the hour.</p>
           </div>
@@ -323,8 +322,6 @@ import { Seedling } from "@illustrations/apothecary";
          9. ON THE HORIZON — the annual Sedona retreat
          ============================================================ -->
     <section class="section horizon-section" id="retreat">
-      <span class="horizon-line" aria-hidden="true"></span>
-      <span class="horizon-sun" aria-hidden="true"></span>
       <div class="container">
         <div class="section-heading reveal">
           <p class="eyebrow">Also Growing Here</p>
@@ -337,11 +334,7 @@ import { Seedling } from "@illustrations/apothecary";
         </p>
 
         <div class="horizon-card reveal">
-          <span class="horizon-corner horizon-corner-tl" aria-hidden="true"><FrameCornerTL /></span>
-          <span class="horizon-corner horizon-corner-tr" aria-hidden="true"><FrameCornerTR /></span>
-          <span class="horizon-corner horizon-corner-bl" aria-hidden="true"><FrameCornerBL /></span>
-          <span class="horizon-corner horizon-corner-br" aria-hidden="true"><FrameCornerBR /></span>
-          <span class="horizon-card-icon" aria-hidden="true"><Seedling /></span>
+          <span class="horizon-card-art" aria-hidden="true"><SedonaVignette /></span>
           <span class="soon-chip">March 18&ndash;20, 2027</span>
           <h3>Annual Retreat</h3>
           <p class="horizon-card-nature">Sedona, Arizona &middot; our fifth year</p>
@@ -360,59 +353,14 @@ import { Seedling } from "@illustrations/apothecary";
          10. FULL-BLOOM CTA — sunrise over the horizon, the climax
          ============================================================ -->
     <section class="bloom-cta">
-      <svg
-        class="cta-sunrise"
-        viewBox="0 0 1200 360"
-        preserveAspectRatio="xMidYMax slice"
-        aria-hidden="true"
-      >
-        <defs>
-          <radialGradient id="ctaSunFill" cx="50%" cy="100%" r="78%">
-            <stop offset="0%" stop-color="#FFF8EC"></stop>
-            <stop offset="38%" stop-color="#F7DCA6"></stop>
-            <stop offset="100%" stop-color="#EFD3A0" stop-opacity="0"></stop>
-          </radialGradient>
-        </defs>
-        <circle class="cta-sun-disc" cx="600" cy="360" r="165" fill="url(#ctaSunFill)"></circle>
-        <!-- Soft, blurred ray volume behind the crisp rays -->
-        <g
-          class="cta-rays cta-rays-soft reveal"
-          stroke="#F4CE86"
-          stroke-width="5"
-          stroke-linecap="round"
-        >
-          <line x1="600" y1="281" x2="600" y2="110"></line>
-          <line x1="617" y1="283" x2="661" y2="118"></line>
-          <line x1="583" y1="283" x2="539" y2="118"></line>
-          <line x1="632" y1="290" x2="712" y2="150"></line>
-          <line x1="568" y1="290" x2="488" y2="150"></line>
-          <line x1="645" y1="300" x2="748" y2="197"></line>
-          <line x1="555" y1="300" x2="452" y2="197"></line>
-          <line x1="655" y1="313" x2="769" y2="248"></line>
-          <line x1="545" y1="313" x2="431" y2="248"></line>
-          <line x1="662" y1="329" x2="774" y2="298"></line>
-          <line x1="538" y1="329" x2="426" y2="298"></line>
-        </g>
-        <!-- Crisp self-drawing god-rays -->
-        <g class="cta-rays reveal" stroke="#F2C879" stroke-width="2.4" stroke-linecap="round">
-          <line x1="600" y1="281" x2="600" y2="110"></line>
-          <line x1="617" y1="283" x2="661" y2="118"></line>
-          <line x1="583" y1="283" x2="539" y2="118"></line>
-          <line x1="632" y1="290" x2="712" y2="150"></line>
-          <line x1="568" y1="290" x2="488" y2="150"></line>
-          <line x1="645" y1="300" x2="748" y2="197"></line>
-          <line x1="555" y1="300" x2="452" y2="197"></line>
-          <line x1="655" y1="313" x2="769" y2="248"></line>
-          <line x1="545" y1="313" x2="431" y2="248"></line>
-          <line x1="662" y1="329" x2="774" y2="298"></line>
-          <line x1="538" y1="329" x2="426" y2="298"></line>
-        </g>
-      </svg>
-
-      <span class="bloom-vine bloom-vine-left" aria-hidden="true"><CtaVineLeft /></span>
-      <span class="bloom-vine bloom-vine-right" aria-hidden="true"><CtaVineRight /></span>
+      <!-- Back to front: the sun (its disc carries the words), the hills it rises
+           over, then the plants standing in front of both -->
+      <RisingSun class="bloom-sun" />
+      <DawnHills class="bloom-hills" />
       <span class="bloom-botanical bloom-botanical-1" aria-hidden="true"><HerbSprig /></span>
       <span class="bloom-botanical bloom-botanical-2" aria-hidden="true"><LavenderSprig /></span>
+      <span class="bloom-vine bloom-vine-left" aria-hidden="true"><CtaVineLeft /></span>
+      <span class="bloom-vine bloom-vine-right" aria-hidden="true"><CtaVineRight /></span>
 
       <div class="bloom-cta-content reveal">
         <h2>Curious is enough</h2>
@@ -429,9 +377,10 @@ import { Seedling } from "@illustrations/apothecary";
   </div>
 </BaseLayout>
 
-<!-- Daybreak on scroll — GSAP ScrollTrigger climbs the sun and warms the page,
-     scrubbed to scroll position. Bundled by Astro/Vite. (Mirrors the homepage
-     roots system; ships a static mid-morning fallback under reduced-motion.) -->
+<!-- Daybreak on scroll — GSAP ScrollTrigger climbs the sun up the page's right edge,
+     scrubbed to scroll position, and hands over to the closing sunrise. Bundled by
+     Astro/Vite. (Mirrors the homepage roots system; under reduced motion the sun holds
+     still in mid-sky and only steps aside for the closing sunrise.) -->
 <script>
   import gsap from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -441,19 +390,26 @@ import { Seedling } from "@illustrations/apothecary";
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const page = document.querySelector(".reiki-page");
-  const sun = document.querySelector(".daybreak-sun");
+  const sun = document.querySelector<HTMLElement>(".daybreak-sun");
+  const art = document.querySelector(".daybreak-sun-art");
+  const finale = document.querySelector(".bloom-cta");
 
   if (page && sun && !prefersReduced) {
-    // The sun climbs from below the hero horizon (low) to high in the sky over
-    // the CTA — one continuous daybreak. Travel spans the viewport and ends high
-    // so it never bleeds onto the footer. Brightens and shrinks as it rises.
+    // The element is a square with the disc at its centre (disc radius = 11.5% of the
+    // side), so every position below is worked out for the centre.
+    const headerH = () =>
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
+    const side = () => sun.offsetWidth;
+
+    // From low in the hero's lower corner to just under the header: one continuous
+    // daybreak. Brightens and shrinks as it rises.
     gsap.fromTo(
       sun,
-      { y: () => window.innerHeight * 0.78, scale: 1.18, opacity: 0.45 },
+      { y: () => window.innerHeight * 0.9 - side() / 2, scale: 1.12, opacity: 0.82 },
       {
-        y: () => window.innerHeight * 0.04,
-        scale: 0.85,
-        opacity: 0.9,
+        y: () => headerH() + 22 + side() * 0.105 - side() / 2,
+        scale: 0.9,
+        opacity: 1,
         ease: "none",
         scrollTrigger: {
           trigger: page,
@@ -465,7 +421,22 @@ import { Seedling } from "@illustrations/apothecary";
       },
     );
 
+    // The closing section has its own sunrise, so this sun dissolves as that one arrives
+    // (which also keeps it off the footer).
+    if (art && finale) {
+      gsap.to(art, {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: { trigger: finale, start: "top 96%", end: "top 48%", scrub: true },
+      });
+    }
+
     // Keep positions honest as fonts/images settle and on resize.
     window.addEventListener("load", () => ScrollTrigger.refresh());
+  } else if (sun && finale && "IntersectionObserver" in window) {
+    // Reduced motion: no travel, but still never two suns at once
+    new IntersectionObserver(([entry]) => sun.classList.toggle("is-set", entry.isIntersecting), {
+      rootMargin: "0px 0px -20% 0px",
+    }).observe(finale);
   }
 </script>

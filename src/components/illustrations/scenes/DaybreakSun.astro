@@ -1,0 +1,139 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* The Reiki page's climbing sun: a soft disc with a shaded limb, a corona, and three
+   orders of ray (long blades, short blades, hairlines) set at hand-jittered angles and
+   lengths so the burst is not a cog wheel. Drawn in pigment rather than screen-blended
+   light, so it shows on the page's cream grounds as well as its plum ones.
+
+   .daybreak-rays is the ray group (the page turns it very slowly); the disc and glow
+   stay still. */
+
+const f = (n: number) => Math.round(n * 10) / 10;
+const C = 200;
+
+/** A tapered blade from radius r0 to r1 at `deg` (0 = up), half-width w at its root */
+function blade(deg: number, r0: number, r1: number, w: number): string {
+  const a = (deg * Math.PI) / 180;
+  const dx = Math.sin(a);
+  const dy = -Math.cos(a);
+  const p = (r: number, side: number) =>
+    `${f(C + dx * r - dy * side)} ${f(C + dy * r + dx * side)}`;
+  const belly = r0 + (r1 - r0) * 0.36;
+  return `M${p(r0, -w)}Q${p(belly, -w * 0.82)} ${p(r1, 0)}Q${p(belly, w * 0.82)} ${p(r0, w)}Z`;
+}
+const hair = (deg: number, r0: number, r1: number) => {
+  const a = (deg * Math.PI) / 180;
+  const dx = Math.sin(a);
+  const dy = -Math.cos(a);
+  return `M${f(C + dx * r0)} ${f(C + dy * r0)}L${f(C + dx * r1)} ${f(C + dy * r1)}`;
+};
+
+// [angle offset from its even slot, length] per ray: placed by hand, not random
+const LONG: [number, number][] = [
+  [0, 156],
+  [2, 141],
+  [-2, 150],
+  [1, 134],
+  [-1, 158],
+  [3, 144],
+  [-2, 137],
+  [0, 152],
+  [2, 146],
+  [-3, 139],
+  [1, 154],
+  [-1, 143],
+];
+const SHORT: [number, number][] = [
+  [1, 106],
+  [-2, 98],
+  [2, 112],
+  [0, 94],
+  [-1, 108],
+  [3, 101],
+  [-2, 114],
+  [1, 96],
+  [0, 104],
+  [-3, 110],
+  [2, 99],
+  [-1, 107],
+];
+const longRays = LONG.map(([j, len], i) => blade(i * 30 + j, 55, len, 4.6)).join("");
+const shortRays = SHORT.map(([j, len], i) => blade(i * 30 + 15 + j, 55, len, 3.3)).join("");
+const hairRays = Array.from({ length: 24 }, (_, i) => {
+  const deg = i * 15 + 7.5 + (i % 3) - 1;
+  return hair(deg, 62, 118 + ((i * 37) % 58));
+}).join("");
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 400 400"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <radialGradient id="ds-halo">
+      <stop offset="0" stop-color="#ffe6b0" stop-opacity="0.62"></stop>
+      <stop offset="0.3" stop-color="#fbd092" stop-opacity="0.34"></stop>
+      <stop offset="0.62" stop-color="#f4bd7c" stop-opacity="0.12"></stop>
+      <stop offset="1" stop-color="#f0b070" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="ds-corona">
+      <stop offset="0.42" stop-color="#fff6d8" stop-opacity="0.95"></stop>
+      <stop offset="0.66" stop-color="#ffdf9e" stop-opacity="0.5"></stop>
+      <stop offset="1" stop-color="#f7c57c" stop-opacity="0"></stop>
+    </radialGradient>
+    <!-- Rays are brightest where they leave the disc and thin to nothing -->
+    <radialGradient id="ds-ray" gradientUnits="userSpaceOnUse" cx="200" cy="200" r="160">
+      <stop offset="0.3" stop-color="#fbd791" stop-opacity="0.95"></stop>
+      <stop offset="0.6" stop-color="#f5c57a" stop-opacity="0.55"></stop>
+      <stop offset="1" stop-color="#eeb468" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="ds-hair" gradientUnits="userSpaceOnUse" cx="200" cy="200" r="178">
+      <stop offset="0.3" stop-color="#f3c172" stop-opacity="0.7"></stop>
+      <stop offset="1" stop-color="#eeb468" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="ds-disc" cx="42%" cy="36%" r="72%">
+      <stop offset="0" stop-color="#fffdf3"></stop>
+      <stop offset="0.42" stop-color="#ffefc4"></stop>
+      <stop offset="0.8" stop-color="#fbd68f"></stop>
+      <stop offset="1" stop-color="#f1b96d"></stop>
+    </radialGradient>
+  </defs>
+
+  <circle cx="200" cy="200" r="200" fill="url(#ds-halo)"></circle>
+
+  <g class="daybreak-rays">
+    <path d={hairRays} stroke="url(#ds-hair)" stroke-width="0.9" stroke-linecap="round"></path>
+    <path d={shortRays} fill="url(#ds-ray)"></path>
+    <path d={longRays} fill="url(#ds-ray)"></path>
+  </g>
+
+  <circle cx="200" cy="200" r="92" fill="url(#ds-corona)"></circle>
+
+  <!-- The disc: lit from the upper left, with a shaded lower limb and a few engraved arcs -->
+  <circle cx="200" cy="200" r="46" fill="url(#ds-disc)"></circle>
+  <path
+    d="M243.2 184.3A46 46 0 0 1 184.3 243.2A50.5 50.5 0 0 0 243.2 184.3Z"
+    fill="#e9a55f"
+    fill-opacity="0.34"></path>
+  <g stroke="#dc9a55" stroke-linecap="round">
+    <path
+      d="M229 212C224 224 215 231 203 234M219 207C216 214 211 218 204 220"
+      stroke-opacity="0.38"
+      stroke-width="1.1"></path>
+    <path d="M171 192C173 181 180 173 190 170" stroke-opacity="0.26" stroke-width="1"></path>
+    <circle cx="200" cy="200" r="46" stroke-opacity="0.5" stroke-width="1.2"></circle>
+  </g>
+  <circle cx="200" cy="200" r="50.5" stroke="#fff3d2" stroke-opacity="0.55" stroke-width="0.9"
+  ></circle>
+</svg>

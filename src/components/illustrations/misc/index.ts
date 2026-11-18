@@ -1,11 +1,17 @@
+export { default as BookmarkRibbon } from "./BookmarkRibbon.astro";
 export { default as Cairn } from "./Cairn.astro";
 export { default as CatalogPull } from "./CatalogPull.astro";
 export { default as Clothespin } from "./Clothespin.astro";
 export { default as ConstellationStar } from "./ConstellationStar.astro";
+export { default as LavenderJar } from "./LavenderJar.astro";
 export { default as ManuscriptMargin } from "./ManuscriptMargin.astro";
 export { default as MoonPath } from "./MoonPath.astro";
 export { default as QuoteMark } from "./QuoteMark.astro";
+export { default as ShelfBookStack } from "./ShelfBookStack.astro";
+export { default as ShelfPlant } from "./ShelfPlant.astro";
 export { default as SpecimenDivider } from "./SpecimenDivider.astro";
 export { default as TagString } from "./TagString.astro";
+export { default as TwineLine } from "./TwineLine.astro";
 export { default as TwineLoop } from "./TwineLoop.astro";
 export { default as VortexSpiral } from "./VortexSpiral.astro";
+export { default as WaxSeal } from "./WaxSeal.astro";

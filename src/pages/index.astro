@@ -69,12 +69,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
     <!-- Overlay for text readability -->
     <div class="hero-overlay"></div>
 
-    <!-- Botanical Line Art Elements -->
-    <Wildflower class="botanical botanical-1" />
-    <HerbSprig class="botanical botanical-2" />
-    <LeafBranch class="botanical botanical-3" />
-    <SeedPodCluster class="botanical botanical-4" />
-    <LavenderSprig class="botanical botanical-5" />
+    <!-- A small stand of wild plants at the lower right, balancing the text block -->
+    <LavenderSprig class="botanical botanical-1" />
+    <Wildflower class="botanical botanical-2" />
+    <SeedPodCluster class="botanical botanical-3" />
 
     <!-- Text Content -->
     <div class="hero-text-content">
@@ -83,9 +81,10 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         Elizabeth Armstrong, LMFT #111154<br />Clinical Supervisor, California Family Institute
       </p>
     </div>
-    <!-- Hanging Botanical Garland - extends past hero edge -->
+    <!-- Garland hung under the header: one drawing for desktop, a narrower one for 768px and down -->
     <div class="hero-garland">
-      <Garland class="garland-svg" />
+      <Garland variant="wide" class="garland-svg garland-wide" />
+      <Garland variant="narrow" class="garland-svg garland-narrow" />
     </div>
   </section>
 
@@ -838,17 +837,20 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         <GateFrame class="gate-structure" />
       </div>
 
-      <!-- Drifting petals + light motes across the section -->
+      <!-- Drifting light motes across the section -->
       <div class="gate-foreground">
         <span class="gate-mote gate-mote-1"></span>
         <span class="gate-mote gate-mote-2"></span>
         <span class="gate-mote gate-mote-3"></span>
         <span class="gate-mote gate-mote-4"></span>
         <span class="gate-mote gate-mote-5"></span>
-        <LeafBranch class="gate-petal gate-petal-1" />
-        <LeafBranch class="gate-petal gate-petal-2" />
       </div>
     </div>
+
+    <!-- Bay branches hanging in from the top corners. They sit outside the 3D
+         stage on purpose: inside it, the planes of the open doors cut across them. -->
+    <LeafBranch class="gate-petal gate-petal-1" />
+    <LeafBranch class="gate-petal gate-petal-2" />
 
     <!-- CTA: always visible, overlaid at the foot of the scene -->
     <div class="gate-content">

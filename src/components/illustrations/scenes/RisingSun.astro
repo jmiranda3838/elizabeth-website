@@ -1,0 +1,108 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* The upper half of a very large rising sun, for the Reiki page's closing section.
+   The disc is big enough to carry the closing words on its face, so the rays start at
+   its rim and never run behind text. The drawing is the half above the horizon only:
+   the centre is the middle of the bottom edge (600, 600) and the disc radius is 400,
+   so an element three disc-radii wide and one and a half tall is at scale.
+
+   .bloom-rays is the ray group (the page fades it in on scroll); .bloom-sun-corona
+   is the glow hugging the rim (the page lets it breathe). */
+
+const f = (n: number) => Math.round(n * 10) / 10;
+const CX = 600;
+const CY = 600;
+
+/** A tapered blade from radius r0 to r1 at `deg` (0 = straight up), half-width w at its root */
+function blade(deg: number, r0: number, r1: number, w: number): string {
+  const a = (deg * Math.PI) / 180;
+  const dx = Math.sin(a);
+  const dy = -Math.cos(a);
+  const p = (r: number, side: number) =>
+    `${f(CX + dx * r - dy * side)} ${f(CY + dy * r + dx * side)}`;
+  const belly = r0 + (r1 - r0) * 0.34;
+  return `M${p(r0, -w)}Q${p(belly, -w * 0.8)} ${p(r1, 0)}Q${p(belly, w * 0.8)} ${p(r0, w)}Z`;
+}
+
+// Lengths set by hand so the burst breathes: long, short, and a few that reach further
+const LONG = [520, 548, 506, 538, 552, 512, 544, 526, 550, 508, 540, 552, 514, 546, 522, 550, 510];
+const SHORT = [462, 476, 454, 470, 482, 458, 474, 466, 480, 456, 472, 464, 478, 460, 468, 474];
+const NUDGE = [0, 0.8, -0.6, 0.4, -0.9, 0.6, 0, -0.5, 0.7, -0.3, 0.9, -0.7, 0.2, 0.5, -0.8, 0.3, 0];
+const longRays = LONG.map((len, i) => blade(-84 + i * 10.5 + NUDGE[i], 412, len, 6.4)).join("");
+const shortRays = SHORT.map((len, i) =>
+  blade(-78.75 + i * 10.5 - NUDGE[i] * 0.8, 412, len, 4),
+).join("");
+const hairs = Array.from({ length: 33 }, (_, i) => {
+  const a = ((-86.6 + i * 5.25 + ((i % 3) - 1) * 0.5) * Math.PI) / 180;
+  const r1 = 440 + ((i * 53) % 84);
+  return `M${f(CX + Math.sin(a) * 416)} ${f(CY - Math.cos(a) * 416)}L${f(CX + Math.sin(a) * r1)} ${f(CY - Math.cos(a) * r1)}`;
+}).join("");
+---
+
+<svg
+  class={className}
+  style={style}
+  aria-hidden="true"
+  {...rest}
+  viewBox="0 0 1200 600"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <radialGradient id="rs-corona" gradientUnits="userSpaceOnUse" cx="600" cy="600" r="600">
+      <stop offset="0.6" stop-color="#fff3d6" stop-opacity="0"></stop>
+      <stop offset="0.668" stop-color="#fff3d6" stop-opacity="0.85"></stop>
+      <stop offset="0.76" stop-color="#ffe2ae" stop-opacity="0.4"></stop>
+      <stop offset="1" stop-color="#f6c98a" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="rs-ray" gradientUnits="userSpaceOnUse" cx="600" cy="600" r="560">
+      <stop offset="0.72" stop-color="#fff1cf" stop-opacity="0.95"></stop>
+      <stop offset="0.86" stop-color="#fde0aa" stop-opacity="0.55"></stop>
+      <stop offset="1" stop-color="#f7cf93" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="rs-hair" gradientUnits="userSpaceOnUse" cx="600" cy="600" r="530">
+      <stop offset="0.78" stop-color="#fff0cc" stop-opacity="0.8"></stop>
+      <stop offset="1" stop-color="#f7cf93" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="rs-disc" gradientUnits="userSpaceOnUse" cx="600" cy="600" r="400">
+      <stop offset="0" stop-color="#fffbf2"></stop>
+      <stop offset="0.62" stop-color="#fff6e3"></stop>
+      <stop offset="0.9" stop-color="#feecc8"></stop>
+      <stop offset="1" stop-color="#fbdca6"></stop>
+    </radialGradient>
+  </defs>
+
+  <circle class="bloom-sun-corona" cx="600" cy="600" r="600" fill="url(#rs-corona)"></circle>
+
+  <g class="bloom-rays">
+    <path d={hairs} stroke="url(#rs-hair)" stroke-width="1.1" stroke-linecap="round"></path>
+    <path d={shortRays} fill="url(#rs-ray)"></path>
+    <path d={longRays} fill="url(#rs-ray)"></path>
+  </g>
+
+  <!-- The disc: a clean cream face (it carries text), a crisp gilt rim, and two
+       engraved arcs just inside the rim where no words reach -->
+  <circle cx="600" cy="600" r="400" fill="url(#rs-disc)"></circle>
+  <g stroke-linecap="round">
+    <circle cx="600" cy="600" r="400" stroke="#f3c583" stroke-opacity="0.9" stroke-width="1.6"
+    ></circle>
+    <circle cx="600" cy="600" r="405.5" stroke="#fff6dd" stroke-opacity="0.75" stroke-width="1.2"
+    ></circle>
+    <path
+      d="M257.8 482.2A362 362 0 0 1 419 286.5M781 286.5A362 362 0 0 1 942.2 482.2"
+      stroke="#eebd7c"
+      stroke-opacity="0.34"
+      stroke-width="1.2"></path>
+    <path
+      d="M300.6 438.5A340 340 0 0 1 405.3 321.6M794.7 321.6A340 340 0 0 1 899.4 438.5"
+      stroke="#eebd7c"
+      stroke-opacity="0.22"
+      stroke-width="1"></path>
+  </g>
+</svg>

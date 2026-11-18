@@ -2,15 +2,15 @@
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/resources.css";
-import {
-  HerbSprig,
-  LavenderSprig,
-  Wildflower,
-  LeafBranch,
-  PressedFlower,
-} from "@illustrations/botanicals";
+import { LavenderSprig, LeafBranch, PressedFlower, Wildflower } from "@illustrations/botanicals";
 import { LeafDivider } from "@illustrations/dividers";
-import { CatalogPull } from "@illustrations/misc";
+import {
+  BookmarkRibbon,
+  CatalogPull,
+  LavenderJar,
+  ShelfBookStack,
+  ShelfPlant,
+} from "@illustrations/misc";
 import { ArrowRight } from "@illustrations/icons";
 ---
 
@@ -26,6 +26,9 @@ import { ArrowRight } from "@illustrations/icons";
         <span class="library-mote" style="--mote-delay: -5s;"></span>
         <span class="library-mote" style="--mote-delay: -9s;"></span>
         <span class="library-mote" style="--mote-delay: -13s;"></span>
+        <span class="library-mote" style="--mote-delay: -3s;"></span>
+        <span class="library-mote" style="--mote-delay: -7s;"></span>
+        <span class="library-mote" style="--mote-delay: -11s;"></span>
       </div>
 
       <div class="library-hero-content">
@@ -48,18 +51,18 @@ import { ArrowRight } from "@illustrations/icons";
           role="group"
           aria-label="A shelf of books with a framed photo of Elizabeth — three books pull out to share a note"
         >
-          <span class="shelf-bookend shelf-bookend-left" aria-hidden="true"><HerbSprig /></span>
+          <span class="shelf-bookend shelf-bookend-left" aria-hidden="true"><ShelfPlant /></span>
 
           <div
-            class="shelf-book"
-            style="--book-w: 38px; --book-h: 198px; --book-c: var(--sage);"
+            class="shelf-book shelf-book--roomy"
+            style="--book-w: 38; --book-h: 198; --book-c: var(--sage);"
             aria-hidden="true"
           >
             <span class="shelf-book-title">growth</span>
           </div>
           <div
-            class="shelf-book shelf-book--extra"
-            style="--book-w: 30px; --book-h: 150px; --book-c: var(--misty-blue);"
+            class="shelf-book shelf-book--extra shelf-book--banded"
+            style="--book-w: 30; --book-h: 150; --book-c: var(--misty-blue);"
             aria-hidden="true"
           >
             <span class="shelf-book-title">kind</span>
@@ -68,7 +71,7 @@ import { ArrowRight } from "@illustrations/icons";
           <div class="shelf-lend-wrap" style="--slip-shift: 36px;">
             <button
               class="shelf-book shelf-book--lend"
-              style="--book-w: 46px; --book-h: 214px; --book-c: var(--muted-rose);"
+              style="--book-w: 46; --book-h: 214; --book-c: var(--muted-rose); --tab-c: var(--sage);"
               aria-expanded="false"
               aria-controls="shelf-slip-1"
             >
@@ -81,15 +84,15 @@ import { ArrowRight } from "@illustrations/icons";
           </div>
 
           <div
-            class="shelf-book shelf-book--spare"
-            style="--book-w: 34px; --book-h: 186px; --book-c: var(--dusty-peach); --book-lean: -5deg;"
+            class="shelf-book shelf-book--spare shelf-book--capped"
+            style="--book-w: 34; --book-h: 186; --book-c: #c9a898; --book-lean: -5deg;"
             aria-hidden="true"
           >
             <span class="shelf-book-title">journey</span>
           </div>
           <div
             class="shelf-book shelf-book--extra"
-            style="--book-w: 36px; --book-h: 204px; --book-c: var(--warm-clay);"
+            style="--book-w: 36; --book-h: 204; --book-c: var(--warm-clay);"
             aria-hidden="true"
           >
             <span class="shelf-book-title">joy</span>
@@ -98,7 +101,7 @@ import { ArrowRight } from "@illustrations/icons";
           <div class="shelf-lend-wrap">
             <button
               class="shelf-book shelf-book--lend"
-              style="--book-w: 42px; --book-h: 222px; --book-c: var(--sage);"
+              style="--book-w: 42; --book-h: 222; --book-c: var(--sage); --tab-c: var(--muted-rose);"
               aria-expanded="false"
               aria-controls="shelf-slip-2"
             >
@@ -121,8 +124,8 @@ import { ArrowRight } from "@illustrations/icons";
           </figure>
 
           <div
-            class="shelf-book"
-            style="--book-w: 38px; --book-h: 196px; --book-c: var(--misty-blue);"
+            class="shelf-book shelf-book--roomy shelf-book--banded"
+            style="--book-w: 38; --book-h: 196; --book-c: var(--misty-blue);"
             aria-hidden="true"
           >
             <span class="shelf-book-title">light</span>
@@ -131,7 +134,7 @@ import { ArrowRight } from "@illustrations/icons";
           <div class="shelf-lend-wrap" style="--slip-shift: -36px;">
             <button
               class="shelf-book shelf-book--lend"
-              style="--book-w: 44px; --book-h: 208px; --book-c: var(--dusty-peach);"
+              style="--book-w: 44; --book-h: 208; --book-c: #c9a898; --tab-c: var(--misty-blue);"
               aria-expanded="false"
               aria-controls="shelf-slip-3"
             >
@@ -143,21 +146,23 @@ import { ArrowRight } from "@illustrations/icons";
 
           <div
             class="shelf-book shelf-book--spare"
-            style="--book-w: 34px; --book-h: 180px; --book-c: var(--muted-rose); --book-lean: 4deg;"
+            style="--book-w: 34; --book-h: 180; --book-c: var(--muted-rose); --book-lean: 4deg;"
             aria-hidden="true"
           >
             <span class="shelf-book-title">healing</span>
           </div>
           <div
-            class="shelf-book shelf-book--extra"
-            style="--book-w: 38px; --book-h: 192px; --book-c: var(--sage-warm);"
+            class="shelf-book shelf-book--extra shelf-book--capped"
+            style="--book-w: 38; --book-h: 192; --book-c: var(--sage-warm);"
             aria-hidden="true"
           >
             <span class="shelf-book-title">safe space</span>
           </div>
 
-          <span class="shelf-bookend shelf-bookend-right" aria-hidden="true"><LavenderSprig /></span
-          >
+          <span class="shelf-bookend shelf-bookend-right" aria-hidden="true">
+            <LavenderJar class="shelf-jar" />
+            <ShelfBookStack class="shelf-stack" />
+          </span>
         </div>
         <div class="shelf-plank" aria-hidden="true"></div>
       </div>
@@ -289,7 +294,7 @@ import { ArrowRight } from "@illustrations/icons";
 
     <!-- Bookmark band: a note from the margins -->
     <section class="bookmark-band">
-      <span class="bookmark-ribbon" aria-hidden="true"></span>
+      <span class="bookmark-ribbon" aria-hidden="true"><BookmarkRibbon /></span>
       <span class="bookmark-flower" aria-hidden="true"><PressedFlower /></span>
       <div class="reveal">
         <p class="bookmark-quote">You are love and light.</p>
@@ -312,8 +317,10 @@ import { ArrowRight } from "@illustrations/icons";
         <div class="catalog-cabinet reveal">
           <details class="catalog-drawer">
             <summary class="catalog-drawer-face">
+              <span class="catalog-holder"
+                ><span class="catalog-label">Intake Information</span></span
+              >
               <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
-              <span class="catalog-label">Intake Information</span>
             </summary>
             <div class="catalog-drawer-inner">
               <div class="catalog-card">
@@ -332,8 +339,9 @@ import { ArrowRight } from "@illustrations/icons";
 
           <details class="catalog-drawer">
             <summary class="catalog-drawer-face">
+              <span class="catalog-holder"><span class="catalog-label">Informed Consent</span></span
+              >
               <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
-              <span class="catalog-label">Informed Consent</span>
             </summary>
             <div class="catalog-drawer-inner">
               <div class="catalog-card">
@@ -350,8 +358,10 @@ import { ArrowRight } from "@illustrations/icons";
 
           <details class="catalog-drawer">
             <summary class="catalog-drawer-face">
+              <span class="catalog-holder"
+                ><span class="catalog-label">Credit Card Authorization</span></span
+              >
               <span class="catalog-pull" aria-hidden="true"><CatalogPull /></span>
-              <span class="catalog-label">Credit Card Authorization</span>
             </summary>
             <div class="catalog-drawer-inner">
               <div class="catalog-card">
@@ -375,8 +385,8 @@ import { ArrowRight } from "@illustrations/icons";
 
     <!-- Bookmark band: mirrored reprise -->
     <section class="bookmark-band bookmark-band--alt">
-      <span class="bookmark-ribbon" aria-hidden="true"></span>
-      <span class="bookmark-flower" aria-hidden="true"><PressedFlower /></span>
+      <span class="bookmark-ribbon" aria-hidden="true"><BookmarkRibbon /></span>
+      <span class="bookmark-flower" aria-hidden="true"><LavenderSprig /></span>
       <div class="reveal">
         <p class="bookmark-quote">renew your joyful spirit</p>
         <p class="bookmark-attribution">a note from Elizabeth&rsquo;s margins</p>
@@ -435,17 +445,19 @@ import { ArrowRight } from "@illustrations/icons";
             >Schedule Your Free Consultation</a
           >
           <div class="lending-signoff">
-            <figure class="lending-patron" style="--tilt: -4deg;">
-              <img
-                src={withBase("/images/resources-cta-patron.jpg")}
-                alt="Elizabeth Armstrong smiling — the photo on her own library card"
-                width="400"
-                height="600"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption class="lending-patron-label">patron</figcaption>
-            </figure>
+            <div class="lending-pocket">
+              <figure class="lending-patron" style="--tilt: -4deg;">
+                <img
+                  src={withBase("/images/resources-cta-patron.jpg")}
+                  alt="Elizabeth Armstrong smiling — the photo on her own library card"
+                  width="400"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="lending-patron-label">patron</figcaption>
+              </figure>
+            </div>
             <span class="lending-signature">&mdash; Elizabeth</span>
           </div>
         </div>

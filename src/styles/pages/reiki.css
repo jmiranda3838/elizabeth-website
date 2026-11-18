@@ -106,6 +106,19 @@ body:has(.reiki-page) {
 /* ============================================================
    DAYBREAK — the single sun that climbs the page on scroll
    ============================================================ */
+
+/* Layering. The sun is fixed at z-index 1. Every section paints its ground at the
+   default level (below the sun) and lifts its content to z-index 2 (above it), so the
+   sun shows on every ground and never crosses a word. For that to work a section must
+   NOT take a z-index of its own: that would seal its ground and content into one layer. */
+.reiki-page > section > .container,
+.conduit-hero-content,
+.atmos-content,
+.bloom-cta-content {
+  position: relative;
+  z-index: 2;
+}
+
 .daybreak {
   position: fixed;
   inset: 0;
@@ -115,43 +128,48 @@ body:has(.reiki-page) {
 }
 
 /* The footer (already position: relative, with a solid ground) rises above the fixed
-   sun, so the sun's end position never glows over the footer links on phones */
+   sun, so the sun never glows over the footer links on phones */
 body:has(.reiki-page) .footer {
   z-index: 2;
 }
 
-/* Warm directional atmosphere, lit from the sun's corner — air full of light */
-.daybreak::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 82% 6%, rgba(255, 224, 168, 0.3) 0%, transparent 52%),
-    radial-gradient(ellipse at 28% 96%, rgba(255, 226, 184, 0.12) 0%, transparent 58%);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
+/* The sun rides the right edge. On wide screens its centre sits in the page margin and
+   the whole disc shows; as the margin closes the centre slides to just past the edge,
+   so the disc stays in the gutter and only glow and rays reach in behind the content. */
 .daybreak-sun {
+  --sun-size: clamp(250px, 30vw, 420px);
   position: absolute;
   top: 0;
-  right: 4%;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--gold-core) 0%,
-    var(--gold-glow) 30%,
-    rgba(240, 200, 140, 0.22) 54%,
-    transparent 72%
-  );
-  opacity: 0.85;
-  mix-blend-mode: screen;
+  right: calc(max(-4px, (100vw - var(--max-width)) / 4) - var(--sun-size) / 2);
+  width: var(--sun-size);
+  height: var(--sun-size);
   /* Static fallback (reduced-motion / no-JS): a calm mid-sky sun.
      GSAP overrides this transform and scrubs it to scroll. */
-  transform: translateY(40vh);
+  transform: translateY(calc(42vh - var(--sun-size) / 2));
   will-change: transform, opacity;
+}
+
+/* Reduced motion only: steps aside while the closing sunrise is on screen */
+.daybreak-sun.is-set {
+  opacity: 0;
+}
+
+.daybreak-sun-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.daybreak-rays {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: daybreakTurn 240s linear infinite;
+}
+
+@keyframes daybreakTurn {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ============================================================
@@ -200,9 +218,8 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .conduit-hero {
   position: relative;
-  z-index: 2;
   overflow: hidden;
-  padding: calc(150px + var(--space-10)) 0 var(--space-24);
+  padding: calc(var(--header-h) + var(--space-5)) 0 var(--space-24);
   background:
     radial-gradient(72% 56% at 50% 40%, rgba(216, 168, 119, 0.2) 0%, transparent 56%),
     linear-gradient(180deg, var(--dusk-anchor) 0%, var(--dusk-2) 58%, #4a3543 100%);
@@ -345,16 +362,17 @@ body:has(.reiki-page) .footer {
   pointer-events: none;
 }
 
-/* Cupped hands holding a breathing light */
+/* Open hands holding a breathing light. The drawing brings its own lighting; the orb
+   sits on top of it, in the hollow where the two palms meet (60% down the drawing) */
 .conduit-hands {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 206px;
-  height: 188px;
-  margin-bottom: var(--space-5);
-  color: var(--dusty-peach);
+  width: 236px;
+  aspect-ratio: 260 / 250;
+  /* The wrists fade out over the drawing's last fifth, so the eyebrow can sit close */
+  margin-bottom: calc(var(--space-3) * -1);
 }
 
 .conduit-hands-svg {
@@ -362,29 +380,26 @@ body:has(.reiki-page) .footer {
   z-index: 1;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 18px rgba(255, 220, 170, 0.45));
+  filter: drop-shadow(0 0 22px rgba(255, 214, 160, 0.3));
 }
 
 .conduit-orb {
   position: absolute;
-  z-index: 0;
-  top: 24px;
+  z-index: 2;
+  top: 60%;
   left: 50%;
-  width: 124px;
-  height: 124px;
-  transform: translateX(-50%);
+  width: 38%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
   background: radial-gradient(
-    circle at 50% 45%,
+    circle,
     #ffffff 0%,
-    #fff3d6 20%,
-    var(--dusty-peach) 52%,
+    #fff6de 16%,
+    rgba(255, 232, 186, 0.62) 38%,
+    rgba(250, 214, 160, 0.22) 60%,
     transparent 74%
   );
-  box-shadow:
-    0 0 50px 14px rgba(255, 236, 196, 0.6),
-    0 0 110px 40px rgba(244, 212, 155, 0.3);
-  filter: blur(3px);
   mix-blend-mode: screen;
   animation: orbBreathe 7s ease-in-out infinite;
   pointer-events: none;
@@ -393,11 +408,11 @@ body:has(.reiki-page) .footer {
 @keyframes orbBreathe {
   0%,
   100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.86;
   }
   50% {
-    transform: translateX(-50%) scale(1.16);
+    transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
   }
 }
@@ -441,7 +456,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .essence-section {
   position: relative;
-  z-index: 2;
   overflow: hidden;
   /* Second step of the climb: picks up the plum the hero ends on and lifts,
      without dipping, to the mauve the quote section starts on */
@@ -553,8 +567,8 @@ body:has(.reiki-page) .footer {
 
 .spread-icon {
   display: inline-flex;
-  width: 38px;
-  height: 38px;
+  width: 50px;
+  height: 50px;
   margin-bottom: var(--space-3);
 }
 
@@ -562,11 +576,12 @@ body:has(.reiki-page) .footer {
   width: 100%;
   height: 100%;
 }
+/* The engraved icons are line drawings, so each pane's hue is deepened to hold on vellum */
 .is-pane .spread-icon {
-  color: var(--sage);
+  color: color-mix(in srgb, var(--sage) 66%, black);
 }
 .isnt-pane .spread-icon {
-  color: var(--misty-blue);
+  color: color-mix(in srgb, var(--misty-blue) 74%, black);
 }
 
 .spread-pane h3 {
@@ -625,7 +640,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .conduit-quote-section {
   position: relative;
-  z-index: 2;
   overflow: hidden;
   /* Extra room at the foot so the horizon glow sits below the words, never under them */
   padding-bottom: calc(var(--space-24) + var(--space-20));
@@ -801,7 +815,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .light-steps-section {
   position: relative;
-  z-index: 2;
   overflow: hidden;
   background: linear-gradient(118deg, var(--dawn-4) 0%, var(--dawn-2) 52%, var(--dawn-1) 100%);
 }
@@ -836,11 +849,6 @@ body:has(.reiki-page) .footer {
     var(--dawn-1) 100%
   );
   pointer-events: none;
-}
-
-.light-steps-section > .container {
-  position: relative;
-  z-index: 1;
 }
 
 .light-steps-section .section-heading {
@@ -898,7 +906,7 @@ body:has(.reiki-page) .footer {
   border-radius: 50%;
   background: radial-gradient(circle at 50% 38%, #ffffff 0%, var(--vellum-solid) 70%);
   border: 1px solid rgba(255, 255, 255, 0.7);
-  color: var(--warm-clay);
+  color: var(--clay-deep);
   margin-bottom: var(--space-4);
   box-shadow:
     0 4px 12px -2px rgba(120, 84, 52, 0.28),
@@ -907,8 +915,8 @@ body:has(.reiki-page) .footer {
 }
 
 .light-step-icon svg {
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   position: relative;
   z-index: 1;
 }
@@ -957,7 +965,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .feel-section {
   position: relative;
-  z-index: 2;
   /* The climb finishes here: the brightest cream on the page */
   background: linear-gradient(
     180deg,
@@ -1016,8 +1023,8 @@ body:has(.reiki-page) .footer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 58px;
+  height: 58px;
   margin: 0 auto var(--space-3);
 }
 
@@ -1046,7 +1053,7 @@ body:has(.reiki-page) .footer {
     var(--vellum);
 }
 .feel-warmth .feel-glyph {
-  color: var(--warm-clay);
+  color: var(--caramel);
 }
 
 .feel-heavy {
@@ -1056,7 +1063,7 @@ body:has(.reiki-page) .footer {
     var(--vellum);
 }
 .feel-heavy .feel-glyph {
-  color: var(--misty-blue);
+  color: color-mix(in srgb, var(--misty-blue) 78%, black);
 }
 
 .feel-quiet {
@@ -1066,8 +1073,7 @@ body:has(.reiki-page) .footer {
     var(--vellum);
 }
 .feel-quiet .feel-glyph {
-  color: var(--sage);
-  opacity: 0.7;
+  color: color-mix(in srgb, var(--sage) 68%, black);
 }
 
 .feel-rest {
@@ -1077,7 +1083,7 @@ body:has(.reiki-page) .footer {
     var(--vellum);
 }
 .feel-rest .feel-glyph {
-  color: var(--muted-rose);
+  color: var(--clay-deep);
 }
 
 /* ============================================================
@@ -1085,7 +1091,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .atmos-band {
   position: relative;
-  z-index: 2;
   /* Tall enough for the sky, the horizon and her whole figure, with the line of
      text sitting in the sky above her */
   min-height: max(58vh, 700px);
@@ -1178,7 +1183,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .bridge-section {
   position: relative;
-  z-index: 2;
   /* The warm-down begins */
   background: linear-gradient(180deg, var(--warm-1) 0%, var(--dawn-2) 100%);
 }
@@ -1337,7 +1341,6 @@ body:has(.reiki-page) .footer {
    ============================================================ */
 .horizon-section {
   position: relative;
-  z-index: 2;
   overflow: hidden;
   padding-top: var(--space-20);
   padding-bottom: var(--space-12);
@@ -1350,43 +1353,6 @@ body:has(.reiki-page) .footer {
     var(--gold-hour) 100%
   );
   text-align: center;
-}
-
-.horizon-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 28%;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--caramel) 20%,
-    var(--amber-light) 50%,
-    var(--caramel) 80%,
-    transparent
-  );
-  box-shadow: 0 0 16px 1px rgba(244, 212, 155, 0.6);
-}
-
-.horizon-sun {
-  position: absolute;
-  left: 50%;
-  bottom: 28%;
-  width: 300px;
-  height: 300px;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--gold-core) 0%,
-    var(--gold-glow) 32%,
-    rgba(240, 200, 140, 0.2) 52%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  opacity: 0.9;
-  pointer-events: none;
 }
 
 .horizon-section .section-heading {
@@ -1407,7 +1373,7 @@ body:has(.reiki-page) .footer {
   z-index: 1;
   max-width: 440px;
   margin: 0 auto;
-  padding: var(--space-10) var(--space-8) var(--space-8);
+  padding: 0 var(--space-8) var(--space-8);
   background: var(--vellum-solid);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-md);
@@ -1415,46 +1381,20 @@ body:has(.reiki-page) .footer {
     var(--shadow-lift),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   text-align: center;
+  /* Rounds the top corners of the postcard art */
+  overflow: hidden;
 }
 
-.horizon-corner {
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  color: var(--caramel);
-  opacity: 0.55;
-}
-.horizon-corner svg {
-  width: 100%;
-  height: 100%;
-}
-.horizon-corner-tl {
-  top: 10px;
-  left: 10px;
-}
-.horizon-corner-tr {
-  top: 10px;
-  right: 10px;
-}
-.horizon-corner-bl {
-  bottom: 10px;
-  left: 10px;
-}
-.horizon-corner-br {
-  bottom: 10px;
-  right: 10px;
+/* The retreat postcard: runs edge to edge across the top of the card. Its desert floor
+   is the card's own cream, so the picture opens into the text below it. */
+.horizon-card-art {
+  display: block;
+  margin: 0 calc(var(--space-8) * -1) var(--space-4);
+  aspect-ratio: 440 / 170;
 }
 
-/* Block-level, so it stacks centred above the date chip instead of sharing its line */
-.horizon-card-icon {
-  display: flex;
-  width: 46px;
-  height: 46px;
-  color: var(--sage-warm);
-  margin: 0 auto var(--space-3);
-}
-
-.horizon-card-icon svg {
+.horizon-card-art svg {
+  display: block;
   width: 100%;
   height: 100%;
 }
@@ -1498,157 +1438,104 @@ body:has(.reiki-page) .footer {
 
 /* ============================================================
    9. FULL-BLOOM CTA — sunrise over the horizon, the climax
+   A very large sun rises over misted hills. Its disc is the ground the closing words
+   are set on, so the rays begin at its rim and never run behind text. Everything is
+   measured up from the horizon:
+     --bloom-ground  the band of hills below the horizon
+     --sun-r         the disc's radius (it must hold the whole text block)
+     --bloom-sky     room above the disc for the rays
+   The copy is bottom-aligned, --bloom-gap above the horizon.
    ============================================================ */
 .bloom-cta {
+  --sun-r: 372px;
+  --bloom-ground: 172px;
+  --bloom-gap: var(--space-12);
+  --bloom-sky: calc(var(--sun-r) * 0.42);
+
   position: relative;
-  z-index: 2;
   overflow: hidden;
-  padding: var(--space-32) 0 var(--space-24);
-  /* Deepest golden hour, then a long eased landing on the footer's own colour */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: calc(var(--bloom-sky) + var(--sun-r) + var(--bloom-ground));
+  padding: var(--bloom-sky) 0 calc(var(--bloom-ground) + var(--bloom-gap));
+  /* Golden hour, brightening towards the horizon; the hills cover the rest */
   background: linear-gradient(
     180deg,
     var(--gold-hour) 0%,
-    #d09663 26%,
-    #d6a171 calc(100% - 240px),
-    #e3bb90 calc(100% - 150px),
-    #efd8bd calc(100% - 70px),
+    #d59d69 24%,
+    #e0ad77 52%,
+    #edc590 calc(100% - var(--bloom-ground) - 60px),
+    #f3d3a4 calc(100% - var(--bloom-ground)),
     var(--bg-secondary) 100%
   );
   text-align: center;
 }
 
-/* Footer landing: sits above the vines and the sunrise drawing so their bases
-   dissolve into the footer instead of being cut off at the section edge */
+/* Footer landing: sits above the hills and the plants so their bases dissolve into
+   the footer instead of being cut off at the section edge */
 .bloom-cta::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 130px;
+  height: 110px;
   z-index: 1;
   background: linear-gradient(
     180deg,
     transparent 0%,
-    color-mix(in srgb, var(--bg-secondary) 40%, transparent) 40%,
-    color-mix(in srgb, var(--bg-secondary) 82%, transparent) 75%,
+    color-mix(in srgb, var(--bg-secondary) 45%, transparent) 45%,
+    color-mix(in srgb, var(--bg-secondary) 86%, transparent) 78%,
     var(--bg-secondary) 100%
   );
   pointer-events: none;
 }
 
-/* Giant blurred sun-bloom rising out of the deeper sky */
-.bloom-cta::before {
-  content: "";
+/* The sun. The drawing is the half above the horizon, three radii wide and one and a
+   half tall, centred on the middle of its bottom edge. */
+.bloom-sun {
   position: absolute;
+  z-index: 1;
   left: 50%;
-  /* Sits low, so its glow is never clipped by the section's top edge */
-  bottom: -470px;
+  bottom: var(--bloom-ground);
+  width: calc(var(--sun-r) * 3);
+  height: calc(var(--sun-r) * 1.5);
   transform: translateX(-50%);
-  width: 980px;
-  max-width: 150vw;
-  height: 980px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff7e6 0%, rgba(255, 224, 170, 0.6) 22%, transparent 60%);
-  mix-blend-mode: screen;
-  filter: blur(22px);
-  /* Fades out before the bottom edge so it never burns lighter than the footer */
-  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 380px, transparent 505px);
-  mask-image: linear-gradient(180deg, #000 0, #000 380px, transparent 505px);
-  z-index: 0;
   pointer-events: none;
 }
 
-.cta-sunrise {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  width: 100%;
-  height: 360px;
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
-  pointer-events: none;
+.bloom-sun-corona {
+  animation: bloomCorona 9s ease-in-out infinite;
 }
 
-.cta-sun-disc {
-  transform-box: fill-box;
-  transform-origin: center bottom;
-  animation: ctaSunBreathe 8s ease-in-out infinite;
-}
-
-@keyframes ctaSunBreathe {
+@keyframes bloomCorona {
   0%,
   100% {
-    transform: scale(1);
-    opacity: 0.92;
+    opacity: 0.72;
   }
   50% {
-    transform: scale(1.06);
     opacity: 1;
   }
 }
 
-/* Soft, blurred ray volume behind the crisp rays */
-.cta-rays-soft {
-  filter: blur(6px);
-  opacity: 0.45;
-  mix-blend-mode: screen;
-}
-
-/* Keep the rays group shown (override base reveal); lines self-draw on scroll-in */
-.cta-rays.reveal {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-.cta-rays line {
-  stroke-dasharray: 240;
-  stroke-dashoffset: 240;
-  opacity: 0;
-  transition:
-    stroke-dashoffset 1.2s ease-out,
-    opacity 0.9s ease-out;
-}
-
-.cta-rays.visible line {
-  stroke-dashoffset: 0;
-  opacity: 0.8;
-}
-.cta-rays-soft.visible line {
-  opacity: 0.5;
+/* The hills: their horizon line (a quarter of the way down the drawing) lands on the
+   sun's centre line */
+.bloom-hills {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(var(--bloom-ground) * 4 / 3);
+  pointer-events: none;
 }
 
 .bloom-cta-content {
-  position: relative;
-  z-index: 2;
   max-width: 580px;
   margin: 0 auto;
   padding: 0 var(--space-6);
-}
-
-/* Luminous backing so the copy stays crisp over the rising sun and its rays */
-.bloom-cta-content::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: -8%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 680px;
-  max-width: 94vw;
-  height: 116%;
-  /* closest-side: reaches zero inside its own box, so it leaves no edges */
-  background: radial-gradient(
-    closest-side,
-    rgba(252, 244, 228, 0.76) 0%,
-    rgba(252, 244, 228, 0.56) 42%,
-    rgba(252, 244, 228, 0.24) 72%,
-    transparent 100%
-  );
-  pointer-events: none;
 }
 
 .bloom-cta h2 {
@@ -1662,65 +1549,70 @@ body:has(.reiki-page) .footer {
   margin-bottom: var(--space-8);
 }
 
-.bloom-btn {
-  position: relative;
-}
-
-.bloom-btn::after {
-  content: "";
-  position: absolute;
-  inset: -12px;
-  z-index: -1;
-  border-radius: var(--radius-md);
-  background: radial-gradient(ellipse at center, rgba(255, 243, 214, 0.8) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* Sized from the section's height (width follows the drawing's 80:200 ratio) so the
-   whole vine, bud included, fits inside the section with --space-6 to spare */
+/* Morning glories on canes, rooted in the hills at either edge. Sized from their
+   height (each drawing brings its own width). Their flowers take the sun's cream. */
 .bloom-vine {
   position: absolute;
-  bottom: -10px;
-  height: calc(100% - var(--space-6));
-  aspect-ratio: 80 / 200;
-  color: var(--sage);
-  opacity: 0.9;
-  pointer-events: none;
   z-index: 1;
+  bottom: 34px;
+  height: min(500px, 74%);
+  color: #5f6f66;
+  pointer-events: none;
 }
 
 .bloom-vine svg {
-  width: 100%;
-  height: auto;
+  display: block;
+  width: auto;
+  height: 100%;
 }
 .bloom-vine-left {
-  left: -16px;
+  left: -6px;
 }
 .bloom-vine-right {
-  right: -16px;
+  right: -6px;
 }
 
+.bloom-vine .cta-vine-flower {
+  color: #fff6e6;
+  fill-opacity: 0.95;
+}
+.bloom-vine .cta-vine-tube {
+  fill-opacity: 0.72;
+}
+.bloom-vine .cta-vine-throat {
+  color: #b9686a;
+}
+.bloom-vine .cta-vine-cane {
+  color: #7d5a48;
+}
+
+/* Rosemary and lavender standing in the near hills, inside the vines and clear of the
+   copy; deep enough in tone to hold against the glow */
 .bloom-botanical {
   position: absolute;
-  color: var(--sage-warm);
-  opacity: 0.85;
-  pointer-events: none;
   z-index: 1;
+  bottom: 52px;
+  pointer-events: none;
 }
 
 .bloom-botanical svg {
+  display: block;
   width: 100%;
   height: auto;
 }
 .bloom-botanical-1 {
-  top: 40px;
-  left: 8%;
-  width: 82px;
+  left: calc(50% - var(--sun-r) - 62px);
+  width: 84px;
+  color: #5d6f63;
+  transform: rotate(-7deg);
+  transform-origin: 50% 100%;
 }
 .bloom-botanical-2 {
-  top: 66px;
-  right: 9%;
-  width: 72px;
+  right: calc(50% - var(--sun-r) - 66px);
+  width: 92px;
+  color: #6c6480;
+  transform: rotate(6deg);
+  transform-origin: 50% 100%;
 }
 
 /* ============================================================
@@ -1748,6 +1640,25 @@ body:has(.reiki-page) .footer {
   }
   .feel-card:nth-child(3) {
     transform: translateY(0) rotate(-0.5deg);
+  }
+}
+
+/* Between the phone layout and a full desktop there is no room for the sprigs inside
+   the vines, so they shrink and tuck in against the vines' inner side, down in the hills */
+@media (max-width: 1180px) {
+  .bloom-botanical {
+    bottom: 40px;
+  }
+  .bloom-botanical-1 {
+    left: 150px;
+    width: 58px;
+  }
+  .bloom-botanical-2 {
+    right: 150px;
+    width: 62px;
+  }
+  .bloom-vine {
+    height: min(450px, 68%);
   }
 }
 
@@ -1804,19 +1715,24 @@ body:has(.reiki-page) .footer {
     margin: 0 auto;
   }
 
-  /* Narrower screens: a short vine that stays in the corner gutter, and two smaller
-     sprigs that sit above the heading, all clear of the copy */
+  /* No gutter beside the sun at this width, so the vines go and the two sprigs move
+     out to the corners, low enough to stay under the button */
   .bloom-vine {
-    height: auto;
-    width: 120px;
+    display: none;
+  }
+  .bloom-cta {
+    --sun-r: max(400px, 740px - 78vw);
+  }
+  .bloom-botanical {
+    bottom: 26px;
   }
   .bloom-botanical-1 {
-    top: var(--space-6);
-    width: 48px;
+    left: var(--space-3);
+    width: 58px;
   }
   .bloom-botanical-2 {
-    top: var(--space-6);
-    width: 42px;
+    right: var(--space-3);
+    width: 54px;
   }
 }
 
@@ -1832,43 +1748,11 @@ body:has(.reiki-page) .footer {
   .steps-thread {
     display: none;
   }
-  .daybreak-sun {
-    width: 220px;
-    height: 220px;
-    opacity: 0.7;
-    right: -4%;
-  }
   .atmos-band {
     min-height: 600px;
   }
   .atmos-content {
     padding-top: var(--space-10);
-  }
-  /* The CTA is tall on phones, so lift the glow to sit behind the copy. Lifted, its
-     top passes the section's top edge, so the mask fades it in from below that edge */
-  .bloom-cta::before {
-    bottom: -300px;
-    -webkit-mask-image: linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 210px,
-      #000 400px,
-      #000 540px,
-      transparent 675px
-    );
-    mask-image: linear-gradient(
-      180deg,
-      transparent 0,
-      transparent 210px,
-      #000 400px,
-      #000 540px,
-      transparent 675px
-    );
-  }
-
-  /* No gutter beside the copy at this width, so the vines go */
-  .bloom-vine {
-    display: none;
   }
 }
 
@@ -1883,8 +1767,7 @@ body:has(.reiki-page) .footer {
     transform: none;
   }
   .conduit-hands {
-    width: 174px;
-    height: 158px;
+    width: 196px;
   }
 }
 
@@ -1898,16 +1781,9 @@ body:has(.reiki-page) .footer {
     clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%);
   }
   .conduit-orb,
-  .cta-sun-disc {
+  .bloom-sun-corona,
+  .daybreak-rays {
     animation: none;
-  }
-  .cta-rays line {
-    transition: none;
-    stroke-dashoffset: 0;
-    opacity: 0.8;
-  }
-  .cta-rays-soft line {
-    opacity: 0.5;
   }
 }
 
@@ -1920,10 +1796,12 @@ body:has(.reiki-page) .footer {
   .light-beam,
   .conduit-hero::before,
   .conduit-motes,
-  .bloom-cta::before,
   .bloom-cta::after,
   .light-steps-section::after,
-  .cta-sunrise {
+  .bloom-sun,
+  .bloom-hills,
+  .bloom-vine,
+  .bloom-botanical {
     display: none !important;
   }
 }
