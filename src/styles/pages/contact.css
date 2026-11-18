@@ -271,7 +271,7 @@ select.form-input {
     rgba(210, 199, 193, 0.3) 100%
   );
   overflow: hidden;
-  padding: calc(160px + var(--space-4)) var(--space-4) var(--space-20);
+  padding: calc(var(--header-h) + var(--space-4)) var(--space-4) var(--space-20);
 }
 
 /* Atmospheric mist effect */
@@ -454,16 +454,16 @@ select.form-input {
   animation: floatGentle 6s ease-in-out infinite;
 }
 
-/* Both start below the fixed 160px header */
+/* Both start below the fixed header */
 .floating-botanical-1 {
-  top: calc(160px + var(--space-6));
+  top: calc(var(--header-h) + var(--space-6));
   left: 5%;
   width: 60px;
   animation-delay: 0s;
 }
 
 .floating-botanical-2 {
-  top: max(20%, calc(160px + var(--space-2)));
+  top: max(20%, calc(var(--header-h) + var(--space-2)));
   right: 8%;
   width: 50px;
   animation-delay: 3s;

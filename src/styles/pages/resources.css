@@ -1256,8 +1256,7 @@
 
 @media (max-width: 768px) {
   .library-hero {
-    /* The stacked mobile header is ~160px tall */
-    padding-top: calc(160px + var(--space-8));
+    padding-top: calc(var(--header-h) + var(--space-8));
   }
 
   .shelf-row {

@@ -1822,7 +1822,7 @@ body:has(.reiki-page) .footer {
 
 @media (max-width: 768px) {
   .conduit-hero {
-    padding-top: calc(120px + var(--space-8));
+    padding-top: calc(var(--header-h) + var(--space-8));
   }
   .light-steps {
     grid-template-columns: 1fr;

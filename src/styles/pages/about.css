@@ -16,7 +16,7 @@
    ============================================ */
 
 .board-hero {
-  padding: calc(160px + var(--space-12)) var(--space-4) var(--space-20);
+  padding: calc(var(--header-h) + var(--space-12)) var(--space-4) var(--space-20);
   background: linear-gradient(135deg, var(--warm-paper) 0%, var(--soft-sand) 55%, #efe7e1 100%);
 }
 
@@ -905,9 +905,9 @@
 
 @media (max-width: 900px) {
   /* The board unwinds into a grid — no absolute positioning.
-     Padding clears the 160px fixed header */
+     Padding clears the fixed header */
   .board-hero {
-    padding-top: calc(160px + var(--space-8));
+    padding-top: calc(var(--header-h) + var(--space-8));
   }
 
   .board-frame {

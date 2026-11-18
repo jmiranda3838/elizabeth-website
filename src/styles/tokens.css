@@ -12,6 +12,8 @@
   /* Accents */
   --dusty-peach: #d0b4a6;
   --warm-clay: #b8817e;
+  --clay-deep: #98605d; /* button fill: 4.5:1 against --warm-paper text */
+  --clay-deeper: #8a5451; /* its hover */
   --sage: #96aca0;
   --sage-warm: #a7a898;
   --misty-blue: #7d9094;
@@ -42,6 +44,9 @@
   --text-4xl: 2.25rem;
   --text-5xl: 3rem;
   --text-6xl: 3.75rem;
+
+  /* Fixed header height. Hero paddings, anchor offsets and the mobile menu all read this */
+  --header-h: 160px;
 
   /* Spacing Scale */
   --space-1: 0.25rem;
@@ -79,4 +84,11 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 9999px;
+}
+
+/* The mobile-menu header (900px and down) is shorter, so phones get more page */
+@media (max-width: 900px) {
+  :root {
+    --header-h: 100px;
+  }
 }

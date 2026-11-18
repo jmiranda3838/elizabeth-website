@@ -249,11 +249,11 @@
   border-radius: var(--radius-full);
 }
 
-/* Cross-page anchor targets must clear the fixed header (~161px tall),
+/* Cross-page anchor targets must clear the fixed header,
    plus the reveal animation's upward shift after the jump */
 #services,
 .service-card[id] {
-  scroll-margin-top: 220px;
+  scroll-margin-top: calc(var(--header-h) + 60px);
 }
 
 @media (max-width: 900px) {

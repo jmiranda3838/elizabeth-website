@@ -16,15 +16,15 @@
 }
 
 .btn-primary {
-  background-color: var(--muted-rose);
+  background-color: var(--clay-deep);
   color: var(--warm-paper);
-  border: 1px solid var(--muted-rose);
+  border: 1px solid var(--clay-deep);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--warm-clay);
-  border-color: var(--warm-clay);
+  background-color: var(--clay-deeper);
+  border-color: var(--clay-deeper);
 }
 
 .btn-outline {

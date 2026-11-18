@@ -12,10 +12,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Anything reached by a #link lands clear of the fixed 160px header.
+/* Anything reached by a #link lands clear of the fixed header.
    :where() keeps this at zero specificity so a section can set its own offset. */
 :where([id]) {
-  scroll-margin-top: 180px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
 }
 
 body {
