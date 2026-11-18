@@ -2,23 +2,46 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 40 40"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Shield shape -->
-  <path
-    d="M20 5 L35 12 L35 25 Q35 35 20 38 Q5 35 5 25 L5 12 Z"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"></path>
-  <path d="M20 12 L20 28" stroke="currentColor" stroke-width="0.8" opacity="0.4"></path>
-  <path d="M12 20 L28 20" stroke="currentColor" stroke-width="0.8" opacity="0.4"></path>
+  <!-- Shield, engraved: a heater shield with an inked shadow edge, bearing a
+       leafy sprig in place of a device. Themes through currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M20 4.2 C16 6.9 11 8.3 6 8.1 C5.4 17 6.4 27.8 20 36.2 C33.6 27.8 34.6 17 34 8.1 C29 8.3 24 6.9 20 4.2 Z"
+      fill="currentColor"
+      fill-opacity="0.11"
+      stroke-width="1.55"></path>
+    <path
+      d="M20 4.2 C24 6.9 29 8.3 34 8.1 C34.6 17 33.6 27.8 20 36.2 Z"
+      fill="currentColor"
+      fill-opacity="0.12"
+      stroke="none"></path>
+    <!-- Inner border -->
+    <path
+      d="M20 8.4 C17 10.2 13.4 11.3 9.6 11.5 C9.5 18.6 10.8 25.8 20 31.8 C29.2 25.8 30.5 18.6 30.4 11.5 C26.6 11.3 23 10.2 20 8.4 Z"
+      stroke-width="0.85"
+      stroke-opacity="0.5"></path>
+    <!-- Sprig -->
+    <path d="M20.3 29.4 C19.6 24.8 20.9 20 20 14.8" stroke-width="1.2"></path>
+    <g fill="currentColor" fill-opacity="0.5" stroke-width="0.95">
+      <path d="M20 25.8 C16.2 26 13.4 23.6 12.8 19.8 C16.6 19.8 19.4 22 20 25.8 Z"></path>
+      <path d="M20.3 22 C23.8 21.6 26.4 19 26.8 15.2 C23.2 15.8 20.6 18.2 20.3 22 Z"></path>
+      <path d="M20.1 18.4 C17.4 18 15.6 16 15.4 13.4 C18 13.8 19.8 15.6 20.1 18.4 Z"></path>
+      <path d="M20 15 C18.2 13.4 18.2 11.2 19.8 9.6 C21.6 11.2 21.8 13.4 20 15 Z"></path>
+    </g>
+  </g>
+  <path d="M34 8.1 C34.6 17 33.6 27.8 20 36.2 C31.8 27.6 33.3 17.6 34 8.1 Z" fill="currentColor"
+  ></path>
 </svg>

@@ -1,6 +1,9 @@
 ---
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { SproutDivider } from "@illustrations/dividers";
+import { TwineLoop } from "@illustrations/misc";
+import { MeadowHorizon, PottingBench } from "@illustrations/scenes";
 ---
 
 <BaseLayout
@@ -8,7 +11,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   description="Session fees, sliding-scale availability, and out-of-network insurance information for therapy with Elizabeth Armstrong, LMFT — in Orange County and online across California."
 >
   <!-- Page Hero -->
-  <section class="page-hero">
+  <section class="page-hero page-hero-scene">
     <div class="container">
       <h1>Fees &amp; Insurance</h1>
       <p class="lead">
@@ -16,26 +19,36 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         the cost is a concern.
       </p>
     </div>
+    <PottingBench class="page-hero-art" aria-hidden="true" />
   </section>
 
   <!-- Session Fees -->
   <section class="section bg-paper">
     <div class="container container-narrow">
       <h2 class="text-center">Session fees</h2>
-      <div class="decorative-line center"></div>
+      <SproutDivider class="fees-rule" aria-hidden="true" />
 
       <div class="fees-grid">
         <div class="fee-card">
+          <span class="fee-tag-shadow" aria-hidden="true"></span>
+          <TwineLoop class="fee-tag-twine" aria-hidden="true" />
+          <span class="fee-tag-hole" aria-hidden="true"></span>
           <p class="fee-amount">$185</p>
           <p class="fee-label">50-minute individual session</p>
           <p class="fee-note">The standard session length for individual therapy.</p>
         </div>
         <div class="fee-card">
+          <span class="fee-tag-shadow" aria-hidden="true"></span>
+          <TwineLoop class="fee-tag-twine" aria-hidden="true" />
+          <span class="fee-tag-hole" aria-hidden="true"></span>
           <p class="fee-amount">$225</p>
           <p class="fee-label">50-minute couple or family session</p>
           <p class="fee-note">The standard session length for couples and families.</p>
         </div>
         <div class="fee-card">
+          <span class="fee-tag-shadow" aria-hidden="true"></span>
+          <TwineLoop class="fee-tag-twine" aria-hidden="true" />
+          <span class="fee-tag-hole" aria-hidden="true"></span>
           <p class="fee-amount">$300</p>
           <p class="fee-label">90-minute session</p>
           <p class="fee-note">
@@ -108,7 +121,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 
   <!-- CTA Band -->
-  <section class="cta-band">
+  <section class="cta-band cta-band-meadow">
     <div class="container">
       <h2>Questions about fees?</h2>
       <p>
@@ -119,38 +132,138 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         >Schedule Your Free Consultation</a
       >
     </div>
+    <MeadowHorizon class="cta-meadow" aria-hidden="true" />
   </section>
 
   <style>
+    /* The rule under the heading: a seedling on a hand-drawn line */
+    .fees-rule {
+      display: block;
+      width: 202px;
+      height: 36px;
+      margin: calc(-1 * var(--space-2)) auto 0;
+      color: #7f9689;
+    }
+
+    /* Fee cards are garden hang tags: clipped shoulders, a punched and
+       reinforced hole, a loop of twine, each hanging a little off true */
     .fees-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-6);
-      margin: var(--space-10) auto 0;
+      margin: var(--space-16) auto 0;
     }
     .fee-card {
+      --notch: 26px;
+      position: relative;
       text-align: center;
-      padding: var(--space-8) var(--space-6);
-      background-color: var(--warm-paper);
-      border: 1px solid var(--dusty-peach);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-subtle);
+      padding: var(--space-16) var(--space-5) var(--space-8);
+      rotate: var(--tilt, 0deg);
+      transform-origin: 50% 18px;
+    }
+    /* The shadow is its own layer (a filter on the card would soften the text) */
+    .fee-tag-shadow {
+      position: absolute;
+      inset: var(--notch) 5px 3px;
+      z-index: -2;
+      border-radius: 2px;
+      box-shadow:
+        0 2px 3px rgba(96, 102, 90, 0.1),
+        0 12px 20px rgba(152, 96, 93, 0.16);
+    }
+    .fee-card:nth-child(1) {
+      --tilt: -1.2deg;
+    }
+    .fee-card:nth-child(2) {
+      --tilt: 0.6deg;
+      margin-top: var(--space-3);
+    }
+    .fee-card:nth-child(3) {
+      --tilt: 1.4deg;
+    }
+    /* Tag outline, then the paper laid 1px inside it */
+    .fee-card::before,
+    .fee-card::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      clip-path: polygon(
+        var(--notch) 0,
+        calc(100% - var(--notch)) 0,
+        100% var(--notch),
+        100% calc(100% - 3px),
+        calc(100% - 3px) 100%,
+        3px 100%,
+        0 calc(100% - 3px),
+        0 var(--notch)
+      );
+    }
+    .fee-card::before {
+      inset: 0;
+      background-color: var(--dusty-peach);
+    }
+    .fee-card::after {
+      inset: 1px;
+      background:
+        linear-gradient(var(--dusty-peach), var(--dusty-peach)) center calc(100% - 9px) /
+          calc(100% - 20px) 1px no-repeat,
+        linear-gradient(172deg, #fffdfb 0%, #fdf6f1 62%, #f9ede6 100%);
+    }
+    .fee-tag-hole {
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      border-radius: var(--radius-full);
+      background-color: var(--bg-primary);
+      box-shadow:
+        0 0 0 5px #f0ddd2,
+        0 0 0 6px var(--dusty-peach),
+        inset 0 2px 2px rgba(96, 102, 90, 0.28);
+    }
+    .fee-tag-twine {
+      position: absolute;
+      top: -33px;
+      left: 50%;
+      width: 48px;
+      height: 64px;
+      margin-left: -24px;
+      color: #c7ab93;
+      pointer-events: none;
+    }
+    .fee-card:nth-child(2) .fee-tag-twine {
+      transform: scaleX(-1);
     }
     .fee-amount {
       font-family: var(--font-serif);
       font-size: var(--text-5xl);
-      color: var(--warm-clay);
+      font-weight: 500;
+      color: var(--clay-deep);
       line-height: 1;
-      margin-bottom: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    /* a short ruled line under the price, as on a hand-written label */
+    .fee-amount::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 1px;
+      margin: var(--space-4) auto 0;
+      background-color: var(--dusty-peach);
     }
     .fee-label {
       font-weight: 600;
+      line-height: 1.4;
       margin-bottom: var(--space-2);
+      text-wrap: balance;
     }
     .fee-note {
       font-size: var(--text-sm);
       color: var(--text-secondary);
       margin-bottom: 0;
+      text-wrap: balance;
     }
     .fees-fineprint {
       margin-top: var(--space-8);
@@ -174,7 +287,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     }
     @media (max-width: 768px) {
       .fees-grid {
-        grid-template-columns: 1fr;
+        gap: var(--space-4);
+        margin-top: var(--space-12);
+      }
+      .fee-card {
+        --notch: 20px;
+        padding-left: var(--space-3);
+        padding-right: var(--space-3);
+      }
+    }
+
+    /* Stacked: the tags keep a tag's proportions instead of stretching full width */
+    @media (max-width: 600px) {
+      .fees-grid {
+        grid-template-columns: minmax(0, 340px);
+        justify-content: center;
+        gap: var(--space-12);
+      }
+      .fee-card {
+        --notch: 26px;
+        padding-left: var(--space-5);
+        padding-right: var(--space-5);
+      }
+      .fee-card:nth-child(2) {
+        margin-top: 0;
       }
     }
   </style>

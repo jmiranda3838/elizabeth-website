@@ -1,0 +1,869 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* Terracotta pots are built from a few measurements so every one shares the
+   same construction (tapered body, thick rim, elliptical mouth) while differing
+   in size, proportion and clay tone. base = y of the foot on the bench. */
+interface Pot {
+  id: string;
+  cx: number;
+  base: number;
+  top: number; // rim width
+  bot: number; // foot width
+  h: number;
+  rim: number; // rim band height
+  clay: string;
+  lip: string;
+  open?: boolean; // false = nested pot: front lip only, nothing inside
+  lean?: number;
+}
+const r = (n: number) => Math.round(n * 10) / 10;
+function build(p: Pot) {
+  const { cx, base, top: T, bot: B, h, rim: R } = p;
+  const e = r(T * 0.075); // half-height of the mouth ellipse
+  const ty = base - h + e; // y of the mouth centre
+  const l = cx - T / 2;
+  const rt = cx + T / 2;
+  const by = ty + R; // where the rim band meets the body
+  const body = `M${r(l + 5)} ${r(by - 2)} C${r(l + 6)} ${r(by + (base - by) * 0.4)} ${r(cx - B / 2 - 1)} ${r(base - 12)} ${r(cx - B / 2)} ${r(base - 3)} Q${cx} ${r(base + 4)} ${r(cx + B / 2)} ${r(base - 3)} C${r(cx + B / 2 + 1)} ${r(base - 12)} ${r(rt - 6)} ${r(by + (base - by) * 0.4)} ${r(rt - 5)} ${r(by - 2)} Z`;
+  const rimFull = `M${l} ${ty} A${T / 2} ${e} 0 0 1 ${rt} ${ty} C${r(rt + 0.6)} ${r(ty + R * 0.5)} ${r(rt - 0.4)} ${r(by - 1)} ${r(rt - 1.5)} ${by} Q${cx} ${r(by + e * 2.1)} ${r(l + 1.5)} ${by} C${r(l + 0.4)} ${r(by - 1)} ${r(l - 0.6)} ${r(ty + R * 0.5)} ${l} ${ty} Z`;
+  const rimFront = `M${l} ${ty} A${T / 2} ${e} 0 0 0 ${rt} ${ty} C${r(rt + 0.6)} ${r(ty + R * 0.5)} ${r(rt - 0.4)} ${r(by - 1)} ${r(rt - 1.5)} ${by} Q${cx} ${r(by + e * 2.1)} ${r(l + 1.5)} ${by} C${r(l + 0.4)} ${r(by - 1)} ${r(l - 0.6)} ${r(ty + R * 0.5)} ${l} ${ty} Z`;
+  // Shadow the rim casts on the body
+  const under = `M${l} ${r(by - 2)} Q${cx} ${r(by + e * 2.1 - 1)} ${rt} ${r(by - 2)} L${rt} ${r(by + 5)} Q${cx} ${r(by + e * 2.1 + 6)} ${l} ${r(by + 5)} Z`;
+  // Two faint throwing rings round the belly
+  const y1 = r(by + (base - by) * 0.42);
+  const y2 = r(by + (base - by) * 0.7);
+  const rings = `M${l} ${y1} Q${cx} ${r(y1 + e * 1.7)} ${rt} ${y1} M${l} ${y2} Q${cx} ${r(y2 + e * 1.5)} ${rt} ${y2}`;
+  return { ...p, e, ty, by, body, rimFull, rimFront, under, rings };
+}
+
+const CLAY = { warm: "#c48f84", rose: "#c99a92", pale: "#d3aa9d", deep: "#b8817e" };
+const LIP = { warm: "#d0a096", rose: "#d6aca3", pale: "#dfbbae", deep: "#c69491" };
+
+const pots = [
+  // Left: a nested stack of empties (drawn top pot first) and a shallow bulb pan
+  {
+    id: "s3",
+    cx: 99,
+    base: 169,
+    top: 70,
+    bot: 50,
+    h: 58,
+    rim: 13,
+    clay: CLAY.pale,
+    lip: LIP.pale,
+    lean: -4,
+  },
+  {
+    id: "s2",
+    cx: 97,
+    base: 185,
+    top: 74,
+    bot: 52,
+    h: 60,
+    rim: 13,
+    clay: CLAY.rose,
+    lip: LIP.rose,
+    open: false,
+    lean: 2.5,
+  },
+  {
+    id: "s1",
+    cx: 96,
+    base: 201,
+    top: 78,
+    bot: 54,
+    h: 62,
+    rim: 14,
+    clay: CLAY.warm,
+    lip: LIP.warm,
+    open: false,
+  },
+  {
+    id: "pan",
+    cx: 196,
+    base: 201,
+    top: 70,
+    bot: 54,
+    h: 36,
+    rim: 9,
+    clay: CLAY.deep,
+    lip: LIP.deep,
+  },
+  // Centre: seedlings, the big pelargonium, lavender
+  {
+    id: "seed",
+    cx: 456,
+    base: 201,
+    top: 58,
+    bot: 40,
+    h: 46,
+    rim: 10,
+    clay: CLAY.pale,
+    lip: LIP.pale,
+  },
+  {
+    id: "main",
+    cx: 566,
+    base: 202,
+    top: 98,
+    bot: 66,
+    h: 84,
+    rim: 16,
+    clay: CLAY.warm,
+    lip: LIP.warm,
+  },
+  {
+    id: "lav",
+    cx: 690,
+    base: 201,
+    top: 62,
+    bot: 44,
+    h: 60,
+    rim: 11,
+    clay: CLAY.rose,
+    lip: LIP.rose,
+  },
+  // Right: trailing ivy and a little succulent
+  {
+    id: "ivy",
+    cx: 948,
+    base: 201,
+    top: 72,
+    bot: 50,
+    h: 62,
+    rim: 12,
+    clay: CLAY.deep,
+    lip: LIP.deep,
+  },
+  {
+    id: "suc",
+    cx: 1042,
+    base: 201,
+    top: 52,
+    bot: 38,
+    h: 38,
+    rim: 9,
+    clay: CLAY.pale,
+    lip: LIP.pale,
+  },
+  // Past the viewBox, for very wide screens: a few more empties down the bench
+  {
+    id: "w1",
+    cx: -118,
+    base: 201,
+    top: 66,
+    bot: 46,
+    h: 52,
+    rim: 11,
+    clay: CLAY.rose,
+    lip: LIP.rose,
+  },
+  {
+    id: "w2",
+    cx: -214,
+    base: 187,
+    top: 60,
+    bot: 44,
+    h: 46,
+    rim: 11,
+    clay: CLAY.pale,
+    lip: LIP.pale,
+    lean: 3,
+  },
+  {
+    id: "w3",
+    cx: -212,
+    base: 201,
+    top: 64,
+    bot: 46,
+    h: 48,
+    rim: 11,
+    clay: CLAY.warm,
+    lip: LIP.warm,
+    open: false,
+  },
+  {
+    id: "w4",
+    cx: 1226,
+    base: 201,
+    top: 86,
+    bot: 58,
+    h: 70,
+    rim: 14,
+    clay: CLAY.warm,
+    lip: LIP.warm,
+  },
+  {
+    id: "w5",
+    cx: 1322,
+    base: 201,
+    top: 54,
+    bot: 38,
+    h: 40,
+    rim: 9,
+    clay: CLAY.rose,
+    lip: LIP.rose,
+  },
+].map((p) => build(p as Pot));
+// Pots with nothing planted: the mouth shows shadowed clay, not soil
+const empty = ["s3", "w1", "w2", "w4", "w5"];
+
+/* A simple asymmetric leaf drawn from its base, pointing up; placed with a transform. */
+const leaf = (len: number, w: number) =>
+  `M0 0 C${r(w * 0.95)} ${r(-len * 0.22)} ${r(w * 0.75)} ${r(-len * 0.78)} 0 ${-len} C${r(-w * 0.6)} ${r(-len * 0.74)} ${r(-w * 0.8)} ${r(-len * 0.28)} 0 0 Z`;
+const half = (len: number, w: number) =>
+  `M0 0 C${r(w * 0.95)} ${r(-len * 0.22)} ${r(w * 0.75)} ${r(-len * 0.78)} 0 ${-len} Q${r(w * 0.12)} ${r(-len * 0.5)} 0 0 Z`;
+
+type L = [number, number, number, number, number, string]; // x, y, len, width, rotation, fill
+const SAGE = { deep: "#7f9689", mid: "#96aca0", soft: "#a9bcb0", pale: "#bfcdc2", warm: "#a7a898" };
+
+// Seedlings: cotyledon pairs and a first true leaf
+const seedLeaves: L[] = [
+  [436, 138, 11, 5, -62, SAGE.soft],
+  [436, 138, 11, 5, 58, SAGE.mid],
+  [436, 136, 8, 3.4, -6, SAGE.pale],
+  [450, 130, 13, 6, -70, SAGE.mid],
+  [450, 130, 12, 5.6, 64, SAGE.soft],
+  [450, 127, 10, 4, 8, SAGE.pale],
+  [462, 142, 9, 4.4, -58, SAGE.soft],
+  [462, 142, 9, 4.4, 66, SAGE.mid],
+];
+
+// Lavender: narrow grey-green leaves at the foot of the spikes
+const lavLeaves: L[] = [
+  [680, 144, 30, 3.6, -34, SAGE.warm],
+  [684, 144, 36, 3.8, -18, SAGE.mid],
+  [688, 144, 34, 3.6, -4, SAGE.soft],
+  [693, 144, 38, 3.8, 12, SAGE.warm],
+  [697, 144, 31, 3.6, 28, SAGE.mid],
+  [700, 145, 24, 3.4, 46, SAGE.soft],
+  [677, 145, 22, 3.4, -52, SAGE.soft],
+];
+// Lavender spikes: [foot x, foot y, tip x, tip y]
+const spikes = [
+  [683, 142, 664, 62],
+  [687, 142, 680, 44],
+  [690, 142, 694, 54],
+  [693, 142, 710, 40],
+  [696, 142, 724, 70],
+  [686, 142, 650, 86],
+];
+
+// Ivy: heart-ish leaves along three trailing stems
+const ivyLeaves: L[] = [
+  [934, 136, 15, 9, -40, SAGE.mid],
+  [946, 130, 17, 10, 4, SAGE.soft],
+  [958, 134, 15, 9, 38, SAGE.deep],
+  [926, 142, 13, 8, -78, SAGE.soft],
+  [968, 142, 14, 8.6, 74, SAGE.mid],
+  // stem trailing over the right of the pot and off the bench
+  [984, 156, 14, 8.6, 118, SAGE.soft],
+  [988, 172, 13, 8, 70, SAGE.mid],
+  [994, 188, 14, 8.6, 136, SAGE.deep],
+  [996, 204, 12, 7.4, 62, SAGE.soft],
+  [1001, 218, 12, 7.4, 150, SAGE.mid],
+  [1000, 231, 10, 6.4, 96, SAGE.soft],
+  // stem trailing down the front of the pot
+  [938, 152, 13, 8, -150, SAGE.mid],
+  [930, 166, 12, 7.4, -96, SAGE.soft],
+  [932, 180, 12, 7.4, -160, SAGE.deep],
+  [924, 192, 11, 7, -104, SAGE.mid],
+  // stem wandering left along the bench
+  [917, 149, 13, 8, -112, SAGE.soft],
+  [908, 163, 12, 7.4, -58, SAGE.mid],
+  [904, 178, 12, 7.4, -132, SAGE.soft],
+  [897, 190, 11, 7, -76, SAGE.deep],
+];
+
+// Chive flowers: a pom of fine florets, a long ring behind a shorter one, tipped darker
+const chiveHeads = [
+  [172, 100, 8.6],
+  [196, 104, 7.4],
+  [222, 112, 6.4],
+].map(([x, y, rad], h) => {
+  let back = "";
+  let front = "";
+  let tips = "";
+  for (let i = 0; i < 16; i++) {
+    const a = (i / 16) * Math.PI * 2 + h;
+    const len = rad * (0.9 + ((i * 3 + h) % 4) * 0.06);
+    const ex = r(x + Math.cos(a) * len);
+    const ey = r(y + Math.sin(a) * len);
+    back += `M${x} ${y}L${ex} ${ey}`;
+    tips += `M${ex} ${ey}h0.1`;
+    const b = a + 0.2;
+    front += `M${x} ${y}L${r(x + Math.cos(b) * len * 0.62)} ${r(y + Math.sin(b) * len * 0.62)}`;
+  }
+  return { x, y, r: rad, back, front, tips };
+});
+
+// Pelargonium flower heads: florets packed in a loose spiral, outer ones first
+const PINK = ["#f9c8c2", "#eeb4ad", "#dfa19b", "#f6d3cd"];
+const florets = [
+  [530, 34, 11, 1.45],
+  [586, 20, 12, 1.5],
+  [625, 58, 8, 1.25],
+].flatMap(([hx, hy, n, s], h) =>
+  Array.from({ length: n }, (_, i) => {
+    const k = n - 1 - i;
+    const a = k * 2.39996 + h * 1.3;
+    const rad = Math.sqrt(k) * 3.9 * s;
+    return {
+      x: r(hx + Math.cos(a) * rad),
+      y: r(hy + Math.sin(a) * rad * 0.8),
+      rot: (k * 67 + h * 31) % 360,
+      s: r(s * (1 - k * 0.012)),
+      fill: PINK[(k + h) % 4],
+    };
+  }),
+);
+
+// Chives in the bulb pan: [foot x, tip x, tip y, bend]
+const chives = [
+  [182, 160, 118, -6],
+  [186, 172, 104, -3],
+  [190, 184, 96, 2],
+  [194, 196, 108, 2],
+  [198, 208, 100, 5],
+  [202, 222, 116, 8],
+  [206, 232, 132, 10],
+  [188, 166, 128, -8],
+  [200, 214, 124, 6],
+];
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 1100 240"
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A potting bench: terracotta pots at every stage (empties, seedlings, a
+       pelargonium in flower, lavender, trailing ivy), a watering can, twine and
+       a trowel. The bench runs far past the viewBox so the scene can sit centred
+       on any width (the svg is overflow: visible). No lettering anywhere. -->
+  <defs>
+    <linearGradient id="pb-under" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#60665a" stop-opacity="0.2"></stop>
+      <stop offset="0.45" stop-color="#60665a" stop-opacity="0.06"></stop>
+      <stop offset="1" stop-color="#60665a" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="pb-can" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b9c6c6"></stop>
+      <stop offset="0.28" stop-color="#d3dddb"></stop>
+      <stop offset="0.6" stop-color="#b0bebf"></stop>
+      <stop offset="1" stop-color="#8fa1a4"></stop>
+    </linearGradient>
+    <!-- Roundness for every pot: a lit left shoulder falling to a shaded right flank -->
+    <linearGradient id="pb-round" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8a5451" stop-opacity="0.12"></stop>
+      <stop offset="0.17" stop-color="#fff" stop-opacity="0.26"></stop>
+      <stop offset="0.44" stop-color="#fff" stop-opacity="0"></stop>
+      <stop offset="0.58" stop-color="#8a5451" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#8a5451" stop-opacity="0.36"></stop>
+    </linearGradient>
+    <radialGradient id="pb-twine" cx="38%" cy="34%" r="70%">
+      <stop offset="0" stop-color="#ead9c6"></stop>
+      <stop offset="1" stop-color="#cdb39c"></stop>
+    </radialGradient>
+    {
+      pots.map((p) => (
+        <>
+          <clipPath id={`pb-b-${p.id}`}>
+            <path d={p.body} />
+          </clipPath>
+        </>
+      ))
+    }
+    <!-- Pelargonium leaf: a round, lobed leaf with a darker zone and radiating veins -->
+    <g id="pb-gleaf">
+      <path
+        d="M0 0 C-7 -3 -17 -5 -21 -13 C-27 -16 -28 -24 -24 -29 C-26 -36 -20 -43 -13 -42 C-9 -49 -1 -50 4 -46 C10 -50 18 -46 19 -39 C26 -38 29 -30 25 -25 C29 -19 26 -11 19 -9 C15 -3 6 -2 0 0 Z"
+      ></path>
+      <path
+        d="M0 -6 C-8 -8 -15 -12 -16 -19 C-19 -25 -15 -33 -8 -34 C-3 -39 6 -38 10 -33 C17 -31 19 -23 15 -18 C14 -11 7 -7 0 -6 Z"
+        fill="#60665a"
+        fill-opacity="0.13"></path>
+      <path
+        d="M0 -1 L-17 -17 M0 -1 L-10 -34 M0 -1 L3 -40 M0 -1 L15 -32 M0 -1 L20 -16"
+        stroke="#60665a"
+        stroke-opacity="0.32"
+        stroke-width="0.7"
+        stroke-linecap="round"></path>
+    </g>
+    <!-- One pelargonium floret: five uneven petals -->
+    <g id="pb-floret">
+      <path
+        d="M0 0 C-3.4 -2 -3.6 -6.4 0 -7.6 C3.6 -6.4 3.4 -2 0 0 C2.6 -3 6.8 -2.6 7.4 1.2 C5.6 4.6 1.8 3.4 0 0 C3 2.2 2.8 6.6 -0.8 7.4 C-4 5.8 -3 2 0 0 C-1.4 3.4 -5.6 4.2 -7.4 0.8 C-6.6 -2.8 -2.8 -2.6 0 0 Z"
+        stroke="#c4807b"
+        stroke-opacity="0.5"
+        stroke-width="0.35"></path>
+      <circle r="1.1" fill="#98605d" fill-opacity="0.7"></circle>
+    </g>
+  </defs>
+
+  <!-- Bench: top surface, front edge with grain, and the shadow it throws on the
+       section below (which shares this strip's paper colour) -->
+  <g class="bench">
+    <rect x="-900" y="219" width="2900" height="22" fill="#f7f6f5"></rect>
+    <rect x="-900" y="219" width="2900" height="20" fill="url(#pb-under)"></rect>
+    <rect x="-900" y="194" width="2900" height="12" fill="#efe1d6"></rect>
+    <rect x="-900" y="205" width="2900" height="15" fill="#dfc8ba"></rect>
+    <path d="M-900 205.5 H2000" stroke="#f8eee6" stroke-width="1.2"></path>
+    <path d="M-900 219.6 H2000" stroke="#b99c8c" stroke-width="1" stroke-opacity="0.7"></path>
+    <path d="M-900 194.4 H2000" stroke="#d9c2b3" stroke-width="0.8"></path>
+    <g stroke="#b99c8c" stroke-width="0.8" stroke-linecap="round" stroke-opacity="0.6">
+      <path d="M-640 210 H-380" stroke-dasharray="90 14 40 18 120 10"></path>
+      <path d="M-300 214 H-40" stroke-dasharray="60 12 130 16"></path>
+      <path d="M20 209.5 C120 208.6 210 210.6 330 209.6" stroke-dasharray="70 10 28 14 120 12"
+      ></path>
+      <path d="M60 214.5 C180 215.4 300 213.6 420 214.6" stroke-dasharray="36 12 150 16 60 10"
+      ></path>
+      <path d="M470 210.4 C560 209.4 660 211.2 800 210" stroke-dasharray="110 14 44 10 90 18"
+      ></path>
+      <path d="M520 215 C640 214 720 216 860 214.8" stroke-dasharray="50 16 130 12"></path>
+      <path d="M900 209.8 C980 209 1040 210.8 1090 210" stroke-dasharray="80 12 30 14"></path>
+      <path d="M1130 214 H1420" stroke-dasharray="120 14 50 18"></path>
+      <path d="M1480 210 H1800" stroke-dasharray="70 12 140 16"></path>
+    </g>
+    <!-- board joints and a knot -->
+    <g stroke="#b99c8c" stroke-width="1" stroke-opacity="0.7">
+      <path d="M-420 194.5 V219.5 M372 194.5 V219.5 M1168 194.5 V219.5"></path>
+    </g>
+    <path
+      d="M806 212.4 c3 -1.8 8 -1.8 11 0 c-3 1.8 -8 1.8 -11 0 Z"
+      stroke="#b99c8c"
+      stroke-width="0.7"
+      stroke-opacity="0.8"></path>
+  </g>
+
+  <!-- Contact shadows on the bench top -->
+  <g fill="#60665a" fill-opacity="0.13">
+    {
+      pots
+        .filter((p) => p.base > 195)
+        .map((p) => <ellipse cx={p.cx + 5} cy="201.5" rx={p.bot / 2 + 9} ry="3.4" />)
+    }
+    <ellipse cx="326" cy="201.5" rx="50" ry="3.8"></ellipse>
+    <ellipse cx="764" cy="201.5" rx="27" ry="3.2"></ellipse>
+    <ellipse cx="846" cy="201.8" rx="52" ry="2.6"></ellipse>
+  </g>
+
+  <!-- Watering can -->
+  <g class="can" transform="translate(14 0)">
+    <!-- back handle -->
+    <path
+      d="M276 140 C252 136 240 150 244 166 C247 180 258 187 272 186"
+      stroke="#8fa1a4"
+      stroke-width="5.5"
+      stroke-linecap="round"></path>
+    <path
+      d="M275 139 C254 136 243 149 246 164"
+      stroke="#d3dddb"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-opacity="0.8"></path>
+    <!-- spout and its brace -->
+    <path d="M338 166 L388 107 L399 116 L344 192 Z" fill="#a3b3b5"></path>
+    <path d="M344 192 L399 116 L394 112 L341 180 Z" fill="#7d9094" fill-opacity="0.45"></path>
+    <path d="M339 165 L388 107" stroke="#d3dddb" stroke-width="1.2" stroke-linecap="round"></path>
+    <path d="M340 138 L368 132" stroke="#8fa1a4" stroke-width="2.4" stroke-linecap="round"></path>
+    <!-- rose -->
+    <path d="M384 104 L396 92 L412 108 L402 119 Z" fill="#b0bebf"></path>
+    <ellipse cx="404" cy="100" rx="12.5" ry="5" transform="rotate(44 404 100)" fill="#c9d4d3"
+    ></ellipse>
+    <ellipse
+      cx="404"
+      cy="100"
+      rx="12.5"
+      ry="5"
+      transform="rotate(44 404 100)"
+      stroke="#7d9094"
+      stroke-width="0.9"></ellipse>
+    <path
+      d="M398.5 95 h0.1 M402 98.6 h0.1 M405.6 102.2 h0.1 M409 105.6 h0.1 M402.6 94.6 h0.1 M406.2 98.2 h0.1 M401.4 102 h0.1 M405 105.4 h0.1"
+      stroke="#7d9094"
+      stroke-width="1.5"
+      stroke-linecap="round"></path>
+    <!-- body -->
+    <path
+      d="M272 128 C271 152 269 180 268 196 Q306 206 344 196 C343 180 341 152 340 128 Z"
+      fill="url(#pb-can)"></path>
+    <path
+      d="M270.6 150 Q306 159 341.4 150 M269.2 186 Q306 196 342.8 186"
+      stroke="#7d9094"
+      stroke-width="1.6"
+      stroke-opacity="0.75"></path>
+    <path
+      d="M270.8 147.6 Q306 156.6 341.2 147.6"
+      stroke="#e6edeb"
+      stroke-width="0.9"
+      stroke-opacity="0.9"></path>
+    <path
+      d="M283 136 C282 154 281 176 280.4 192"
+      stroke="#f1f5f3"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-opacity="0.55"></path>
+    <!-- mouth -->
+    <ellipse cx="306" cy="128" rx="34" ry="6.4" fill="#c9d4d3"></ellipse>
+    <ellipse cx="306" cy="128.6" rx="29.6" ry="4.6" fill="#71858a"></ellipse>
+    <path d="M280 129.6 Q306 136 332 129.6 Q306 132.4 280 129.6 Z" fill="#dfe8e6" fill-opacity="0.5"
+    ></path>
+    <ellipse cx="306" cy="128" rx="34" ry="6.4" stroke="#7d9094" stroke-width="0.9"></ellipse>
+    <!-- carry handle -->
+    <path
+      d="M284 124 C286 100 300 92 310 93 C322 94 330 106 330 124"
+      stroke="#8fa1a4"
+      stroke-width="5"
+      stroke-linecap="round"></path>
+    <path
+      d="M286 118 C289 102 300 95.6 309 96"
+      stroke="#d3dddb"
+      stroke-width="1.3"
+      stroke-linecap="round"
+      stroke-opacity="0.85"></path>
+  </g>
+
+  <!-- Pots -->
+  {
+    pots.map((p) => (
+      <g class="pot" transform={p.lean ? `rotate(${p.lean} ${p.cx} ${p.base})` : undefined}>
+        <path d={p.body} fill={p.clay} />
+        <path d={p.body} fill="url(#pb-round)" />
+        <g clip-path={`url(#pb-b-${p.id})`}>
+          <path d={p.under} fill="#8a5451" fill-opacity="0.24" />
+          <path
+            d={p.rings}
+            stroke="#8a5451"
+            stroke-width="0.8"
+            stroke-opacity="0.3"
+            stroke-dasharray="26 5 14 7 40 6"
+          />
+        </g>
+        <path d={p.body} stroke="#8a5451" stroke-width="0.8" stroke-opacity="0.3" />
+        <path d={p.open === false ? p.rimFront : p.rimFull} fill={p.lip} />
+        <path d={p.open === false ? p.rimFront : p.rimFull} fill="url(#pb-round)" />
+        {p.open !== false && (
+          <>
+            <ellipse cx={p.cx} cy={p.ty} rx={p.top / 2 - 3.6} ry={p.e - 1.4} fill="#a56f69" />
+            <ellipse
+              cx={p.cx}
+              cy={r(p.ty + 1.4)}
+              rx={p.top / 2 - 6.4}
+              ry={r(p.e - 2.4)}
+              fill={empty.includes(p.id) ? "#8a5451" : "#7c5f57"}
+              fill-opacity={empty.includes(p.id) ? 0.5 : 1}
+            />
+          </>
+        )}
+        <path
+          d={p.open === false ? p.rimFront : p.rimFull}
+          stroke="#8a5451"
+          stroke-width="0.8"
+          stroke-opacity="0.32"
+        />
+      </g>
+    ))
+  }
+  <!-- A chip out of one rim, crumbs of soil, fallen petals -->
+  <path d="M664 143.4 c2 2.6 5 2.8 7 0.4 Z" fill="#a56f69" fill-opacity="0.7"></path>
+  <g fill="#7c5f57" fill-opacity="0.75">
+    <circle cx="482" cy="199.4" r="1.2"></circle>
+    <circle cx="487" cy="200.6" r="0.8"></circle>
+    <circle cx="424" cy="200.2" r="1"></circle>
+    <circle cx="492" cy="199" r="0.6"></circle>
+  </g>
+  <g fill="#f3bfb8">
+    <path d="M612 199.6 c2 -2.6 6 -2.6 7.6 -0.4 c-1.6 2 -5.4 2.4 -7.6 0.4 Z"></path>
+    <path d="M628 201.4 c1 -2.4 4.4 -3 6 -1.2 c-1.2 2 -4 2.6 -6 1.2 Z" fill="#e9aea7"></path>
+    <path d="M522 200.4 c1.6 -2 4.6 -2 6 -0.2 c-1.4 1.6 -4.2 1.8 -6 0.2 Z"></path>
+  </g>
+
+  <!-- Chives in the bulb pan -->
+  <g stroke-linecap="round">
+    {
+      chives.map(([fx, tx, ty, bend], i) => (
+        <path
+          d={`M${fx} 168 C${fx + bend} ${r(168 - (168 - ty) * 0.5)} ${tx - bend} ${r(ty + (168 - ty) * 0.3)} ${tx} ${ty}`}
+          stroke={i % 3 === 0 ? SAGE.deep : i % 3 === 1 ? SAGE.mid : SAGE.soft}
+          stroke-width={i % 2 ? 1.5 : 1.9}
+        />
+      ))
+    }
+    {
+      chiveHeads.map((h) => (
+        <g>
+          <circle cx={h.x} cy={h.y} r={r(h.r * 0.72)} fill="#ecd0ca" />
+          <path d={h.back} stroke="#e6bdb6" stroke-width="1.5" />
+          <path d={h.front} stroke="#d39f99" stroke-width="1.1" />
+          <path d={h.tips} stroke="#b8817e" stroke-width="1.5" />
+        </g>
+      ))
+    }
+  </g>
+
+  <!-- Seedlings -->
+  <g transform="translate(8 0)">
+    <path
+      d="M437 157 C436 150 437 144 436 138 M450 157 C451 148 449 138 450 129 M461 157 C462 151 461 147 462 142"
+      stroke={SAGE.mid}
+      stroke-width="1.3"
+      stroke-linecap="round"></path>
+    {
+      seedLeaves.map(([x, y, len, w, rot, fill]) => (
+        <g transform={`translate(${x} ${y}) rotate(${rot})`}>
+          <path d={leaf(len, w)} fill={fill} />
+          <path d={half(len, w)} fill="#60665a" fill-opacity="0.12" />
+        </g>
+      ))
+    }
+  </g>
+
+  <!-- Pelargonium: a mound of round leaves, three heads of flower, a blank label -->
+  <g>
+    <!-- wooden plant label, left blank -->
+    <path d="M610 126 L606 84 C606 80 614 79 615 83 L617 126 Z" fill="#ecdccb"></path>
+    <path d="M610 126 L606 84" stroke="#fff" stroke-width="0.9" stroke-opacity="0.7"></path>
+    <path
+      d="M617 126 L615 83 C614 79 606 80 606 84"
+      stroke="#b99c8c"
+      stroke-width="0.8"
+      stroke-opacity="0.9"></path>
+    <!-- flower stalks -->
+    <g stroke={SAGE.deep} stroke-width="1.5" stroke-linecap="round">
+      <path d="M556 112 C552 86 540 62 532 40"></path>
+      <path d="M570 110 C572 80 580 52 584 26"></path>
+      <path d="M582 114 C592 96 606 78 620 64"></path>
+    </g>
+    <!-- back leaves -->
+    <use href="#pb-gleaf" fill={SAGE.pale} transform="translate(538 104) rotate(-52) scale(0.86)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.soft} transform="translate(596 102) rotate(48) scale(0.9)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.pale} transform="translate(566 96) rotate(6) scale(0.82)"
+    ></use>
+    <!-- mid leaves -->
+    <use href="#pb-gleaf" fill={SAGE.mid} transform="translate(546 118) rotate(-84) scale(0.96)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.soft} transform="translate(552 114) rotate(-24) scale(0.9)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.mid} transform="translate(586 116) rotate(30) scale(0.94)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.deep} transform="translate(590 120) rotate(86) scale(0.9)"
+    ></use>
+    <!-- front leaves, drooping over the rim -->
+    <use href="#pb-gleaf" fill={SAGE.soft} transform="translate(562 124) rotate(-150) scale(0.6)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.mid} transform="translate(572 120) rotate(4) scale(0.74)"
+    ></use>
+    <use href="#pb-gleaf" fill={SAGE.pale} transform="translate(540 124) rotate(-118) scale(0.62)"
+    ></use>
+    <!-- flower heads -->
+    <g>
+      {
+        florets.map((f) => (
+          <use
+            href="#pb-floret"
+            fill={f.fill}
+            transform={`translate(${f.x} ${f.y}) rotate(${f.rot}) scale(${f.s})`}
+          />
+        ))
+      }
+      <!-- unopened buds, nodding -->
+      <g stroke={SAGE.deep} stroke-width="0.9" stroke-linecap="round">
+        <path
+          d="M534 50 C526 54 516 56 510 64 M588 34 C596 40 604 42 608 50 M622 68 C618 72 615 78 615 84"
+        ></path>
+      </g>
+      <g fill="#d99f99">
+        <ellipse cx="509" cy="66.5" rx="2.4" ry="4" transform="rotate(24 509 66.5)"></ellipse>
+        <ellipse cx="609" cy="52.5" rx="2.4" ry="4" transform="rotate(-24 609 52.5)"></ellipse>
+        <ellipse cx="615" cy="87" rx="2.2" ry="3.6"></ellipse>
+      </g>
+    </g>
+  </g>
+
+  <!-- Lavender, with a blank tag tied round the pot -->
+  <g>
+    {
+      lavLeaves.map(([x, y, len, w, rot, fill]) => (
+        <path d={leaf(len, w)} fill={fill} transform={`translate(${x} ${y}) rotate(${rot})`} />
+      ))
+    }
+    {
+      spikes.map(([fx, fy, tx, ty], i) => {
+        const dx = tx - fx;
+        const dy = ty - fy;
+        const ang = (Math.atan2(dx, -dy) * 180) / Math.PI;
+        const n = 6 + (i % 2);
+        return (
+          <g>
+            <path
+              d={`M${fx} ${fy} Q${r(fx + dx * 0.3 - dy * 0.04)} ${r(fy + dy * 0.5)} ${tx} ${ty}`}
+              stroke={SAGE.deep}
+              stroke-width="1"
+              stroke-linecap="round"
+            />
+            <g transform={`translate(${tx} ${ty}) rotate(${r(ang)})`}>
+              {Array.from({ length: n }, (_, k) => {
+                const y = r(k * 4.4 - 4);
+                const s = r(1.5 + Math.sin(((k + 0.6) / n) * Math.PI) * 1.9);
+                return (
+                  <>
+                    <ellipse
+                      cx={-s}
+                      cy={y}
+                      rx={s}
+                      ry="2.3"
+                      transform={`rotate(-24 ${-s} ${y})`}
+                      fill={k % 2 ? "#c69491" : "#b98e9a"}
+                    />
+                    <ellipse
+                      cx={s}
+                      cy={r(y + 1.4)}
+                      rx={s}
+                      ry="2.3"
+                      transform={`rotate(24 ${s} ${r(y + 1.4)})`}
+                      fill={k % 2 ? "#a98592" : "#d0a3a3"}
+                    />
+                  </>
+                );
+              })}
+              <ellipse cx="0" cy="-7" rx="1.6" ry="2.6" fill="#d0a3a3" />
+            </g>
+          </g>
+        );
+      })
+    }
+    <!-- twine round the neck and a blank kraft tag -->
+    <path
+      d="M659.6 157 Q690 167 720.4 157"
+      stroke="#b99c8c"
+      stroke-width="1.5"
+      stroke-linecap="round"></path>
+    <path d="M704 162.6 C708 166 709 170 708 174" stroke="#b99c8c" stroke-width="1.1"></path>
+    <path
+      d="M704 162 c-5 -5 -11 -3 -9 2 c1 3 6 2 9 -2 c5 -4 11 -1 9 3 c-1 3 -6 1 -9 -3 Z"
+      stroke="#b99c8c"
+      stroke-width="1.1"
+      stroke-linejoin="round"></path>
+    <g transform="rotate(9 708 174)">
+      <path d="M701 178 L704.5 173 H711.5 L715 178 V196 H701 Z" fill="#f1e4d5"></path>
+      <path
+        d="M701 178 L704.5 173 H711.5 L715 178 V196 H701 Z"
+        stroke="#b99c8c"
+        stroke-width="0.8"
+        stroke-linejoin="round"></path>
+      <circle cx="708" cy="177.6" r="1.5" fill="#c99a92"></circle>
+      <path
+        d="M704 184 H712 M704 188 H710"
+        stroke="#b99c8c"
+        stroke-width="0.6"
+        stroke-opacity="0.55"></path>
+    </g>
+  </g>
+
+  <!-- Ball of twine with a loose end, and a trowel laid beside it -->
+  <g transform="translate(-12 0)">
+    <path
+      d="M790 196 C806 204 820 196 836 199 C850 201.6 858 198 868 199.6"
+      stroke="#c7ab93"
+      stroke-width="1.6"
+      stroke-linecap="round"></path>
+    <circle cx="776" cy="179" r="22" fill="url(#pb-twine)"></circle>
+    <g stroke="#b3957e" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.85">
+      <path d="M756 172 C768 160 786 158 796 168"></path>
+      <path d="M754.6 178 C768 165 788 163 797.6 175"></path>
+      <path d="M755 185 C768 171 790 170 797.6 182"></path>
+      <path d="M758 192 C770 178 790 177 796 189"></path>
+      <path d="M764 197.6 C773 186 788 185 792 195"></path>
+      <path d="M762 163 C776 168 790 182 792 196"></path>
+      <path d="M768 159.4 C782 165 794 178 796.6 188"></path>
+      <path d="M757 168 C770 174 782 188 783 200"></path>
+    </g>
+    <circle cx="776" cy="179" r="22" stroke="#b3957e" stroke-width="0.9"></circle>
+    <path d="M772 172 c2 -3 7 -3 9 0 c-2 3 -7 3 -9 0 Z" fill="#8a6a58" fill-opacity="0.55"></path>
+    <!-- trowel -->
+    <g transform="translate(806 196) scale(1.15) translate(-806 -196) rotate(-3 840 196)">
+      <path
+        d="M806 192.6 C806 189.6 810 188.6 818 189 L836 190 C838 190.2 838 196.4 836 196.6 L818 198 C810 198.4 806 197.2 806 194.6 Z"
+        fill="#d9bfa6"></path>
+      <path d="M809 190.6 L835 191.6" stroke="#f4e8da" stroke-width="1" stroke-linecap="round"
+      ></path>
+      <path d="M836 190 h5 v6.6 h-5 Z" fill="#9fb0b2"></path>
+      <path d="M841 192 C847 191.6 849 195.6 853 195.6" stroke="#8fa1a4" stroke-width="2.6"></path>
+      <path
+        d="M852 192 C862 187.6 882 188.6 896 195.8 C884 201 862 201.2 852 198.4 C850.6 196.4 850.6 194 852 192 Z"
+        fill="#b9c6c6"></path>
+      <path
+        d="M853 196 C864 199.6 882 199.8 896 195.8 C884 201 862 201.2 852 198.4 Z"
+        fill="#7d9094"
+        fill-opacity="0.5"></path>
+      <path d="M856 193 C866 190.4 880 191 890 194.6" stroke="#eef3f1" stroke-width="0.9"></path>
+    </g>
+  </g>
+
+  <!-- Ivy trailing out of its pot and over the bench edge -->
+  <g>
+    <g stroke={SAGE.deep} stroke-width="1.1" stroke-linecap="round">
+      <path
+        d="M950 142 C968 140 982 150 986 164 C990 180 996 196 998 210 C999 220 1001 226 1000 234"
+      ></path>
+      <path d="M944 142 C938 150 934 160 932 170 C930 180 928 188 924 194"></path>
+      <path d="M940 142 C926 142 916 150 910 164 C906 176 902 184 896 192"></path>
+      <path d="M946 142 C944 136 946 132 946 128"></path>
+    </g>
+    {
+      ivyLeaves.map(([x, y, len, w, rot, fill]) => (
+        <g transform={`translate(${x} ${y}) rotate(${rot})`}>
+          <path
+            d={`M0 0 C${r(w * 0.5)} ${r(len * 0.16)} ${r(w * 1.1)} ${r(-len * 0.1)} ${r(w * 0.9)} ${r(-len * 0.46)} C${r(w * 0.7)} ${r(-len * 0.74)} ${r(w * 0.2)} ${r(-len * 0.84)} 0 ${-len} C${r(-w * 0.26)} ${r(-len * 0.8)} ${r(-w * 0.8)} ${r(-len * 0.7)} ${r(-w * 0.94)} ${r(-len * 0.4)} C${r(-w * 1.06)} ${r(-len * 0.06)} ${r(-w * 0.5)} ${r(len * 0.16)} 0 0 Z`}
+            fill={fill}
+          />
+          <path
+            d={`M0 0 L0 ${r(-len * 0.86)} M0 ${r(-len * 0.2)} L${r(w * 0.6)} ${r(-len * 0.42)} M0 ${r(-len * 0.2)} L${r(-w * 0.62)} ${r(-len * 0.38)}`}
+            stroke="#f1f5f3"
+            stroke-width="0.55"
+            stroke-opacity="0.75"
+            stroke-linecap="round"
+          />
+        </g>
+      ))
+    }
+  </g>
+
+  <!-- Succulent rosette -->
+  <g transform="translate(1042 165)">
+    {
+      [
+        [-74, 22, 8, "#a9bcb0"],
+        [74, 22, 8, "#96aca0"],
+        [-48, 24, 9, "#bfcdc2"],
+        [48, 24, 9, "#a9bcb0"],
+        [-24, 25, 9.4, "#96aca0"],
+        [24, 25, 9.4, "#bfcdc2"],
+        [0, 25, 9.6, "#a9bcb0"],
+        [-36, 16, 7, "#cfdad1"],
+        [36, 16, 7, "#bfcdc2"],
+        [-12, 17, 7, "#bfcdc2"],
+        [12, 17, 7, "#cfdad1"],
+      ].map(([rot, len, w, fill]) => (
+        <g transform={`rotate(${rot})`}>
+          <path d={leaf(len as number, w as number)} fill={fill as string} />
+          <path d={half(len as number, w as number)} fill="#60665a" fill-opacity="0.1" />
+          <circle cx="0" cy={-(len as number) + 1.2} r="1.3" fill="#d99f99" fill-opacity="0.8" />
+        </g>
+      ))
+    }
+  </g>
+</svg>

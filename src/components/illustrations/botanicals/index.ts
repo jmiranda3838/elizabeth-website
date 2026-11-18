@@ -1,3 +1,4 @@
+export { default as DandelionClock } from "./DandelionClock.astro";
 export { default as DesertAgave } from "./DesertAgave.astro";
 export { default as FloatingBotanical1 } from "./FloatingBotanical1.astro";
 export { default as FloatingBotanical2 } from "./FloatingBotanical2.astro";

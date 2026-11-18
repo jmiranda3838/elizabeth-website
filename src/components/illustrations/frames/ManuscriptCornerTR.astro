@@ -1,25 +1,57 @@
 ---
+import { stem, sprig, tipped, leaf, ivy, bud, gilt } from "./illumination";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// Top-right corner: a knot of ivy. Drawn as a top-left corner and flipped; its run
+// down the side is short, because ManuscriptMargin carries on from it.
+const art = [
+  stem("M20 14.4 C26 20 33 21 39 16.6 C44 12.8 50 11 56 14.4 C62 18 69 19.4 75 16.6"),
+  stem("M14 20.6 C19 26 20.4 33 16.8 38.6 C14.8 41.6 14.8 45 16 48"),
+  tipped(sprig([29, 19.7], [30, 23], [33, 25.6], [36.4, 24.6], { r: 2.1, dir: -1 })),
+  tipped(sprig([47, 12], [46, 8], [48, 4.6], [51.6, 4.4], { r: 2.3 }), "ivy"),
+  tipped(sprig([63, 17.9], [64, 21], [66.6, 23], [69.6, 22], { r: 1.9, turns: 1, dir: -1 })),
+  tipped(sprig([18.6, 30], [22, 30], [25, 32], [25.4, 35.4], { r: 2.1 }), "bud"),
+  tipped(sprig([12, 12], [8.4, 11], [5, 8], [5.6, 4.6], { r: 1.9, turns: 1 })),
+  stem("M13 17 C11.4 18.6 10.4 20.2 9.6 22", 0.6),
+  bud([9.6, 22, 118, 0.8]),
+  leaf([33.6, 19.6, 68, 0.6]),
+  leaf([41.2, 15, -64, 0.7]),
+  leaf([53.4, 12.6, 56, 0.64]),
+  leaf([60.2, 16.8, -52, 0.62]),
+  leaf([75, 16.6, -26, 0.6]),
+  leaf([16, 48, 80, 0.54]),
+  leaf([18.9, 27, 4, 0.56]),
+  leaf([15.6, 41, 170, 0.6]),
+  // The ivy knot, largest leaf pointing out through the corner
+  ivy([13.6, 13.6, 226, 1.3], "leaf"),
+  ivy([17.4, 12.6, 304, 1], "leaf"),
+  ivy([12.6, 17.6, 150, 0.96], "leaf"),
+  ivy([19.4, 17.4, 14, 1.08], "leaf"),
+  ivy([17, 20, 82, 0.92], "leaf"),
+  gilt([16, 16, 40, 1.5]),
+  gilt([24, 6.2, -80, 1.35]),
+  gilt([38.4, 7.6, -100, 1.1]),
+  gilt([58.6, 7.6, -60, 1.25]),
+  gilt([75.4, 11.4, -90, 1.05]),
+  gilt([6, 29, 190, 1.25]),
+  gilt([22.4, 43, 20, 1.05]),
+].join("");
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 80 80"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path d="M80 80 L80 40 Q80 0 40 0 L0 0" stroke="currentColor" stroke-width="1" fill="none"></path>
-  <path
-    d="M80 60 L80 30 Q80 10 50 10 L20 10"
-    stroke="currentColor"
-    stroke-width="0.5"
-    fill="none"
-    opacity="0.5"></path>
-  <circle cx="72" cy="70" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="10" cy="8" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+  <!-- Illuminated corner: ivy knot and vine scroll. Shapes come from ./illumination. -->
+  <g transform="translate(80 0) scale(-1 1)" set:html={art} />
 </svg>

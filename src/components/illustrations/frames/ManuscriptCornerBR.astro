@@ -1,26 +1,58 @@
 ---
+import { stem, sprig, tipped, leaf, bud, daisy, gilt } from "./illumination";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// Bottom-right corner: a daisy. Drawn as a top-left corner and turned half round;
+// its run up the side is short, because ManuscriptMargin comes down to meet it.
+const art = [
+  stem("M22 17 C28 21.6 35 20.6 40 16 C45 11.6 52 11.4 57 15 C63 19.4 70 19.4 75 16.6"),
+  stem("M15 21.4 C19.6 26.6 20 33 16.8 38 C15 41 15 44.6 16 47"),
+  tipped(sprig([31, 20.4], [32, 24], [35, 26], [38, 24.8], { r: 2, dir: -1 })),
+  tipped(sprig([48.6, 11.7], [48, 8], [50.4, 5], [53.8, 5.2], { r: 2.2 }), "ivy"),
+  tipped(
+    sprig([66.4, 18.6], [67.4, 21.6], [70, 23.4], [72.8, 22.2], { r: 1.8, turns: 1, dir: -1 }),
+  ),
+  tipped(sprig([18.9, 31], [22.4, 31], [25, 33.4], [25, 36.6], { r: 1.9, turns: 1 }), "ivy"),
+  tipped(sprig([11.6, 12.4], [8, 10.6], [5.6, 7.4], [6.6, 4], { r: 1.9, turns: 1 })),
+  stem("M20 20 C23 22 25.4 24.6 26.6 28", 0.6),
+  bud([26.6, 28, 72, 0.86]),
+  leaf([36, 19.4, 60, 0.6]),
+  leaf([43.4, 13, -60, 0.68]),
+  leaf([54.6, 13.2, 52, 0.6]),
+  leaf([61.4, 17.6, -46, 0.62]),
+  leaf([75, 16.6, -24, 0.58]),
+  leaf([16, 47, 82, 0.54]),
+  leaf([19.3, 28, 0, 0.54]),
+  leaf([15.8, 40.4, 172, 0.6]),
+  leaf([11, 11, 224, 0.96]),
+  leaf([10, 15.2, 184, 0.72]),
+  leaf([15.2, 10, 264, 0.7]),
+  leaf([22.6, 15.4, -10, 1]),
+  leaf([15.6, 22.6, 98, 0.94]),
+  daisy([15.6, 15.6, 8, 1.12]),
+  gilt([26.4, 9.4, -90, 1.3]),
+  gilt([42, 23.6, 90, 1.1]),
+  gilt([60.4, 8.4, -80, 1.2]),
+  gilt([76.4, 12, -90, 1.05]),
+  gilt([5.6, 26.6, 190, 1.2]),
+  gilt([23, 43.4, 30, 1.05]),
+].join("");
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 80 80"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path d="M80 0 L80 40 Q80 80 40 80 L0 80" stroke="currentColor" stroke-width="1" fill="none"
-  ></path>
-  <path
-    d="M80 20 L80 50 Q80 70 50 70 L20 70"
-    stroke="currentColor"
-    stroke-width="0.5"
-    fill="none"
-    opacity="0.5"></path>
-  <circle cx="72" cy="10" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="10" cy="72" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+  <!-- Illuminated corner: daisy and vine scroll. Shapes come from ./illumination. -->
+  <g transform="translate(80 80) scale(-1 -1)" set:html={art} />
 </svg>

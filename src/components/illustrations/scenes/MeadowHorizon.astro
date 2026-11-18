@@ -1,0 +1,314 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+const r = (n: number) => Math.round(n * 10) / 10;
+
+// Sun rays, in the spirit of the logo: fine lines of uneven length fanning from the disc
+const SUN = { x: 720, y: 121 };
+const rays = Array.from({ length: 17 }, (_, i) => {
+  const a = Math.PI + (Math.PI * (i + 0.5)) / 17 + (i % 3 === 1 ? 0.012 : -0.008);
+  const inner = 58 + (i % 2) * 5;
+  const outer = [118, 88, 132, 82, 110, 94, 124, 86][i % 8] - Math.abs(8 - i) * 1.2;
+  return `M${r(SUN.x + Math.cos(a) * inner)} ${r(SUN.y + Math.sin(a) * inner)}L${r(SUN.x + Math.cos(a) * outer)} ${r(SUN.y + Math.sin(a) * outer)}`;
+}).join("");
+
+/* Meadow flowers as line art. Each is a leaning stem topped by an umbel (a spray
+   of short stalks ending in dots), like cow parsley gone to seed. */
+const umbels = [
+  // [foot x, foot y, top x, top y, spread]
+  [118, 190, 102, 100, 21],
+  [152, 190, 168, 124, 16],
+  [84, 192, 66, 140, 13],
+  [476, 188, 466, 130, 14],
+  [970, 188, 982, 124, 15],
+  [1250, 188, 1236, 94, 21],
+  [1294, 188, 1312, 118, 17],
+  [1338, 190, 1352, 144, 13],
+].map(([fx, fy, tx, ty, sp], n) => {
+  const stem = `M${fx} ${fy}C${r(fx + (tx - fx) * 0.1)} ${r(fy - (fy - ty) * 0.5)} ${r(tx - (tx - fx) * 0.3)} ${r(ty + (fy - ty) * 0.25)} ${tx} ${ty}`;
+  let spray = "";
+  const dots: [number, number, number][] = [];
+  const k = 7;
+  for (let i = 0; i < k; i++) {
+    const a = -Math.PI / 2 + ((i - (k - 1) / 2) / k) * 2.1 + (n % 2 ? 0.06 : -0.05);
+    const len = sp * (0.82 + ((i * 7 + n * 3) % 5) * 0.06);
+    const ex = r(tx + Math.cos(a) * len);
+    const ey = r(ty + Math.sin(a) * len * 0.8);
+    spray += `M${tx} ${ty}Q${r(tx + Math.cos(a) * len * 0.5)} ${r(ty + Math.sin(a) * len * 0.3)} ${ex} ${ey}`;
+    dots.push([ex, ey, 2.4 + ((i + n) % 3) * 0.6]);
+  }
+  // a leaf or two low on the stem
+  const lx = r(fx + (tx - fx) * 0.22);
+  const ly = r(fy - (fy - ty) * 0.34);
+  const side = n % 2 ? 1 : -1;
+  const leafD = `M${lx} ${ly}c${4 * side} -5 ${11 * side} -7 ${16 * side} -5c${-3 * side} 5 ${-10 * side} 7 ${-16 * side} 5Z`;
+  return { stem, spray, dots, leafD };
+});
+
+// Grass: fans of blades. [x, y, height, lean]
+const tufts = [
+  [40, 192, 26, -3],
+  [196, 190, 20, 2],
+  [330, 186, 16, -2],
+  [520, 186, 18, 2],
+  [596, 186, 13, -1],
+  [870, 185, 14, 2],
+  [948, 186, 20, -2],
+  [1120, 186, 18, 2],
+  [1200, 188, 24, -3],
+  [1400, 188, 26, 3],
+].map(([x, y, h, lean]) =>
+  [-2, -1, 0, 1, 2]
+    .map((i) => {
+      const hh = h * (1 - Math.abs(i) * 0.16);
+      const tx = x + i * (h * 0.26) + lean * (2 - Math.abs(i));
+      return `M${r(x + i * 1.6)} ${y}Q${r(x + i * 2.4)} ${r(y - hh * 0.6)} ${r(tx)} ${r(y - hh)}`;
+    })
+    .join(""),
+);
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 1440 200"
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A meadow at first light: the logo's rising sun behind three soft ridges, a
+       path winding toward it, trees on the middle ridge and meadow flowers in
+       the foreground. The floor is filled with currentColor: set the svg's CSS
+       `color` to whatever sits directly below, so the scene becomes the seam. -->
+  <defs>
+    <radialGradient id="mh-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff6ea" stop-opacity="0.95"></stop>
+      <stop offset="0.3" stop-color="#ffe3d2" stop-opacity="0.7"></stop>
+      <stop offset="0.62" stop-color="#f9c8c2" stop-opacity="0.22"></stop>
+      <stop offset="1" stop-color="#f9c8c2" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="mh-far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4d7cd"></stop>
+      <stop offset="1" stop-color="#f8e6de"></stop>
+    </linearGradient>
+    <linearGradient id="mh-mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6c4b8"></stop>
+      <stop offset="1" stop-color="#efd9cf"></stop>
+    </linearGradient>
+    <linearGradient id="mh-near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c6d5c9"></stop>
+      <stop offset="1" stop-color="#dde6dd"></stop>
+    </linearGradient>
+    <path
+      id="mh-far-shape"
+      d="M0 200 V112 C110 96 240 88 380 100 C500 110 600 124 720 120 C850 116 950 84 1090 86 C1230 88 1340 110 1440 104 V200 Z"
+    ></path>
+    <path
+      id="mh-mid-shape"
+      d="M0 200 V134 C90 120 210 126 330 142 C450 158 560 146 664 138 C790 128 900 148 1040 146 C1190 144 1300 112 1440 120 V200 Z"
+    ></path>
+    <path
+      id="mh-near-shape"
+      d="M0 200 V150 C80 140 170 152 262 164 C398 182 520 176 642 168 C800 158 902 174 1042 176 C1202 178 1322 156 1440 146 V200 Z"
+    ></path>
+    <clipPath id="mh-clip-mid"><use href="#mh-mid-shape"></use></clipPath>
+    <clipPath id="mh-clip-near"><use href="#mh-near-shape"></use></clipPath>
+  </defs>
+
+  <!-- Sun -->
+  <g class="meadow-sun">
+    <circle cx={SUN.x} cy={SUN.y} r="150" fill="url(#mh-glow)"></circle>
+    <path d={rays} stroke="#f3aaa3" stroke-width="1.3" stroke-linecap="round" stroke-opacity="0.85"
+    ></path>
+    <circle cx={SUN.x} cy={SUN.y} r="46" fill="#f9c8c2"></circle>
+    <circle cx={SUN.x} cy={SUN.y} r="46" stroke="#f3aaa3" stroke-width="1" stroke-opacity="0.6"
+    ></circle>
+  </g>
+
+  <!-- Far ridge -->
+  <use href="#mh-far-shape" fill="url(#mh-far)"></use>
+  <path
+    d="M0 112 C110 96 240 88 380 100 C500 110 600 124 720 120 C850 116 950 84 1090 86 C1230 88 1340 110 1440 104"
+    stroke="#e9c3b7"
+    stroke-width="1"
+    stroke-opacity="0.8"></path>
+  <!-- a hedgerow of distant trees along it -->
+  <g fill="#e6c8bd">
+    <g transform="translate(0 -12)">
+      <path
+        d="M214 108 c-7 -1 -9 -9 -3 -12 c0 -7 10 -9 13 -3 c7 -2 12 5 8 10 c2 5 -4 9 -9 6 c-3 2 -7 2 -9 -1 Z"
+      ></path>
+      <path
+        d="M250 107 c-5 -1 -6 -7 -2 -9 c0 -5 8 -6 10 -2 c5 -1 8 4 5 8 c0 4 -5 6 -8 4 c-2 1 -4 1 -5 -1 Z"
+      ></path>
+      <path
+        d="M176 110 c-4 -1 -5 -6 -2 -8 c1 -5 8 -5 9 -1 c4 0 6 4 3 7 c0 3 -4 4 -6 3 c-2 1 -3 1 -4 -1 Z"
+      ></path>
+    </g>
+    <g transform="translate(0 -17)">
+      <path
+        d="M1146 104 c-7 -1 -9 -9 -3 -12 c0 -7 10 -9 13 -3 c7 -2 12 5 8 10 c2 5 -4 9 -9 6 c-3 2 -7 2 -9 -1 Z"
+      ></path>
+      <path
+        d="M1184 106 c-6 -1 -8 -8 -3 -11 c1 -8 12 -9 14 -2 c6 -1 9 6 5 10 c0 4 -5 6 -8 4 c-3 2 -6 2 -8 -1 Z"
+      ></path>
+      <path
+        d="M1212 108 c-4 -1 -5 -6 -2 -8 c1 -5 8 -5 9 -1 c4 0 6 4 3 7 c0 3 -4 4 -6 3 c-2 1 -3 1 -4 -1 Z"
+      ></path>
+    </g>
+  </g>
+
+  <!-- Middle ridge, combed with field rows -->
+  <use href="#mh-mid-shape" fill="url(#mh-mid)"></use>
+  <g
+    clip-path="url(#mh-clip-mid)"
+    stroke="#d6ac9f"
+    stroke-width="1"
+    stroke-linecap="round"
+    stroke-opacity="0.75"
+  >
+    <path
+      d="M0 147 C90 133 210 139 330 155 C450 171 560 159 664 151"
+      stroke-dasharray="80 9 34 12 120 10"></path>
+    <path
+      d="M0 161 C100 148 220 154 340 169 C460 184 570 172 680 165"
+      stroke-dasharray="46 10 110 9"></path>
+    <path
+      d="M780 147 C880 152 960 161 1050 159 C1196 157 1306 126 1440 133"
+      stroke-dasharray="100 10 40 12 70 9"></path>
+    <path
+      d="M820 163 C920 168 1000 175 1080 173 C1220 171 1330 142 1440 148"
+      stroke-dasharray="60 12 130 9"></path>
+  </g>
+  <path
+    d="M0 134 C90 120 210 126 330 142 C450 158 560 146 664 138 C790 128 900 148 1040 146 C1190 144 1300 112 1440 120"
+    stroke="#d6ac9f"
+    stroke-width="1.1"
+    stroke-opacity="0.7"></path>
+  <!-- Trees on the middle ridge: a broad one on the left, a pair on the right -->
+  <g transform="translate(0 -8)">
+    <ellipse cx="308" cy="149" rx="26" ry="2.8" fill="#c59a8c" fill-opacity="0.32"></ellipse>
+    <path
+      d="M300 148 C301 140 299 134 300 124 M300 138 C295 133 291 131 287 126 M300 133 C305 128 308 126 312 121"
+      stroke="#8e9f93"
+      stroke-width="1.6"
+      stroke-linecap="round"></path>
+    <path
+      d="M280 127 C269 124 268 111 277 107 C275 96 288 89 297 96 C303 87 318 90 320 101 C331 101 335 115 326 121 C328 130 317 136 308 131 C302 138 289 137 285 131 C282 131 280 129 280 127 Z"
+      fill="#bccdc0"></path>
+    <path
+      d="M301 98 C308 94 318 96 320 103 C329 105 331 114 324 120 C325 127 316 132 309 128 C314 120 314 107 301 98 Z"
+      fill="#8e9f93"
+      fill-opacity="0.34"></path>
+    <path
+      d="M280 127 C272 125 270 116 275 110 C279 116 286 119 292 118 C290 124 286 127 280 127 Z"
+      fill="#fff"
+      fill-opacity="0.22"></path>
+    <path
+      d="M280 127 C269 124 268 111 277 107 C275 96 288 89 297 96 C303 87 318 90 320 101 C331 101 335 115 326 121 C328 130 317 136 308 131 C302 138 289 137 285 131 C282 131 280 129 280 127 Z"
+      stroke="#8e9f93"
+      stroke-width="0.8"
+      stroke-opacity="0.55"></path>
+  </g>
+  <g transform="translate(0 -8)">
+    <ellipse cx="1140" cy="151" rx="30" ry="2.6" fill="#c59a8c" fill-opacity="0.3"></ellipse>
+    <path
+      d="M1128 150 C1127 142 1129 136 1128 126 M1128 138 C1132 134 1136 133 1139 128 M1160 150 C1161 144 1159 140 1160 134"
+      stroke="#8e9f93"
+      stroke-width="1.5"
+      stroke-linecap="round"></path>
+    <path
+      d="M1111 130 C1102 126 1105 113 1114 111 C1114 100 1129 96 1135 105 C1146 103 1152 114 1145 122 C1149 131 1138 139 1130 133 C1124 139 1113 137 1111 130 Z"
+      fill="#c6d5c9"></path>
+    <path
+      d="M1135 105 C1146 103 1152 114 1145 122 C1149 131 1138 139 1130 133 C1137 126 1139 115 1135 105 Z"
+      fill="#8e9f93"
+      fill-opacity="0.3"></path>
+    <path
+      d="M1111 130 C1102 126 1105 113 1114 111 C1114 100 1129 96 1135 105 C1146 103 1152 114 1145 122 C1149 131 1138 139 1130 133 C1124 139 1113 137 1111 130 Z"
+      stroke="#8e9f93"
+      stroke-width="0.8"
+      stroke-opacity="0.5"></path>
+    <path
+      d="M1150 136 C1145 133 1147 125 1153 124 C1154 117 1164 116 1167 122 C1174 122 1176 131 1171 135 C1171 140 1164 142 1160 139 C1156 141 1151 140 1150 136 Z"
+      fill="#b5c7ba"></path>
+    <path
+      d="M1167 122 C1174 122 1176 131 1171 135 C1171 140 1164 142 1160 139 C1166 134 1168 128 1167 122 Z"
+      fill="#8e9f93"
+      fill-opacity="0.3"></path>
+  </g>
+
+  <!-- and a young one nearer the path -->
+  <g transform="translate(-278 -10)">
+    <ellipse cx="1164" cy="151" rx="14" ry="2" fill="#c59a8c" fill-opacity="0.3"></ellipse>
+    <path
+      d="M1160 150 C1161 144 1159 140 1160 134"
+      stroke="#8e9f93"
+      stroke-width="1.4"
+      stroke-linecap="round"></path>
+    <path
+      d="M1150 136 C1145 133 1147 125 1153 124 C1154 117 1164 116 1167 122 C1174 122 1176 131 1171 135 C1171 140 1164 142 1160 139 C1156 141 1151 140 1150 136 Z"
+      fill="#bccdc0"></path>
+    <path
+      d="M1167 122 C1174 122 1176 131 1171 135 C1171 140 1164 142 1160 139 C1166 134 1168 128 1167 122 Z"
+      fill="#8e9f93"
+      fill-opacity="0.3"></path>
+  </g>
+
+  <!-- Near ridge: meadow green, with the path toward the sun -->
+  <use href="#mh-near-shape" fill="url(#mh-near)"></use>
+  <g clip-path="url(#mh-clip-near)">
+    <path
+      d="M0 166 C80 157 170 168 262 180 M860 178 C960 186 1100 190 1240 182 C1320 176 1390 166 1440 162"
+      stroke="#aebfb2"
+      stroke-width="1"
+      stroke-linecap="round"
+      stroke-dasharray="50 10 90 12"
+      stroke-opacity="0.8"></path>
+  </g>
+  <path
+    d="M0 150 C80 140 170 152 262 164 C398 182 520 176 642 168 C800 158 902 174 1042 176 C1202 178 1322 156 1440 146"
+    stroke="#aebfb2"
+    stroke-width="1.1"
+    stroke-opacity="0.75"></path>
+  <path
+    class="meadow-path"
+    d="M646 200 C662 190 700 184 722 178 C744 172 742 164 724 160 C706 156 700 150 712 145 C719 142 721 140 720 137 L725 137 C728 141 726 144 720 147 C712 151 720 155 738 159 C764 165 764 174 742 181 C720 188 718 194 740 200 Z"
+    fill="#f8eee8"
+    fill-opacity="0.9"></path>
+
+  <!-- Floor: the colour of whatever follows -->
+  <path
+    class="meadow-floor"
+    d="M0 200 V186 C180 180 400 192 720 188 C1010 184 1240 192 1440 184 V200 Z"
+    fill="currentColor"></path>
+
+  <!-- Meadow flowers and grasses, drawn in line -->
+  <g class="meadow-flora" stroke="#7f9689" stroke-linecap="round" stroke-linejoin="round">
+    {tufts.map((d) => <path d={d} stroke-width="1" stroke-opacity="0.8" />)}
+    {
+      umbels.map((u) => (
+        <g>
+          <path d={u.leafD} fill="#a9bcb0" fill-opacity="0.6" stroke-width="0.9" />
+          <path d={u.stem} stroke-width="1.3" />
+          <path d={u.spray} stroke-width="0.9" />
+          {u.dots.map(([x, y, s], i) => (
+            <circle
+              cx={x}
+              cy={y}
+              r={s}
+              fill={i % 3 === 0 ? "#f9c8c2" : "#fdf2ef"}
+              stroke-width="0.8"
+            />
+          ))}
+        </g>
+      ))
+    }
+  </g>
+</svg>

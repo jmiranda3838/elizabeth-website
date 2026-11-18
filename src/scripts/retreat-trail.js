@@ -81,6 +81,40 @@ export function initRetreatTrail() {
     return a.len + (b.len - a.len) * f;
   };
 
+  // Prayer flags (retreat.astro) the trail would touch are hidden, so the path runs
+  // through a gap in the string at every width. Flag boxes come from
+  // getBoundingClientRect (they are rotated SVG), shifted by the gap between their
+  // hang's layout position and its rendered one, which undoes .reveal's offset.
+  const flags = [...page.querySelectorAll("[data-flag]")];
+  const flagHang = page.querySelector(".flagline-hang");
+  const clearFlags = () => {
+    flags.forEach((f) => f.classList.remove("is-cleared"));
+    if (!flags.length || !flagHang) return;
+    const pageBox = page.getBoundingClientRect();
+    const hangBox = flagHang.getBoundingClientRect();
+    const hangAt = centreIn(flagHang);
+    if (!hangAt) return;
+    const dx = hangAt.x - (hangBox.left + hangBox.width / 2 - pageBox.left);
+    const dy = hangAt.y - (hangBox.top + hangBox.height / 2 - pageBox.top);
+    const pad = 9;
+    for (const f of flags) {
+      const b = f.getBoundingClientRect();
+      if (b.right < pageBox.left || b.left > pageBox.right) continue;
+      const left = b.left - pageBox.left + dx - pad;
+      const right = b.right - pageBox.left + dx + pad;
+      const top = b.top - pageBox.top + dy - pad;
+      const bottom = b.bottom - pageBox.top + dy + pad;
+      const end = lengthAtY(bottom);
+      for (let len = lengthAtY(top); len <= end; len += 3) {
+        const p = reveal.getPointAtLength(len);
+        if (p.x >= left && p.x <= right && p.y >= top && p.y <= bottom) {
+          f.classList.add("is-cleared");
+          break;
+        }
+      }
+    }
+  };
+
   const paint = () => {
     const off = Math.max(0, total - current);
     reveal.style.strokeDashoffset = `${off}`;
@@ -110,6 +144,7 @@ export function initRetreatTrail() {
       total = 0;
       lut = [];
       cairns = [];
+      flags.forEach((f) => f.classList.remove("is-cleared"));
       page.classList.remove("trail-live");
       return;
     }
@@ -131,6 +166,7 @@ export function initRetreatTrail() {
       .map((p) => ({ stop: p.el.closest(".trail-stop"), len: lengthAtY(p.y) }))
       .filter((c) => c.stop);
 
+    clearFlags();
     page.classList.add("trail-live");
     if (reduced) current = total;
     update(true);

@@ -2,23 +2,43 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 32 32"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- Guiding star, engraved: four long points and four short, each long point
+       faceted light and dark along its ridge, with a glint between the points.
+       Themes through currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M16 2.4 L17.3 13.2 L20.8 11.5 L19.1 15 L26.8 16.3 L19.1 17.6 L20.8 21.1 L17.3 19.4 L16 30 L14.7 19.4 L11.2 21.1 L12.9 17.6 L5.2 16.3 L12.9 15 L11.2 11.5 L14.7 13.2 Z"
+      fill="currentColor"
+      fill-opacity="0.12"
+      stroke-width="1.25"></path>
+    <path
+      d="M16 2.4 L17.3 13.2 L16 16.3 Z M26.8 16.3 L19.1 17.6 L16 16.3 Z M16 30 L14.7 19.4 L16 16.3 Z M5.2 16.3 L12.9 15 L16 16.3 Z M20.8 11.5 L19.1 15 L16 16.3 Z M11.2 21.1 L12.9 17.6 L16 16.3 Z"
+      fill="currentColor"
+      fill-opacity="0.38"
+      stroke="none"></path>
+    <path d="M16 4.6 V28 M7.2 16.3 H24.8" stroke-width="0.65" stroke-opacity="0.55"></path>
+    <path
+      d="M22.4 9.9 L23.6 8.7 M22.4 22.7 L23.6 23.9 M9.6 22.7 L8.4 23.9 M9.6 9.9 L8.4 8.7"
+      stroke-width="0.8"
+      stroke-opacity="0.7"></path>
+  </g>
   <path
-    d="M16 4 L18 12 L26 12 L20 17 L22 25 L16 20 L10 25 L12 17 L6 12 L14 12 Z"
-    stroke="currentColor"
-    stroke-width="1.2"
-    fill="none"
-    stroke-linejoin="round"></path>
-  <circle cx="16" cy="14" r="2" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"
-  ></circle>
+    d="M26 3.4 C26.2 5.1 26.7 5.6 28.4 5.8 C26.7 6 26.2 6.5 26 8.2 C25.8 6.5 25.3 6 23.6 5.8 C25.3 5.6 25.8 5.1 26 3.4 Z"
+    fill="currentColor"
+    fill-opacity="0.8"></path>
+  <circle cx="5.8" cy="26.2" r="0.75" fill="currentColor" fill-opacity="0.65"></circle>
+  <circle cx="6.4" cy="6.2" r="0.5" fill="currentColor" fill-opacity="0.5"></circle>
 </svg>

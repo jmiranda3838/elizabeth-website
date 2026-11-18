@@ -2,28 +2,58 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 40 40"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Compass/journey -->
-  <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1" fill="none"></circle>
-  <circle cx="20" cy="20" r="10" stroke="currentColor" stroke-width="0.5" fill="none" opacity="0.5"
-  ></circle>
+  <!-- Compass, engraved: a graduated dial and a two-tone needle, its north
+       half veined like a leaf and swung a little off true. Themes through
+       currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="20" cy="20" r="14.6" fill="currentColor" fill-opacity="0.1" stroke-width="1.55"
+    ></circle>
+    <path
+      d="M30.4 9.8 A14.6 14.6 0 0 1 9.8 30.4 C16.6 32.8 28.4 27.4 30.4 9.8 Z"
+      fill="currentColor"
+      fill-opacity="0.1"
+      stroke="none"></path>
+    <!-- Graduations -->
+    <path
+      d="M20.00 9.40 L20.00 7.10 M30.60 20.00 L32.90 20.00 M20.00 30.60 L20.00 32.90 M9.40 20.00 L7.10 20.00"
+      stroke-width="1.1"></path>
+    <path
+      d="M24.55 9.01 L24.94 8.08 M28.06 11.94 L29.12 10.88 M30.99 15.45 L31.92 15.06 M30.99 24.55 L31.92 24.94 M28.06 28.06 L29.12 29.12 M24.55 30.99 L24.94 31.92 M15.45 30.99 L15.06 31.92 M11.94 28.06 L10.88 29.12 M9.01 24.55 L8.08 24.94 M9.01 15.45 L8.08 15.06 M11.94 11.94 L10.88 10.88 M15.45 9.01 L15.06 8.08"
+      stroke-width="0.75"
+      stroke-opacity="0.6"></path>
+    <!-- Needle -->
+    <g transform="rotate(38 20 20)">
+      <path
+        d="M20 9 C21.4 12.6 22.6 16.2 23.2 20 H16.8 C17.4 16.2 18.6 12.6 20 9 Z"
+        fill="currentColor"
+        fill-opacity="0.6"
+        stroke-width="1.05"></path>
+      <path
+        d="M20 31 C18.6 27.4 17.4 23.8 16.8 20 H23.2 C22.6 23.8 21.4 27.4 20 31 Z"
+        fill="currentColor"
+        fill-opacity="0.06"
+        stroke-width="1.05"></path>
+      <path
+        d="M20 11.4 V18 M20 14.2 L21 13 M20 14.2 L19 13 M20 16.6 L21.4 15.2 M20 16.6 L18.6 15.2"
+        stroke-width="0.7"
+        stroke-opacity="0.75"></path>
+    </g>
+  </g>
   <path
-    d="M20 8 L22 18 L20 20 L18 18 Z"
-    stroke="currentColor"
-    stroke-width="0.8"
-    fill="currentColor"
-    opacity="0.3"></path>
-  <path d="M20 32 L18 22 L20 20 L22 22 Z" stroke="currentColor" stroke-width="0.8" fill="none"
-  ></path>
-  <circle cx="20" cy="20" r="2" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    d="M33.72 15.01 A14.6 14.6 0 0 1 15.01 33.72 A15.6 15.6 0 0 0 33.72 15.01 Z"
+    fill="currentColor"></path>
+  <circle cx="20" cy="20" r="1.5" fill="currentColor"></circle>
 </svg>

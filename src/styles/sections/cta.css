@@ -18,6 +18,69 @@
   text-align: center;
 }
 
+/* --- With the meadow scene along the bottom edge (fees, faqs) ---
+   The copy and button keep their own block; the scene is a strip below them,
+   reserved by the bottom padding, so nothing is drawn behind the text. */
+.cta-band-meadow {
+  --meadow-h: max(132px, 13.9vw);
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-20) 0 calc(var(--meadow-h) + var(--space-4));
+  background: linear-gradient(180deg, var(--bg-accent) 0%, #fcece6 55%, #fbe6de 100%);
+  box-shadow: inset 0 1px 0 rgba(208, 180, 166, 0.35);
+}
+
+.cta-band-meadow .container {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-band-meadow h2,
+.cta-band-meadow p {
+  text-wrap: balance;
+}
+
+/* The floor of the scene takes the footer's colour, so the meadow is the seam */
+.cta-meadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  display: block;
+  width: 100%;
+  height: var(--meadow-h);
+  color: var(--bg-secondary);
+  pointer-events: none;
+}
+
+/* The one moment of motion: the sun lifts into place as the meadow scrolls into
+   view, and is fully risen just after the whole band is on screen. Without
+   scroll-driven animation support, or with reduced motion, it simply sits risen. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-band-meadow {
+      view-timeline: --cta-band block;
+    }
+
+    .cta-meadow .meadow-sun {
+      animation: meadowSunRise linear both;
+      animation-timeline: --cta-band;
+      animation-range: entry 60% contain 30%;
+    }
+  }
+}
+
+@keyframes meadowSunRise {
+  from {
+    translate: 0 34px;
+    opacity: 0.5;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
 .botanical-cta {
   position: relative;
   overflow: hidden;
@@ -67,6 +130,12 @@
 
 .cta-button {
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .cta-band-meadow {
+    padding-top: var(--space-16);
+  }
 }
 
 @media (max-width: 900px) {

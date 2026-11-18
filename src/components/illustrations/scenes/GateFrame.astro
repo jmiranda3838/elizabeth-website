@@ -1,69 +1,270 @@
 ---
-// Static gate structure: posts, finials, arch, and climbing roses.
-// Shares the 0 0 800 400 viewBox with GateDoorLeft/GateDoorRight so the
-// layers stack pixel-perfectly when absolutely positioned over each other.
+// Static gate structure: timber posts with caps and finials, the arbor arch,
+// iron hinge knuckles, and a climbing rose. Shares the 0 0 800 400 viewBox with
+// GateDoorLeft/GateDoorRight so the layers stack pixel-perfectly when absolutely
+// positioned over each other. Line and timber are currentColor (garden-gate.css
+// sets it); the rose, leaves and canes take palette colours from the
+// .gate-rose-* / .gate-leaf / .gate-vine classes there.
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+type Leaf = [number, number, number, number?];
+// [x, y, rotation, scale]: leaves along the canes, never in matched pairs
+const leavesLeft: Leaf[] = [
+  [46, 384, -100, 1.1],
+  [52, 366, -20, 0.9],
+  [74, 340, -150],
+  [86, 312, 10, 0.85],
+  [60, 262, 200, 1.05],
+  [44, 232, -140, 0.9],
+  [50, 196, -30],
+  [80, 172, 20, 0.8],
+  [86, 150, -60, 0.95],
+  [60, 104, 160, 0.9],
+  [104, 70, -30, 1.1],
+  [136, 56, 160, 0.9],
+  [150, 50, -40, 0.8],
+  [190, 40, 150, 0.85],
+  [232, 34, -20, 0.75],
+  [252, 26, 170, 0.7],
+];
+const leavesRight: Leaf[] = [
+  [754, 386, -80, 1],
+  [748, 356, 200, 0.85],
+  [718, 300, -160, 1],
+  [744, 250, -10, 0.9],
+  [754, 210, 30, 0.8],
+  [724, 150, 190, 0.95],
+  [740, 96, -20, 0.85],
+  [700, 56, 200, 0.9],
+  [664, 46, -30, 0.8],
+  [628, 40, 160, 0.7],
+];
+
+type Rose = [number, number, number, number];
+// [x, y, scale, rotation]: open blooms, a heavier cluster on the left shoulder
+const roses: Rose[] = [
+  [92, 82, 1.25, 10],
+  [120, 62, 0.95, -30],
+  [70, 132, 1, 40],
+  [168, 44, 0.7, 70],
+  [712, 78, 1.05, -20],
+  [742, 172, 0.75, 30],
+];
+type Bud = [number, number, number];
+const buds: Bud[] = [
+  [58, 208, -20],
+  [212, 33, 60],
+  [690, 58, -60],
+  [604, 50, 160],
+  [760, 300, 10],
+];
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 800 400"
   fill="none"
   preserveAspectRatio="xMidYMid meet"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Left gate post -->
-  <rect x="50" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"
-  ></rect>
-  <circle cx="65" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
-  <circle cx="65" cy="100" r="3" fill="currentColor" opacity="0.3"></circle>
+  <defs>
+    <!-- One leaf: a blade with a curled tip, and its midrib -->
+    <g id="gate-leaf">
+      <path class="gate-leaf" d="M0 0 C2.6 -4.6 8.4 -6.4 14 -3.4 C11.4 0.6 5.6 2.6 0 0 Z"></path>
+      <path class="gate-leaf-rib" d="M0.6 -0.3 C4.6 -1.8 8.6 -2.6 12.6 -3.1"></path>
+    </g>
+    <!-- One open rose: outer petals, inner cup, and the inked spiral of the heart -->
+    <g id="gate-rose">
+      <path
+        class="gate-rose-outer"
+        d="M-9.4 1.2 C-11.6 -5.4 -6 -10.4 -0.4 -9.6 C3.4 -11.2 9.8 -7.4 9.8 -1.6 C11.4 3.6 6.6 9.6 0.8 9.6 C-3.6 10.8 -9.6 7 -9.4 1.2 Z"
+      ></path>
+      <path
+        class="gate-rose-mid"
+        d="M-6.2 0.4 C-7 -4.4 -2.6 -7 0.8 -6.4 C4.6 -6.2 7 -3 6.2 1 C5.6 4.8 1.6 6.6 -1.4 6.2 C-4.4 5.8 -6.2 3.4 -6.2 0.4 Z"
+      ></path>
+      <path
+        class="gate-rose-line"
+        d="M-2.4 -0.8 C-2.6 -3.2 0.8 -4 2.4 -2.2 C3.8 -0.4 2.2 2.4 -0.4 2.1 C-2 1.8 -2.2 0.2 -0.8 -0.4 M-7.6 3.2 C-4.4 6.4 2.8 6.8 7 2.6 M-8.2 -2.8 C-6.4 -7 -1.4 -8.6 3 -7.6 M5.4 -5.6 C7.6 -4 8.6 -1.6 8.4 0.6"
+      ></path>
+    </g>
+    <!-- A closed bud with its sepals -->
+    <g id="gate-bud">
+      <path class="gate-rose-mid" d="M0 0 C-3.6 -2.4 -3.4 -8 0 -10.4 C3.4 -8 3.6 -2.4 0 0 Z"></path>
+      <path class="gate-leaf" d="M0 0 C-3 -1 -4.6 -3.6 -4.2 -6.4 C-2.4 -4.4 -1 -2.6 0 0 Z"></path>
+      <path class="gate-leaf" d="M0 0 C3 -1 4.6 -3.6 4.2 -6.4 C2.4 -4.4 1 -2.6 0 0 Z"></path>
+      <path class="gate-vine" d="M0 0 L0 4"></path>
+    </g>
+  </defs>
 
-  <!-- Right gate post -->
-  <rect x="720" y="80" width="30" height="320" stroke="currentColor" stroke-width="1.5" fill="none"
-  ></rect>
-  <circle cx="735" cy="100" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
-  <circle cx="735" cy="100" r="3" fill="currentColor" opacity="0.3"></circle>
+  <!-- Arbor arch: a curved timber beam springing from the post caps -->
+  <g class="gate-arbor" stroke="currentColor" stroke-linejoin="round">
+    <path
+      d="M58 74 C190 16 610 16 742 74 L742 88 C610 32 190 32 58 88 Z"
+      fill="currentColor"
+      fill-opacity="0.08"
+      stroke-width="1.3"
+      stroke-opacity="0.8"></path>
+    <!-- the beam's shadowed underside -->
+    <path
+      d="M58 84 C190 28 610 28 742 84 L742 88 C610 32 190 32 58 88 Z"
+      fill="currentColor"
+      fill-opacity="0.12"
+      stroke="none"></path>
+    <!-- grain running along the beam -->
+    <g stroke-width="0.6" stroke-opacity="0.3" stroke-linecap="round">
+      <path d="M120 58 C200 36 290 28 360 27" stroke-dasharray="70 8 40 12"></path>
+      <path d="M430 28 C520 30 610 40 690 62" stroke-dasharray="50 10 80 9"></path>
+      <path d="M90 74 C150 50 220 40 260 37" stroke-dasharray="30 7"></path>
+      <path d="M540 38 C600 44 660 56 720 76" stroke-dasharray="44 9 22 8"></path>
+    </g>
+  </g>
 
-  <!-- Gate arch -->
-  <path d="M80 80 Q400 -20 720 80" stroke="currentColor" stroke-width="1.5" fill="none"></path>
-  <path d="M100 90 Q400 10 700 90" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5"
-  ></path>
+  <!-- Posts: square timber with a bevelled cap and a ball finial -->
+  {
+    [50, 720].map((x) => (
+      <g class="gate-post" stroke="currentColor" stroke-linejoin="round">
+        <rect
+          x={x}
+          y="84"
+          width="30"
+          height="318"
+          fill="currentColor"
+          fill-opacity="0.08"
+          stroke-width="1.4"
+          stroke-opacity="0.8"
+        />
+        {/* the face turned away from the light */}
+        <rect
+          x={x + 21}
+          y="84.7"
+          width="8.3"
+          height="316"
+          fill="currentColor"
+          fill-opacity="0.12"
+          stroke="none"
+        />
+        {/* grain and a knot */}
+        <g stroke-width="0.6" stroke-opacity="0.32" stroke-linecap="round">
+          <path
+            d={`M${x + 7} 96 C${x + 6} 160 ${x + 9} 220 ${x + 7} 300 C${x + 6} 340 ${x + 8} 370 ${x + 7} 398`}
+            stroke-dasharray="80 9 50 7 120 10"
+          />
+          <path
+            d={`M${x + 14} 110 C${x + 15} 170 ${x + 12} 210 ${x + 15} 250`}
+            stroke-dasharray="40 8"
+          />
+          <path
+            d={`M${x + 12} 284 C${x + 9} 290 ${x + 9} 298 ${x + 13} 302 C${x + 17} 298 ${x + 17} 290 ${x + 12} 284 Z M${x + 13} 304 C${x + 13} 330 ${x + 11} 360 ${x + 13} 396`}
+          />
+        </g>
+        {/* cap */}
+        <path
+          d={`M${x - 5} 84 L${x - 2} 74 L${x + 32} 74 L${x + 35} 84 Z`}
+          fill="currentColor"
+          fill-opacity="0.14"
+          stroke-width="1.2"
+          stroke-opacity="0.8"
+        />
+        <path
+          d={`M${x + 1} 74 L${x + 4} 69 L${x + 26} 69 L${x + 29} 74`}
+          fill="currentColor"
+          fill-opacity="0.1"
+          stroke-width="1"
+          stroke-opacity="0.7"
+        />
+        {/* finial: neck and ball, with a soft catch-light */}
+        <path
+          d={`M${x + 11} 69 C${x + 12} 66 ${x + 12} 64 ${x + 10.5} 62 L${x + 19.5} 62 C${x + 18} 64 ${x + 18} 66 ${x + 19} 69 Z`}
+          fill="currentColor"
+          fill-opacity="0.12"
+          stroke-width="0.9"
+          stroke-opacity="0.7"
+        />
+        <circle
+          cx={x + 15}
+          cy="54"
+          r="8"
+          fill="currentColor"
+          fill-opacity="0.12"
+          stroke-width="1.1"
+          stroke-opacity="0.8"
+        />
+        <path
+          d={`M${x + 15} 54 m4 1.5 a6 6 0 0 1 -7.5 5`}
+          stroke-width="1.2"
+          stroke-opacity="0.35"
+          stroke-linecap="round"
+        />
+        <ellipse class="gate-catchlight" cx={x + 12.4} cy="51" rx="2.2" ry="1.5" stroke="none" />
+      </g>
+    ))
+  }
 
-  <!-- Climbing roses on the posts -->
+  <!-- Iron hinge knuckles on the inner faces of the posts -->
+  <g
+    class="gate-iron"
+    fill="currentColor"
+    fill-opacity="0.55"
+    stroke="currentColor"
+    stroke-width="0.8"
+  >
+    <rect x="78" y="142.5" width="9" height="16" rx="2.5"></rect>
+    <rect x="78" y="355" width="9" height="16" rx="2.5"></rect>
+    <rect x="713" y="142.5" width="9" height="16" rx="2.5"></rect>
+    <rect x="713" y="355" width="9" height="16" rx="2.5"></rect>
+    <g fill="none" stroke-opacity="0.6">
+      <path d="M78 150.5 H87 M78 363 H87 M713 150.5 H722 M713 363 H722"></path>
+    </g>
+  </g>
+
+  <!-- Climbing rose: canes winding up both posts, the left far fuller -->
   <g class="gate-roses">
-    <!-- Left side roses -->
-    <circle cx="100" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="100" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"></circle>
-    <circle cx="100" cy="150" r="2" fill="currentColor" opacity="0.3"></circle>
-    <path d="M95 165 Q85 180 90 200" stroke="currentColor" stroke-width="0.6" fill="none"></path>
-
-    <circle cx="85" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="85" cy="250" r="3" fill="currentColor" opacity="0.3"></circle>
-
-    <!-- Right side roses -->
-    <circle cx="700" cy="150" r="10" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="700" cy="150" r="5" stroke="currentColor" stroke-width="0.5" fill="none"></circle>
-    <circle cx="700" cy="150" r="2" fill="currentColor" opacity="0.3"></circle>
-    <path d="M705 165 Q715 180 710 200" stroke="currentColor" stroke-width="0.6" fill="none"></path>
-
-    <circle cx="715" cy="250" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="715" cy="250" r="3" fill="currentColor" opacity="0.3"></circle>
-
-    <!-- Leaves -->
     <path
-      d="M80 180 Q70 175 68 185 Q75 188 80 180"
-      stroke="currentColor"
-      stroke-width="0.6"
-      fill="none"></path>
+      class="gate-vine gate-vine-main"
+      d="M42 400 C36 372 72 352 84 314 C94 282 48 266 45 228 C42 192 88 180 86 144 C84 118 58 106 68 86 C80 64 126 54 168 44 C200 37 236 30 268 27 C284 26 296 28 300 22 C302 18 297 15 294 18"
+    ></path>
     <path
-      d="M720 180 Q730 175 732 185 Q725 188 720 180"
-      stroke="currentColor"
-      stroke-width="0.6"
-      fill="none"></path>
+      class="gate-vine"
+      d="M84 314 C96 300 104 292 100 280 M45 228 C34 220 30 210 36 200 M68 86 C60 78 56 66 64 58 C70 54 74 58 72 62 M168 44 C176 54 178 64 172 72"
+    ></path>
+    <path
+      class="gate-vine gate-vine-main"
+      d="M758 400 C764 352 724 332 718 292 C712 252 757 238 755 198 C753 160 719 142 723 106 C725 88 742 82 731 72 C714 56 682 50 652 45 C632 42 614 42 604 50"
+    ></path>
+    <path class="gate-vine" d="M718 292 C708 284 704 274 708 264 M731 72 C738 64 738 56 732 52"
+    ></path>
+
+    {
+      [...leavesLeft, ...leavesRight].map(([x, y, r, s = 1]) => (
+        <use href="#gate-leaf" transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`} />
+      ))
+    }
+    {
+      buds.map(([x, y, r]) => (
+        <use href="#gate-bud" transform={`translate(${x} ${y}) rotate(${r})`} />
+      ))
+    }
+    {
+      roses.map(([x, y, s, r]) => (
+        <use href="#gate-rose" transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`} />
+      ))
+    }
+  </g>
+
+  <!-- Ground foliage anchoring the post bases -->
+  <g class="gate-ground">
+    <use href="#gate-leaf" transform="translate(30 400) rotate(-150) scale(1.3)"></use>
+    <use href="#gate-leaf" transform="translate(84 400) rotate(-40) scale(1.2)"></use>
+    <use href="#gate-leaf" transform="translate(92 400) rotate(-70) scale(0.9)"></use>
+    <use href="#gate-leaf" transform="translate(712 400) rotate(-120) scale(1.1)"></use>
+    <use href="#gate-leaf" transform="translate(770 400) rotate(-30) scale(1.3)"></use>
   </g>
 </svg>

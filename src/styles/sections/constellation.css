@@ -128,7 +128,13 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(249, 200, 194, 0.3) 0%, transparent 70%);
+  /* Warm cream light, not pink-on-brown (which read as a muddy smudge) */
+  background: radial-gradient(
+    circle,
+    rgba(255, 238, 220, 0.3) 0%,
+    rgba(249, 200, 194, 0.12) 45%,
+    transparent 70%
+  );
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
@@ -176,36 +182,89 @@
   }
 }
 
+/* Phones and small tablets: the scattered star map crowds its labels, so the same
+   eight stars walk down a gentle meandering path instead, each label beside its
+   star. constellation.js links them in markup order with a softly bowed line
+   (and re-links on resize/rotation). Each star's sideways step is a margin, so
+   the measured layout is the drawn layout. */
 @media (max-width: 768px) {
+  .constellation-sky {
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-16);
+  }
+
+  .constellation-header {
+    margin-bottom: var(--space-10);
+  }
+
   .constellation-map {
     height: auto;
-    /* Size to the star list; a fixed 500px left an empty band below it. */
+    /* Size to the star path; a fixed 500px left an empty band below it. */
     min-height: 0;
+    width: min(100%, 300px);
   }
 
   .constellation-stars {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-8);
-    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-10);
+    padding: var(--space-2) 0;
   }
 
-  /* Stay positioned (not static) so each star's glow anchors to it, not the grid */
-  .constellation-star {
-    position: relative !important;
+  /* Stay positioned (not static) so each star's glow anchors to it */
+  .constellation-star,
+  .constellation-star:hover {
+    position: relative;
     top: auto;
     left: auto;
-    transform: none !important;
+    flex-direction: row;
+    gap: var(--space-4);
+    margin-left: var(--path-x, 0%);
+    transform: none;
   }
 
-  .constellation-lines {
-    display: none;
+  .constellation-star:nth-child(1) {
+    --path-x: 12%;
   }
-}
+  .constellation-star:nth-child(2) {
+    --path-x: 40%;
+  }
+  .constellation-star:nth-child(3) {
+    --path-x: 22%;
+    margin-top: var(--space-2);
+  }
+  .constellation-star:nth-child(4) {
+    --path-x: 46%;
+  }
+  .constellation-star:nth-child(5) {
+    --path-x: 8%;
+    margin-top: var(--space-4);
+  }
+  .constellation-star:nth-child(6) {
+    --path-x: 30%;
+  }
+  .constellation-star:nth-child(7) {
+    --path-x: 14%;
+    margin-top: var(--space-2);
+  }
+  .constellation-star:nth-child(8) {
+    --path-x: 36%;
+  }
 
-@media (max-width: 480px) {
-  .constellation-stars {
-    grid-template-columns: 1fr;
+  /* The glow centres on the icon, which now leads the row */
+  .star-glow {
+    top: -16px;
+    left: 14px;
+  }
+
+  .star-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .star-label {
+    font-size: var(--text-sm);
   }
 }
 

@@ -43,7 +43,7 @@ Guidance for Claude Code when working in this repository.
 
 ```
 src/
-├── pages/            # One route each: index, about, reiki, retreat, resources, fees, faqs, contact (.astro)
+├── pages/            # One route each: index, about, reiki, retreat, resources, fees, faqs, contact, 404 (.astro)
 ├── layouts/          # BaseLayout.astro: head/meta, Header, Footer, skip link, loads the public/scripts modules
 ├── lib/withBase.ts   # Base-path helper (see Key Conventions)
 ├── scripts/          # garden-gate.js (homepage), retreat-trail.js (retreat): ES modules bundled by Vite
@@ -105,6 +105,7 @@ Class names are metaphor-heavy. This is the one map from prefix to UI to file:
 | `pages/retreat.css` | `.retreat-*`, `.mesa-*`, `.trail-*`, `.cairn-*`, `.flagline-*`, `.permit-*`, `.summit-*` | Sedona retreat as a desert trail: red-rock hero (RedRockHorizon), cairn waypoints, a print on prayer flags, a trail permit, the summit (registration). Also restyles the header over its light sky |
 | `pages/resources.css` | `.library-*`, `.shelf-*`, `.welcome-desk*`, `.checkout-*`, `.catalog-*`, `.helpdesk-*`, `.bookmark-*`, `.lending-*` | Resources as a lending library: shelf, checkout cards (self-assessments), card catalog (forms), crisis help desk |
 | `pages/contact.css` | `.threshold-*`, `.doorway-*`, `.candle-glow`, `.floating-botanical`, `.contact-*`, `.form-*`, `.hint-text`, `.location-note` | Contact page: self-drawing doorway hero, form, details |
+| `pages/notfound.css` | `.notfound-*` | 404 page: a dandelion clock letting go of its seeds (GitHub Pages serves the built `404.html` for missing URLs) |
 
 Watch out: `.vine-divider` is defined in `animations.css` and `sections/approach.css`, with scoped overrides in `sections/process-steps.css` (under `.moon-journey-section`).
 

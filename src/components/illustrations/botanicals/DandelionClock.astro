@@ -1,0 +1,229 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+const r = (n: number) => Math.round(n * 10) / 10;
+const HEAD = { x: 138, y: 112 };
+
+/* One dandelion seed: a hair-thin beak from the achene at (x, y) out along `ang`
+   (radians), ending in a parachute of fine hairs. Returns path data only. */
+function seed(x: number, y: number, ang: number, len: number, s: number, n: number) {
+  const tx = x + Math.cos(ang) * len;
+  const ty = y + Math.sin(ang) * len;
+  const beak = `M${r(x)} ${r(y)}L${r(tx)} ${r(ty)}`;
+  let hairs = "";
+  const k = 7;
+  for (let i = 0; i < k; i++) {
+    const a = ang + ((i - (k - 1) / 2) / (k - 1)) * 2.5;
+    const hl = 8.4 * s * (0.86 + ((i * 5 + n * 3) % 4) * 0.07);
+    // each hair lifts away from the beak and then relaxes outward
+    const mx = tx + Math.cos(a) * hl * 0.55 + Math.cos(ang) * hl * 0.16;
+    const my = ty + Math.sin(a) * hl * 0.55 + Math.sin(ang) * hl * 0.16;
+    hairs += `M${r(tx)} ${r(ty)}Q${r(mx)} ${r(my)} ${r(tx + Math.cos(a) * hl)} ${r(ty + Math.sin(a) * hl)}`;
+  }
+  return { beak, hairs, tx: r(tx), ty: r(ty) };
+}
+
+// Seeds still on the clock: everything except the windward quarter, which has blown
+const held = { beak: "", hairs: "", back: "", backHairs: "", dots: [] as [number, number][] };
+let n = 0;
+for (let deg = 62; deg <= 318; deg += 9.4) {
+  n++;
+  const a = ((deg + (n % 3) * 2.2) * Math.PI) / 180;
+  const len = 33 + ((n * 7) % 5) * 1.6;
+  const s = seed(HEAD.x + Math.cos(a) * 5.4, HEAD.y + Math.sin(a) * 5.4, a, len, 1, n);
+  held.beak += s.beak;
+  held.hairs += s.hairs;
+  held.dots.push([r(HEAD.x + Math.cos(a) * 5.4), r(HEAD.y + Math.sin(a) * 5.4)]);
+}
+// a shorter, paler layer behind gives the head its depth
+for (let deg = 70; deg <= 310; deg += 13) {
+  n++;
+  const a = ((deg + 4) * Math.PI) / 180;
+  const s = seed(HEAD.x + Math.cos(a) * 4, HEAD.y + Math.sin(a) * 4, a, 21 + (n % 3) * 2, 0.8, n);
+  held.back += s.beak;
+  held.backHairs += s.hairs;
+}
+
+// Seeds on the wind, nearest first: [x, y of the achene, angle°, size]
+const adrift = [
+  [186, 96, -62, 1],
+  [214, 70, -38, 0.96],
+  [236, 108, -74, 0.9],
+  [262, 50, -52, 0.86],
+  [286, 88, -30, 0.8],
+  [300, 30, -66, 0.74],
+].map(([x, y, deg, s], i) => {
+  const a = (deg * Math.PI) / 180;
+  return { ...seed(x, y, a, 18 * s, s, i), x, y, deg, s, i };
+});
+
+// Toothed leaves of the rosette: [rotation°, length, mirrored, fill]
+const leaves: [number, number, number, string][] = [
+  [-74, 74, 1, "#a9bcb0"],
+  [68, 70, -1, "#96aca0"],
+  [-46, 62, 1, "#96aca0"],
+  [40, 58, -1, "#b5c7ba"],
+  [-98, 50, -1, "#b5c7ba"],
+  [94, 48, 1, "#a9bcb0"],
+];
+// One "lion's tooth" leaf from its base at the origin, pointing up, length 100:
+// the lobes point back toward the crown, as they do on the real plant
+const TOOTH_LEFT =
+  "M0 0 C-1.6 -8 -2.4 -13 -3 -18 C-7 -17 -11 -14 -15 -10 C-13 -18 -9 -25 -4.6 -29 C-5.4 -33 -6 -37 -6.6 -41 C-11 -40 -16 -37 -21 -32 C-18 -42 -13 -50 -7.6 -54 C-8 -58 -8.4 -62 -8.6 -66 C-13 -65.6 -17 -63 -21 -59 C-19 -68 -15 -75 -9 -79 C-8 -88 -5 -95 0 -100";
+const TOOTH =
+  TOOTH_LEFT +
+  " C5 -95 8 -88 9 -80 C14 -75 18 -69 20 -61 C16 -65 12 -67 8.4 -67 C8.2 -63 7.8 -59 7.4 -55 C13 -51 17 -44 20 -35 C15 -39 10.6 -41.6 6.4 -42 C5.8 -38 5.2 -34 4.6 -30 C9 -26 12.6 -20 14 -12 C10.6 -16 6.8 -18.4 3 -19 C2.4 -13 1.6 -8 0 0 Z";
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 320 300"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A dandelion clock with a quarter of its seeds already gone on the wind: a
+       rosette of toothed leaves, a hollow stem, the half-bare seed head, a
+       closed bud beside it, and six seeds drifting off (each a .dandelion-seed
+       group, so a page may let them bob). -->
+  <defs>
+    <radialGradient id="dc-puff" cx="46%" cy="44%" r="56%">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.95"></stop>
+      <stop offset="0.6" stop-color="#fff" stop-opacity="0.62"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="dc-stem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b5c7ba"></stop>
+      <stop offset="0.7" stop-color="#a9bcb0"></stop>
+      <stop offset="1" stop-color="#d7b3a8"></stop>
+    </linearGradient>
+    <clipPath id="dc-gap">
+      <!-- everything but the blown quarter (up and to the right) -->
+      <path d="M138 112 L212 45 L212 20 L40 20 L40 215 L185 215 L185 200 Z"></path>
+    </clipPath>
+  </defs>
+
+  <!-- Ground -->
+  <ellipse cx="150" cy="276" rx="118" ry="9" fill="#60665a" fill-opacity="0.07"></ellipse>
+  <path
+    d="M34 280 C70 268 108 264 150 265 C196 266 240 270 286 280 C240 284 80 284 34 280 Z"
+    fill="#e9d6cc"></path>
+  <path
+    d="M34 280 C70 268 108 264 150 265 C196 266 240 270 286 280"
+    stroke="#d0b4a6"
+    stroke-width="1"
+    stroke-linecap="round"
+    stroke-dasharray="46 7 20 9 70 8"></path>
+
+  <!-- Rosette -->
+  {
+    leaves.map(([rot, len, flip, fill]) => (
+      <g
+        transform={`translate(132 270) rotate(${rot}) scale(${r((len / 100) * flip)} ${r(len / 100)})`}
+      >
+        <path d={TOOTH} fill={fill} />
+        <path d={`${TOOTH_LEFT} L0 0 Z`} fill="#60665a" fill-opacity="0.1" />
+        <path
+          d="M0 -2 C0.6 -34 -0.6 -66 0 -96"
+          stroke="#f1f5f3"
+          stroke-opacity="0.8"
+          stroke-width="1.6"
+          stroke-linecap="round"
+        />
+      </g>
+    ))
+  }
+  <path
+    d="M96 272 l-4 -9 M100 272 l0 -11 M104 272 l4 -8 M176 273 l-3 -8 M180 273 l1 -10 M184 273 l4 -7 M222 276 l-3 -7 M226 276 l1 -9"
+    stroke="#96aca0"
+    stroke-width="1"
+    stroke-linecap="round"></path>
+
+  <!-- Bud on a short stem, still closed -->
+  <path
+    d="M134 268 C120 246 104 228 96 204"
+    stroke="url(#dc-stem)"
+    stroke-width="3.4"
+    stroke-linecap="round"></path>
+  <path
+    d="M96 206 C88 200 86 188 92 178 C96 172 100 172 104 178 C108 188 104 200 96 206 Z"
+    fill="#a9bcb0"></path>
+  <path
+    d="M96 206 C100 198 102 188 100 176 C104 176 106 180 105 186 C105 196 101 202 96 206 Z"
+    fill="#60665a"
+    fill-opacity="0.12"></path>
+  <path
+    d="M92 178 C94 172 96 168 98 166 C99 169 101 173 104 178 M95 204 C90 206 86 204 84 200 M98 205 C102 208 106 206 108 202"
+    stroke="#7f9689"
+    stroke-width="1"
+    stroke-linecap="round"></path>
+  <path d="M95 170 C96 166 98 164 99 163 C100 165 101 168 101 171 Z" fill="#f9c8c2"></path>
+
+  <!-- Main stem -->
+  <path
+    d="M132 268 C140 228 126 176 137 120"
+    stroke="url(#dc-stem)"
+    stroke-width="4.6"
+    stroke-linecap="round"></path>
+  <path
+    d="M130.6 262 C137 226 124.6 176 135.2 124"
+    stroke="#fff"
+    stroke-opacity="0.5"
+    stroke-width="1.1"
+    stroke-linecap="round"></path>
+
+  <!-- Seed head -->
+  <circle cx={HEAD.x} cy={HEAD.y} r="46" fill="url(#dc-puff)" clip-path="url(#dc-gap)"></circle>
+  <g stroke-linecap="round">
+    <path d={held.back} stroke="#a9bcb0" stroke-width="0.6" stroke-opacity="0.8"></path>
+    <path d={held.backHairs} stroke="#b9c8bc" stroke-width="0.5" stroke-opacity="0.8"></path>
+    <path d={held.beak} stroke="#8e9f93" stroke-width="0.7"></path>
+    <path d={held.hairs} stroke="#8e9f93" stroke-width="0.55" stroke-opacity="0.85"></path>
+  </g>
+  <!-- bracts folded back under the head -->
+  <path
+    d="M132 121 C126 126 122 132 121 139 C126 136 131 131 135 124 Z M138 122 C137 129 138 136 141 142 C143 136 143 129 141 122 Z M144 120 C149 125 153 131 154 138 C149 135 145 130 141 123 Z"
+    fill="#96aca0"></path>
+  <!-- the bare receptacle where seeds have left, pitted -->
+  <ellipse cx={HEAD.x} cy={HEAD.y} rx="7.4" ry="6.6" fill="#ecdccb"></ellipse>
+  <path
+    d="M133 107 C136 105 141 105 144 108"
+    stroke="#fff"
+    stroke-opacity="0.8"
+    stroke-width="1"
+    stroke-linecap="round"></path>
+  <ellipse cx={HEAD.x} cy={HEAD.y} rx="7.4" ry="6.6" stroke="#b99c8c" stroke-width="0.8"></ellipse>
+  <path
+    d="M141 108.6 h0.1 M143.4 111.6 h0.1 M140.6 112.4 h0.1 M142.6 115 h0.1 M138.4 109.6 h0.1"
+    stroke="#b99c8c"
+    stroke-width="1.3"
+    stroke-linecap="round"></path>
+  <g fill="#c69491">
+    {held.dots.map(([x, y]) => <circle cx={x} cy={y} r="0.7" />)}
+  </g>
+
+  <!-- Seeds on the wind -->
+  {
+    adrift.map((s) => (
+      <g class="dandelion-seed" style={`--i:${s.i}`}>
+        <circle cx={s.tx} cy={s.ty} r={r(8 * s.s)} fill="#fff" fill-opacity="0.6" />
+        <path d={s.hairs} stroke="#8e9f93" stroke-width="0.6" stroke-linecap="round" />
+        <path d={s.beak} stroke="#8e9f93" stroke-width="0.8" stroke-linecap="round" />
+        <ellipse
+          cx={s.x}
+          cy={s.y}
+          rx={r(1.3 * s.s)}
+          ry={r(3 * s.s)}
+          transform={`rotate(${s.deg + 90} ${s.x} ${s.y})`}
+          fill="#b8817e"
+        />
+      </g>
+    ))
+  }
+</svg>

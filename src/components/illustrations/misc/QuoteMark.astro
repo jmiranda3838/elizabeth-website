@@ -2,25 +2,38 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 30 24"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- A hand-inked open quote: two weighted drops whose tails flick up and
+       away, the second a touch smaller and higher, as a pen would leave them.
+       A pale pool under each drop and a hairline flourish give the ink depth;
+       every layer is currentColor, so it themes through CSS `color`. -->
+  <ellipse cx="8" cy="16.6" rx="5.6" ry="4.8" fill="currentColor" fill-opacity="0.16"></ellipse>
+  <ellipse cx="21.6" cy="15.4" rx="5.2" ry="4.5" fill="currentColor" fill-opacity="0.16"></ellipse>
   <path
-    d="M12 4 Q4 8 4 14 Q4 20 10 20 Q14 20 14 16 Q14 12 10 12 Q6 12 6 8 Q6 4 12 4"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"></path>
+    d="M7.6 20.4 C4.5 20.5 2.3 18.2 2.4 15.3 C2.5 10.2 6.2 5.4 11.9 2.5 C12.3 2.3 12.7 2.8 12.4 3.2 C9.4 5.3 7.4 7.7 6.8 10.4 C7.3 10.1 8 10 8.7 10 C11.4 10.1 13.3 12.3 13.2 15.2 C13.1 18.2 10.7 20.4 7.6 20.4 Z"
+    fill="currentColor"
+    fill-opacity="0.92"></path>
   <path
-    d="M26 4 Q18 8 18 14 Q18 20 24 20 Q28 20 28 16 Q28 12 24 12 Q20 12 20 8 Q20 4 26 4"
+    d="M21.3 19.1 C18.4 19.2 16.4 17.1 16.5 14.4 C16.6 9.8 19.9 5.4 25 2.6 C25.4 2.4 25.8 2.9 25.5 3.2 C22.8 5.2 21 7.4 20.5 9.8 C21 9.5 21.6 9.4 22.3 9.4 C24.8 9.5 26.6 11.5 26.5 14.2 C26.4 17 24.1 19.1 21.3 19.1 Z"
+    fill="currentColor"
+    fill-opacity="0.92"></path>
+  <!-- Hairline flicks where the nib lifted -->
+  <path
+    d="M12.2 2.9 C13.6 2.1 15 1.9 16.2 2.3 M25.3 2.9 C26.6 2.2 27.8 2.1 28.8 2.6"
     stroke="currentColor"
-    stroke-width="1"
-    fill="none"></path>
+    stroke-width="0.5"
+    stroke-linecap="round"
+    stroke-opacity="0.6"></path>
 </svg>

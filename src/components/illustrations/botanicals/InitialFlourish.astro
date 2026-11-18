@@ -1,32 +1,141 @@
 ---
+import { stem, sprig, tipped, leaf, ivy, bud, rose, gilt } from "../frames/illumination";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// The ground for an illuminated initial. The letter itself is set in type on top of
+// the square panel (x 10 to 90, y 28 to 108); a vine winds through where the bowl of
+// the letter falls, and the foliage breaks out of the panel at its corners.
+const inside = [
+  // The scroll inside the letter's bowl, ending in a small rose
+  stem("M36 100 C48 103 62 98 66 86 C70 73 64 58 52 55 C43 53 37 60 38 68", 0.8),
+  stem("M38 68 C39 76 48 79 53 74", 0.8),
+  leaf([62, 94, -150, 0.7]),
+  leaf([67.4, 80, 16, 0.66]),
+  leaf([64, 62, -150, 0.6]),
+  leaf([46, 54.4, -60, 0.56]),
+  leaf([38, 64, 150, 0.56]),
+  rose([53.4, 72, 30, 0.78]),
+  tipped(sprig([58, 99.4], [63, 102], [70, 101], [74, 97], { r: 2.4, dir: -1 }), "ivy", 0.9),
+  tipped(sprig([67.6, 70], [72, 66], [77, 64], [80, 60], { r: 2.2, dir: -1 })),
+  tipped(sprig([44, 54], [38, 50], [30, 50], [25.6, 45.6], { r: 2.4 }), "ivy", 0.9),
+  tipped(sprig([36, 100], [30, 99], [24, 96], [21.6, 91], { r: 2.2 })),
+  gilt([78, 84, 0, 1.2]),
+  gilt([24, 62, 180, 1.2]),
+  gilt([80, 42, -45, 1.1]),
+  gilt([22, 78, 180, 1]),
+].join("");
+
+const outside = [
+  // Up and away from the top-left corner
+  stem("M11 30 C6 24 7 15 13 11.4 C19 8 26 10 29.4 15.4", 0.85),
+  tipped(sprig([29.4, 15.4], [31, 18.4], [30, 21.6], [27.4, 22], { r: 2 }), "gilt", 0.9),
+  stem("M13 11.4 C13 7 16 4 20 3.6", 0.6),
+  bud([20, 3.6, -8, 0.9]),
+  leaf([8, 22, 196, 0.72]),
+  leaf([9.4, 15, -116, 0.66]),
+  leaf([18, 9.2, -52, 0.7]),
+  leaf([24.6, 11, 62, 0.6]),
+  // Along the top edge
+  stem("M14 28 C24 21.4 38 21 50 25.6 C55 27.4 60 27 64 24.6", 0.7),
+  leaf([28, 22.6, -64, 0.6]),
+  leaf([40, 22.4, 58, 0.5]),
+  leaf([52, 26.4, -56, 0.58]),
+  tipped(
+    sprig([64, 24.6], [66.6, 22.6], [70, 22.4], [72.4, 24.6], { r: 1.9, turns: 1 }),
+    "ivy",
+    0.9,
+  ),
+  // Down the left side
+  stem("M10 34 C5.4 39 4.6 47 8 53 C10.4 57.4 10.4 62 8.4 66", 0.7),
+  leaf([6, 42, 150, 0.6]),
+  leaf([8.6, 54, 10, 0.5]),
+  tipped(sprig([8.4, 66], [7, 69], [4, 70.4], [2.4, 68.4], { r: 1.7, turns: 1 }), "gilt", 0.85),
+  // Leaf tips breaking out at the other corners
+  ivy([89, 29, -42, 0.96], "leaf"),
+  leaf([89, 107, 38, 0.72]),
+  leaf([88, 107.4, 78, 0.56]),
+  leaf([11, 107, 146, 0.72]),
+  leaf([11.6, 107.4, 102, 0.56]),
+  gilt([96, 21.6, -45, 1.2]),
+  gilt([3.4, 30, 200, 1.2]),
+  gilt([36, 16.6, -90, 1.1]),
+  gilt([4.6, 113.6, 140, 1.1]),
+  gilt([95.4, 114.4, 40, 1.1]),
+].join("");
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 100 120"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Vine wrapping around letter -->
-  <path
-    d="M10 100 Q5 70 15 50 Q25 30 20 10"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"
-    stroke-linecap="round"></path>
-  <path d="M15 85 Q5 80 3 88" stroke="currentColor" stroke-width="0.8" fill="none"></path>
-  <path d="M18 60 Q8 55 6 63" stroke="currentColor" stroke-width="0.8" fill="none"></path>
-  <path d="M20 35 Q30 30 32 38" stroke="currentColor" stroke-width="0.8" fill="none"></path>
-  <circle cx="3" cy="90" r="3" stroke="currentColor" stroke-width="0.6" fill="none"></circle>
-  <circle cx="5" cy="65" r="2" stroke="currentColor" stroke-width="0.6" fill="none"></circle>
-  <circle cx="33" cy="40" r="2" stroke="currentColor" stroke-width="0.6" fill="none"></circle>
-  <!-- Small flower at top -->
-  <circle cx="20" cy="8" r="5" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="20" cy="8" r="2" fill="currentColor" opacity="0.3"></circle>
+  <!-- Illuminated initial: a diapered panel in a gilt frame, with a vine scroll through
+       it. Shapes come from ../frames/illumination. -->
+  <defs>
+    <pattern
+      id="initial-flourish-diaper"
+      width="6"
+      height="6"
+      patternUnits="userSpaceOnUse"
+      patternTransform="translate(10 28) rotate(45)"
+    >
+      <path d="M0 0 H6 M0 0 V6" stroke="currentColor" stroke-width="0.4" stroke-opacity="0.5"
+      ></path>
+      <circle cx="3" cy="3" r="0.55" fill="currentColor" fill-opacity="0.7"></circle>
+    </pattern>
+    <clipPath id="initial-flourish-panel">
+      <rect x="12.6" y="30.6" width="74.8" height="74.8" rx="1"></rect>
+    </clipPath>
+  </defs>
+  <!-- Ground -->
+  <g style="color: var(--manuscript-bloom, currentColor)">
+    <rect x="10" y="28" width="80" height="80" rx="2" fill="currentColor" fill-opacity="0.2"></rect>
+  </g>
+  <g style="color: var(--manuscript-gilt, currentColor)">
+    <rect x="12.6" y="30.6" width="74.8" height="74.8" fill="url(#initial-flourish-diaper)"></rect>
+  </g>
+  <g clip-path="url(#initial-flourish-panel)" set:html={inside} />
+  <!-- Frame: a gilt band between two ink hairlines -->
+  <g style="color: var(--manuscript-gilt, currentColor)">
+    <rect
+      x="11.3"
+      y="29.3"
+      width="77.4"
+      height="77.4"
+      rx="1.4"
+      stroke="currentColor"
+      stroke-width="2.4"></rect>
+    <path d="M10.6 29.6 H89.4 M10.6 29.6 V68" stroke="#fff" stroke-opacity="0.45" stroke-width="0.6"
+    ></path>
+  </g>
+  <g style="color: var(--manuscript-vine, currentColor)">
+    <rect
+      x="10"
+      y="28"
+      width="80"
+      height="80"
+      rx="2"
+      stroke="currentColor"
+      stroke-width="0.45"
+      stroke-opacity="0.8"></rect>
+    <rect
+      x="12.8"
+      y="30.8"
+      width="74.4"
+      height="74.4"
+      rx="0.8"
+      stroke="currentColor"
+      stroke-width="0.4"
+      stroke-opacity="0.7"></rect>
+  </g>
+  <g set:html={outside} />
 </svg>

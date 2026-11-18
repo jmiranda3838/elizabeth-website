@@ -13,6 +13,8 @@ import {
 import {
   Garland,
   BookSpine,
+  BookPageEdge,
+  BookRibbon,
   RootsSystem,
   GateFrame,
   GateDoorLeft,
@@ -370,13 +372,26 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
   <!-- Sacred Promises - Book Spread -->
   <section class="promises-section">
     <div class="promises-book">
-      <!-- Book spine decoration -->
-      <div class="book-spine">
+      <!-- Gutter (fold and binding thread) and the ribbon marker -->
+      <div class="book-spine" aria-hidden="true">
         <BookSpine />
       </div>
+      <BookRibbon class="promises-ribbon" aria-hidden="true" />
 
       <div class="promises-pages">
         <div class="promises-page promises-page-left">
+          <BookPageEdge
+            class="promises-edge promises-edge-top"
+            edge="top"
+            lift={0.6}
+            aria-hidden="true"
+          />
+          <BookPageEdge
+            class="promises-edge promises-edge-bottom"
+            edge="bottom"
+            lift={0.6}
+            aria-hidden="true"
+          />
           <div class="page-header">
             <h2 class="page-script">Sacred Promises</h2>
             <div class="page-divider">
@@ -426,6 +441,12 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
         </div>
 
         <div class="promises-page promises-page-right">
+          <BookPageEdge class="promises-edge promises-edge-top" edge="top" aria-hidden="true" />
+          <BookPageEdge
+            class="promises-edge promises-edge-bottom"
+            edge="bottom"
+            aria-hidden="true"
+          />
           <div class="promise-list">
             <!-- Promise 4 -->
             <div class="promise-item">
@@ -456,8 +477,8 @@ import { MoonPath, QuoteMark, ConstellationStar, ManuscriptMargin } from "@illus
             </div>
           </div>
 
-          <!-- Decorative page element -->
-          <div class="page-botanical">
+          <!-- Botanical plate at the foot of the page -->
+          <div class="page-botanical" aria-hidden="true">
             <PageBotanical />
           </div>
         </div>

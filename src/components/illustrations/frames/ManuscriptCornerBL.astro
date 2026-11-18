@@ -1,25 +1,66 @@
 ---
+import { stem, sprig, tipped, leaf, rose, strawberry, gilt } from "./illumination";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// Bottom-left corner: wild strawberries, in fruit and in flower at once, as the old
+// borders show them. Drawn as a top-left corner and flipped top to bottom, so the
+// fruit here points up in order to hang down on the page.
+const art = [
+  stem("M21 14 C28 9 36 10.4 41 15.4 C46 20.4 53 20 58 16 C63 12.4 70 12.4 75 15.4"),
+  stem("M13.4 21.4 C9 28 10 37 15.4 42 C20 46.4 20.6 53 17.4 58 C15 62 14.4 69 15.8 75"),
+  tipped(sprig([31.4, 10], [31, 6.6], [33.6, 3.8], [37, 4.2], { r: 2.2 })),
+  tipped(
+    sprig([50, 19.4], [51.4, 23], [54.6, 24.6], [57.6, 23.4], { r: 1.9, turns: 1, dir: -1 }),
+    "ivy",
+  ),
+  tipped(sprig([67, 13], [67.4, 9.6], [70, 7.4], [73, 8], { r: 1.9, turns: 1 })),
+  tipped(sprig([10.4, 31], [6.4, 30.6], [3.6, 33], [3.8, 36.4], { r: 2.1, dir: -1 }), "ivy"),
+  tipped(sprig([19.6, 50], [23, 50.6], [25.6, 53.4], [25, 56.6], { r: 1.9, turns: 1 })),
+  tipped(sprig([16, 66], [12.4, 66.4], [9.6, 68.6], [9.4, 72], { r: 1.9, turns: 1, dir: -1 })),
+  leaf([38.4, 12, -62, 0.66]),
+  leaf([45.8, 19.4, 72, 0.6]),
+  leaf([55.4, 18.2, -38, 0.58]),
+  leaf([63.4, 12.9, 44, 0.6]),
+  leaf([75, 15.4, 24, 0.58]),
+  leaf([9.8, 34.6, 150, 0.66]),
+  leaf([14.6, 41.4, 18, 0.6]),
+  leaf([20, 52, 70, 0.54]),
+  leaf([17.6, 57.6, 176, 0.66]),
+  leaf([15.8, 75, 76, 0.58]),
+  // Stalks, fruit, a three-part leaf and one blossom
+  stem("M15.4 15.4 C14.4 13.6 13.4 12 12.6 10.6", 0.6),
+  stem("M17 15 C18.6 13.6 20.2 12.2 21.4 10.8", 0.6),
+  leaf([15, 17, 96, 0.86]),
+  leaf([14.6, 16.6, 142, 0.9]),
+  leaf([16.4, 17, 52, 0.8]),
+  strawberry([12.6, 10.8, 196, 0.98]),
+  strawberry([21.4, 11, 164, 0.74]),
+  rose([18.6, 19.4, 20, 0.62]),
+  gilt([27, 4.4, -90, 1.3]),
+  gilt([44, 9.6, -80, 1.1]),
+  gilt([62.6, 21.4, 90, 1.15]),
+  gilt([77, 9.6, -70, 1.05]),
+  gilt([4, 25, 200, 1.25]),
+  gilt([23.4, 37.6, 0, 1.1]),
+  gilt([10.4, 60.6, 180, 1.15]),
+  gilt([21, 74, 10, 1.05]),
+].join("");
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 80 80"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path d="M0 0 L0 40 Q0 80 40 80 L80 80" stroke="currentColor" stroke-width="1" fill="none"></path>
-  <path
-    d="M0 20 L0 50 Q0 70 30 70 L60 70"
-    stroke="currentColor"
-    stroke-width="0.5"
-    fill="none"
-    opacity="0.5"></path>
-  <circle cx="8" cy="10" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="70" cy="72" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+  <!-- Illuminated corner: wild strawberries and vine scroll. Shapes come from ./illumination. -->
+  <g transform="translate(0 80) scale(1 -1)" set:html={art} />
 </svg>

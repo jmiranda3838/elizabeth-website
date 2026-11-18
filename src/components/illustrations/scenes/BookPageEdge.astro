@@ -1,0 +1,143 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  /** Which end of the page block: the far (head) edge or the near (tail) edge */
+  edge?: "top" | "bottom";
+  /** How high this half of the book sits, 0 to 1: a thick stack of pages (1) or a thin one */
+  lift?: number;
+  [key: string]: unknown;
+}
+const {
+  class: className = "",
+  style = "",
+  edge = "bottom",
+  lift = 1,
+  ...rest
+} = Astro.props as Props;
+
+// One page of an open book, seen from the reader's side. x runs from the fore-edge (0)
+// to the gutter (500); the svg stretches sideways to the page's width, so everything
+// here is a curve along x. The page swells gently to a crown about two thirds of the
+// way across and then dives into the gutter.
+const W = 500;
+const GUTTER = 4; // height of the page surface where it meets the gutter
+const surface = (u: number) => {
+  const crown = 0.66;
+  const full =
+    u < crown ? 25 - 5 * Math.pow(1 - u / crown, 2) : 25 - 21 * Math.pow((u - crown) / 0.34, 2.6);
+  return GUTTER + lift * (full - GUTTER);
+};
+
+const BASE = 31; // where the page block rests on the cover (bottom edge only)
+const HEAD = 26; // the same datum for the far edge
+const height = edge === "top" ? 26 : 33;
+const datum = edge === "top" ? HEAD : BASE;
+
+const steps = 50;
+const xs = Array.from({ length: steps + 1 }, (_, i) => (i / steps) * W);
+const r = (n: number) => Math.round(n * 100) / 100;
+const points = (f: (u: number) => number) => xs.map((x) => `${r(x)} ${r(f(x / W))}`);
+const line = (f: (u: number) => number) => `M${points(f).join(" L")}`;
+
+const edgeY = (u: number) => datum - surface(u);
+const edgeLine = line(edgeY);
+
+// Far edge: paper from the curve down to the page box below it.
+const topFill = `${edgeLine} L${W} ${height} L0 ${height} Z`;
+// Near edge: paper from the page box above it down to the curve.
+const bottomFill = `M0 0 L${W} 0 L${points(edgeY).reverse().join(" L")} Z`;
+
+// The stack of pages below the top one: each lower leaf follows the same curve, flattened.
+// Uneven spacing and a little wander, so it reads as paper and not as ruled lines.
+const leaves = [
+  { t: 0.1, wob: 0.5, o: 0.5 },
+  { t: 0.2, wob: -0.3, o: 0.34 },
+  { t: 0.33, wob: 0.6, o: 0.55 },
+  { t: 0.43, wob: 0.2, o: 0.3 },
+  { t: 0.56, wob: -0.5, o: 0.6 },
+  { t: 0.68, wob: 0.4, o: 0.36 },
+  { t: 0.79, wob: -0.2, o: 0.52 },
+  { t: 0.9, wob: 0.3, o: 0.42 },
+].filter((_, i) => lift > 0.8 || i % 2 === 0);
+const leafLine = (t: number, wob: number) =>
+  line((u) => {
+    const y = edgeY(u);
+    return y + (BASE - y) * t + wob * Math.sin(u * 9 + t * 20) * (1 - u);
+  });
+const stackFill = `${edgeLine} L${W} ${BASE} L0 ${BASE} Z`;
+const uid = `bpe-${edge}-${Math.round(lift * 100)}`;
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox={`0 0 ${W} ${height}`}
+  preserveAspectRatio="none"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- The curved edge of an open book's page. Stretches to the page width; the stops of
+       the paper gradient match the page background in promises.css. -->
+  <defs>
+    <linearGradient id={`${uid}-paper`} x1="0" y1="0" x2={W} y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color: var(--book-paper-1, #f1e8df)"></stop>
+      <stop offset="0.05" style="stop-color: var(--book-paper-2, #fbf7f2)"></stop>
+      <stop offset="0.45" style="stop-color: var(--book-paper-3, #fffdfa)"></stop>
+      <stop offset="0.72" style="stop-color: var(--book-paper-4, #fdf9f4)"></stop>
+      <stop offset="0.88" style="stop-color: var(--book-paper-5, #f5ede5)"></stop>
+      <stop offset="0.96" style="stop-color: var(--book-paper-6, #e9ddd2)"></stop>
+      <stop offset="1" style="stop-color: var(--book-paper-7, #d6c5b8)"></stop>
+    </linearGradient>
+    <linearGradient id={`${uid}-shade`} x1="0" y1="0" x2={W} y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#543123" stop-opacity="0.1"></stop>
+      <stop offset="0.08" stop-color="#543123" stop-opacity="0"></stop>
+      <stop offset="0.7" stop-color="#543123" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#543123" stop-opacity="0.34"></stop>
+    </linearGradient>
+  </defs>
+  {
+    edge === "top" ? (
+      <>
+        <path d={topFill} fill={`url(#${uid}-paper)`} />
+        <path
+          d={edgeLine}
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-opacity="0.45"
+          vector-effect="non-scaling-stroke"
+        />
+      </>
+    ) : (
+      <>
+        <path d={stackFill} style="fill: var(--book-paper-5, #f5ede5)" />
+        <path d={stackFill} fill={`url(#${uid}-shade)`} />
+        {leaves.map((l) => (
+          <path
+            d={leafLine(l.t, l.wob)}
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-opacity={l.o}
+            vector-effect="non-scaling-stroke"
+          />
+        ))}
+        <path d={bottomFill} fill={`url(#${uid}-paper)`} />
+        <path
+          d={edgeLine}
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-opacity="0.7"
+          vector-effect="non-scaling-stroke"
+        />
+        <path
+          d={`M0 ${BASE} L${W} ${BASE}`}
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-opacity="0.8"
+          vector-effect="non-scaling-stroke"
+        />
+      </>
+    )
+  }
+</svg>

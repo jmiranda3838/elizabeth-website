@@ -7,4 +7,5 @@ export { default as MoonPath } from "./MoonPath.astro";
 export { default as QuoteMark } from "./QuoteMark.astro";
 export { default as SpecimenDivider } from "./SpecimenDivider.astro";
 export { default as TagString } from "./TagString.astro";
+export { default as TwineLoop } from "./TwineLoop.astro";
 export { default as VortexSpiral } from "./VortexSpiral.astro";

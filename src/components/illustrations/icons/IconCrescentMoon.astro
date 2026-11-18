@@ -2,23 +2,39 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 32 32"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- Crescent moon, engraved: a full-bellied sickle, its outer limb inked
+       heavier, with contour hatching and a small star resting in the hollow.
+       Themes through currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M15.2 5.4 A11.2 11.2 0 1 0 24.9 21 A9.2 9.2 0 1 1 15.2 5.4 Z"
+      fill="currentColor"
+      fill-opacity="0.15"
+      stroke-width="1.25"></path>
+    <path
+      d="M6.6 13.2 C5.6 17.4 7 21.8 10.4 24.4 M9.1 12.4 C8.4 16.2 9.8 20 12.8 22.4 M11.6 11.8 C11.2 14.8 12.2 17.8 14.6 19.8 M13.4 25.6 C15.8 26.4 18.4 26.2 20.6 25"
+      stroke-width="0.7"
+      stroke-opacity="0.6"></path>
+  </g>
+  <path d="M20.2 26.3 A11.2 11.2 0 0 1 4.08 12.77 A11.9 11.9 0 0 0 20.2 26.3 Z" fill="currentColor"
+  ></path>
   <path
-    d="M22 16c0-6-4.5-10-10-10 1 2 1.5 4.5 1.5 7s-0.5 5-1.5 7c5.5 0 10-4 10-10z"
-    stroke="currentColor"
-    stroke-width="1.2"
-    fill="none"></path>
-  <circle cx="18" cy="8" r="0.5" fill="currentColor" opacity="0.4"></circle>
-  <circle cx="22" cy="14" r="0.5" fill="currentColor" opacity="0.3"></circle>
-  <circle cx="20" cy="20" r="0.5" fill="currentColor" opacity="0.4"></circle>
+    d="M21.6 8.2 C21.9 10.8 22.8 11.7 25.4 12 C22.8 12.3 21.9 13.2 21.6 15.8 C21.3 13.2 20.4 12.3 17.8 12 C20.4 11.7 21.3 10.8 21.6 8.2 Z"
+    fill="currentColor"
+    fill-opacity="0.85"></path>
+  <circle cx="27.4" cy="6.6" r="0.75" fill="currentColor" fill-opacity="0.7"></circle>
+  <circle cx="18.4" cy="18.8" r="0.55" fill="currentColor" fill-opacity="0.55"></circle>
 </svg>

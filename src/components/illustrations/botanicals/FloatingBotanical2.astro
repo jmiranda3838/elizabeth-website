@@ -2,27 +2,172 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* A shorter olive bough leaning in from the top-right corner of the contact hero.
+   Drawn in currentColor; depth comes from three leaf layers at different
+   opacities, so it still themes through CSS `color`. The leaves are set along
+   hand-placed twigs from a fixed seed: irregular, but the same on every build. */
+
+type Pt = [number, number];
+let seed = 29;
+const rnd = () => {
+  seed = (seed * 16807) % 2147483647;
+  return (seed - 1) / 2147483646;
+};
+const jit = (a: number, b: number) => a + (b - a) * rnd();
+const f = (n: number) => Math.round(n * 10) / 10;
+const rad = (deg: number) => (deg * Math.PI) / 180;
+
+// A lanceolate olive leaf and its midrib, pointing along +x from the stalk
+const LEAF: Pt[] = [
+  [0, 0],
+  [6, -4.6],
+  [18, -4.8],
+  [27, 0],
+  [18, 3.4],
+  [6, 3.8],
+  [0, 0],
+];
+const stamp = (x: number, y: number, a: number, s: number) => {
+  const c = Math.cos(rad(a)) * s;
+  const n = Math.sin(rad(a)) * s;
+  const p = LEAF.map(([lx, ly]) => `${f(x + lx * c - ly * n)} ${f(y + lx * n + ly * c)}`);
+  return {
+    leaf: `M${p[0]}C${p[1]} ${p[2]} ${p[3]}C${p[4]} ${p[5]} ${p[6]}Z`,
+    rib: `M${f(x + 2 * c)} ${f(y + 2 * n)}L${f(x + 24 * c)} ${f(y + 24 * n)}`,
+  };
+};
+
+/** A smooth twig through points, with a sampler (position + heading) */
+function twig(pts: Pt[]) {
+  const seg = (i: number): Pt[] => {
+    const p0 = pts[Math.max(i - 1, 0)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(i + 2, pts.length - 1)];
+    return [
+      p1,
+      [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6],
+      [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6],
+      p2,
+    ];
+  };
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [, c1, c2, p] = seg(i);
+    d += `C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${p[0]} ${p[1]}`;
+  }
+  const at = (u: number) => {
+    const x = Math.min(Math.max(u, 0), 0.9999) * (pts.length - 1);
+    const i = Math.floor(x);
+    const t = x - i;
+    const m = 1 - t;
+    const [a, b, c, e] = seg(i);
+    const pos = (k: 0 | 1) =>
+      m * m * m * a[k] + 3 * m * m * t * b[k] + 3 * m * t * t * c[k] + t * t * t * e[k];
+    const der = (k: 0 | 1) =>
+      3 * m * m * (b[k] - a[k]) + 6 * m * t * (c[k] - b[k]) + 3 * t * t * (e[k] - c[k]);
+    return { x: pos(0), y: pos(1), ang: (Math.atan2(der(1), der(0)) * 180) / Math.PI };
+  };
+  return { d, at };
+}
+
+// [points, leaf pairs, where along the twig the leaves start]
+const twigs: [Pt[], number, number][] = [
+  [
+    [
+      [208, 8],
+      [160, 22],
+      [118, 50],
+      [86, 92],
+      [66, 144],
+      [58, 198],
+      [62, 250],
+    ],
+    13,
+    0.08,
+  ],
+  [
+    [
+      [118, 50],
+      [92, 46],
+      [62, 56],
+      [40, 82],
+    ],
+    5,
+    0.14,
+  ],
+  [
+    [
+      [86, 92],
+      [104, 128],
+      [112, 166],
+      [106, 202],
+    ],
+    6,
+    0.14,
+  ],
+];
+const drawn = twigs.map(([pts]) => twig(pts));
+const layers = ["", "", ""];
+let ribs = "";
+let olives = "";
+drawn.forEach((t, ti) => {
+  const [, pairs, from] = twigs[ti];
+  for (let i = 0; i < pairs; i++) {
+    const u = from + ((1 - from) * (i + jit(0.25, 0.75))) / pairs;
+    const p = t.at(u);
+    const size = (1.42 - 0.5 * u) * jit(0.85, 1.12);
+    for (const side of [-1, 1]) {
+      if (rnd() < 0.12) continue; // a leaf lost here and there
+      const s = stamp(p.x, p.y, p.ang + side * jit(28, 58), size * jit(0.8, 1.05));
+      layers[Math.floor(jit(0, 3))] += s.leaf;
+      ribs += s.rib;
+    }
+    if (rnd() < 0.24) {
+      const a = rad(p.ang + (rnd() < 0.5 ? 80 : -80));
+      const ox = p.x + Math.cos(a) * 11;
+      const oy = p.y + Math.sin(a) * 11 + 4;
+      olives += `M${f(p.x)} ${f(p.y)}L${f(ox)} ${f(oy - 4)}M${f(ox - 3.6)} ${f(oy)}a3.6 4.6 0 1 0 7.2 0a3.6 4.6 0 1 0 -7.2 0Z`;
+    }
+  }
+  // the leaf at the very tip
+  const tip = t.at(1);
+  layers[2] += stamp(tip.x, tip.y, tip.ang + jit(-12, 12), 0.85).leaf;
+});
 ---
 
 <svg
   class={className}
   style={style}
-  viewBox="0 0 50 70"
+  {...rest}
+  viewBox="0 0 200 280"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
+  <!-- Olive bough: a drooping stem from the top-right with two side twigs -->
+  <path d={layers[0]} fill="currentColor" fill-opacity="0.34"></path>
+  <g stroke="currentColor" stroke-linecap="round">
+    {drawn.map((t) => <path d={t.d} stroke-width="1.4" stroke-opacity="0.9" />)}
+    {/* the main stem again, twice, each pass shorter and thicker: a taper */}
+    <path d={drawn[0].d} pathLength="1" stroke-dasharray="0.62 1" stroke-width="2.4"></path>
+    <path d={drawn[0].d} pathLength="1" stroke-dasharray="0.3 1" stroke-width="3.6"></path>
+  </g>
+  <path d={layers[1]} fill="currentColor" fill-opacity="0.6"></path>
+  <path d={layers[2]} fill="currentColor" fill-opacity="0.86"></path>
   <path
-    d="M25 65 Q25 45 25 25"
+    d={ribs}
     stroke="currentColor"
-    stroke-width="1"
-    fill="none"
+    stroke-width="0.6"
+    stroke-opacity="0.45"
     stroke-linecap="round"></path>
-  <path d="M25 50 Q15 45 10 52 Q18 55 25 50" stroke="currentColor" stroke-width="0.8" fill="none"
-  ></path>
-  <path d="M25 38 Q35 33 40 40 Q32 43 25 38" stroke="currentColor" stroke-width="0.8" fill="none"
-  ></path>
-  <circle cx="25" cy="20" r="6" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="25" cy="20" r="2" fill="currentColor" opacity="0.4"></circle>
+  <path
+    d={olives}
+    fill="currentColor"
+    stroke="currentColor"
+    stroke-width="0.9"
+    stroke-linecap="round"></path>
 </svg>

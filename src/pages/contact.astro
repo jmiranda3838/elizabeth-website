@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { IconEmail, IconPhone, IconLocation, IconClock } from "@illustrations/icons";
 import { FloatingBotanical1, FloatingBotanical2 } from "@illustrations/botanicals";
-import { DoorwayFrame } from "@illustrations/scenes";
+import { DoorwayFrame, DoorwayLight, ReachOutStep } from "@illustrations/scenes";
 import "@styles/pages/contact.css";
 ---
 
@@ -10,30 +10,23 @@ import "@styles/pages/contact.css";
   title="Contact | Elizabeth Armstrong Therapy"
   description="Contact Elizabeth Armstrong, LMFT for a free 15-minute consultation. Therapy services available in Orange County and online across California."
 >
-  <!-- Hero: The Threshold/Doorway -->
+  <!-- Hero: the threshold. Words first, then the open door they point to -->
   <section class="threshold-hero">
-    <!-- Atmospheric mist at bottom -->
-    <div class="threshold-mist"></div>
-
-    <!-- Candlelight glow effects -->
-    <div class="candle-glow candle-glow-1"></div>
-    <div class="candle-glow candle-glow-2"></div>
-
-    <!-- The Arched Doorway Frame -->
-    <div class="threshold-doorway">
-      <DoorwayFrame class="doorway-frame" aria-hidden="true" />
-
-      <!-- Content within the doorway -->
-      <div class="threshold-content">
-        <p class="threshold-eyebrow">Get in Touch</p>
-        <h1 class="threshold-title">The door is open</h1>
-        <p class="threshold-subtitle">
-          Reaching out is the first step &mdash; a free 15-minute conversation is the next
-        </p>
-      </div>
+    <div class="threshold-content">
+      <p class="threshold-eyebrow">Get in Touch</p>
+      <h1 class="threshold-title">The door is open</h1>
+      <p class="threshold-subtitle">
+        Reaching out is the first step &mdash; a free 15-minute conversation is the next
+      </p>
     </div>
 
-    <!-- Floating botanical elements -->
+    <!-- The garden door, ajar, with morning light on the steps -->
+    <div class="threshold-doorway" aria-hidden="true">
+      <DoorwayFrame class="doorway-frame" />
+      <DoorwayLight class="doorway-light-layer" />
+    </div>
+
+    <!-- Boughs leaning in from the top corners (wide screens only) -->
     <div class="floating-botanical floating-botanical-1" aria-hidden="true">
       <FloatingBotanical1 />
     </div>
@@ -226,14 +219,20 @@ import "@styles/pages/contact.css";
       <h2 class="text-center">What happens after you reach out</h2>
       <div class="decorative-line center"></div>
 
-      <div class="steps-grid mt-10">
+      <div class="steps-grid contact-steps mt-10">
         <div class="step-item">
+          <div class="contact-step-art" aria-hidden="true">
+            <ReachOutStep variant="letter" />
+          </div>
           <div class="step-number">1</div>
           <h3>I'll respond</h3>
           <p>Within one business day, I'll reach out to schedule a brief phone consultation.</p>
         </div>
 
         <div class="step-item">
+          <div class="contact-step-art" aria-hidden="true">
+            <ReachOutStep variant="talk" />
+          </div>
           <div class="step-number">2</div>
           <h3>We'll talk</h3>
           <p>
@@ -242,6 +241,9 @@ import "@styles/pages/contact.css";
         </div>
 
         <div class="step-item">
+          <div class="contact-step-art" aria-hidden="true">
+            <ReachOutStep variant="begin" />
+          </div>
           <div class="step-number">3</div>
           <h3>We'll begin</h3>
           <p>If we decide to work together, we'll schedule your first full session.</p>

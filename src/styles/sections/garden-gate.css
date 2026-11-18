@@ -173,6 +173,52 @@
   transform: translateZ(12px);
 }
 
+/* The climbing rose on the frame (GateFrame.astro): canes, leaves, blooms */
+.gate-vine {
+  stroke: var(--slate-olive);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-opacity: 0.6;
+}
+.gate-vine-main {
+  stroke-width: 1.5;
+  stroke-opacity: 0.7;
+}
+.gate-leaf {
+  fill: var(--sage);
+  fill-opacity: 0.8;
+  stroke: var(--slate-olive);
+  stroke-width: 0.5;
+  stroke-opacity: 0.5;
+}
+.gate-leaf-rib {
+  stroke: var(--slate-olive);
+  stroke-width: 0.5;
+  stroke-opacity: 0.55;
+  stroke-linecap: round;
+}
+.gate-rose-outer {
+  fill: var(--muted-rose);
+  fill-opacity: 0.55;
+  stroke: var(--warm-clay);
+  stroke-width: 0.5;
+  stroke-opacity: 0.6;
+}
+.gate-rose-mid {
+  fill: var(--muted-rose);
+  fill-opacity: 0.85;
+}
+.gate-rose-line {
+  stroke: var(--clay-deep);
+  stroke-width: 0.7;
+  stroke-linecap: round;
+  stroke-opacity: 0.7;
+}
+.gate-catchlight {
+  fill: var(--warm-paper);
+  fill-opacity: 0.7;
+}
+
 /* --- Foreground: drifting motes + petals across the whole section -------- */
 .gate-foreground {
   position: absolute;
@@ -230,13 +276,14 @@
   opacity: 0.5;
   transform-origin: top center;
 }
+/* Kept outside the posts, clear of the climbing rose on the frame */
 .gate-petal-1 {
-  left: 11%;
+  left: 3%;
   top: 9%;
   animation: gate-sway 7s ease-in-out infinite;
 }
 .gate-petal-2 {
-  right: 11%;
+  right: 3%;
   top: 13%;
   width: 64px;
   color: var(--muted-rose);

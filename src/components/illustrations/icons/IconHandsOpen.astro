@@ -2,70 +2,55 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 32 32"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Cupped open hands -->
-  <path
-    d="M4 18 Q4.5 24.5 11.5 25.8 Q14 26.2 16 26.2"
-    stroke="currentColor"
-    stroke-width="1.2"
-    stroke-linecap="round"
-    fill="none"></path>
-  <path
-    d="M28 18 Q27.5 24.5 20.5 25.8 Q18 26.2 16 26.2"
-    stroke="currentColor"
-    stroke-width="1.2"
-    stroke-linecap="round"
-    fill="none"></path>
-  <path
-    d="M7.5 19.5 Q10 22.5 13.5 23.2"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"
-    fill="none"></path>
-  <path
-    d="M24.5 19.5 Q22 22.5 18.5 23.2"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"
-    fill="none"></path>
-
-  <!-- Light held above -->
-  <circle cx="16" cy="12" r="3" stroke="currentColor" stroke-width="1.2" fill="none"></circle>
-  <line
-    x1="16"
-    y1="5.5"
-    x2="16"
-    y2="7.5"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"></line>
-  <line
-    x1="10"
-    y1="8"
-    x2="11.5"
-    y2="9.5"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"></line>
-  <line
-    x1="22"
-    y1="8"
-    x2="20.5"
-    y2="9.5"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"></line>
-
-  <!-- Light received -->
-  <circle cx="16" cy="20.5" r="1.1" fill="currentColor" opacity="0.3"></circle>
+  <!-- Open hands, engraved: two palms held side by side, a small light risen
+       between the fingertips and motes settling down into the palms. Themes
+       through currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left hand -->
+    <g transform="translate(2 1.2) rotate(-14 11.6 28.6)">
+      <path
+        d="M13.8 28.8 C14.9 26 15.4 23 15.4 20 V13.7 C15.4 12.1 13.5 12.1 13.4 13.7 L13.2 15 L13.1 11.1 C13.1 9.5 11.2 9.5 11.1 11.1 L11 12.6 L10.9 10.3 C10.9 8.7 9 8.7 8.9 10.3 L8.8 13 L8.7 11.7 C8.7 10.1 6.7 10.1 6.6 11.7 V18.4 C5.9 17.6 5.3 16.8 4.8 15.8 C4.2 14.8 2.6 15.6 3 16.8 C3.8 19.4 5 21.8 6.8 23.8 C7.9 25.2 8.8 27 9.2 28.8 Z"
+        fill="currentColor"
+        fill-opacity="0.13"
+        stroke-width="1.25"></path>
+      <path
+        d="M13.2 15 V18.2 M11 12.6 V17.8 M8.8 13 V18.2"
+        stroke-width="0.75"
+        stroke-opacity="0.75"></path>
+      <path d="M7.8 22.8 C9.8 21 12.4 21 14.6 22" stroke-width="0.7" stroke-opacity="0.5"></path>
+    </g>
+    <!-- Right hand -->
+    <g transform="translate(30.2 0.8) scale(-1 1) rotate(-12 11.6 28.6)">
+      <path
+        d="M13.8 28.8 C14.9 26 15.4 23 15.4 20 V13.7 C15.4 12.1 13.5 12.1 13.4 13.7 L13.2 15 L13.1 11.1 C13.1 9.5 11.2 9.5 11.1 11.1 L11 12.6 L10.9 10.3 C10.9 8.7 9 8.7 8.9 10.3 L8.8 13 L8.7 11.7 C8.7 10.1 6.7 10.1 6.6 11.7 V18.4 C5.9 17.6 5.3 16.8 4.8 15.8 C4.2 14.8 2.6 15.6 3 16.8 C3.8 19.4 5 21.8 6.8 23.8 C7.9 25.2 8.8 27 9.2 28.8 Z"
+        fill="currentColor"
+        fill-opacity="0.24"
+        stroke-width="1.25"></path>
+      <path
+        d="M13.2 15 V18.2 M11 12.6 V17.8 M8.8 13 V18.2"
+        stroke-width="0.75"
+        stroke-opacity="0.75"></path>
+      <path d="M7.8 22.8 C9.8 21 12.4 21 14.6 22" stroke-width="0.7" stroke-opacity="0.5"></path>
+    </g>
+    <!-- Light -->
+    <circle cx="16" cy="8.4" r="2.5" fill="currentColor" fill-opacity="0.34" stroke-width="1.25"
+    ></circle>
+    <path d="M16 1.8 V3.8 M11.6 3.6 L12.8 5.1 M20.4 3.6 L19.2 5.1" stroke-width="0.95"></path>
+  </g>
+  <circle cx="16" cy="14.2" r="0.75" fill="currentColor" fill-opacity="0.75"></circle>
+  <circle cx="15.4" cy="17.6" r="0.6" fill="currentColor" fill-opacity="0.6"></circle>
+  <circle cx="16.5" cy="20.6" r="0.5" fill="currentColor" fill-opacity="0.5"></circle>
 </svg>

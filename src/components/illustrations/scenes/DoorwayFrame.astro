@@ -5,173 +5,1467 @@ interface Props {
   [key: string]: unknown;
 }
 const { class: className = "", style = "", ...rest } = Astro.props;
+
+/* The doorway scene: a garden door standing ajar in a plastered courtyard wall,
+   morning light spilling out over the steps.
+
+   The drawing is 2000 x 700, but its x axis runs from -400 to 1600 so the door
+   keeps round numbers: the opening is x 465-735, centred on 600. The middle
+   600 units (x 300-900) are the part a phone shows; everything outside is the
+   wider courtyard that desktop screens reveal.
+
+   Stonework, door, lanterns and furniture are drawn by hand in the markup.
+   Foliage is grown here from a fixed seed, so it is irregular but identical on
+   every build, and is stamped into a handful of paths to keep the DOM small.
+   DoorwayLight.astro is the matching overlay (lantern glow, drifting petals). */
+
+type Pt = [number, number];
+interface Leaf {
+  x: number;
+  y: number;
+  a: number;
+  s: number;
+  tone: number;
+}
+
+let seed = 41;
+const rnd = () => {
+  seed = (seed * 16807) % 2147483647;
+  return (seed - 1) / 2147483646;
+};
+const jit = (a: number, b: number) => a + (b - a) * rnd();
+const f = (n: number) => Math.round(n * 10) / 10;
+const rad = (deg: number) => (deg * Math.PI) / 180;
+
+/** Stamp a closed shape (M p0, then cubic triplets) at a leaf's position, as path data */
+function stamp(shape: Pt[], l: Leaf): string {
+  const c = Math.cos(rad(l.a)) * l.s;
+  const s = Math.sin(rad(l.a)) * l.s;
+  const p = shape.map(([x, y]): Pt => [l.x + x * c - y * s, l.y + x * s + y * c]);
+  // relative curves: the numbers stay short, which matters with hundreds of leaves
+  let d = `M${f(p[0][0])} ${f(p[0][1])}`;
+  for (let i = 1; i < p.length; i += 3) {
+    const [ox, oy] = p[i - 1];
+    d += "c" + [p[i], p[i + 1], p[i + 2]].map(([x, y]) => `${f(x - ox)} ${f(y - oy)}`).join(" ");
+  }
+  return d + "Z";
+}
+/** A leaf's midrib, as one short line */
+function rib(l: Leaf): string {
+  const c = Math.cos(rad(l.a)) * l.s;
+  const s = Math.sin(rad(l.a)) * l.s;
+  return `M${f(l.x + 0.6 * c)} ${f(l.y + 0.6 * s)}l${f(11.4 * c)} ${f(11.4 * s)}`;
+}
+/** A small rotated oval: one leaf-sized dab of foliage (wound the same way as the crown lobes) */
+function dab(l: Leaf): string {
+  const dx = Math.cos(rad(l.a)) * 6.2 * l.s;
+  const dy = Math.sin(rad(l.a)) * 6.2 * l.s;
+  const arc = `a${f(6.2 * l.s)} ${f(3.9 * l.s)} ${Math.round(l.a)} 1 1 `;
+  return `M${f(l.x - dx)} ${f(l.y - dy)}${arc}${f(2 * dx)} ${f(2 * dy)}${arc}${f(-2 * dx)} ${f(-2 * dy)}Z`;
+}
+const byTone = (leaves: Leaf[], shape: Pt[], tones: number) =>
+  Array.from({ length: tones }, (_, t) =>
+    leaves
+      .filter((l) => l.tone === t)
+      .map((l) => stamp(shape, l))
+      .join(""),
+  );
+
+// Leaf shapes, drawn pointing along +x from their stalk end
+const ROSE_LEAF: Pt[] = [
+  [0, 0],
+  [2.6, -4],
+  [8.2, -4.8],
+  [13, -0.5],
+  [9.2, 3.7],
+  [3.4, 3.9],
+  [0, 0],
+];
+const OLIVE_LEAF: Pt[] = [
+  [0, 0],
+  [3, -2.1],
+  [8, -2.1],
+  [11.5, 0],
+  [8, 1.7],
+  [3, 1.9],
+  [0, 0],
+];
+const PETAL: Pt[] = [
+  [0, 0],
+  [-3.4, -2.6],
+  [-3, -6.8],
+  [0.6, -8.2],
+  [3.6, -5.6],
+  [3, -2],
+  [0, 0],
+];
+
+/** A smooth stem through hand-placed points, plus a sampler (position + heading) */
+function cane(pts: Pt[]) {
+  const seg = (i: number): Pt[] => {
+    const p0 = pts[Math.max(i - 1, 0)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(i + 2, pts.length - 1)];
+    return [
+      p1,
+      [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6],
+      [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6],
+      p2,
+    ];
+  };
+  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [, c1, c2, p] = seg(i);
+    d += `C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${f(p[0])} ${f(p[1])}`;
+  }
+  const at = (u: number) => {
+    const x = Math.min(Math.max(u, 0), 0.9999) * (pts.length - 1);
+    const i = Math.floor(x);
+    const t = x - i;
+    const m = 1 - t;
+    const [a, b, c, e] = seg(i);
+    const pos = (k: 0 | 1) =>
+      m * m * m * a[k] + 3 * m * m * t * b[k] + 3 * m * t * t * c[k] + t * t * t * e[k];
+    const der = (k: 0 | 1) =>
+      3 * m * m * (b[k] - a[k]) + 6 * m * t * (c[k] - b[k]) + 3 * t * t * (e[k] - c[k]);
+    return { x: pos(0), y: pos(1), ang: (Math.atan2(der(1), der(0)) * 180) / Math.PI };
+  };
+  return { d, at };
+}
+type Cane = ReturnType<typeof cane>;
+
+/** Leaf sprays (a terminal leaflet and one or two pairs) alternating along a stem */
+function sprays(c: Cane, n: number, size = 1, from = 0, to = 1) {
+  const leaves: Leaf[] = [];
+  let stalks = "";
+  for (let i = 0; i < n; i++) {
+    const u = from + ((i + jit(0.15, 0.85)) / n) * (to - from);
+    const p = c.at(u);
+    const side = i % 2 ? 1 : -1;
+    const dir = p.ang + side * jit(46, 84);
+    const len = jit(10, 18) * size;
+    const tx = p.x + Math.cos(rad(dir)) * len;
+    const ty = p.y + Math.sin(rad(dir)) * len;
+    const s = jit(0.8, 1.2) * size;
+    const tone = Math.floor(jit(0, 4));
+    leaves.push({ x: tx, y: ty, a: dir + jit(-14, 14), s, tone });
+    const pairs = rnd() < 0.5 ? 2 : 1;
+    for (let k = 1; k <= pairs; k++) {
+      const q = 1 - k * 0.4;
+      const bx = p.x + Math.cos(rad(dir)) * len * q;
+      const by = p.y + Math.sin(rad(dir)) * len * q;
+      for (const sd of [-1, 1]) {
+        leaves.push({ x: bx, y: by, a: dir + sd * jit(40, 66), s: s * jit(0.68, 0.9), tone });
+      }
+    }
+    stalks += `M${f(p.x)} ${f(p.y)}L${f(tx)} ${f(ty)}`;
+  }
+  return { leaves, stalks };
+}
+const merge = (...parts: ReturnType<typeof sprays>[]) => ({
+  leaves: parts.flatMap((p) => p.leaves),
+  stalks: parts.map((p) => p.stalks).join(""),
+});
+const LEAF_TONES = ["#b9c8bb", "#9db1a4", "#86a091", "#a9ad9b"];
+
+/** A tree or shrub crown: soft lobes, with leaf dabs feathering the silhouette */
+function crown(lobes: number[][], dabsPerLobe = 16) {
+  let body = "";
+  const edge: Leaf[] = [];
+  const lights: Leaf[] = [];
+  for (const [cx, cy, rx, ry] of lobes) {
+    body += `M${cx - rx} ${cy}A${rx} ${ry} 0 1 1 ${cx + rx} ${cy}A${rx} ${ry} 0 1 1 ${cx - rx} ${cy}Z`;
+    for (let i = 0; i < dabsPerLobe; i++) {
+      const th = jit(175, 365);
+      const k = jit(0.9, 1.08);
+      edge.push({
+        x: cx + Math.cos(rad(th)) * rx * k,
+        y: cy + Math.sin(rad(th)) * ry * k,
+        a: th + 90 + jit(-40, 40),
+        s: jit(0.7, 1.3),
+        tone: 0,
+      });
+    }
+    for (let i = 0; i < dabsPerLobe / 3; i++) {
+      const th = jit(200, 320);
+      const k = jit(0.25, 0.8);
+      lights.push({
+        x: cx + Math.cos(rad(th)) * rx * k,
+        y: cy + Math.sin(rad(th)) * ry * k,
+        a: jit(-50, 50),
+        s: jit(0.6, 1),
+        tone: 0,
+      });
+    }
+  }
+  return {
+    body: body + edge.map(dab).join(""),
+    lights: lights.map(dab).join(""),
+  };
+}
+
+/* ---- Beyond the wall ---------------------------------------------------- */
+const farTrees = crown(
+  [
+    [-330, 232, 70, 44],
+    [70, 236, 60, 36],
+    [140, 222, 50, 40],
+    [226, 240, 46, 30],
+    [940, 232, 56, 40],
+    [1190, 236, 64, 36],
+    [1270, 224, 48, 38],
+    [1410, 238, 70, 34],
+    [1540, 228, 60, 44],
+  ],
+  14,
+);
+const bigTree = crown(
+  [
+    [-236, 196, 62, 44],
+    [-170, 150, 66, 50],
+    [-96, 178, 60, 46],
+    [-150, 218, 96, 44],
+    [-52, 222, 44, 34],
+  ],
+  22,
+);
+const rightTree = crown(
+  [
+    [1330, 206, 54, 40],
+    [1386, 176, 48, 42],
+    [1444, 204, 52, 38],
+    [1390, 228, 84, 34],
+  ],
+  20,
+);
+
+/* ---- Stonework ---------------------------------------------------------- */
+const CX = 600;
+const SPRING = 285;
+const R_IN = 135;
+const R_OUT = 167;
+const STONE_TONES = ["#eaddd0", "#e4d5c7", "#ece1d5", "#e7d8ca", "#dfcfc0"];
+const onArc = (deg: number, r: number): Pt => [
+  CX + r * Math.cos(rad(deg)),
+  SPRING - r * Math.sin(rad(deg)),
+];
+// Voussoirs: six each side of the keystone, none quite the same width
+const bounds = [180, 166.5, 152, 138.5, 124, 110.5, 98, 82, 69.5, 56, 41.5, 28, 13.5, 0];
+const voussoirs = bounds.slice(0, -1).flatMap((a0, i) => {
+  if (i === 6) return [];
+  const a1 = bounds[i + 1];
+  const ro = R_OUT + jit(-2, 2.5);
+  const [x0, y0] = onArc(a0, R_IN);
+  const [x1, y1] = onArc(a1, R_IN);
+  const [x2, y2] = onArc(a1, ro);
+  const [x3, y3] = onArc(a0, ro);
+  return [
+    {
+      d: `M${f(x0)} ${f(y0)} A${R_IN} ${R_IN} 0 0 1 ${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)} A${f(ro)} ${f(ro)} 0 0 0 ${f(x3)} ${f(y3)} Z`,
+      fill: STONE_TONES[(i * 3 + 1) % STONE_TONES.length],
+    },
+  ];
+});
+// Jamb blocks, long-and-short work: [top, bottom, how far the block reaches into the wall]
+const jambL = [
+  [285, 329, 11],
+  [329, 368, 0],
+  [368, 419, 9],
+  [419, 456, 0],
+  [456, 504, 12],
+  [504, 540, 0],
+];
+const jambR = [
+  [285, 323, 0],
+  [323, 372, 10],
+  [372, 410, 0],
+  [410, 463, 12],
+  [463, 499, 0],
+  [499, 540, 8],
+];
+
+/* ---- The climbing rose -------------------------------------------------- */
+const mainCane = cane([
+  [352, 606],
+  [362, 566],
+  [384, 524],
+  [411, 486],
+  [423, 440],
+  [431, 392],
+  [423, 344],
+  [431, 296],
+  [440, 242],
+  [464, 190],
+  [502, 146],
+  [549, 113],
+  [600, 97],
+  [652, 109],
+  [702, 138],
+  [742, 178],
+  [767, 224],
+  [779, 272],
+  [774, 322],
+]);
+const crownCane = cane([
+  [411, 486],
+  [398, 440],
+  [401, 392],
+  [388, 348],
+  [396, 300],
+  [407, 250],
+  [423, 206],
+  [446, 166],
+  [476, 126],
+  [512, 99],
+  [548, 84],
+]);
+const dropCane = cane([
+  [464, 190],
+  [486, 178],
+  [508, 186],
+  [521, 208],
+  [519, 238],
+]);
+const topCane = cane([
+  [600, 97],
+  [624, 84],
+  [652, 79],
+  [680, 86],
+]);
+const rightCane = cane([
+  [767, 224],
+  [790, 214],
+  [812, 221],
+  [826, 242],
+]);
+const rose = merge(
+  sprays(crownCane, 20, 1.05),
+  sprays(mainCane, 14, 1.05, 0.03, 0.42),
+  sprays(mainCane, 26, 1, 0.42, 1),
+  sprays(topCane, 6, 0.9),
+  sprays(rightCane, 5, 0.85),
+);
+const roseDrop = sprays(dropCane, 6, 0.85);
+
+// Blooms: [x, y, scale, rotation]; placed by hand, gathered at the crown
+const blooms = [
+  [479, 147, 1.25, -20],
+  [452, 197, 1, 30],
+  [511, 110, 1.05, 80],
+  [546, 84, 0.85, 10],
+  [434, 262, 0.9, -40],
+  [574, 96, 1.1, 50],
+  [644, 92, 0.8, -10],
+  [703, 134, 1, 25],
+  [753, 196, 0.85, -60],
+  [778, 290, 0.78, 15],
+  [425, 398, 0.92, 70],
+  [397, 332, 0.75, -15],
+  [404, 458, 0.8, 40],
+  [373, 548, 0.7, -30],
+];
+const dropBlooms = [[519, 236, 0.72, 20]];
+// Buds: [x, y, rotation]
+const buds = [
+  [465, 121, -70],
+  [498, 173, 110],
+  [610, 80, -60],
+  [668, 76, -40],
+  [728, 152, -30],
+  [792, 206, -50],
+  [828, 248, 60],
+  [770, 330, 95],
+  [414, 300, -150],
+  [386, 398, 170],
+  [439, 350, -10],
+  [394, 500, -120],
+];
+// The rose's leaves by tone. They live in <defs> and are drawn twice: once in a
+// single flat colour as the shadow on the wall, once in their own greens.
+const roseLeaves = byTone(rose.leaves, ROSE_LEAF, 4);
+const bloomShadow = blooms
+  .map(([x, y, s]) => {
+    const r = f(12.5 * s);
+    return `M${x - r} ${y}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`;
+  })
+  .join("");
+
+/* ---- Bougainvillea tumbling over the wall on the right ------------------- */
+const bougCanes = [
+  cane([
+    [1000, 244],
+    [994, 270],
+    [1003, 300],
+    [993, 332],
+    [999, 362],
+    [990, 392],
+  ]),
+  cane([
+    [1040, 242],
+    [1048, 272],
+    [1040, 304],
+    [1050, 338],
+    [1043, 372],
+    [1052, 404],
+    [1046, 432],
+  ]),
+  cane([
+    [1078, 244],
+    [1087, 268],
+    [1080, 296],
+    [1090, 322],
+    [1084, 352],
+  ]),
+  cane([
+    [1110, 246],
+    [1117, 268],
+    [1110, 290],
+    [1118, 314],
+  ]),
+];
+const boug = merge(
+  sprays(bougCanes[0], 9, 0.95),
+  sprays(bougCanes[1], 12, 0.95),
+  sprays(bougCanes[2], 7, 0.9),
+  sprays(bougCanes[3], 5, 0.85),
+);
+const bougMound = crown(
+  [
+    [1006, 236, 30, 17],
+    [1054, 226, 38, 24],
+    [1102, 236, 30, 16],
+  ],
+  18,
+);
+// Papery bracts in threes, along the canes and scattered over the mound
+const bractSpots: Pt[] = [
+  ...bougCanes.flatMap((c, ci) => {
+    const n = [6, 8, 5, 3][ci];
+    return Array.from({ length: n }, (_, i): Pt => {
+      const p = c.at((i + jit(0.3, 0.9)) / n);
+      return [p.x + jit(-9, 9), p.y + jit(-4, 4)];
+    });
+  }),
+  ...Array.from({ length: 16 }, (): Pt => [jit(984, 1126), jit(208, 246)]),
+];
+const bracts: Leaf[] = bractSpots.flatMap(([x, y]) => {
+  const a0 = jit(0, 360);
+  const tone = Math.floor(jit(0, 3));
+  return [0, 120, 240].map((k) => ({ x, y, a: a0 + k + jit(-18, 18), s: jit(0.75, 1.1), tone }));
+});
+const BRACT_TONES = ["#f6c3bc", "#eeaaa2", "#f9d6d0"];
+
+/* ---- Olive standard in the big pot -------------------------------------- */
+const oliveLeaves: Leaf[] = Array.from({ length: 96 }, () => {
+  const ang = jit(0, 360);
+  const r = Math.sqrt(rnd());
+  return {
+    x: 851 + Math.cos(rad(ang)) * 45 * r,
+    y: 428 + Math.sin(rad(ang)) * 40 * r,
+    // leaves fan outward from the middle of the crown, lifting a little
+    a: ang + jit(-55, 55) - 12,
+    s: jit(0.7, 1.15),
+    tone: Math.floor(jit(0, 3)),
+  };
+});
+const OLIVE_TONES = ["#c3cfc3", "#a3b5a8", "#8ba294"];
+
+/* ---- Lavender clumps: [base x, base y, stems, height] -------------------- */
+const lavender = [
+  [318, 610, 15, 62],
+  [760, 646, 9, 40],
+  [960, 612, 13, 52],
+  [-330, 612, 14, 58],
+  [-262, 616, 12, 50],
+  [1452, 614, 14, 56],
+  [1520, 618, 12, 50],
+  [-110, 614, 10, 44],
+].flatMap(([bx, by, n, h]) =>
+  Array.from({ length: n }, (_, i) => {
+    const lean = -38 + (76 * (i + jit(0.2, 0.8))) / n;
+    const len = h * jit(0.72, 1.08);
+    const tx = bx + Math.sin(rad(lean)) * len;
+    const ty = by - Math.cos(rad(lean)) * len;
+    const mx = bx + Math.sin(rad(lean * 0.45)) * len * 0.55;
+    const my = by - Math.cos(rad(lean * 0.45)) * len * 0.55;
+    const k = jit(0.6, 0.72);
+    return {
+      stem: `M${f(bx + jit(-4, 4))} ${f(by)}Q${f(mx)} ${f(my)} ${f(tx)} ${f(ty)}`,
+      spike: `M${f(mx + (tx - mx) * k)} ${f(my + (ty - my) * k)}L${f(tx)} ${f(ty)}`,
+      tone: i % 3,
+    };
+  }),
+);
+const LAV_TONES = ["#8d9da5", "#a3aab8", "#7d9094"];
+
+/* ---- Hollyhocks against the wall: [base x, base y, height, lean, petal, eye] */
+const hollyhocks = (
+  [
+    [196, 608, 252, -5, "#f3bdb5", "#d28a84"],
+    [234, 610, 204, 3, "#fbe1db", "#e3a29b"],
+    [266, 608, 166, 8, "#e9aca5", "#c47b74"],
+  ] as [number, number, number, number, string, string][]
+).map(([bx, by, h, lean, petal, eye]) => {
+  const tip: Pt = [bx + lean * 3, by - h];
+  const ctl: Pt = [bx - lean * 1.5, by - h / 2];
+  const at = (t: number): Pt => [
+    (1 - t) * (1 - t) * bx + 2 * (1 - t) * t * ctl[0] + t * t * tip[0],
+    (1 - t) * (1 - t) * by + 2 * (1 - t) * t * ctl[1] + t * t * tip[1],
+  ];
+  const n = Math.round(h / 23);
+  const flowers = Array.from({ length: n }, (_, i) => {
+    const t = 0.36 + (0.55 * i) / (n - 1);
+    const [x, y] = at(t);
+    const side = i % 2 ? 1 : -1;
+    const r = 11 - 6.5 * (i / (n - 1));
+    return { x: f(x + side * (r * 0.62)), y: f(y + jit(-2, 2)), s: f(r / 12), a: f(jit(0, 72)) };
+  });
+  const budDots = [0.93, 0.965, 1].map((t, i) => {
+    const [x, y] = at(t);
+    return { x: f(x + (i % 2 ? 2 : -2)), y: f(y), r: f(3.2 - i * 0.7) };
+  });
+  const leaves = [0.05, 0.13, 0.2, 0.28].map((t, i) => {
+    const [x, y] = at(t);
+    const side = i % 2 ? 1 : -1;
+    return { x: f(x), y: f(y), s: f(1.25 - i * 0.2), a: side > 0 ? jit(-25, 5) : jit(175, 205) };
+  });
+  return {
+    stalk: `M${bx} ${by}Q${f(ctl[0])} ${f(ctl[1])} ${f(tip[0])} ${f(tip[1])}`,
+    flowers,
+    budDots,
+    leaves,
+    petal,
+    eye,
+  };
+});
+
+/* ---- Flagstones: three rows widening toward the viewer ------------------- */
+const rows = [
+  { y0: 623, y1: 644, x0: 402, x1: 798, n: 5 },
+  { y0: 648, y1: 672, x0: 376, x1: 824, n: 4 },
+  { y0: 677, y1: 706, x0: 346, x1: 854, n: 4 },
+];
+const flags = rows.flatMap((r, ri) => {
+  const cuts = Array.from({ length: r.n + 1 }, (_, i) =>
+    i === 0 || i === r.n
+      ? r.x0 + ((r.x1 - r.x0) * i) / r.n
+      : r.x0 + ((r.x1 - r.x0) * (i + jit(-0.22, 0.22))) / r.n,
+  );
+  return cuts.slice(0, -1).map((a, i) => {
+    const b = cuts[i + 1] - 6;
+    const sk = (r.y1 - r.y0) * 0.35;
+    const lean = ((a + b) / 2 - CX) / 60;
+    const pts: Pt[] = [
+      [a + jit(0, 3), r.y0 + jit(0, 3)],
+      [(a + b) / 2 + jit(-8, 8), r.y0 + jit(-1.5, 1.5)],
+      [b - jit(0, 3), r.y0 + jit(0, 3)],
+      [b + lean * 0.4 * sk + jit(0, 2), r.y1 - jit(0, 3)],
+      [(a + b) / 2 + lean * 0.3 * sk + jit(-8, 8), r.y1 + jit(-1.5, 1.5)],
+      [a + lean * 0.4 * sk - jit(0, 2), r.y1 - jit(0, 3)],
+    ];
+    return {
+      d: "M" + pts.map((p) => `${f(p[0])} ${f(p[1])}`).join("L") + "Z",
+      lit: Math.abs((a + b) / 2 - 560) < 110 - ri * 12,
+    };
+  });
+});
+
+const WALL_TOP_L = "M-400 256 C-250 250 -120 257 0 253 C120 250 250 255 372 251";
+const WALL_TOP_R = "M828 251 C950 255 1080 250 1200 253 C1330 256 1470 250 1600 255";
+const GABLE =
+  "V212 C372 196 388 190 402 186 C424 180 430 160 434 142 C442 104 500 66 600 62 C700 66 758 104 766 142 C770 160 776 180 798 186 C812 190 828 196 828 212 V251";
 ---
 
 <svg
   class={className}
   style={style}
   {...rest}
-  viewBox="0 0 600 700"
+  viewBox="-400 0 2000 700"
+  preserveAspectRatio="xMidYMax slice"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  preserveAspectRatio="xMidYMid meet"
 >
-  <!-- Main arch structure -->
+  <defs>
+    <linearGradient id="dw-wall" x1="0" y1="60" x2="0" y2="610" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f7ede5"></stop>
+      <stop offset="0.5" stop-color="#f2e3d8"></stop>
+      <stop offset="0.84" stop-color="#ead8cc"></stop>
+      <stop offset="1" stop-color="#dccfc0"></stop>
+    </linearGradient>
+    <radialGradient id="dw-wash">
+      <stop offset="0" stop-color="#fdf6ef" stop-opacity="0.6"></stop>
+      <stop offset="1" stop-color="#fdf6ef" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="dw-stain">
+      <stop offset="0" stop-color="#dcc0b0" stop-opacity="0.22"></stop>
+      <stop offset="1" stop-color="#d9bcab" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="dw-sky" x1="0" y1="150" x2="0" y2="456" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#efc3b0"></stop>
+      <stop offset="0.5" stop-color="#f8dcc8"></stop>
+      <stop offset="1" stop-color="#fff2dc"></stop>
+    </linearGradient>
+    <radialGradient id="dw-sun" cx="578" cy="446" r="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffdf6"></stop>
+      <stop offset="0.2" stop-color="#fff6e2" stop-opacity="0.95"></stop>
+      <stop offset="0.55" stop-color="#ffeccf" stop-opacity="0.5"></stop>
+      <stop offset="1" stop-color="#ffe6c8" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="dw-soffit" x1="0" y1="150" x2="0" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d49d86" stop-opacity="0.6"></stop>
+      <stop offset="1" stop-color="#d49d86" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="dw-reveal" x1="465" y1="0" x2="735" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fde7cd"></stop>
+      <stop offset="0.5" stop-color="#f1cfb8"></stop>
+      <stop offset="1" stop-color="#cbab99"></stop>
+    </linearGradient>
+    <linearGradient id="dw-door" x1="652" y1="0" x2="727" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#adbfb2"></stop>
+      <stop offset="0.55" stop-color="#93a99b"></stop>
+      <stop offset="1" stop-color="#788f83"></stop>
+    </linearGradient>
+    <linearGradient
+      id="dw-door-foot"
+      x1="0"
+      y1="430"
+      x2="0"
+      y2="566"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#5f7468" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#5f7468" stop-opacity="0.36"></stop>
+    </linearGradient>
+    <linearGradient id="dw-spill" x1="0" y1="566" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff4dc" stop-opacity="0.8"></stop>
+      <stop offset="0.6" stop-color="#fff1d8" stop-opacity="0.42"></stop>
+      <stop offset="1" stop-color="#fff1d8" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="dw-ground" x1="0" y1="590" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cfd6c2"></stop>
+      <stop offset="0.5" stop-color="#dee1d0"></stop>
+      <stop offset="0.86" stop-color="#eeeee6"></stop>
+      <stop offset="1" stop-color="#f7f6f5"></stop>
+    </linearGradient>
+    <linearGradient id="dw-fade" x1="0" y1="656" x2="0" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f7f6f5" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#f7f6f5"></stop>
+    </linearGradient>
+    <linearGradient id="dw-pot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e2b49c"></stop>
+      <stop offset="0.45" stop-color="#d49b83"></stop>
+      <stop offset="1" stop-color="#b97f6a"></stop>
+    </linearGradient>
+    <linearGradient id="dw-tin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d3dcda"></stop>
+      <stop offset="0.5" stop-color="#b7c5c4"></stop>
+      <stop offset="1" stop-color="#97a9aa"></stop>
+    </linearGradient>
+    {roseLeaves.map((d, i) => <path id={`dw-rose-leaves-${i}`} d={d} />)}
+    <clipPath id="dw-opening">
+      <path d="M465 566 V285 A135 135 0 0 1 735 285 V566 Z"></path>
+    </clipPath>
+
+    <!-- A rose bloom, a bud, a hollyhock flower and leaf, a bistro chair: each used several times -->
+    <g id="dw-rose">
+      <path
+        d="M0 -13 C6 -15 12 -11 12 -5 C16 -1 15 7 9 9 C8 14 0 16 -4 12 C-10 14 -15 8 -13 3 C-17 -2 -13 -10 -7 -10 C-6 -13 -3 -14 0 -13 Z"
+        fill="#f8cfc8"></path>
+      <path
+        d="M-13 3 C-9 2 -8 -3 -7 -10 M12 -5 C8 -3 7 3 9 9 M-4 12 C-2 8 4 8 9 9"
+        stroke="#dba59f"
+        stroke-width="0.7"
+        stroke-linecap="round"></path>
+      <path
+        d="M0 -8.5 C5 -9.5 9 -5 8 -1 C10.5 3 7 8 2 8 C-2 10 -8 8 -8 3 C-11 0 -9 -6 -5 -7 C-4 -9 -2 -9 0 -8.5 Z"
+        fill="#efb3ac"></path>
+      <path
+        d="M0.5 -4.5 C3.5 -4.5 5 -2 4.5 0.5 C4 3.5 0.5 5 -2 3.5 C-4.5 2 -4.5 -2 -2.5 -3.5 C-1.5 -4.3 -0.5 -4.5 0.5 -4.5 Z"
+        fill="#dd9c97"></path>
+      <path
+        d="M-2.6 -0.6 C-2.4 -3 1.6 -3.4 2.6 -1 C3.4 1.2 1 3 -0.6 2 C-1.8 1.2 -1 -0.6 0.4 -0.4"
+        stroke="#b8817e"
+        stroke-width="0.8"
+        stroke-linecap="round"></path>
+    </g>
+    <g id="dw-bud">
+      <path d="M0 0 C-3.4 -2.4 -3.6 -7.4 0 -10.5 C3.6 -7.4 3.4 -2.4 0 0 Z" fill="#eeb0aa"></path>
+      <path d="M0 -10.5 C-1 -7 -0.8 -4 0 -1.5" stroke="#c98f8b" stroke-width="0.6"></path>
+      <path
+        d="M0 0.6 C-3 0 -4.4 -2.6 -4.2 -5 C-2.6 -4 -1.2 -2.4 0 0.6 C1.2 -2.4 2.6 -4 4.2 -5 C4.4 -2.6 3 0 0 0.6 Z"
+        fill="#93a99b"></path>
+    </g>
+    <path
+      id="dw-holly"
+      d="M0 -12 C5 -13.5 10.5 -10 11 -5 C14.5 -1 13.5 6 8.5 8.5 C7 13 0 14.5 -4 11 C-9.5 12.5 -13.5 7 -12 2.5 C-15 -2 -12 -9 -6.5 -9.5 C-5.5 -12 -2.5 -12.8 0 -12 Z"
+    ></path>
+    <g id="dw-holly-leaf">
+      <path
+        d="M0 0 C6 -5 8 -13 16 -14 C19 -18 27 -17 28 -11 C33 -9 33 -1 28 1 C28 7 20 9 16 6 C10 9 4 6 0 0 Z"
+        fill="#a3b5a5"></path>
+      <path
+        d="M1 0 C9 -2 18 -4 27 -9 M12 -2.4 C13 -6 15 -9 17 -12 M13 -2 C17 0 21 2 26 2"
+        stroke="#86a091"
+        stroke-width="0.6"
+        stroke-linecap="round"></path>
+    </g>
+    <g id="dw-chair" stroke="#6d7a6f" stroke-linecap="round" stroke-linejoin="round">
+      <!-- far legs first, fainter -->
+      <path
+        d="M-12 4 C-12 18 -12.5 30 -13 40 M12 4 C12 18 12.5 30 13 40"
+        stroke-width="1.2"
+        stroke-opacity="0.55"></path>
+      <!-- back hoop with a small scrolled heart -->
+      <path
+        d="M-17 -2 C-23 -30 -25 -58 -18 -70 C-12 -80 0 -79 3 -68 C7 -54 6 -26 4 -3"
+        stroke-width="1.7"></path>
+      <path
+        d="M-11 -6 C-16 -26 -17 -46 -12 -56 C-9 -62 -3 -61 -2 -54 C0 -44 0 -24 -1 -6"
+        stroke-width="1"></path>
+      <path
+        d="M-7 -22 C-13 -28 -11 -38 -7 -36 C-5 -35 -6 -31 -7 -29 C-7 -33 -3 -37 -2 -33 C-1 -29 -4 -25 -7 -22 Z"
+        stroke-width="0.9"></path>
+      <!-- seat -->
+      <ellipse cx="0" cy="0" rx="20" ry="5.6" fill="#dfe6dd" stroke-width="1.3"></ellipse>
+      <path d="M-20 0.6 C-19 5.4 19 5.4 20 0.6" stroke-width="1.3"></path>
+      <!-- near legs and stretcher -->
+      <path d="M-17 3 C-18 18 -21 32 -24 44 M17 3 C18 18 21 32 24 44" stroke-width="1.6"></path>
+      <ellipse cx="0" cy="26" rx="18.6" ry="3.6" stroke-width="0.9"></ellipse>
+    </g>
+  </defs>
+
+  <!-- 1. Beyond the wall: treetops in the morning haze -->
+  <g class="doorway-backdrop">
+    <path d={farTrees.body} fill="#dbe3d8" fill-opacity="0.8"></path>
+    <path d={farTrees.lights} fill="#e6ece2" fill-opacity="0.7"></path>
+    <path d={bigTree.body} fill="#c3d0c4" fill-opacity="0.92"></path>
+    <path d={bigTree.lights} fill="#d0dbcf" fill-opacity="0.8"></path>
+    <path d={rightTree.body} fill="#c9d5c9" fill-opacity="0.9"></path>
+    <path d={rightTree.lights} fill="#d7e1d5" fill-opacity="0.8"></path>
+    <!-- Cypresses -->
+    <path d="M294 262 C288 214 296 168 306 140 C316 168 326 214 320 262 Z" fill="#b9c8bc"></path>
+    <path
+      d="M306 146 C304 180 310 220 306 262"
+      stroke="#a6b8aa"
+      stroke-width="1"
+      stroke-linecap="round"></path>
+    <path d="M334 262 C330 226 336 194 343 176 C350 194 356 226 352 262 Z" fill="#c9d5ca"></path>
+    <path d="M1150 262 C1143 206 1152 152 1163 122 C1174 152 1183 206 1176 262 Z" fill="#bccabf"
+    ></path>
+    <path
+      d="M1163 130 C1160 170 1167 214 1163 262"
+      stroke="#a9baad"
+      stroke-width="1"
+      stroke-linecap="round"></path>
+    <path d="M-20 262 C-25 222 -18 186 -10 166 C-2 186 5 222 0 262 Z" fill="#c6d2c7"></path>
+  </g>
+
+  <!-- 2. The wall: lime plaster, a tiled coping, a raised gable over the door -->
+  <g class="doorway-wall">
+    <path
+      d={`${WALL_TOP_L} ${GABLE} ${WALL_TOP_R.replace("M828 251", "")} V700 H-400 Z`}
+      fill="url(#dw-wall)"></path>
+    <!-- Uneven limewash, and weather stains -->
+    <g fill="url(#dw-wash)">
+      <ellipse cx="-200" cy="400" rx="190" ry="90"></ellipse>
+      <ellipse cx="150" cy="380" rx="150" ry="80"></ellipse>
+      <ellipse cx="600" cy="92" rx="150" ry="34"></ellipse>
+      <ellipse cx="1010" cy="420" rx="170" ry="90"></ellipse>
+      <ellipse cx="1400" cy="380" rx="200" ry="90"></ellipse>
+      <ellipse cx="400" cy="250" rx="40" ry="60"></ellipse>
+    </g>
+    <g fill="url(#dw-stain)">
+      <ellipse cx="-60" cy="300" rx="120" ry="44"></ellipse>
+      <ellipse cx="260" cy="500" rx="110" ry="60"></ellipse>
+      <ellipse cx="930" cy="296" rx="100" ry="40"></ellipse>
+      <ellipse cx="1240" cy="480" rx="160" ry="70"></ellipse>
+      <ellipse cx="1500" cy="300" rx="110" ry="40"></ellipse>
+      <ellipse cx="800" cy="230" rx="30" ry="40"></ellipse>
+    </g>
+    <!-- Where plaster has let go: old brick showing through -->
+    <g>
+      <path
+        d="M118 342 C124 332 140 330 152 334 C166 328 186 330 196 338 C206 344 204 358 196 364 C190 374 172 378 158 374 C144 378 128 374 122 364 C114 356 113 348 118 342 Z"
+        fill="#e2cabb"></path>
+      <g fill="#dbb6a3">
+        <path d="M128 340 h20 v8 h-20 Z M152 339 h22 v8 h-22 Z M178 341 h16 v8 h-16 Z"></path>
+        <path
+          d="M122 351 h14 v8 h-14 Z M140 351 h22 v8 h-22 Z M166 351 h24 v8 h-24 Z"
+          fill="#d3aa97"></path>
+        <path d="M134 362 h20 v7 h-20 Z M158 362 h22 v7 h-22 Z" fill="#dfbfae"></path>
+      </g>
+      <path
+        d="M118 342 C124 332 140 330 152 334 C166 328 186 330 196 338"
+        stroke="#fbf3ec"
+        stroke-width="1.4"
+        stroke-linecap="round"></path>
+      <path
+        d="M1096 356 C1104 346 1120 346 1130 350 C1144 344 1162 348 1168 356 C1174 364 1170 376 1160 380 C1150 388 1132 388 1122 384 C1110 386 1098 380 1094 370 C1090 364 1092 360 1096 356 Z"
+        fill="#e2cabb"></path>
+      <g fill="#dbb6a3">
+        <path d="M1104 354 h20 v8 h-20 Z M1128 353 h22 v8 h-22 Z"></path>
+        <path
+          d="M1098 365 h16 v8 h-16 Z M1118 365 h22 v8 h-22 Z M1144 365 h20 v8 h-20 Z"
+          fill="#d3aa97"></path>
+        <path d="M1112 376 h20 v6 h-20 Z M1136 376 h18 v6 h-18 Z" fill="#dfbfae"></path>
+      </g>
+      <path
+        d="M1096 356 C1104 346 1120 346 1130 350 C1144 344 1162 348 1168 356"
+        stroke="#fbf3ec"
+        stroke-width="1.4"
+        stroke-linecap="round"></path>
+    </g>
+    <!-- Hairline cracks and trowel marks -->
+    <g stroke="#d2b9aa" stroke-width="0.8" stroke-linecap="round" stroke-opacity="0.85">
+      <path d="M96 262 C100 284 92 300 98 322 C102 336 96 346 100 356"></path>
+      <path d="M98 322 C106 328 112 330 118 340"></path>
+      <path d="M1328 262 C1324 284 1332 304 1326 330 C1322 344 1330 352 1326 364"></path>
+      <path d="M-280 262 C-276 280 -284 292 -280 310"></path>
+      <path d="M560 70 C562 82 556 90 560 100"></path>
+      <path d="M150 520 C190 516 230 520 270 516" stroke-dasharray="34 10 16 12"></path>
+      <path d="M900 500 C960 496 1040 500 1110 496" stroke-dasharray="50 12 22 10"></path>
+      <path d="M-360 440 C-300 436 -230 440 -170 437" stroke-dasharray="40 12 26 9"></path>
+      <path d="M-120 330 C-80 327 -40 330 0 328" stroke-dasharray="26 9"></path>
+      <path d="M1210 330 C1260 326 1320 330 1370 328" stroke-dasharray="40 10 18 8"></path>
+      <path d="M1420 470 C1470 466 1530 470 1590 467" stroke-dasharray="30 10 50 12"></path>
+      <path d="M390 228 C400 226 410 228 420 227 M780 232 C792 230 804 232 816 231"></path>
+      {/* the stretch of wall a phone shows */}
+      <path d="M334 262 C337 280 331 292 335 310 C338 322 333 330 336 342"></path>
+      <path d="M335 310 C342 314 347 318 350 326"></path>
+      <path d="M312 452 C330 449 350 452 368 450" stroke-dasharray="20 8 12 7"></path>
+      <path d="M318 388 C330 386 342 388 352 387" stroke-dasharray="14 7"></path>
+      <path d="M842 520 C858 518 876 520 894 518" stroke-dasharray="18 7 10 6"></path>
+      <path d="M852 276 C866 274 880 276 892 275" stroke-dasharray="16 8"></path>
+      <path d="M884 262 C881 276 887 286 884 298"></path>
+    </g>
+    <!-- Damp and moss where the wall meets the beds -->
+    <path
+      d="M-400 562 C-240 550 -100 566 60 556 C180 548 280 564 372 554 L433 560 V600 H-400 Z M767 560 L828 556 C950 566 1080 548 1200 558 C1340 566 1480 550 1600 560 V600 H767 Z"
+      fill="#c6cfbd"
+      fill-opacity="0.3"></path>
+
+    <!-- Clay-tile coping along the low wall -->
+    <g stroke-linecap="round">
+      <path d={WALL_TOP_L} stroke="#d5a48d" stroke-width="12" stroke-dasharray="13 3.5"></path>
+      <path d={WALL_TOP_R} stroke="#d5a48d" stroke-width="12" stroke-dasharray="13 3.5"></path>
+      <g transform="translate(0 -3.4)">
+        <path d={WALL_TOP_L} stroke="#eccbb9" stroke-width="3" stroke-dasharray="13 3.5"></path>
+        <path d={WALL_TOP_R} stroke="#eccbb9" stroke-width="3" stroke-dasharray="13 3.5"></path>
+      </g>
+      <g transform="translate(0 8.6)" stroke="#d8bdad" stroke-width="2.6" stroke-opacity="0.8">
+        <path d={WALL_TOP_L}></path>
+        <path d={WALL_TOP_R}></path>
+      </g>
+    </g>
+    <!-- Plaster moulding on the gable -->
+    <path d={`M372 251 ${GABLE}`} stroke="#e6cfc1" stroke-width="5" stroke-linejoin="round"></path>
+    <path d={`M372 251 ${GABLE}`} stroke="#c9a999" stroke-width="1.1" stroke-linejoin="round"
+    ></path>
+    <path
+      d="M381 246 V214 C381 202 392 198 406 194 C432 186 438 164 442 146 C450 112 504 76 600 72 C696 76 750 112 758 146 C762 164 768 186 794 194 C808 198 819 202 819 214 V246"
+      stroke="#dcc3b4"
+      stroke-width="0.9"
+      stroke-linejoin="round"></path>
+  </g>
+
+  <!-- 3. Bougainvillea coming over the top of the wall, right -->
+  <g class="doorway-bougainvillea">
+    <path d={bougMound.body} fill="#a3b5a5"></path>
+    <path d={bougMound.lights} fill="#b9c8bb"></path>
+    <path
+      d={bougCanes.map((c) => c.d).join("")}
+      stroke="#8c9a86"
+      stroke-width="1.3"
+      stroke-linecap="round"></path>
+    <path d={boug.stalks} stroke="#8fa391" stroke-width="0.8" stroke-linecap="round"></path>
+    {byTone(boug.leaves, ROSE_LEAF, 4).map((d, i) => <path d={d} fill={LEAF_TONES[i]} />)}
+    {byTone(bracts, PETAL, 3).map((d, i) => <path d={d} fill={BRACT_TONES[i]} />)}
+  </g>
+
+  <!-- 4. Through the door: a sunlit garden, the path going on -->
+  <g class="doorway-beyond" clip-path="url(#dw-opening)">
+    <rect x="460" y="145" width="280" height="425" fill="url(#dw-sky)"></rect>
+    <path
+      d="M465 458 C492 442 520 440 548 450 C580 438 640 432 690 440 C710 442 726 448 735 452 V480 H465 Z"
+      fill="#f1cfc0"></path>
+    <path d="M465 566 V470 C520 462 680 462 735 470 V566 Z" fill="#eaeeda"></path>
+    <path
+      d="M465 486 V462 C470 448 486 442 498 450 C508 438 528 442 532 456 C544 454 554 462 556 472 C562 476 566 480 568 484 C540 480 500 482 465 486 Z"
+      fill="#c9d6c5"></path>
+    <path d="M486 470 C481 430 487 396 494 378 C501 396 507 430 502 470 Z" fill="#bccbbd"></path>
+    <path
+      d="M604 484 C612 478 622 474 632 472 C636 458 654 450 668 458 C680 446 704 452 706 466 C722 464 735 472 735 488 C700 482 650 480 604 484 Z"
+      fill="#c9d6c5"></path>
+    <path d="M498 566 C534 524 562 492 574 470 L594 470 C612 494 660 534 704 566 Z" fill="#fff7e6"
+    ></path>
+    <path
+      d="M520 548 C540 546 560 548 580 546 M548 520 C562 518 580 520 596 518 M566 496 C576 495 588 496 598 495"
+      stroke="#e9d5bd"
+      stroke-width="1"
+      stroke-linecap="round"></path>
+    <g class="doorway-sun">
+      <circle cx="578" cy="446" r="200" fill="url(#dw-sun)"></circle>
+      <!-- rays, like the practice's rising-sun mark -->
+      <path
+        d="M578 404 V372 M556 410 L542 384 M600 410 L614 384 M540 424 L514 408 M616 424 L642 408 M532 444 L500 440 M624 444 L656 440"
+        stroke="#fffaf0"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-opacity="0.75"></path>
+      <circle cx="578" cy="446" r="22" fill="#fffdf6"></circle>
+    </g>
+    <rect x="460" y="145" width="280" height="160" fill="url(#dw-soffit)"></rect>
+  </g>
+
+  <!-- 5. The door, swung inward on its strap hinges -->
+  <g class="doorway-door" clip-path="url(#dw-opening)">
+    <g class="doorway-leaf">
+      <path
+        d="M727 566 V285 C727 226 712 172 688 165 C667 172 654 242 652 300 V553 Z"
+        fill="url(#dw-door)"></path>
+      <path
+        d="M727 566 V285 C727 226 712 172 688 165 C667 172 654 242 652 300 V553 Z"
+        fill="url(#dw-door-foot)"></path>
+      <g stroke="#6c8276" stroke-width="0.9" stroke-opacity="0.7" stroke-linecap="round">
+        <path d="M708 562.6 V208"></path>
+        <path d="M689.5 559.4 V167"></path>
+        <path d="M671 556.2 V200"></path>
+      </g>
+      <g stroke="#c6d3c8" stroke-width="0.7" stroke-opacity="0.75" stroke-linecap="round">
+        <path d="M706.6 560 V214"></path>
+        <path d="M688 557 V172"></path>
+        <path d="M669.6 554 V206"></path>
+      </g>
+      <!-- A grille window, lit from behind -->
+      <path
+        d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z"
+        fill="#ffeecd"></path>
+      <path
+        d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z M683.5 270.6 V233 M689.5 271 V227.5 M695.5 271.5 V231 M677 251 L702 252.6"
+        stroke="#5d6a5f"
+        stroke-width="1.1"
+        stroke-linejoin="round"></path>
+      <!-- Strap hinges, ring pull, studs -->
+      <g fill="#5d6a5f">
+        <path
+          d="M727 335 L684 342.5 C680 341 675 343.5 673 347.5 C675 351.5 680 354 684 352.5 L727 346 Z"
+        ></path>
+        <path
+          d="M727 504 L684 501 C680 499.5 675 502 673 505.5 C675 509.5 680 511.5 684 510 L727 515 Z"
+        ></path>
+        <ellipse cx="662" cy="432" rx="2.6" ry="4.4"></ellipse>
+      </g>
+      <ellipse cx="662" cy="440" rx="3.6" ry="6.4" stroke="#5d6a5f" stroke-width="1.3"></ellipse>
+      <path
+        d="M718 341.4 h0.1 M704 343.8 h0.1 M690 346.2 h0.1 M718 509 h0.1 M704 507.6 h0.1 M690 506.4 h0.1"
+        stroke="#aebdb1"
+        stroke-width="1.6"
+        stroke-linecap="round"></path>
+      <!-- The door's edge and top, catching the light -->
+      <path
+        d="M652 553 L646 550.8 V304 C648 246 661 176 685 166.4 L688 165 C667 172 654 242 652 300 Z"
+        fill="#fff2d8"></path>
+    </g>
+  </g>
+
+  <!-- The splayed reveal: lit on the left, in the door's shade on the right -->
+  <path
+    class="doorway-reveal"
+    d="M465 566 V285 A135 135 0 0 1 735 285 V566"
+    stroke="url(#dw-reveal)"
+    stroke-width="15"
+    clip-path="url(#dw-opening)"></path>
+
+  <!-- 6. Dressed-stone surround: voussoirs, keystone, long-and-short jambs -->
+  <path
+    d="M424 566 V285 A176 176 0 0 1 776 285 V566 H735 V285 A135 135 0 0 0 465 285 V566 Z"
+    fill="#c9a593"
+    fill-opacity="0.32"
+    transform="translate(3 3.5)"></path>
+  <g class="doorway-surround" stroke="#c9ae9e" stroke-width="0.9" stroke-linejoin="round">
+    {voussoirs.map((v) => <path d={v.d} fill={v.fill} />)}
+    {
+      jambL.map(([y0, y1, reach], i) => (
+        <path
+          d={`M${433 - reach} ${y0} H465 V${y1} H${433 - reach} Z`}
+          fill={STONE_TONES[(i * 2 + 2) % STONE_TONES.length]}
+        />
+      ))
+    }
+    {
+      jambR.map(([y0, y1, reach], i) => (
+        <path
+          d={`M735 ${y0} H${767 + reach} V${y1} H735 Z`}
+          fill={STONE_TONES[(i * 2 + 1) % STONE_TONES.length]}
+        />
+      ))
+    }
+    <!-- Plinth blocks -->
+    <path d="M426 540 H469 V566 H424 Z" fill="#e4d5c7"></path>
+    <path d="M731 540 H774 L776 566 H731 Z" fill="#dfcfc0"></path>
+    <!-- Keystone, standing a little proud -->
+    <path d="M583 153 L617 153 L623 106 C608 102 592 102 577 106 Z" fill="#f0e6db"></path>
+    <path d="M587 149 L613 149 L618 112 C606 109 594 109 582 112 Z" stroke="#dcc7b8" fill="none"
+    ></path>
+  </g>
+  <!-- Chisel marks and worn corners -->
+  <g stroke="#c9ad9d" stroke-width="0.7" stroke-linecap="round" stroke-opacity="0.8">
+    <path
+      d="M440 300 q6 -1.6 12 0 M444 312 q5 -1 9 0.4 M438 384 q7 -1.4 13 0.4 M446 436 q5 -1 10 0 M440 474 q6 -1.4 12 0.2 M444 520 q6 -1 11 0.4"
+    ></path>
+    <path
+      d="M744 300 q6 -1.4 12 0.2 M742 344 q7 -1.4 13 0.4 M748 392 q5 -1 9 0.4 M742 430 q7 -1.4 14 0.2 M746 480 q5 -1 10 0.2 M742 522 q6 -1.2 12 0.2"
+    ></path>
+    <path
+      d="M470 214 q5 -4 9 -9 M500 178 q5 -3 10 -5 M548 150 q6 -1.6 11 -2 M642 148 q6 1 11 3 M690 172 q5 3 9 6 M724 208 q3 5 5 10"
+    ></path>
+  </g>
+  <!-- The line that draws itself on arrival -->
   <path
     class="doorway-arch"
-    d="M50 700 L50 280 Q50 50 300 50 Q550 50 550 280 L550 700"
-    stroke="currentColor"
-    stroke-width="2"
-    fill="none"></path>
+    d="M433 566 V285 A167 167 0 0 1 767 285 V566"
+    pathLength="1"
+    stroke="#b79685"
+    stroke-width="1.6"
+    stroke-linecap="round"></path>
   <path
     class="doorway-arch-inner"
-    d="M70 700 L70 290 Q70 80 300 80 Q530 80 530 290 L530 700"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"
-    opacity="0.5"></path>
+    d="M465 566 V285 A135 135 0 0 1 735 285 V566"
+    pathLength="1"
+    stroke="#c4a595"
+    stroke-width="1.1"
+    stroke-linecap="round"></path>
 
-  <!-- Left vine climbing up -->
-  <g class="doorway-vine doorway-vine-left">
+  <!-- 7. Ground: beds, two worn steps, a flagged path -->
+  <g class="doorway-ground">
     <path
-      d="M50 680 Q45 620 55 560 Q65 500 50 440 Q35 380 55 320 Q75 260 60 200"
-      stroke="currentColor"
-      stroke-width="1.5"
-      fill="none"
+      d="M-400 600 C-200 594 -60 602 140 596 C240 593 330 598 420 594 H780 C920 600 1060 592 1200 597 C1340 602 1480 594 1600 599 V700 H-400 Z"
+      fill="url(#dw-ground)"></path>
+    <!-- Earth under the path, so the joints between the flags read -->
+    <path d="M396 618 H804 L866 700 H334 Z" fill="#d4cab8" fill-opacity="0.75"></path>
+    <!-- Steps -->
+    <path d="M384 603 L400 590 H800 L816 603 V618 C680 621 520 621 384 618 Z" fill="#cdb9a9"></path>
+    <path d="M400 590 H800 L816 603 C680 606 520 606 384 603 Z" fill="#eee3d7"></path>
+    <path d="M414 577 L428 566 H772 L786 577 V590 H414 Z" fill="#d3c0b1"></path>
+    <path d="M428 566 H772 L786 577 C660 579.5 540 579.5 414 577 Z" fill="#f2e8dd"></path>
+    <!-- Flagstones -->
+    {
+      flags.map((s) => (
+        <path
+          d={s.d}
+          fill={s.lit ? "#f7eee2" : "#ede3d7"}
+          stroke={s.lit ? "#f7eee2" : "#ede3d7"}
+          stroke-width="3.4"
+          stroke-linejoin="round"
+        />
+      ))
+    }
+    <path
+      d="M430 636 q10 -1.4 18 0.4 M690 660 q12 -1.6 20 0.4 M520 690 q12 -1.4 22 0.4 M620 632 q8 -1 14 0.4 M560 664 q9 -1.2 16 0.2"
+      stroke="#d6c6b6"
+      stroke-width="0.8"
       stroke-linecap="round"></path>
-    <!-- Leaves -->
-    <path
-      d="M50 650 Q30 640 25 655 Q35 660 50 650"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M55 580 Q75 570 80 585 Q70 590 55 580"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M48 510 Q28 500 23 515 Q33 520 48 510"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M52 440 Q72 430 77 445 Q67 450 52 440"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M45 370 Q25 360 20 375 Q30 380 45 370"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <!-- Small berries -->
-    <circle cx="22" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="82" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="18" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
   </g>
 
-  <!-- Right vine climbing up -->
-  <g class="doorway-vine doorway-vine-right">
-    <path
-      d="M550 680 Q555 620 545 560 Q535 500 550 440 Q565 380 545 320 Q525 260 540 200"
-      stroke="currentColor"
-      stroke-width="1.5"
-      fill="none"
-      stroke-linecap="round"></path>
-    <!-- Leaves -->
-    <path
-      d="M550 650 Q570 640 575 655 Q565 660 550 650"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M545 580 Q525 570 520 585 Q530 590 545 580"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M552 510 Q572 500 577 515 Q567 520 552 510"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M548 440 Q528 430 523 445 Q533 450 548 440"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <path
-      d="M555 370 Q575 360 580 375 Q570 380 555 370"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></path>
-    <!-- Small berries -->
-    <circle cx="578" cy="652" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="518" cy="582" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <circle cx="582" cy="372" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+  <!-- Light from the open door, falling toward you -->
+  <g class="doorway-light">
+    <path d="M473 566 H652 L748 700 H346 Z" fill="url(#dw-spill)" fill-opacity="0.55"></path>
+    <path d="M482 566 H648 L716 700 H384 Z" fill="url(#dw-spill)" fill-opacity="0.6"></path>
+    <path d="M500 566 H640 L676 700 H424 Z" fill="url(#dw-spill)" fill-opacity="0.7"></path>
   </g>
 
-  <!-- Arch crown decoration - flowering vine -->
-  <g class="doorway-crown">
+  <!-- Step edges, drawn over the light so the treads keep their shape -->
+  <g stroke="#ad9484" stroke-width="1" stroke-linecap="round">
+    <path d="M414 577 C540 579.5 660 579.5 786 577"></path>
+    <path d="M384 603 C520 606 680 606 816 603"></path>
+    <path d="M384 618 C520 621 680 621 816 618" stroke-opacity="0.7"></path>
+    <path d="M414 590 H786" stroke-opacity="0.5"></path>
     <path
-      d="M140 160 Q180 120 220 140 Q260 100 300 120 Q340 100 380 140 Q420 120 460 160"
-      stroke="currentColor"
+      d="M520 579 V590 M668 579 V590 M470 605 V619 M604 606 V620 M742 605 V619"
+      stroke-opacity="0.6"></path>
+    <path
+      d="M440 584 q8 -1 14 0.4 M700 585 q7 -1 12 0.2 M530 612 q9 -1 16 0.4 M660 613 q8 -1.2 14 0"
+      stroke-opacity="0.6"></path>
+  </g>
+
+  <!-- 8. The wider courtyard (desktop): a wall fountain, hollyhocks, a watering can, a table for two -->
+  <g class="doorway-fountain">
+    <path
+      d="M-30 524 V438 C-30 408 -8 390 20 390 C48 390 70 408 70 438 V524 Z"
+      fill="#d9c3b4"
+      fill-opacity="0.6"
+      transform="translate(4 4)"></path>
+    <path
+      d="M-30 524 V438 C-30 408 -8 390 20 390 C48 390 70 408 70 438 V524 Z"
+      fill="#ebdfd3"
+      stroke="#c9ae9e"
+      stroke-width="0.9"></path>
+    <path d="M-18 524 V442 C-18 420 -2 406 20 406 C42 406 58 420 58 442 V524 Z" fill="#decdbe"
+    ></path>
+    <path
+      d="M-18 524 V442 C-18 420 -2 406 20 406"
+      stroke="#cdb4a4"
+      stroke-width="2.4"
+      stroke-opacity="0.7"></path>
+    <!-- spout rosette -->
+    <path
+      d="M20 440 C26 438 32 443 31 449 C35 454 31 462 25 462 C22 466 14 465 12 460 C6 459 5 451 9 448 C9 442 15 438 20 440 Z"
+      fill="#eadbcd"
+      stroke="#c4a797"
+      stroke-width="0.8"></path>
+    <circle cx="20" cy="452" r="3" fill="#b99f8f"></circle>
+    <!-- falling water -->
+    <path
+      d="M20 455 C20.8 478 19.4 502 20 526"
+      stroke="#bcd0d1"
+      stroke-width="2.2"
+      stroke-linecap="round"></path>
+    <path
+      d="M20.6 458 C21 480 20 500 20.6 522"
+      stroke="#f4fafa"
+      stroke-width="0.8"
+      stroke-linecap="round"
+      stroke-dasharray="9 5 4 6"></path>
+    <!-- basin -->
+    <path d="M-34 528 C-31 554 -8 568 20 568 C48 568 71 554 74 528 Z" fill="#e7d9cb"></path>
+    <path
+      d="M30 567 C52 562 70 548 74 528 L60 528 C58 546 46 560 30 567 Z"
+      fill="#d6c3b3"
+      fill-opacity="0.8"></path>
+    <ellipse cx="20" cy="527" rx="54" ry="8.4" fill="#eee4d9" stroke="#c9ae9e" stroke-width="0.9"
+    ></ellipse>
+    <ellipse cx="20" cy="527.6" rx="46" ry="5.8" fill="#c7d9d8"></ellipse>
+    <path
+      d="M6 527 C12 525 28 525 34 527 M-10 529 C4 532 36 532 50 529 M-22 527 C-16 526 -10 526 -6 526.6"
+      stroke="#f1f8f7"
+      stroke-width="0.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M-34 528 C-31 554 -8 568 20 568 C48 568 71 554 74 528"
+      stroke="#c9ae9e"
+      stroke-width="0.9"></path>
+    <path
+      d="M-24 544 C-8 552 48 552 64 544"
+      stroke="#d6c3b3"
+      stroke-width="0.8"
+      stroke-linecap="round"></path>
+    <!-- pedestal -->
+    <path
+      d="M6 567 C8 580 4 592 -6 602 H46 C36 592 32 580 34 567 Z"
+      fill="#e2d2c3"
+      stroke="#c9ae9e"
+      stroke-width="0.9"></path>
+    <path d="M-12 601 H52 L55 609 H-15 Z" fill="#d9c7b8" stroke="#c9ae9e" stroke-width="0.9"></path>
+    <path
+      d="M26 570 C26 582 30 594 40 601 L46 602 C36 592 32 580 34 567 Z"
+      fill="#cfbbab"
+      fill-opacity="0.7"></path>
+    <!-- a sparrow come to drink -->
+    <g transform="translate(58 517)">
+      <path d="M2 5 v4.6 M5.4 5 v4.6" stroke="#8d7a6b" stroke-width="0.8" stroke-linecap="round"
+      ></path>
+      <path
+        d="M-10 2 C-9 -5 -2 -8 5 -7 C7 -10.5 12.5 -10.5 13.5 -6.5 L17 -5.4 L13.6 -4.2 C13 1.5 7.5 5.5 0.5 5 L-4 4.5 L-15 8.5 Z"
+        fill="#bca898"></path>
+      <path d="M-6 1 C-2 -3.5 5 -3.5 8 -1 C5 3 -1 4 -6 1 Z" fill="#9c8777"></path>
+      <path d="M2 4.8 C7 5 11.5 2 12.6 -2.6 C10 1 6 3 2 4.8 Z" fill="#f1e6da"></path>
+      <circle cx="10.6" cy="-6.8" r="0.8" fill="#5d6a5f"></circle>
+    </g>
+  </g>
+
+  <g class="doorway-courtyard">
+    <!-- low shrubs along the wall -->
+    <path
+      d="M-400 612 C-396 584 -366 574 -346 588 C-336 572 -304 572 -296 590 C-276 584 -258 598 -262 614 Z M1418 614 C1414 594 1436 582 1454 592 C1466 576 1498 578 1504 596 C1524 590 1548 600 1546 616 C1566 606 1596 610 1600 620 L1600 626 H1418 Z M-150 612 C-150 598 -132 592 -120 600 C-110 592 -90 596 -88 612 Z M924 612 C924 598 940 592 952 600 C964 590 986 596 986 612 Z"
+      fill="#b3c2b2"></path>
+    <path
+      d="M-386 600 q8 -8 18 -4 M-330 590 q10 -6 18 0 M1436 598 q8 -6 16 -2 M1474 590 q10 -5 18 1 M1560 612 q10 -5 20 -1"
+      stroke="#c9d5c7"
+      stroke-width="2"
+      stroke-linecap="round"></path>
+
+    <!-- hollyhocks -->
+    {
+      hollyhocks.map((h) => (
+        <g>
+          <path d={h.stalk} stroke="#93a892" stroke-width="2.2" stroke-linecap="round" />
+          {h.leaves.map((l) => (
+            <use
+              href="#dw-holly-leaf"
+              transform={`translate(${l.x} ${l.y}) rotate(${f(l.a)}) scale(${l.s})`}
+            />
+          ))}
+          {h.flowers.map((fl) => (
+            <g transform={`translate(${fl.x} ${fl.y}) rotate(${fl.a}) scale(${fl.s})`}>
+              <use href="#dw-holly" fill={h.petal} />
+              <circle r="4.6" fill={h.eye} fill-opacity="0.75" />
+              <circle r="1.9" fill="#fff1d2" />
+            </g>
+          ))}
+          {h.budDots.map((b) => (
+            <circle cx={b.x} cy={b.y} r={b.r} fill="#a3b5a5" />
+          ))}
+        </g>
+      ))
+    }
+
+    <!-- watering can -->
+    <ellipse cx="122" cy="610" rx="30" ry="4" fill="#b5a593" fill-opacity="0.4"></ellipse>
+    <path d="M104 592 L80 566 L85 562 L108 582 Z" fill="#a9b9b8"></path>
+    <path d="M77 568 C75 564 80 558 85 560 L88 564 L80 571 Z" fill="#8fa2a3"></path>
+    <path d="M106 574 H140 L143 608 H103 Z" fill="url(#dw-tin)"></path>
+    <path d="M105 584 H141 M104.4 598 H142" stroke="#8fa2a3" stroke-width="0.9" stroke-opacity="0.8"
+    ></path>
+    <path
+      d="M110 574 C110 556 136 556 136 574"
+      stroke="#8fa2a3"
+      stroke-width="2"
+      stroke-linecap="round"></path>
+    <path
+      d="M141 580 C154 580 156 600 143 601"
+      stroke="#8fa2a3"
+      stroke-width="2"
+      stroke-linecap="round"></path>
+    <ellipse cx="123" cy="574" rx="17" ry="2.6" fill="#8fa2a3"></ellipse>
+
+    <!-- a table for two -->
+    <g class="doorway-table">
+      <ellipse cx="1300" cy="648" rx="92" ry="6" fill="#b5a593" fill-opacity="0.32"></ellipse>
+      <use href="#dw-chair" transform="translate(1236 604)"></use>
+      <use href="#dw-chair" transform="translate(1364 604) scale(-1 1)"></use>
+      <!-- a shawl left over the back of one chair -->
+      <path
+        d="M1361 536 C1368 528 1380 530 1383 540 C1388 552 1384 574 1378 590 C1372 594 1366 590 1364 584 C1366 568 1364 550 1361 536 Z"
+        fill="#e3b1aa"></path>
+      <path
+        d="M1367 540 C1372 554 1372 572 1369 586 M1376 536 C1380 552 1379 572 1375 588"
+        stroke="#c98f89"
+        stroke-width="0.8"
+        stroke-linecap="round"></path>
+      <g stroke="#6d7a6f" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1300 582 V628" stroke-width="2.2"></path>
+        <path
+          d="M1300 626 C1291 631 1281 640 1275 649 C1273 652 1269 651 1269 648 M1300 626 C1309 631 1319 640 1325 649 C1327 652 1331 651 1331 648 M1300 628 C1300 636 1301 644 1302 651"
+          stroke-width="1.6"></path>
+        <path d="M1292 600 C1296 604 1304 604 1308 600" stroke-width="1"></path>
+        <ellipse cx="1300" cy="574" rx="37" ry="7.6" fill="#f2eadf" stroke-width="1.3"></ellipse>
+        <path d="M1263 575 C1264 585 1336 585 1337 575" stroke-width="1.3"></path>
+      </g>
+      <!-- two cups, and a rose in a jug -->
+      <g stroke="#bfa999" stroke-width="0.7" stroke-linejoin="round">
+        <ellipse cx="1279" cy="573.4" rx="8" ry="1.9" fill="#fbf6ee"></ellipse>
+        <path
+          d="M1273.6 565 H1284.4 C1284.4 570 1282.6 572.6 1279 572.6 C1275.4 572.6 1273.6 570 1273.6 565 Z"
+          fill="#fdf8f0"></path>
+        <path d="M1273.6 566.4 C1270.4 566.4 1270.4 570.4 1274.2 570.4"></path>
+        <ellipse cx="1322" cy="574" rx="8" ry="1.9" fill="#fbf6ee"></ellipse>
+        <path
+          d="M1316.6 565.6 H1327.4 C1327.4 570.6 1325.6 573.2 1322 573.2 C1318.4 573.2 1316.6 570.6 1316.6 565.6 Z"
+          fill="#fdf8f0"></path>
+        <path d="M1327.4 567 C1330.6 567 1330.6 571 1326.8 571"></path>
+      </g>
+      <path
+        d="M1279 561 C1277.6 558 1280.4 556 1279 553 M1322 561.6 C1320.6 558.6 1323.4 556.6 1322 553.6"
+        stroke="#fffaf2"
+        stroke-width="1"
+        stroke-linecap="round"
+        stroke-opacity="0.9"></path>
+      <path
+        d="M1296.4 571 C1293.6 565 1294.4 559 1297.4 557 V553 H1303 V557 C1306 559 1306.8 565 1304 571 Z"
+        fill="#c3d2d0"
+        stroke="#9fb2b1"
+        stroke-width="0.7"></path>
+      <path
+        d="M1300 553 C1299.6 546 1297.6 541 1295 536 M1300.6 553 C1301.4 546 1303.6 542 1306 538"
+        stroke="#8fa391"
+        stroke-width="0.9"
+        stroke-linecap="round"></path>
+      <path
+        d={stamp(ROSE_LEAF, { x: 1299.6, y: 548, a: 200, s: 0.6, tone: 0 }) +
+          stamp(ROSE_LEAF, { x: 1301.4, y: 545, a: -30, s: 0.6, tone: 0 })}
+        fill="#9db1a4"></path>
+      <use href="#dw-rose" transform="translate(1294 533) scale(0.46)"></use>
+      <use href="#dw-rose" transform="translate(1307 535) rotate(60) scale(0.38)"></use>
+    </g>
+  </g>
+
+  <!-- 9. Pots, olive, lavender -->
+  <g class="doorway-plants">
+    <path
+      d={lavender.map((l) => l.stem).join("")}
+      stroke="#9bab9c"
+      stroke-width="0.9"
+      stroke-linecap="round"></path>
+    {
+      LAV_TONES.map((tone, t) => (
+        <path
+          d={lavender
+            .filter((l) => l.tone === t)
+            .map((l) => l.spike)
+            .join("")}
+          stroke={tone}
+          stroke-width="3.6"
+          stroke-dasharray="0.1 3.3"
+          stroke-linecap="round"
+        />
+      ))
+    }
+    <path
+      d="M290 612 C296 600 308 598 318 604 C328 596 344 600 348 612 Z M-352 614 C-348 602 -336 600 -328 606 C-318 598 -302 602 -300 614 Z M-284 618 C-280 608 -268 606 -262 612 C-254 606 -242 610 -240 618 Z M1426 616 C1432 604 1444 602 1452 608 C1462 600 1478 604 1480 616 Z M1498 620 C1502 610 1514 608 1520 614 C1528 608 1540 612 1542 620 Z M938 614 C942 604 954 602 960 608 C968 602 980 606 982 614 Z"
+      fill="#a9b9a9"></path>
+
+    <!-- Olive standard in a terracotta pot -->
+    <ellipse cx="852" cy="614" rx="34" ry="5" fill="#b5a593" fill-opacity="0.45"></ellipse>
+    <path
+      d="M851 562 C854 540 845 520 850 498 C853 482 847 470 850 452"
+      stroke="#a39382"
+      stroke-width="3.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M850 474 C842 464 832 454 824 440 M850 464 C860 454 870 446 878 434 M850 456 C848 444 852 432 850 418"
+      stroke="#a39382"
+      stroke-width="1.7"
+      stroke-linecap="round"></path>
+    <path
+      d="M806 432 C800 410 816 390 836 392 C846 380 868 380 876 394 C894 396 902 416 894 432 C900 450 886 468 868 464 C858 474 838 474 830 462 C814 464 802 450 806 432 Z"
+      fill="#b4c3b6"
+      fill-opacity="0.5"></path>
+    {byTone(oliveLeaves, OLIVE_LEAF, 3).map((d, i) => <path d={d} fill={OLIVE_TONES[i]} />)}
+    <path
+      d="M822 430 a1.9 2.3 0 1 0 3.8 0 a1.9 2.3 0 1 0 -3.8 0 M866 448 a1.9 2.3 0 1 0 3.8 0 a1.9 2.3 0 1 0 -3.8 0 M846 406 a1.9 2.3 0 1 0 3.8 0 a1.9 2.3 0 1 0 -3.8 0 M880 418 a1.7 2.1 0 1 0 3.4 0 a1.7 2.1 0 1 0 -3.4 0"
+      fill="#71877a"></path>
+    <path d="M822 560 H882 L874 610 C860 614 844 614 830 610 Z" fill="url(#dw-pot)"></path>
+    <path d="M818 553 H886 C888 557 887 562 884 564 H820 C817 562 816 557 818 553 Z" fill="#dba68e"
+    ></path>
+    <path d="M818 553 H886" stroke="#edc7b2" stroke-width="1.4" stroke-linecap="round"></path>
+    <path
+      d="M826 584 C842 588 862 588 878 584 M830 574 C836 590 836 600 834 608"
+      stroke="#c48d76"
+      stroke-width="0.9"
+      stroke-linecap="round"
+      stroke-opacity="0.8"></path>
+    <path
+      d="M826 564 C834 568 870 568 878 564"
+      stroke="#b97f6a"
+      stroke-width="1"
+      stroke-opacity="0.6"></path>
+
+    <!-- A small pot of trailing geranium, nearer to us -->
+    <ellipse cx="806" cy="640" rx="20" ry="3.4" fill="#b5a593" fill-opacity="0.45"></ellipse>
+    <path d="M790 610 H822 L817 638 C811 641 801 641 795 638 Z" fill="url(#dw-pot)"></path>
+    <path
+      d="M787 605 H825 C826.5 608 826 611 824 612.5 H788 C786 611 785.5 608 787 605 Z"
+      fill="#dba68e"></path>
+    <path
+      d="M790 606 C784 596 790 586 800 590 C802 580 816 580 818 590 C828 588 832 598 824 606 Z"
+      fill="#9db1a4"></path>
+    <path
+      d="M794 598 q4 -4 9 -2 M808 592 q4 -3 8 0 M800 603 q5 -3 10 -1"
+      stroke="#b9c8bb"
+      stroke-width="1.4"
+      stroke-linecap="round"></path>
+    <path
+      d="M792 608 C786 614 786 622 790 628 M822 607 C828 612 828 620 826 626"
+      stroke="#86a091"
       stroke-width="1.2"
-      fill="none"
       stroke-linecap="round"></path>
-    <!-- Crown flowers -->
-    <circle cx="180" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
-    <circle cx="180" cy="135" r="3" fill="currentColor" opacity="0.3"></circle>
-    <circle cx="300" cy="115" r="10" stroke="currentColor" stroke-width="1" fill="none"></circle>
-    <circle cx="300" cy="115" r="4" fill="currentColor" opacity="0.3"></circle>
-    <circle cx="420" cy="135" r="8" stroke="currentColor" stroke-width="1" fill="none"></circle>
-    <circle cx="420" cy="135" r="3" fill="currentColor" opacity="0.3"></circle>
-    <!-- Small hanging elements -->
-    <path d="M220 140 L220 155" stroke="currentColor" stroke-width="0.8"></path>
-    <circle cx="220" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-    <path d="M380 140 L380 155" stroke="currentColor" stroke-width="0.8"></path>
-    <circle cx="380" cy="160" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+    <g fill="#eeb0aa">
+      <circle cx="797" cy="590" r="3.2"></circle>
+      <circle cx="809" cy="585" r="3.6"></circle>
+      <circle cx="819" cy="593" r="2.8"></circle>
+      <circle cx="789" cy="629" r="2.4"></circle>
+    </g>
+    <g fill="#f8cfc8">
+      <circle cx="803" cy="587" r="2.4"></circle>
+      <circle cx="814" cy="589" r="2.2"></circle>
+      <circle cx="826" cy="627" r="2.2"></circle>
+    </g>
   </g>
 
-  <!-- Candle niches in doorway -->
-  <g class="doorway-candles">
-    <!-- Left candle -->
-    <rect
-      x="80"
-      y="450"
-      width="20"
-      height="40"
-      rx="2"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></rect>
-    <ellipse
-      cx="90"
-      cy="448"
-      rx="3"
-      ry="6"
-      stroke="currentColor"
-      stroke-width="0.8"
-      fill="currentColor"
-      opacity="0.3"></ellipse>
-    <!-- Right candle -->
-    <rect
-      x="500"
-      y="450"
-      width="20"
-      height="40"
-      rx="2"
-      stroke="currentColor"
-      stroke-width="1"
-      fill="none"></rect>
-    <ellipse
-      cx="510"
-      cy="448"
-      rx="3"
-      ry="6"
-      stroke="currentColor"
-      stroke-width="0.8"
-      fill="currentColor"
-      opacity="0.3"></ellipse>
+  <!-- 10. The climbing rose, with the shadow it throws on the wall -->
+  <g class="doorway-rose-shadow" fill="#a98572" opacity="0.24" transform="translate(3.5 4.5)">
+    {roseLeaves.map((_, i) => <use href={`#dw-rose-leaves-${i}`} />)}
+    <path d={bloomShadow}></path>
   </g>
+  <g class="doorway-rose">
+    <g stroke="#8c9a86" stroke-linecap="round">
+      <path d={crownCane.d} stroke-width="1.8"></path>
+      <path d={mainCane.d} stroke-width="2.2"></path>
+      <path
+        d="M352 606 C354 590 358 578 362 566 C368 548 376 536 384 524 C394 510 404 500 411 486"
+        stroke-width="4.2"
+        stroke="#979481"></path>
+      <path d={topCane.d} stroke-width="1.3"></path>
+      <path d={rightCane.d} stroke-width="1.3"></path>
+    </g>
+    <path d={rose.stalks} stroke="#8fa391" stroke-width="0.8" stroke-linecap="round"></path>
+    {roseLeaves.map((_, i) => <use href={`#dw-rose-leaves-${i}`} fill={LEAF_TONES[i]} />)}
+    <path d={rose.leaves.map(rib).join("")} stroke="#6f8779" stroke-opacity="0.5" stroke-width="0.5"
+    ></path>
+    {
+      buds.map(([x, y, a]) => (
+        <use href="#dw-bud" transform={`translate(${x} ${y}) rotate(${a})`} />
+      ))
+    }
+    {
+      blooms.map(([x, y, s, a]) => (
+        <use href="#dw-rose" transform={`translate(${x} ${y}) rotate(${a}) scale(${s})`} />
+      ))
+    }
+  </g>
+  <!-- A spray that hangs into the opening, against the light -->
+  <g class="doorway-rose-drop">
+    <path d={dropCane.d} stroke="#8c9a86" stroke-width="1.3" stroke-linecap="round"></path>
+    <path d={roseDrop.stalks} stroke="#8fa391" stroke-width="0.8" stroke-linecap="round"></path>
+    {byTone(roseDrop.leaves, ROSE_LEAF, 4).map((d, i) => <path d={d} fill={LEAF_TONES[i]} />)}
+    {
+      dropBlooms.map(([x, y, s, a]) => (
+        <use href="#dw-rose" transform={`translate(${x} ${y}) rotate(${a}) scale(${s})`} />
+      ))
+    }
+  </g>
+
+  <!-- 11. Lanterns: one on a bracket by the door, one set down on the step.
+       Their glow lives in DoorwayLight, so its flicker repaints only that layer. -->
+  <g class="doorway-lanterns">
+    <g stroke="#5d6a5f" stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M822 322 C823 304 816 292 804 292 C797 292 794 297 797 301 C799 303.5 803 302.5 803 299.5"
+        stroke-width="1.8"></path>
+      <path d="M822 300 V330 M819 304 h6 M819 326 h6" stroke-width="1.6"></path>
+      <path d="M804 293 V303" stroke-width="1" stroke-dasharray="1.6 1.6"></path>
+    </g>
+    <path d="M794.6 318 H813.4 L812 350 H796 Z" fill="#fff0cf" fill-opacity="0.94"></path>
+    <path
+      d="M804 327 C801.6 331 801.8 334.6 804 336.4 C806.2 334.6 806.4 331 804 327 Z"
+      fill="#f4b97c"></path>
+    <path d="M801.4 337 H806.6 V349 H801.4 Z" fill="#fbf4e8" stroke="#d9c7b3" stroke-width="0.5"
+    ></path>
+    <g stroke="#5d6a5f" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M804 302 L816 315 C812 317.6 796 317.6 792 315 Z" fill="#6d7a6f" stroke-width="1"
+      ></path>
+      <path
+        d="M794.6 318 L796 350 M813.4 318 L812 350 M804 318 V326 M804 349 V350"
+        stroke-width="1.2"></path>
+      <path d="M794 350.6 H814 L812 355 H796 Z" fill="#6d7a6f" stroke-width="1"></path>
+      <path d="M804 355 V358.6" stroke-width="1.4"></path>
+    </g>
+
+    <ellipse cx="409" cy="603" rx="19" ry="3" fill="#a9937f" fill-opacity="0.4"></ellipse>
+    <path d="M396.4 560 H419.6 L421 596 H395 Z" fill="#fff0cf" fill-opacity="0.94"></path>
+    <path d="M408 566 C405 571 405.2 575.6 408 578 C410.8 575.6 411 571 408 566 Z" fill="#f4b97c"
+    ></path>
+    <path d="M403.6 578.6 H412.4 V596 H403.6 Z" fill="#fbf4e8" stroke="#d9c7b3" stroke-width="0.5"
+    ></path>
+    <g stroke="#5d6a5f" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M402 548 C402 540 414 540 414 548" stroke-width="1.4"></path>
+      <path d="M408 546 L422 558 C417 561 399 561 394 558 Z" fill="#6d7a6f" stroke-width="1"></path>
+      <path d="M396.4 560 L395 596 M419.6 560 L421 596 M408 560 V565" stroke-width="1.3"></path>
+      <path d="M393 596.4 H423 L424 602 H392 Z" fill="#6d7a6f" stroke-width="1"></path>
+    </g>
+  </g>
+
+  <!-- The path dissolves into the page -->
+  <rect class="doorway-fade" x="-400" y="646" width="2000" height="55" fill="url(#dw-fade)"></rect>
 </svg>

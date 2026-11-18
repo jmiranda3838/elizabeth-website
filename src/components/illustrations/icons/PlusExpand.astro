@@ -2,18 +2,65 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 24 24"
   fill="none"
-  stroke="currentColor"
-  stroke-width="2"
+  xmlns="http://www.w3.org/2000/svg"
 >
-  <line x1="12" y1="5" x2="12" y2="19"></line>
-  <line x1="5" y1="12" x2="19" y2="12"></line>
+  <!-- Expand / collapse mark, hand-drawn: a plus on a soft round seat. On its own
+       it is simply the plus. A page can animate the open state with the classes:
+       hide .plus-v (leaving a minus) and show .plus-sprout, a seedling that
+       grows from the bar (see the FAQ styles in faqs.astro). Themes through
+       currentColor. -->
+  <circle cx="12" cy="12" r="11" fill="currentColor" fill-opacity="0.08"></circle>
+  <path
+    d="M12 1.2 C18.2 1 23 6 22.8 12.2 C22.6 18.2 17.8 22.9 11.8 22.8 C5.8 22.7 1.1 17.8 1.2 11.8 C1.3 6 6 1.4 12 1.2 Z"
+    stroke="currentColor"
+    stroke-opacity="0.42"
+    stroke-width="0.9"></path>
+  <path
+    class="plus-h"
+    d="M6.6 12.1 C8.8 11.8 15.2 12.3 17.4 11.9"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"></path>
+  <path
+    class="plus-v"
+    d="M12 6.6 C12.3 8.8 11.8 15.2 12.1 17.4"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="round"></path>
+  <g class="plus-sprout" opacity="0">
+    <path
+      d="M12 12 C11.8 10.2 12.2 8.6 12 6.8"
+      stroke="currentColor"
+      stroke-width="1.3"
+      stroke-linecap="round"></path>
+    <path
+      d="M12 8.4 C10 8.2 7.8 7 7 4.6 C9.8 4.2 11.8 5.8 12 8.4 Z"
+      fill="currentColor"
+      fill-opacity="0.38"></path>
+    <path
+      d="M12 8.4 C10 8.2 7.8 7 7 4.6 C9.8 4.2 11.8 5.8 12 8.4 Z"
+      stroke="currentColor"
+      stroke-width="0.9"
+      stroke-linejoin="round"></path>
+    <path
+      d="M12.1 9.8 C13.8 9.8 15.8 8.8 16.8 6.8 C14.6 6 12.6 7.4 12.1 9.8 Z"
+      fill="currentColor"
+      fill-opacity="0.22"></path>
+    <path
+      d="M12.1 9.8 C13.8 9.8 15.8 8.8 16.8 6.8 C14.6 6 12.6 7.4 12.1 9.8 Z"
+      stroke="currentColor"
+      stroke-width="0.9"
+      stroke-linejoin="round"></path>
+  </g>
 </svg>

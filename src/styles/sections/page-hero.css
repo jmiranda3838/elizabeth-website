@@ -17,3 +17,43 @@
   max-width: 600px;
   margin: 0 auto;
 }
+
+/* --- With a drawn scene along the bottom edge (fees, faqs) ---
+   The text keeps its own block above; the scene is a separate strip below it,
+   so nothing is ever drawn behind the heading or the intro. */
+.page-hero-scene {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--header-h) + var(--space-12));
+  padding-bottom: 0;
+  background:
+    radial-gradient(60% 52% at 50% 100%, rgba(255, 244, 232, 0.9) 0%, transparent 72%),
+    linear-gradient(180deg, var(--bg-accent) 0%, #fbeae4 100%);
+}
+
+.page-hero-scene h1,
+.page-hero-scene .lead {
+  text-wrap: balance;
+}
+
+/* The scene's viewBox is 1100 wide and its ground runs far past both sides, so
+   the svg sits centred at its natural size and overflows (clipped by the hero).
+   On narrow screens `slice` keeps the height and shows the middle of the scene. */
+.page-hero-art {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  height: clamp(150px, 21.8vw, 240px);
+  margin: var(--space-10) auto 0;
+  overflow: visible;
+}
+
+@media (max-width: 768px) {
+  .page-hero-scene {
+    padding-top: calc(var(--header-h) + var(--space-8));
+  }
+
+  .page-hero-art {
+    margin-top: var(--space-8);
+  }
+}

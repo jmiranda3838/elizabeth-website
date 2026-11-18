@@ -253,289 +253,357 @@ select.form-input {
 }
 
 /* ============================================
-   THRESHOLD HERO - The Doorway
-   (load-timed choreography: arch draws itself,
-   vines and crown fade in, then the text rises)
+   WHAT HAPPENS AFTER YOU REACH OUT
+   The shared .steps-grid (sections/process-steps.css) with this page's own
+   look: a small drawing per step in a blush medallion, the number as a tag
+   on its rim, and a dotted garden path between them.
    ============================================ */
 
-.threshold-hero {
+.contact-step-art {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-    to bottom,
-    var(--blush-wash) 0%,
-    var(--warm-paper) 60%,
-    rgba(210, 199, 193, 0.3) 100%
-  );
-  overflow: hidden;
-  padding: calc(var(--header-h) + var(--space-4)) var(--space-4) var(--space-20);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, #fffaf6 0%, var(--blush-wash) 55%, #f8e6de 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(208, 180, 166, 0.55),
+    0 0 0 6px var(--bg-primary);
 }
 
-/* Atmospheric mist effect */
-.threshold-mist {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  background: linear-gradient(
-    to top,
-    rgba(247, 246, 245, 0.95) 0%,
-    rgba(247, 246, 245, 0.6) 40%,
-    transparent 100%
-  );
-  pointer-events: none;
+.contact-step-art svg {
+  display: block;
+  width: 78%;
+  height: auto;
+}
+
+.contact-steps .step-number {
+  width: 36px;
+  height: 36px;
+  margin: -18px auto var(--space-4);
+  border-width: 1.5px;
+  font-size: var(--text-lg);
+  /* Cormorant's default old-style figures sit low and read as letters */
+  font-variant-numeric: lining-nums;
+  line-height: 1;
   z-index: 2;
 }
 
-/* Candlelight glow effects */
-.candle-glow {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(249, 200, 194, 0.25) 0%,
-    rgba(249, 200, 194, 0.1) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  animation: candleFlicker 4s ease-in-out infinite;
+/* The path between the medallions */
+.steps-grid.contact-steps::before {
+  top: 63px;
+  left: calc(16.67% + 70px);
+  right: calc(16.67% + 70px);
+  height: 3px;
+  background: radial-gradient(circle, var(--dusty-peach) 1.2px, transparent 1.6px) 0 0 / 12px 3px
+    repeat-x;
+  opacity: 1;
 }
 
-.candle-glow-1 {
-  top: 30%;
-  left: 10%;
-  animation-delay: 0s;
-}
+/* ============================================
+   THRESHOLD HERO - The Doorway
+   The words sit above; below them a garden door stands ajar in a plastered
+   courtyard wall (DoorwayFrame), morning light on the steps. On arrival the
+   arch line draws itself, the door swings in and the light grows; after that
+   only the lantern flames and a few petals move.
+   ============================================ */
 
-.candle-glow-2 {
-  top: 25%;
-  right: 10%;
-  animation-delay: 2s;
-}
-
-@keyframes candleFlicker {
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.05);
-  }
-}
-
-/* The Doorway Frame */
-.threshold-doorway {
+.threshold-hero {
+  /* The scene is drawn 20:7, with the door in its 6:7 middle. Its height
+     follows the screen so the words and the whole door share the first
+     screen. Phones show just the middle; wider screens reveal the courtyard
+     either side, always edge to edge. The fit is "slice", so a box wider than
+     20:7 trims the top of the drawing; 3.05:1 only trims empty sky. */
+  --door-fit: calc(100vh - var(--header-h) - 12.5rem);
+  --door-h: max(min(clamp(340px, var(--door-fit), 660px), calc(100vw * 7 / 6)), calc(100vw / 3.05));
   position: relative;
-  width: 100%;
-  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  padding: calc(var(--header-h) + var(--space-8)) 0 0;
+  background:
+    radial-gradient(64% 46% at 50% 76%, rgba(255, 238, 214, 0.9) 0%, transparent 72%),
+    linear-gradient(to bottom, var(--blush-wash) 0%, #fbeee6 52%, var(--warm-paper) 100%);
 }
 
-.doorway-frame {
-  width: 100%;
-  height: auto;
-  color: var(--espresso);
-}
-
-.doorway-arch {
-  stroke-dasharray: 2000;
-  stroke-dashoffset: 2000;
-  animation: drawArch 3s ease-out forwards;
-}
-
-@keyframes drawArch {
-  to {
-    stroke-dashoffset: 0;
+/* Phone browsers: measure the screen with the address bar showing */
+@supports (height: 100svh) {
+  .threshold-hero {
+    --door-fit: calc(100svh - var(--header-h) - 12.5rem);
   }
 }
 
-.doorway-vine {
-  opacity: 0;
-  animation: fadeInVine 1s ease-out forwards;
-  animation-delay: 1.5s;
-}
-
-.doorway-vine-left {
-  animation-delay: 1.8s;
-}
-
-.doorway-vine-right {
-  animation-delay: 2s;
-}
-
-.doorway-crown {
-  opacity: 0;
-  animation: fadeInVine 1s ease-out forwards;
-  animation-delay: 2.2s;
-}
-
-@keyframes fadeInVine {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Content within the doorway */
 .threshold-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 44rem;
+  padding: 0 var(--space-6);
   text-align: center;
-  /* Slim side padding so "The door is open" fits on one line */
-  padding: var(--space-8) var(--space-4);
-  width: 80%;
 }
 
 .threshold-eyebrow {
   font-family: var(--font-nav);
   font-size: var(--text-xs);
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--sage);
-  margin-bottom: var(--space-4);
-  opacity: 0;
-  animation: thresholdFadeInUp 0.8s ease-out forwards;
-  animation-delay: 2.5s;
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+  animation: thresholdFadeInUp 0.8s ease-out 0.1s backwards;
 }
 
 .threshold-title {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 400;
   color: var(--espresso);
-  line-height: 1.2;
+  line-height: 1.1;
   text-wrap: balance;
-  margin-bottom: var(--space-4);
-  opacity: 0;
-  animation: thresholdFadeInUp 0.8s ease-out forwards;
-  animation-delay: 2.7s;
+  margin-bottom: var(--space-3);
+  animation: thresholdFadeInUp 0.8s ease-out 0.25s backwards;
 }
 
 .threshold-subtitle {
   font-family: var(--font-serif);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-style: italic;
-  color: var(--slate-olive);
-  opacity: 0;
-  animation: thresholdFadeInUp 0.8s ease-out forwards;
-  animation-delay: 2.9s;
+  line-height: 1.45;
+  color: var(--text-primary);
+  text-wrap: balance;
+  margin-bottom: 0;
+  animation: thresholdFadeInUp 0.8s ease-out 0.4s backwards;
 }
 
 @keyframes thresholdFadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(14px);
   }
 }
 
-/* Floating botanicals */
+/* The scene */
+.threshold-doorway {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: var(--door-h);
+  margin-top: var(--space-6);
+}
+
+.doorway-frame,
+.doorway-light-layer {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Lantern glow and petals, laid exactly over the scene */
+.doorway-light-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Arrival: the arch line draws itself... */
+.doorway-arch,
+.doorway-arch-inner {
+  stroke-dasharray: 1;
+  animation: drawArch 2.2s ease-out backwards;
+}
+
+.doorway-arch-inner {
+  animation-delay: 0.3s;
+}
+
+@keyframes drawArch {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* ...the door swings in on its hinges (the right edge of the leaf)... */
+.doorway-leaf {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+  animation: doorSwing 2.6s cubic-bezier(0.3, 0.05, 0.2, 1) 0.4s backwards;
+}
+
+@keyframes doorSwing {
+  from {
+    transform: scaleX(3.5);
+  }
+}
+
+/* ...and the light comes out to meet you */
+.doorway-light {
+  animation: lightArrive 2.8s ease-out 0.6s backwards;
+}
+
+@keyframes lightArrive {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Lantern flames: a slow, uneven breath */
+.candle-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: candleFlicker 5s ease-in-out infinite;
+}
+
+.candle-glow-2 {
+  animation-duration: 6.4s;
+  animation-delay: -2s;
+}
+
+@keyframes candleFlicker {
+  0%,
+  100% {
+    opacity: 0.82;
+    transform: scale(1);
+  }
+  38% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  62% {
+    opacity: 0.88;
+    transform: scale(0.98);
+  }
+}
+
+/* Petals drifting out along the light. Each rests where it is drawn; the
+   animation only carries it a little way and back. */
+.doorway-petal {
+  transform-box: fill-box;
+  transform-origin: center;
+  translate: 0 0;
+  animation: petalDrift 11s ease-in-out infinite;
+}
+
+.doorway-petal-2 {
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+.doorway-petal-3 {
+  animation-duration: 9s;
+  animation-delay: -2s;
+}
+
+.doorway-petal-4 {
+  animation-duration: 14s;
+  animation-delay: -7s;
+}
+
+.doorway-petal-5 {
+  animation-duration: 12s;
+  animation-delay: -5s;
+}
+
+.doorway-petal-6 {
+  animation-duration: 15s;
+  animation-delay: -9s;
+}
+
+@keyframes petalDrift {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: -14px 9px;
+    rotate: 38deg;
+  }
+}
+
+/* Olive boughs leaning in from the top corners: the nearest thing in the
+   picture, so a deeper green than the hazy trees behind the wall */
 .floating-botanical {
   position: absolute;
-  color: var(--dusty-peach);
-  opacity: 0.4;
-  animation: floatGentle 6s ease-in-out infinite;
+  z-index: 2;
+  top: var(--header-h);
+  color: color-mix(in srgb, var(--sage) 72%, var(--espresso));
+  pointer-events: none;
+  animation: floatGentle 9s ease-in-out infinite;
 }
 
-/* Both start below the fixed header */
+.floating-botanical svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .floating-botanical-1 {
-  top: calc(var(--header-h) + var(--space-6));
-  left: 5%;
-  width: 60px;
-  animation-delay: 0s;
+  left: 0;
+  width: clamp(170px, 17vw, 300px);
+  transform-origin: top left;
 }
 
 .floating-botanical-2 {
-  top: max(20%, calc(var(--header-h) + var(--space-2)));
-  right: 8%;
-  width: 50px;
-  animation-delay: 3s;
+  right: 0;
+  width: clamp(140px, 14vw, 250px);
+  transform-origin: top right;
+  animation-duration: 11s;
+  animation-delay: -4s;
 }
 
 @keyframes floatGentle {
   0%,
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform: rotate(-1.2deg);
   }
   50% {
-    transform: translateY(-10px) rotate(3deg);
+    transform: rotate(1.4deg);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .threshold-hero {
-    min-height: 80vh;
+    padding-top: calc(var(--header-h) + var(--space-6));
   }
 
-  .threshold-doorway {
-    max-width: 350px;
-  }
-
-  /* The doorway shrinks, so the text shrinks with it and stays clear
-     of the crown garland */
-  .threshold-content {
-    width: 90%;
-    padding: var(--space-4);
-  }
-
-  .threshold-title {
-    font-size: clamp(2rem, 6vw, 2.25rem);
-  }
-}
-
-@media (max-width: 480px) {
-  /* No room beside the doorway on phones */
+  /* No room beside the words */
   .floating-botanical {
     display: none;
   }
 }
 
-/* Below 360px the candles would sit on the subtitle's words and the
-   eyebrow would touch the garland */
-@media (max-width: 359px) {
-  .doorway-candles {
-    display: none;
+@media (max-width: 600px) {
+  .threshold-content {
+    padding: 0 var(--space-4);
   }
 
-  .threshold-content {
-    top: calc(50% + var(--space-3));
+  .threshold-title {
+    font-size: clamp(2.25rem, 10.5vw, 2.75rem);
+  }
+
+  .threshold-subtitle {
+    font-size: var(--text-lg);
+  }
+
+  .threshold-doorway {
+    margin-top: var(--space-4);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .doorway-arch {
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-    animation: none;
-  }
-
-  .doorway-vine,
-  .doorway-crown,
   .threshold-eyebrow,
   .threshold-title,
-  .threshold-subtitle {
-    opacity: 1;
-    animation: none;
-  }
-
+  .threshold-subtitle,
+  .doorway-arch,
+  .doorway-arch-inner,
+  .doorway-leaf,
+  .doorway-light,
   .candle-glow,
+  .doorway-petal,
   .floating-botanical {
     animation: none;
   }

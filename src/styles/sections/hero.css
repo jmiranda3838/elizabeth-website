@@ -136,6 +136,24 @@
   text-transform: uppercase;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   margin-bottom: var(--space-8);
+  position: relative;
+}
+
+/* The credentials sit over the pale blouse and sunlit grass at every width; a
+   soft dark scrim centred on them keeps the small white text legible. */
+.hero-name::before {
+  content: "";
+  position: absolute;
+  inset: -70% -12%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side,
+    rgba(45, 35, 28, 0.5) 0%,
+    rgba(45, 35, 28, 0.4) 45%,
+    rgba(45, 35, 28, 0.18) 72%,
+    transparent 100%
+  );
+  pointer-events: none;
 }
 
 .hero-cta {
@@ -160,27 +178,6 @@
 
   .hero-tagline {
     font-size: 3.5rem;
-  }
-
-  /* Below desktop the credentials sit over the pale blouse; a soft dark scrim
-     centred on them keeps the small white text legible. */
-  .hero-name {
-    position: relative;
-  }
-
-  .hero-name::before {
-    content: "";
-    position: absolute;
-    inset: -70% -12%;
-    z-index: -1;
-    background: radial-gradient(
-      closest-side,
-      rgba(45, 35, 28, 0.5) 0%,
-      rgba(45, 35, 28, 0.4) 45%,
-      rgba(45, 35, 28, 0.18) 72%,
-      transparent 100%
-    );
-    pointer-events: none;
   }
 
   .botanical-1,

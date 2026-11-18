@@ -1,0 +1,31 @@
+---
+import { withBase } from "@/lib/withBase";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { DandelionClock } from "@illustrations/botanicals";
+import { MeadowHorizon } from "@illustrations/scenes";
+import "@styles/pages/notfound.css";
+---
+
+<BaseLayout
+  title="Page Not Found | Elizabeth Armstrong Therapy"
+  description="This page isn't here. Head back to the home page, or get in touch."
+>
+  <section class="notfound">
+    <div class="container notfound-inner">
+      <DandelionClock class="notfound-art" aria-hidden="true" />
+      <div class="notfound-copy">
+        <p class="eyebrow">Page not found</p>
+        <h1>This page isn&rsquo;t here</h1>
+        <p class="lead">
+          It may have moved, or the link may be out of date. The rest of the site is right where you
+          left it.
+        </p>
+        <div class="notfound-actions">
+          <a href={withBase("/index.html")} class="btn btn-primary btn-lg">Back to Home</a>
+          <a href={withBase("/contact.html")} class="btn btn-outline btn-lg">Contact</a>
+        </div>
+      </div>
+    </div>
+    <MeadowHorizon class="notfound-meadow" aria-hidden="true" />
+  </section>
+</BaseLayout>

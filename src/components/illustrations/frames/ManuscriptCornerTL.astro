@@ -1,27 +1,68 @@
 ---
+import { stem, sprig, tipped, leaf, bud, rose, gilt } from "./illumination";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// Top-left corner: a wild rose sits where the frame's two bars meet (16,16), and a
+// vine runs away from it along each bar, weaving over and under the line.
+const art = [
+  // The two runs
+  stem("M21.5 13.4 C27 7.6 36 8 42 14 C47 19 54 21 60 17 C65 13.6 70.6 13 75 15.4"),
+  stem("M12.6 22 C8 30 9.4 41 15 47 C19.6 52 20.4 59 17 64 C14.6 68 14.2 72 15.6 75.6"),
+  // Sprigs off the top run
+  tipped(sprig([30, 8.7], [29, 5.4], [31, 2.6], [34.4, 2.6], { r: 2.5 }), "ivy"),
+  tipped(sprig([50, 19.7], [52, 23], [55, 25], [58.4, 24.2], { r: 2.1, dir: -1 })),
+  tipped(sprig([66, 14.2], [66, 10.4], [68, 7.4], [71.4, 6.6], { r: 2.2, turns: 1 }), "ivy"),
+  // Sprigs off the left run
+  tipped(sprig([9.5, 32], [5.6, 31], [3.2, 33.2], [3.2, 36.4], { r: 2.3, dir: -1 })),
+  tipped(sprig([19.4, 53], [23, 53.6], [25.4, 56.6], [24.8, 60], { r: 2.1 }), "ivy"),
+  tipped(sprig([16.2, 66], [12.2, 66.2], [9.2, 68.2], [8.6, 71.6], { r: 2.1, turns: 1, dir: -1 })),
+  // Out past the corner, and a bud leaning into the page
+  tipped(sprig([12, 12], [9.4, 10], [6.6, 7.2], [7, 3.8], { r: 1.9, turns: 1 })),
+  stem("M19.4 19.4 C22.4 21.4 25 24 26 27.4", 0.6),
+  bud([26, 27.4, 74, 0.9]),
+  // Leaves along the runs, alternating sides
+  leaf([36.6, 9.2, -72, 0.68]),
+  leaf([44.6, 16.4, 76, 0.62]),
+  leaf([56, 19.8, 24, 0.6]),
+  leaf([61.6, 15.8, -58, 0.7]),
+  leaf([75, 15.4, 26, 0.6]),
+  leaf([9, 36.4, 158, 0.7]),
+  leaf([13.6, 45.6, 22, 0.62]),
+  leaf([19.9, 57, 62, 0.56]),
+  leaf([17.4, 62.6, 172, 0.7]),
+  leaf([15.6, 75.6, 74, 0.6]),
+  // Leaves behind the rose
+  leaf([11.6, 11.6, 222, 1.02]),
+  leaf([10.6, 14.2, 186, 0.78]),
+  leaf([14.2, 10.6, 260, 0.76]),
+  leaf([22.4, 16.6, 8, 1.12]),
+  leaf([16.6, 22.4, 84, 1.04]),
+  rose([15.6, 15.6, 14, 1.14]),
+  // Gilt
+  gilt([25.4, 3.6, -70, 1.4]),
+  gilt([47.4, 9.4, -90, 1.2]),
+  gilt([76.6, 20.6, 80, 1.1]),
+  gilt([3.6, 24.6, 200, 1.3]),
+  gilt([22.6, 40.6, 10, 1.15]),
+  gilt([9.6, 58.4, 170, 1.2]),
+  gilt([21.4, 73, 20, 1.05]),
+].join("");
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 80 80"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path d="M0 80 L0 40 Q0 0 40 0 L80 0" stroke="currentColor" stroke-width="1" fill="none"></path>
-  <path
-    d="M0 60 L0 30 Q0 10 30 10 L60 10"
-    stroke="currentColor"
-    stroke-width="0.5"
-    fill="none"
-    opacity="0.5"></path>
-  <circle cx="8" cy="70" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="70" cy="8" r="4" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <path d="M15 50 Q10 45 15 40" stroke="currentColor" stroke-width="0.8" fill="none"></path>
-  <path d="M50 15 Q45 10 40 15" stroke="currentColor" stroke-width="0.8" fill="none"></path>
+  <!-- Illuminated corner: wild rose and vine scroll. Shapes come from ./illumination. -->
+  <g set:html={art} />
 </svg>

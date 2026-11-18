@@ -1,5 +1,9 @@
+export { default as BookPageEdge } from "./BookPageEdge.astro";
+export { default as BookRibbon } from "./BookRibbon.astro";
 export { default as BookSpine } from "./BookSpine.astro";
 export { default as DoorwayFrame } from "./DoorwayFrame.astro";
+export { default as DoorwayLight } from "./DoorwayLight.astro";
+export { default as FernBank } from "./FernBank.astro";
 export { default as GardenGate } from "./GardenGate.astro";
 export { default as Garland } from "./Garland.astro";
 export { default as GateDoorLeft } from "./GateDoorLeft.astro";
@@ -7,5 +11,8 @@ export { default as GateDoorRight } from "./GateDoorRight.astro";
 export { default as GateFrame } from "./GateFrame.astro";
 export { default as HandsCupped } from "./HandsCupped.astro";
 export { default as LightChannel } from "./LightChannel.astro";
+export { default as ReachOutStep } from "./ReachOutStep.astro";
+export { default as MeadowHorizon } from "./MeadowHorizon.astro";
+export { default as PottingBench } from "./PottingBench.astro";
 export { default as RedRockHorizon } from "./RedRockHorizon.astro";
 export { default as RootsSystem } from "./RootsSystem.astro";

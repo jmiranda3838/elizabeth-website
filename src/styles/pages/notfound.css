@@ -1,0 +1,118 @@
+/* === Pages: Not Found (404) ===
+   A dandelion clock losing its seeds to the wind (the page has drifted off),
+   over the same meadow that closes the fees and FAQ pages. */
+.notfound {
+  --meadow-h: max(132px, 13.9vw);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: min(100vh, 980px);
+  padding: calc(var(--header-h) + var(--space-10)) 0 calc(var(--meadow-h) + var(--space-8));
+  background:
+    radial-gradient(52% 40% at 50% 100%, rgba(255, 244, 232, 0.9) 0%, transparent 72%),
+    linear-gradient(180deg, var(--bg-accent) 0%, #fcece6 60%, #fbe6de 100%);
+}
+
+.notfound-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 460px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.notfound-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.notfound-copy .eyebrow {
+  color: var(--clay-deep);
+}
+
+.notfound-copy h1 {
+  margin-bottom: var(--space-5);
+  text-wrap: balance;
+}
+
+.notfound-copy .lead {
+  margin-bottom: var(--space-8);
+  text-wrap: pretty;
+}
+
+.notfound-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* The floor of the meadow takes the footer's colour, so the scene is the seam */
+.notfound-meadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  display: block;
+  width: 100%;
+  height: var(--meadow-h);
+  color: var(--bg-secondary);
+  pointer-events: none;
+}
+
+/* The loose seeds bob on the air, each on its own beat. With reduced motion
+   they simply hang where they are drawn. */
+@media (prefers-reduced-motion: no-preference) {
+  .notfound-art .dandelion-seed {
+    animation: notfoundDrift calc(5.5s + var(--i, 0) * 0.7s) ease-in-out calc(var(--i, 0) * -1.1s)
+      infinite alternate;
+  }
+}
+
+@keyframes notfoundDrift {
+  from {
+    translate: -3px 4px;
+    rotate: -3deg;
+  }
+  to {
+    translate: 7px -6px;
+    rotate: 4deg;
+  }
+}
+
+.notfound-art .dandelion-seed {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@media (max-width: 768px) {
+  .notfound {
+    min-height: 0;
+    padding-top: calc(var(--header-h) + var(--space-6));
+  }
+
+  .notfound-inner {
+    grid-template-columns: minmax(0, 440px);
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .notfound-art {
+    max-width: 230px;
+    margin: 0 auto;
+  }
+
+  .notfound-actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .notfound-actions .btn {
+    width: 100%;
+  }
+}

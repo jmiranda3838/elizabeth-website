@@ -2,15 +2,30 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
-<svg class={className} style={style} viewBox="0 0 24 24" fill="none">
+<svg class={className} style={style} {...rest} viewBox="0 0 24 24" fill="none">
+  <!-- A twinkling star, not a pentagram: a faint halo, four long concave rays
+       (the vertical pair a touch longer, like a real diffraction twinkle), four
+       short diagonal glints and a bright core. Every layer is currentColor at its
+       own opacity, so the star themes through CSS `color`. -->
+  <circle cx="12" cy="12" r="7.2" fill="currentColor" fill-opacity="0.08"></circle>
+  <circle cx="12" cy="12" r="4.2" fill="currentColor" fill-opacity="0.12"></circle>
   <path
-    d="M12 2 L14 9 L21 9 L15.5 13.5 L17.5 21 L12 16.5 L6.5 21 L8.5 13.5 L3 9 L10 9 Z"
-    stroke="currentColor"
-    stroke-width="1"
+    d="M12 6.6 L12.9 11.1 L17.4 12 L12.9 12.9 L12 17.4 L11.1 12.9 L6.6 12 L11.1 11.1 Z"
+    transform="rotate(45 12 12)"
     fill="currentColor"
-    opacity="0.3"></path>
+    fill-opacity="0.38"></path>
+  <path
+    d="M12 0.8 C12.35 7.4 13.6 10.5 21.6 12 C13.6 13.5 12.35 16.6 12 23.2 C11.65 16.6 10.4 13.5 2.4 12 C10.4 10.5 11.65 7.4 12 0.8 Z"
+    fill="currentColor"
+    fill-opacity="0.7"></path>
+  <path
+    d="M12 4.2 C12.2 9.4 12.9 11.1 17.6 12 C12.9 12.9 12.2 14.6 12 19.8 C11.8 14.6 11.1 12.9 6.4 12 C11.1 11.1 11.8 9.4 12 4.2 Z"
+    fill="currentColor"
+    fill-opacity="0.55"></path>
+  <circle cx="12" cy="12" r="1.7" fill="currentColor"></circle>
 </svg>

@@ -2,22 +2,43 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 40 40"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Open hands/heart -->
-  <path
-    d="M10 25 Q5 20 10 15 Q15 10 20 15 Q25 10 30 15 Q35 20 30 25 L20 35 L10 25"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"></path>
-  <circle cx="20" cy="22" r="3" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
+  <!-- Heart, engraved: drawn in one pen stroke that overshoots at the cleft,
+       a little lopsided, its lower right inked heavier and hatched. Themes
+       through currentColor. -->
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M20.2 35 C13 29.4 5.2 23.6 4.8 15.6 C4.6 10 8.6 6.2 13.2 6.4 C16.2 6.6 18.6 8.4 20 11.4 C21.6 8 24.6 5.8 28.2 6.2 C32.8 6.8 35.6 10.8 35 16.2 C34.2 23.8 26.8 29.8 20.2 35 Z"
+      fill="currentColor"
+      fill-opacity="0.14"
+      stroke-width="1.55"></path>
+    <!-- The pen's overshoot at the cleft -->
+    <path d="M20 11.4 C20.6 13 20.4 14.8 19.4 16.2" stroke-width="1.2"></path>
+    <!-- Shade -->
+    <path
+      d="M35 16.2 C34.2 23.8 26.8 29.8 20.2 35 C18 33.3 15.8 31.6 13.8 29.8 C17.4 30 21.4 28.4 24.8 25.4 C27.8 22.8 29.6 19.6 30.2 16 C31.6 16.6 33.4 16.8 35 16.2 Z"
+      fill="currentColor"
+      fill-opacity="0.14"
+      stroke="none"></path>
+    <path
+      d="M31.4 19.2 C30 23 27.4 26.2 24 28.8 M28.6 18.6 C27.6 21.6 25.6 24.2 23 26.2 M26 28.8 C24.6 30 23.2 31 21.8 32"
+      stroke-width="0.85"
+      stroke-opacity="0.55"></path>
+    <!-- Light on the left lobe -->
+    <path d="M8.6 14.8 C8.6 12.2 10.4 10.2 12.8 10" stroke-width="0.95" stroke-opacity="0.6"></path>
+  </g>
+  <path d="M35 16.2 C34.2 23.8 26.8 29.8 20.2 35 C26 29.4 32.4 23.8 35 16.2 Z" fill="currentColor"
+  ></path>
 </svg>

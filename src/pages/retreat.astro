@@ -41,25 +41,63 @@ const stops: { title: string; gloss: string; variant: 1 | 2 | 3 }[] = [
   },
 ];
 
-// Prayer-flag string the group photo hangs from. The cord is the quadratic
-// M0 18 Q600 69 1200 18, so y(t) = 18 + 102·t(1−t). The print spans x 300–900
-// (the middle half), so flags hang only on the two outer stretches.
-// Above 900px the dotted trail crosses the cord at x 980, so that flag is left out
-// there (.flagline-trail-gap) and the trail passes through a gap in the flags.
-const cordY = (t: number) => 18 + 102 * t * (1 - t);
-const flagXs = [20, 60, 100, 140, 180, 220, 260, 940, 980, 1020, 1060, 1100, 1140, 1180];
-const trailGapX = 980;
-const flags = flagXs.map((x, i) => {
-  const t = x / 1200;
-  const angle = (Math.atan((102 * (1 - 2 * t)) / 1200) * 180) / Math.PI;
-  return {
-    x: x.toFixed(1),
-    y: cordY(t).toFixed(1),
-    angle: angle.toFixed(1),
-    tone: i % 5,
-    trailGap: x === trailGapX,
-  };
-});
+// Prayer-flag string the group photo hangs from. The print's weight pulls the cord
+// down at the two clothespins, so each side is one run that climbs away from its pin
+// and off the edge of the page: y = −(a·d + b·d²) at distance d from the pin, drawn
+// 1:1 in px (the runs never scale with the print). Flags start past the print's edge
+// and keep the traditional order (blue, white, red, green, yellow) left to right.
+// Wherever the dotted trail passes under the string, retreat-trail.js clears the
+// flags it would touch, so the path runs through a gap at every width.
+const RUN = 2000; // run length in px, enough to leave the page at any width
+const PIN_Y = 200; // the cord's height at the pin, inside each run's viewBox
+const RUN_H = 250;
+const RISE_A = 0.06;
+const RISE_B = 0.000012;
+const rise = (d: number) => RISE_A * d + RISE_B * d * d;
+const runCord = (dir: 1 | -1) => {
+  const x0 = dir === 1 ? 0 : RUN;
+  const x2 = x0 + dir * RUN;
+  const cy = PIN_Y - (RISE_A * RUN) / 2;
+  return `M${x0} ${PIN_Y} Q${(x0 + x2) / 2} ${cy} ${x2} ${PIN_Y - rise(RUN)}`;
+};
+const runFlags = (dir: 1 | -1) => {
+  const out = [];
+  for (let k = 0, d = 72; d < RUN - 10; k++, d += 36) {
+    const slope = RISE_A + 2 * RISE_B * d; // the cord's climb at this flag
+    const tone = dir === 1 ? (k + 3) % 5 : (((2 - k) % 5) + 5) % 5;
+    out.push({
+      x: (dir === 1 ? d : RUN - d).toFixed(1),
+      y: (PIN_Y - rise(d)).toFixed(1),
+      angle: ((-dir * Math.atan(slope) * 180) / Math.PI).toFixed(2),
+      // The breeze, mostly from the left: each flag's hem swings by its own amount
+      // (a shear, so the sewn top edge stays on the cord) and drops a little more
+      // or less as the cloth lifts
+      skew: (3.5 + 5.5 * Math.sin(k * 1.7 + (dir === 1 ? 0.9 : 0))).toFixed(1),
+      drop: (1 + 0.05 * Math.cos(k * 2.3 + (dir === 1 ? 0 : 1.4))).toFixed(3),
+      tone,
+      shape: "abc"[(k * 7 + (dir === 1 ? 1 : 0)) % 3],
+      // Sun-faded, unevenly: a few flags have weathered paler than the rest
+      worn: (k * 5 + (dir === 1 ? 2 : 0)) % 7 === 3,
+    });
+  }
+  return out;
+};
+// The summit's last view: three strata of red rock in golden-hour light, far to near,
+// echoing the hero. Each is its top edge (stroked) closed down to the svg's foot
+// (filled). Nothing rises above y 70 of the 200-unit viewBox, the spire the summit
+// section's bottom padding is measured against (retreat.css).
+const ridgeFar =
+  "M0 132 C40 131 80 129 110 126 L122 119 C126 114 132 112 140 112 L230 111 C238 111 242 114 245 119 L254 127 C300 131 360 131 420 129 C470 127 520 128 560 126 C600 124 638 120 664 112 C680 106 690 100 696 96 L700 85 L703 77 C704 75 706 75 707 77 L710 87 C712 90 715 91 718 88 L722 80 L725 73 C726 71 731 71 733 73 L737 80 C739 85 741 87 744 86 L747 83 L751 77 C753 74.5 756 74.5 757 77 L760 85 L763 92 C769 100 786 107 812 112 C846 122 900 126 960 126 C1030 126 1076 124 1106 121 L1118 114 C1122 110 1128 108 1136 108 L1248 107 C1258 107 1263 110 1266 115 L1276 125 C1320 130 1380 131 1440 131";
+const ridgeMid =
+  "M0 152 C30 151 60 148 84 143 L102 132 C106 126 110 121 116 119 L126 109 C129 104 134 102 142 102 L244 101 C248 101 250 104 254 104 C258 104 260 101 264 101 L302 101 C310 101 315 104 319 109 L330 122 C336 128 348 133 366 137 C420 145 480 149 540 149 C620 149 700 147 760 147 C840 147 920 148 990 147 C1040 146 1068 143 1088 137 L1104 125 C1108 119 1114 117 1122 117 L1208 116 C1214 116 1218 113 1224 113 L1234 114 C1242 114 1246 118 1250 123 L1260 135 C1290 143 1340 147 1380 148 C1410 149 1430 149 1440 149";
+const ridgeNear =
+  "M0 170 C60 164 120 159 180 160 C240 161 282 169 340 172 C440 176 560 173 660 175 C780 178 900 177 1000 173 C1080 170 1140 162 1200 160 C1262 158 1330 162 1380 165 C1410 167 1430 167 1440 167";
+const toFoot = (edge: string) => `${edge} V200 H0 Z`;
+
+const flagRuns = [
+  { side: "left", cord: runCord(-1), flags: runFlags(-1) },
+  { side: "right", cord: runCord(1), flags: runFlags(1) },
+];
 
 const email = "elizabetharmstrongtherapy@gmail.com";
 const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit V registration")}`;
@@ -178,28 +216,153 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit 
     <section class="flagline-section">
       <div class="container flagline-grid">
         <div class="flagline-hang reveal">
+          {
+            /* Three cotton flags, each lifted by the wind differently: the body
+               (filled with currentColor, so each tone is set from CSS), a fold
+               in shadow, a sunlit fold, the sewn sleeve the cord runs through,
+               the woodblock print (a jewel between lines of prayer) and a few
+               frayed threads at the hem. */
+          }
+          <svg class="flagline-defs" width="0" height="0" aria-hidden="true" focusable="false">
+            <defs>
+              <g id="flagline-flag-a">
+                <path
+                  fill="currentColor"
+                  stroke="#6b4234"
+                  stroke-opacity="0.3"
+                  stroke-width="0.6"
+                  d="M-14 0 H14 C14.8 7 13.4 15 14.4 23 C15 28.5 13.8 32.5 14.2 35.2 C10 36.6 6.2 34.4 1.6 36 C-2.6 37.4 -8.2 35 -14.4 36.8 C-13.6 30.6 -15 22.4 -13.9 14.2 C-13.3 8.6 -14.5 4.2 -14 0 Z"
+                ></path>
+                <path
+                  fill="#5b3326"
+                  fill-opacity="0.13"
+                  d="M2.5 0 C4.2 9 1.8 21 4.4 35.4 C6.2 34.9 7.8 34.7 9.6 34.9 C7.4 22 9.4 10 7.6 0 Z"
+                ></path>
+                <path
+                  fill="#fffaf2"
+                  fill-opacity="0.2"
+                  d="M-9.6 0 C-8.4 11 -10.6 24 -8.8 36 L-5.6 35.4 C-7.4 23.6 -5.2 11 -6.4 0 Z"
+                ></path>
+              </g>
+              <g id="flagline-flag-b">
+                <path
+                  fill="currentColor"
+                  stroke="#6b4234"
+                  stroke-opacity="0.3"
+                  stroke-width="0.6"
+                  d="M-14 0 H14 C13.4 6 14.9 13 14.1 20 C13.4 26.4 14.6 31 13.6 35.8 C9.4 34.6 5.6 36.6 0.8 35.4 C-3.8 34.2 -8.4 36.6 -14.2 35.6 C-14.8 29 -13.2 22 -14.3 15.6 C-15 9.6 -13.6 4.6 -14 0 Z"
+                ></path>
+                <path
+                  fill="#5b3326"
+                  fill-opacity="0.12"
+                  d="M-5.4 0 C-3.2 11 -6.6 23 -3.6 35.2 C-1.6 35.6 0.4 35.6 2 35.4 C-0.8 23 1.8 11 0.2 0 Z"
+                ></path>
+                <path
+                  fill="#5b3326"
+                  fill-opacity="0.07"
+                  d="M9 0 C10.4 10 8.6 22 10.6 34.9 L13.6 35.8 C14.6 31 13.4 26.4 14.1 20 C14.9 13 13.4 6 14 0 Z"
+                ></path>
+                <path
+                  fill="#fffaf2"
+                  fill-opacity="0.18"
+                  d="M3.4 0 C5 10 2.8 22 4.8 35.6 L7.4 35.3 C5.6 22 7.8 10 6.2 0 Z"></path>
+              </g>
+              <g id="flagline-flag-c">
+                <path
+                  fill="currentColor"
+                  stroke="#6b4234"
+                  stroke-opacity="0.3"
+                  stroke-width="0.6"
+                  d="M-14 0 H14 C14.6 8.4 15.2 17 14.6 25 C14.2 29.6 15 32.6 14.8 34.6 C11 36.2 7.4 33.6 3 35.6 C-1.6 37.6 -6.4 34.8 -10.6 36.6 C-12.2 37.2 -13.6 36.4 -14.6 36 C-14 29 -13.2 20 -13.8 12 C-14.2 7 -14.2 3.4 -14 0 Z"
+                ></path>
+                <path
+                  fill="#5b3326"
+                  fill-opacity="0.12"
+                  d="M-12 0 C-10.6 12 -12.8 25 -10.6 36.6 C-12.2 37.2 -13.6 36.4 -14.6 36 C-14 29 -13.2 20 -13.8 12 C-14.2 7 -14.2 3.4 -14 0 Z"
+                ></path>
+                <path
+                  fill="#5b3326"
+                  fill-opacity="0.1"
+                  d="M6 0 C8.6 9 5.6 22 8.8 34.8 C10.6 34.6 12.2 34.8 14 34.9 C12 22 13.6 10 11.4 0 Z"
+                ></path>
+                <path
+                  fill="#fffaf2"
+                  fill-opacity="0.17"
+                  d="M-4 0 C-2.4 12 -5 24 -2.8 36.4 L0.2 36.1 C-1.8 24 0.6 12 -0.8 0 Z"></path>
+              </g>
+              <g id="flagline-print">
+                <rect x="-14" y="0" width="28" height="3.6" fill="#5b3326" fill-opacity="0.14"
+                ></rect>
+                <path
+                  d="M-14 3.6 H14"
+                  stroke="#5b3326"
+                  stroke-opacity="0.2"
+                  stroke-width="0.5"
+                  stroke-dasharray="1.4 1.1"></path>
+                <g
+                  stroke="#4a2a1f"
+                  stroke-opacity="0.38"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                >
+                  <path
+                    stroke-width="0.6"
+                    d="M-8.6 8.4 C-3 8 3 8.2 8.4 8.6 C8.8 14.6 8.6 21 8.2 27.4 C2.8 27.8 -3 27.6 -8.4 27.2 C-8.8 21 -8.6 14.6 -8.6 8.4 Z"
+                  ></path>
+                  <path
+                    stroke-width="0.55"
+                    stroke-dasharray="1.8 0.7 2.6 0.8 1.2 0.9"
+                    d="M-6.6 10.8 H6.4 M-6.6 12.7 H6.4 M-6.6 22.8 H6.4 M-6.6 24.8 H6.4"></path>
+                  <path
+                    stroke-width="0.7"
+                    d="M0 14.6 C2 16 2.6 17.8 0 20.6 C-2.6 17.8 -2 16 0 14.6 Z M-3.6 18.6 C-2.2 19.6 -1.4 19.6 -1 18.8 M3.6 18.6 C2.2 19.6 1.4 19.6 1 18.8"
+                  ></path>
+                </g>
+              </g>
+            </defs>
+          </svg>
+          {
+            flagRuns.map((run) => (
+              <svg
+                class={`flagline-run flagline-run-${run.side}`}
+                viewBox={`0 0 ${RUN} ${RUN_H}`}
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                {run.flags.map((f) => (
+                  <g
+                    class={`flagline-flag flagline-tone-${f.tone}${f.worn ? " flagline-worn" : ""}`}
+                    transform={`translate(${f.x} ${f.y}) rotate(${f.angle}) skewX(${f.skew}) scale(1 ${f.drop})`}
+                    data-flag
+                  >
+                    <use href={`#flagline-flag-${f.shape}`} />
+                    <use href="#flagline-print" />
+                    <path
+                      class="flagline-thread"
+                      d={
+                        f.shape === "b"
+                          ? "M-9 35.6 l-0.5 2.4 M5.6 35.8 l0.4 2"
+                          : "M-6 36 l0.3 2.2 M9.4 35.4 l-0.4 2.3 M10.6 35.3 l0.2 1.6"
+                      }
+                    />
+                  </g>
+                ))}
+                <path class="flagline-string" d={run.cord} />
+                <path class="flagline-string-twist" d={run.cord} />
+              </svg>
+            ))
+          }
           <svg
-            class="flagline-cord"
-            viewBox="0 0 1200 90"
+            class="flagline-span"
+            viewBox="0 0 100 6"
+            preserveAspectRatio="none"
             fill="none"
             aria-hidden="true"
             focusable="false"
           >
-            <path class="flagline-string" d="M0 18 Q600 69 1200 18"></path>
-            {
-              flags.map((f) => (
-                <g
-                  class={f.trailGap ? "flagline-trail-gap" : undefined}
-                  transform={`translate(${f.x} ${f.y}) rotate(${f.angle})`}
-                >
-                  <path
-                    class={`flagline-flag flagline-tone-${f.tone}`}
-                    d="M-15 0 H15 V34 C9 35.5 5 33.5 0 35 C-5 36.5 -9 34.5 -15 36 Z"
-                  />
-                  <path class="flagline-glyph" d="M-6 14 Q0 8 6 14 Q0 20 -6 14 Z" />
-                </g>
-              ))
-            }
+            <path class="flagline-string" d="M0 1 Q50 4 100 1"></path>
           </svg>
           <figure class="flagline-print">
             <span class="flagline-clip flagline-clip-left" aria-hidden="true"></span>
@@ -312,13 +475,97 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit 
         aria-hidden="true"
         focusable="false"
       >
-        <path
-          d="M0 150 C80 148 140 140 180 128 L196 112 C200 106 208 104 220 104 L380 102 C392 102 398 108 402 116 L414 132 C470 142 540 146 600 146 C660 146 700 140 730 130 C744 124 752 112 758 98 L766 80 C770 72 776 70 780 78 L788 96 C796 88 804 76 812 70 C816 66 820 68 822 74 L832 104 C844 124 880 136 930 142 C1000 148 1060 144 1100 134 L1116 120 C1120 114 1126 112 1136 112 L1268 110 C1280 110 1286 116 1290 124 L1300 138 C1340 146 1400 148 1440 148"
-        ></path>
-        <path
-          class="summit-ridge-strata"
-          d="M206 120 C260 118 340 118 396 122 M760 104 C780 102 806 102 826 106 M1124 126 C1170 124 1240 124 1284 128"
-        ></path>
+        <defs>
+          {
+            /* Each stratum fades out toward the svg's foot, where the section lands on
+               the footer's colour */
+          }
+          <linearGradient
+            id="summit-far-fill"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="70"
+            x2="0"
+            y2="200"
+          >
+            <stop offset="0" stop-color="#ecb89e" stop-opacity="0.95"></stop>
+            <stop offset="0.55" stop-color="#efc4ac" stop-opacity="0.75"></stop>
+            <stop offset="1" stop-color="#f4d9c8" stop-opacity="0"></stop>
+          </linearGradient>
+          <linearGradient
+            id="summit-mid-fill"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="100"
+            x2="0"
+            y2="200"
+          >
+            <stop offset="0" stop-color="#df9f83" stop-opacity="1"></stop>
+            <stop offset="0.6" stop-color="#e7b298" stop-opacity="0.7"></stop>
+            <stop offset="1" stop-color="#f0cdb9" stop-opacity="0"></stop>
+          </linearGradient>
+          <linearGradient
+            id="summit-near-fill"
+            gradientUnits="userSpaceOnUse"
+            x1="0"
+            y1="158"
+            x2="0"
+            y2="200"
+          >
+            <stop offset="0" stop-color="#d48f75" stop-opacity="0.95"></stop>
+            <stop offset="0.55" stop-color="#e2a98f" stop-opacity="0.55"></stop>
+            <stop offset="1" stop-color="#eec6b2" stop-opacity="0"></stop>
+          </linearGradient>
+          {/* Shading for the summit's plants (retreat.css fills their outlines with these) */}
+          <linearGradient id="summit-pad-fill" x1="0.15" y1="0" x2="0.85" y2="1">
+            <stop offset="0" stop-color="#cbd6c9"></stop>
+            <stop offset="1" stop-color="#9fb3a3"></stop>
+          </linearGradient>
+          <linearGradient id="summit-leaf-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#c3d0c2"></stop>
+            <stop offset="1" stop-color="#93a997"></stop>
+          </linearGradient>
+          <linearGradient id="summit-leaf-back" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#a9baa9"></stop>
+            <stop offset="1" stop-color="#839b88"></stop>
+          </linearGradient>
+          <clipPath id="summit-clip-far"><path d={toFoot(ridgeFar)}></path></clipPath>
+          <clipPath id="summit-clip-mid"><path d={toFoot(ridgeMid)}></path></clipPath>
+        </defs>
+
+        <!-- 1. Far mesas and the summit's three spires, back-lit: a pale rim of light
+             along the top -->
+        <g class="summit-far">
+          <path d={toFoot(ridgeFar)} fill="url(#summit-far-fill)"></path>
+          <g class="summit-strata" clip-path="url(#summit-clip-far)">
+            <path d="M126 118 C160 117 200 117 246 120" stroke-dasharray="34 6 14 8"></path>
+            <path d="M694 98 C720 96 750 96 772 99" stroke-dasharray="14 4 22 5"></path>
+            <path d="M716 86 C724 85 732 85 740 87" stroke-dasharray="9 3"></path>
+            <path d="M672 110 C716 107 772 107 810 112" stroke-dasharray="40 7 18 6"></path>
+            <path d="M1120 116 C1170 114 1220 114 1270 118" stroke-dasharray="26 7 44 8"></path>
+          </g>
+          <path class="summit-rim" d={ridgeFar}></path>
+          <path class="summit-edge" d={ridgeFar}></path>
+        </g>
+
+        <!-- 2. Two flat-topped buttes with stepped talus, one either side -->
+        <g class="summit-mid">
+          <path d={toFoot(ridgeMid)} fill="url(#summit-mid-fill)"></path>
+          <g class="summit-strata" clip-path="url(#summit-clip-mid)">
+            <path d="M124 110 C180 108 260 108 322 112" stroke-dasharray="52 7 26 9"></path>
+            <path d="M112 120 C190 118 270 118 332 124" stroke-dasharray="30 8 64 6"></path>
+            <path d="M96 132 C180 129 280 130 350 136" stroke-dasharray="80 10 24 9"></path>
+            <path d="M1112 124 C1160 122 1210 122 1252 126" stroke-dasharray="36 6 22 9"></path>
+            <path d="M1098 134 C1160 131 1230 132 1270 138" stroke-dasharray="58 9 30 7"></path>
+          </g>
+          <path class="summit-edge" d={ridgeMid}></path>
+        </g>
+
+        <!-- 3. The near swell of ground the plants stand on -->
+        <g class="summit-near">
+          <path d={toFoot(ridgeNear)} fill="url(#summit-near-fill)"></path>
+          <path class="summit-edge" d={ridgeNear}></path>
+        </g>
       </svg>
       <span class="summit-flora summit-flora-left" aria-hidden="true"><PricklyPear /></span>
       <span class="summit-flora summit-flora-right" aria-hidden="true"><DesertAgave /></span>

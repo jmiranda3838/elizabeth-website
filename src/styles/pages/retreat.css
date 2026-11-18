@@ -42,12 +42,13 @@
   --juniper: #7d9384;
   --trail-dot: #b0705a;
 
-  /* Prayer flags: the site's rose, sage and blush, plus sandstone and clay */
-  --flag-0: #dca9a1;
-  --flag-1: #b3c4b6;
-  --flag-2: #ebd2aa;
-  --flag-3: #cf977f;
-  --flag-4: #f2d6cd;
+  /* Prayer flags in their traditional order (sky blue, wind white, fire red, water
+     green, earth yellow), each softened toward the page's dusty palette */
+  --flag-0: #9fb2c2;
+  --flag-1: #f6eee4;
+  --flag-2: #cf857a;
+  --flag-3: #9fb7a5;
+  --flag-4: #e6c27f;
 
   --print-shadow:
     0 1px 2px rgba(90, 52, 38, 0.12), 0 10px 22px -8px rgba(90, 52, 38, 0.28),
@@ -663,8 +664,11 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   align-items: center;
 }
 
-/* The cord svg is 200% of the print's width; percentage padding is relative to
-   width, so the print always hangs exactly where the clothespins meet it */
+/* The print hangs 7% of its width below the top of .flagline-hang (percentage padding
+   and margins resolve against width), and the clothespins sit at 12.5% and 87.5%.
+   Each flag run is drawn 1:1 in px with its pin at (edge, 200) of a 2000 × 250 box,
+   so margin-top: calc(7% − 203px) puts the cord 3px above the print's top edge.
+   The section's overflow: hidden trims both runs where they leave the page. */
 .flagline-hang {
   position: relative;
   justify-self: end;
@@ -672,54 +676,85 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   padding-top: 7%;
 }
 
-.flagline-cord {
+.flagline-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.flagline-run {
   position: absolute;
   top: 0;
-  left: -50%;
-  width: 200%;
-  height: auto;
+  width: 2000px;
+  height: 250px;
+  margin-top: calc(7% - 203px);
   overflow: visible;
-  /* The string and its outermost flags dissolve at both ends instead of stopping in
-     mid-air */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 10%, #000 90%, transparent 100%);
+  pointer-events: none;
+}
+.flagline-run-left {
+  right: 87.5%;
+}
+.flagline-run-right {
+  left: 87.5%;
 }
 
+/* The short stretch between the pins, along the print's top edge */
+.flagline-span {
+  position: absolute;
+  top: 0;
+  left: 12.5%;
+  width: 75%;
+  height: 6px;
+  margin-top: calc(7% - 4px);
+  overflow: visible;
+}
+
+/* Twisted cotton cord: a warm brown line with a paler twist laid along it */
 .flagline-string {
-  stroke: #9a7a68;
-  stroke-width: 1.4;
+  stroke: #87675a;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.flagline-string-twist {
+  stroke: #e9d6c6;
+  stroke-width: 0.6;
+  stroke-dasharray: 1.6 3.2;
+  stroke-opacity: 0.55;
 }
 
-.flagline-flag {
-  stroke: rgba(110, 70, 56, 0.35);
-  stroke-width: 0.8;
-}
+/* The five traditional colours, softened toward the page's palette */
 .flagline-tone-0 {
-  fill: var(--flag-0);
+  color: var(--flag-0);
 }
 .flagline-tone-1 {
-  fill: var(--flag-1);
+  color: var(--flag-1);
 }
 .flagline-tone-2 {
-  fill: var(--flag-2);
+  color: var(--flag-2);
 }
 .flagline-tone-3 {
-  fill: var(--flag-3);
+  color: var(--flag-3);
 }
 .flagline-tone-4 {
-  fill: var(--flag-4);
+  color: var(--flag-4);
+}
+.flagline-worn {
+  opacity: 0.78;
 }
 
-/* The flag the dotted trail would run through (see retreat.astro); back below 900px,
-   where the trail no longer crosses the cord */
-.flagline-trail-gap {
-  display: none;
+.flagline-thread {
+  stroke: #8d6a5a;
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  stroke-opacity: 0.55;
 }
 
-.flagline-glyph {
-  fill: none;
-  stroke: rgba(255, 250, 244, 0.85);
-  stroke-width: 1.1;
+/* A flag the dotted trail would touch (retreat-trail.js), so the path runs through a
+   gap in the string */
+.flagline-flag.is-cleared {
+  visibility: hidden;
 }
 
 /* Wooden clothespins, holding the print on the cord */
@@ -1060,7 +1095,8 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   pointer-events: none;
 }
 
-/* A far ridge in line only, the summit's last view, dissolving into the footer */
+/* The summit's last view: three strata of red rock in golden-hour light (the hero's
+   layering, paler and warmer), each dissolving toward the footer */
 .summit-ridge {
   position: absolute;
   left: 0;
@@ -1068,27 +1104,69 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   bottom: 40px;
   width: 100%;
   height: 200px;
-  stroke: var(--rr-bell-line);
-  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.4;
-  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
 }
 
-.summit-ridge-strata {
-  stroke-dasharray: 30 8 14 10;
+.summit-strata {
+  stroke-width: 1;
+  opacity: 0.55;
+}
+.summit-edge {
+  stroke-width: 1.1;
+}
+.summit-far .summit-strata,
+.summit-far .summit-edge {
+  stroke: #d8a088;
+}
+.summit-far .summit-edge {
+  opacity: 0.5;
+}
+/* Back-lit rim on the far ridge, laid just above its edge */
+.summit-rim {
+  stroke: #fff4e6;
+  stroke-width: 1.6;
   opacity: 0.7;
+  transform: translateY(-1px);
+}
+.summit-mid .summit-strata,
+.summit-mid .summit-edge {
+  stroke: #c4866d;
+}
+.summit-mid .summit-edge {
+  opacity: 0.55;
+}
+.summit-near .summit-edge {
+  stroke: #b8735b;
+  opacity: 0.45;
 }
 
+/* The summit's plants, drawn filled and shaded so they stand in front of the rock
+   (their outlines come from the shared botanicals; the fills are gradients defined in
+   the ridge svg) */
 .summit-flora {
   position: absolute;
   bottom: 70px;
   color: var(--juniper);
-  opacity: 0.8;
   pointer-events: none;
+}
+.summit-flora-left g:first-of-type ellipse {
+  fill: url(#summit-pad-fill);
+}
+/* The prickly pear's bloom */
+.summit-flora-left g:nth-of-type(4) path {
+  fill: #eeb0a2;
+  stroke: #c47f70;
+}
+.summit-flora-right g:first-of-type path {
+  fill: url(#summit-leaf-fill);
+}
+/* The agave's outermost and centre leaves sit behind the others */
+.summit-flora-right g:first-of-type path:nth-child(odd) {
+  fill: url(#summit-leaf-back);
 }
 
 .summit-flora svg {
@@ -1237,10 +1315,6 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   .trail-bend,
   .trail-end {
     display: none;
-  }
-
-  .flagline-trail-gap {
-    display: inline;
   }
 
   .retreat-intro-grid,

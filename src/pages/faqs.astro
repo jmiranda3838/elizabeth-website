@@ -1,7 +1,8 @@
 ---
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { PlusExpand } from "@illustrations/icons";
+import { IconFiddlehead, PlusExpand } from "@illustrations/icons";
+import { FernBank, MeadowHorizon } from "@illustrations/scenes";
 ---
 
 <BaseLayout
@@ -9,7 +10,7 @@ import { PlusExpand } from "@illustrations/icons";
   description="Frequently asked questions about therapy with Elizabeth Armstrong, LMFT. Learn about sessions, fees, insurance, and what to expect."
 >
   <!-- Page Hero -->
-  <section class="page-hero">
+  <section class="page-hero page-hero-scene">
     <div class="container">
       <h1>Frequently Asked Questions</h1>
       <p class="lead">
@@ -17,6 +18,7 @@ import { PlusExpand } from "@illustrations/icons";
         here, please reach out.
       </p>
     </div>
+    <FernBank class="page-hero-art" aria-hidden="true" />
   </section>
 
   <!-- FAQ Content -->
@@ -24,7 +26,7 @@ import { PlusExpand } from "@illustrations/icons";
     <div class="container container-narrow">
       <!-- Getting Started Section -->
       <div class="faq-section" id="getting-started">
-        <h2>Getting Started</h2>
+        <h2><IconFiddlehead class="faq-mark" aria-hidden="true" />Getting Started</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -98,7 +100,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Logistics Section -->
       <div class="faq-section" id="logistics">
-        <h2>Logistics</h2>
+        <h2><IconFiddlehead class="faq-mark" aria-hidden="true" />Logistics</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -179,7 +181,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- Fees & Insurance Section -->
       <div class="faq-section" id="fees">
-        <h2>Fees & Insurance</h2>
+        <h2><IconFiddlehead class="faq-mark" aria-hidden="true" />Fees & Insurance</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -263,7 +265,7 @@ import { PlusExpand } from "@illustrations/icons";
 
       <!-- About Therapy Section -->
       <div class="faq-section" id="about-therapy">
-        <h2>About Therapy</h2>
+        <h2><IconFiddlehead class="faq-mark" aria-hidden="true" />About Therapy</h2>
         <div class="faq-list">
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -378,7 +380,7 @@ import { PlusExpand } from "@illustrations/icons";
   </section>
 
   <!-- CTA Band -->
-  <section class="cta-band">
+  <section class="cta-band cta-band-meadow">
     <div class="container">
       <h2>Still have questions?</h2>
       <p>
@@ -387,30 +389,89 @@ import { PlusExpand } from "@illustrations/icons";
       </p>
       <a href={withBase("/contact.html")} class="btn btn-primary btn-lg">Get in Touch</a>
     </div>
+    <MeadowHorizon class="cta-meadow" aria-hidden="true" />
   </section>
 
   <style is:global>
-    /* === Pages: FAQ === */
+    /* === Pages: FAQ ===
+       Each group is a small stack of index cards under a heading marked with a
+       fiddlehead; the expand mark is a plus that becomes a seedling on a line. */
     .faq-section {
-      margin-bottom: var(--space-10);
+      margin-bottom: var(--space-12);
     }
 
     .faq-section h2 {
-      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
       padding-bottom: var(--space-3);
-      border-bottom: var(--border-thin);
+      border-bottom: 1px solid transparent;
+      border-image: linear-gradient(
+          90deg,
+          var(--dusty-peach) 0%,
+          rgba(208, 180, 166, 0.5) 45%,
+          rgba(208, 180, 166, 0) 100%
+        )
+        1;
+    }
+
+    .faq-mark {
+      flex-shrink: 0;
+      width: 1.05em;
+      height: 1.05em;
+      color: var(--sage);
+    }
+
+    /* Alternate groups curl the other way, as fiddleheads do */
+    .faq-section:nth-of-type(even) .faq-mark {
+      transform: scaleX(-1);
+      color: var(--muted-rose);
     }
 
     .faq-list {
       display: flex;
       flex-direction: column;
-      gap: var(--space-4);
+      gap: var(--space-3);
     }
 
     .faq-item {
-      border: var(--border-thin);
+      position: relative;
+      background-color: #fffdfb;
+      border: 1px solid rgba(208, 180, 166, 0.5);
       border-radius: var(--radius-md);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 1px 2px rgba(96, 102, 90, 0.05);
       overflow: hidden;
+      transition:
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    /* A clay margin line down the left edge of the open card */
+    .faq-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 3px;
+      background-color: var(--muted-rose);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+    }
+
+    .faq-item:hover,
+    .faq-item.open {
+      border-color: var(--dusty-peach);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 6px 16px rgba(152, 96, 93, 0.09);
+    }
+
+    .faq-item.open::before {
+      opacity: 1;
     }
 
     .faq-question {
@@ -418,30 +479,71 @@ import { PlusExpand } from "@illustrations/icons";
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: var(--space-5) var(--space-6);
-      font-size: var(--text-base);
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5) var(--space-4) var(--space-6);
+      font-family: var(--font-serif);
+      font-size: var(--text-xl);
       font-weight: 500;
+      line-height: 1.3;
       text-align: left;
       color: var(--text-primary);
-      background-color: var(--warm-paper);
+      background-color: transparent;
       cursor: pointer;
       transition: background-color var(--transition-fast);
     }
 
-    .faq-question:hover {
-      background-color: var(--bg-accent);
+    /* Hover tint only where there is a real pointer, so it does not stick after a tap */
+    @media (hover: hover) {
+      .faq-question:hover {
+        background-color: var(--bg-accent);
+      }
+    }
+
+    .faq-question:focus-visible {
+      outline: 2px solid var(--misty-blue);
+      outline-offset: -3px;
+      border-radius: var(--radius-md);
+    }
+
+    .faq-item.open .faq-question {
+      background: linear-gradient(180deg, var(--bg-accent) 0%, rgba(253, 242, 239, 0) 100%);
     }
 
     .faq-icon {
-      width: 20px;
-      height: 20px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
-      color: var(--text-secondary);
-      transition: transform var(--transition-fast);
+      color: var(--misty-blue);
+      transition: color var(--transition-base);
     }
 
+    .faq-question:hover .faq-icon,
     .faq-item.open .faq-icon {
-      transform: rotate(45deg);
+      color: var(--clay-deep);
+    }
+
+    /* Open: the upright stroke folds away (plus becomes minus) and a seedling
+       grows from the bar */
+    .faq-icon .plus-v,
+    .faq-icon .plus-sprout {
+      transform-origin: 12px 12px;
+      transition:
+        transform var(--transition-base),
+        opacity var(--transition-base);
+    }
+
+    .faq-icon .plus-sprout {
+      transform: scale(0.3);
+    }
+
+    .faq-item.open .faq-icon .plus-v {
+      transform: scaleY(0);
+      opacity: 0;
+    }
+
+    .faq-item.open .faq-icon .plus-sprout {
+      transform: scale(1);
+      opacity: 1;
     }
 
     /* Closed panels are also hidden from keyboard focus. A transitioning
@@ -461,17 +563,46 @@ import { PlusExpand } from "@illustrations/icons";
     }
 
     .faq-answer-content a {
-      color: var(--warm-clay);
+      color: var(--clay-deep);
       text-decoration: underline;
       text-underline-offset: 2px;
     }
 
     .faq-answer-content {
-      padding: var(--space-6);
-      padding-top: 0;
-      font-size: var(--text-sm);
+      padding: var(--space-2) var(--space-6) var(--space-6);
+      font-size: var(--text-base);
       color: var(--text-secondary);
       line-height: 1.7;
+    }
+
+    .faq-answer-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 600px) {
+      .faq-question {
+        padding: var(--space-4) var(--space-4) var(--space-4) var(--space-5);
+        font-size: var(--text-lg);
+      }
+
+      .faq-answer-content {
+        padding: var(--space-2) var(--space-5) var(--space-5);
+      }
+
+      .faq-icon {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq-item,
+      .faq-item::before,
+      .faq-icon,
+      .faq-icon .plus-v,
+      .faq-icon .plus-sprout {
+        transition: none;
+      }
     }
 
     /* Crisis callout */

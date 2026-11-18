@@ -2,27 +2,111 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// The sewing shows at the centre of a gathering: long stitches down the fold,
+// a kettle stitch near each end. Lengths are uneven, as hand sewing is.
+const stitches = [
+  [14, 24],
+  [44, 96],
+  [118, 176],
+  [198, 262],
+  [286, 348],
+  [368, 384],
+];
 ---
 
-<svg class={className} style={style} viewBox="0 0 30 400" fill="none">
-  <rect
-    x="5"
-    y="10"
-    width="20"
-    height="380"
-    stroke="currentColor"
-    stroke-width="1"
-    fill="none"
-    rx="2"></rect>
-  <line x1="15" y1="30" x2="15" y2="370" stroke="currentColor" stroke-width="0.5" opacity="0.3"
-  ></line>
-  <!-- Decorative elements on spine -->
-  <circle cx="15" cy="60" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="15" cy="60" r="3" fill="currentColor" opacity="0.2"></circle>
-  <circle cx="15" cy="200" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="15" cy="200" r="3" fill="currentColor" opacity="0.2"></circle>
-  <circle cx="15" cy="340" r="8" stroke="currentColor" stroke-width="0.8" fill="none"></circle>
-  <circle cx="15" cy="340" r="3" fill="currentColor" opacity="0.2"></circle>
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 30 400"
+  preserveAspectRatio="none"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- The gutter of an open book: the valley where two pages meet, with the binding
+       thread showing in the fold. Stretches to the height of the book (everything in
+       it is vertical), and `color` tints the thread. -->
+  <defs>
+    <linearGradient
+      id="book-spine-valley"
+      x1="0"
+      y1="0"
+      x2="30"
+      y2="0"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#543123" stop-opacity="0"></stop>
+      <stop offset="0.3" stop-color="#543123" stop-opacity="0.07"></stop>
+      <stop offset="0.46" stop-color="#543123" stop-opacity="0.3"></stop>
+      <stop offset="0.5" stop-color="#3b2620" stop-opacity="0.5"></stop>
+      <stop offset="0.54" stop-color="#543123" stop-opacity="0.24"></stop>
+      <stop offset="0.72" stop-color="#543123" stop-opacity="0.05"></stop>
+      <stop offset="1" stop-color="#543123" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient
+      id="book-spine-ends"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="400"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#fff" stop-opacity="0"></stop>
+      <stop offset="0.04" stop-color="#fff" stop-opacity="1"></stop>
+      <stop offset="0.97" stop-color="#fff" stop-opacity="1"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.4"></stop>
+    </linearGradient>
+    <mask id="book-spine-fade" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="400">
+      <rect width="30" height="400" fill="url(#book-spine-ends)"></rect>
+    </mask>
+  </defs>
+  <g mask="url(#book-spine-fade)">
+    <rect width="30" height="400" fill="url(#book-spine-valley)"></rect>
+    <!-- The fold itself, and the faint edges of the leaves either side of it -->
+    <path
+      d="M15 0 V400"
+      stroke="#3b2620"
+      stroke-opacity="0.5"
+      stroke-width="1"
+      vector-effect="non-scaling-stroke"></path>
+    <path
+      d="M12.6 0 V400 M17.2 0 V400"
+      stroke="#543123"
+      stroke-opacity="0.16"
+      stroke-width="1"
+      vector-effect="non-scaling-stroke"></path>
+    <path
+      d="M10.4 6 V396 M19.8 4 V398"
+      stroke="#543123"
+      stroke-opacity="0.08"
+      stroke-width="1"
+      vector-effect="non-scaling-stroke"></path>
+  </g>
+  <!-- Binding thread -->
+  <g vector-effect="non-scaling-stroke" stroke-linecap="round">
+    {
+      stitches.map(([a, b]) => (
+        <>
+          <path
+            d={`M15.3 ${a} V${b}`}
+            stroke="#3b2620"
+            stroke-opacity="0.3"
+            stroke-width="2"
+            vector-effect="non-scaling-stroke"
+          />
+          <path
+            d={`M15 ${a} V${b}`}
+            stroke="currentColor"
+            stroke-opacity="0.85"
+            stroke-width="1"
+            vector-effect="non-scaling-stroke"
+          />
+        </>
+      ))
+    }
+  </g>
 </svg>

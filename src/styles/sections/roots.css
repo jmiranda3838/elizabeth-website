@@ -85,7 +85,50 @@
   width: 100%;
   height: auto;
   margin-top: -2px; /* ground line tucks against the photo's base */
-  color: var(--espresso);
+  /* Warm rose-brown roots: a clay body with a deeper flank in shadow */
+  color: var(--clay-deep);
+}
+
+.roots-body {
+  fill: var(--warm-clay);
+}
+
+.roots-shade {
+  fill: var(--clay-deeper);
+  fill-opacity: 0.75;
+}
+
+/* Soil strata under the photo, palest at depth; faded at the edges by a mask
+   inside RootsSystem.astro */
+.roots-soil-top {
+  fill: var(--warm-clay);
+  fill-opacity: 0.28;
+}
+
+.roots-soil-mid {
+  fill: var(--dusty-peach);
+  fill-opacity: 0.24;
+}
+
+.roots-soil-low {
+  fill: var(--soft-coral);
+  fill-opacity: 0.16;
+}
+
+.roots-seam {
+  color: var(--warm-clay);
+  opacity: 0.45;
+}
+
+.roots-stones {
+  color: var(--warm-clay);
+  fill: var(--dusty-peach);
+  fill-opacity: 0.35;
+  stroke-opacity: 0.5;
+}
+
+.roots-grass {
+  color: var(--sage);
 }
 
 /* The roots draw themselves on scroll via GSAP (see the <script> in

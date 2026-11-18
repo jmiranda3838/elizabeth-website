@@ -1,61 +1,236 @@
 /* === Sections: Sacred Promises Book Spread === */
 /* (Migrated from therapy.css; renamed grimoire-* -> promises-* to avoid
-   colliding with the approach section's .grimoire-section in approach.css) */
+   colliding with the approach section's .grimoire-section in approach.css)
+
+   An open book lying on a table, seen from the reader's side. The pages are HTML
+   (so the text reflows); BookPageEdge draws each page's curved head and tail edge,
+   BookSpine the gutter, BookRibbon the marker. From 900px down it is a single
+   page: the right-hand leaf, with the gutter at its left. */
 
 .promises-section {
-  background: linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);
-  padding: var(--space-24) var(--space-4);
+  background:
+    radial-gradient(ellipse 58% 46% at 50% 58%, rgba(184, 129, 126, 0.16), transparent 72%),
+    linear-gradient(to bottom, var(--soft-sand) 0%, var(--warm-paper) 100%);
+  padding: var(--space-24) var(--space-4) calc(var(--space-24) + var(--space-4));
   display: flex;
   justify-content: center;
+  overflow-x: clip;
 }
 
 .promises-book {
+  /* Paper, fore-edge to gutter. BookPageEdge reads the same seven stops. */
+  --book-paper-1: #f1e8df;
+  --book-paper-2: #fbf7f2;
+  --book-paper-3: #fffdfa;
+  --book-paper-4: #fdf9f4;
+  --book-paper-5: #f5ede5;
+  --book-paper-6: #e9ddd2;
+  --book-paper-7: #d6c5b8;
+  --book-edge-ink: #a58d7f;
+  --book-fore-ink: #c4b1a4;
+  /* Room above and below the page boxes for the curved edges */
+  --book-head: 26px;
+  --book-foot: 33px;
+  /* How much cover board shows round the page block */
+  --book-rim-top: 9px;
+  --book-rim-side: 13px;
+  --book-rim-bottom: 12px;
+
   position: relative;
-  display: flex;
-  max-width: 1000px;
+  isolation: isolate;
+  max-width: 1040px;
   width: 100%;
-  background: var(--warm-paper);
+  padding: var(--book-rim-top) var(--book-rim-side) var(--book-rim-bottom);
+  /* Cloth-bound cover board */
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, rgba(59, 38, 32, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(to bottom, var(--warm-clay) 0%, var(--clay-deep) 100%);
+  border-radius: 9px 9px 7px 7px;
   box-shadow:
-    0 10px 40px rgba(84, 49, 35, 0.15),
-    0 2px 10px rgba(84, 49, 35, 0.1);
-  border-radius: 4px 12px 12px 4px;
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -2px 0 rgba(59, 38, 32, 0.28),
+    0 1px 2px rgba(59, 38, 32, 0.4),
+    0 10px 14px -6px rgba(84, 49, 35, 0.32),
+    0 30px 50px -18px rgba(84, 49, 35, 0.3);
 }
 
-/* Book spine */
+/* The two ends of the spine, standing a little proud of the boards */
+.promises-book::before,
+.promises-book::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 54px;
+  height: 13px;
+  margin-left: -27px;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+    linear-gradient(
+      to right,
+      var(--clay-deeper) 0%,
+      var(--clay-deep) 30%,
+      var(--warm-clay) 52%,
+      var(--clay-deep) 74%,
+      var(--clay-deeper) 100%
+    );
+  /* The joints where the boards hinge on the spine */
+  box-shadow:
+    inset 2px 0 1px -1px rgba(59, 38, 32, 0.5),
+    inset -2px 0 1px -1px rgba(59, 38, 32, 0.5);
+}
+
+.promises-book::before {
+  top: -3px;
+  border-radius: 50% 50% 0 0 / 5px 5px 0 0;
+}
+
+.promises-book::after {
+  bottom: -3px;
+  border-radius: 0 0 50% 50% / 0 0 5px 5px;
+  box-shadow:
+    inset 2px 0 1px -1px rgba(59, 38, 32, 0.5),
+    inset -2px 0 1px -1px rgba(59, 38, 32, 0.5),
+    0 3px 4px -1px rgba(59, 38, 32, 0.35);
+}
+
+/* Gutter: the fold between the pages, with the binding thread */
 .book-spine {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
   width: 30px;
-  background: linear-gradient(
-    to right,
-    var(--dusty-peach) 0%,
-    var(--warm-clay) 50%,
-    var(--dusty-peach) 100%
-  );
-  border-radius: 4px 0 0 4px;
-  flex-shrink: 0;
+  margin-left: -15px;
+  top: calc(var(--book-rim-top) + var(--book-head) - 4px);
+  bottom: calc(var(--book-rim-bottom) + 5px);
+  pointer-events: none;
 }
 
 .book-spine svg {
+  display: block;
   width: 100%;
   height: 100%;
-  color: var(--espresso);
-  opacity: 0.3;
+  color: var(--blush-wash);
+}
+
+/* Headband: the little striped band sewn across the top of the spine */
+.book-spine::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  width: 42px;
+  height: 10px;
+  margin-left: -19px;
+  border-radius: 50% 50% 3px 3px / 70% 70% 3px 3px;
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent 45%, rgba(59, 38, 32, 0.3)),
+    repeating-linear-gradient(
+      100deg,
+      var(--blush-wash) 0 2.5px,
+      var(--sage) 2.5px 5px,
+      var(--blush-wash) 5px 7.5px,
+      var(--muted-rose) 7.5px 10px
+    );
+  box-shadow: 0 2px 3px rgba(59, 38, 32, 0.45);
+}
+
+/* Ribbon marker: lies down the gutter and trails out onto the table */
+.promises-ribbon {
+  position: absolute;
+  z-index: 2;
+  left: calc(50% - 4px);
+  top: calc(var(--book-rim-top) + var(--book-head) - 8px);
+  width: 40px;
+  /* 64px of it hangs below the cover (TAIL in BookRibbon) */
+  height: calc(100% - var(--book-rim-top) - var(--book-head) + 8px + 64px);
+  color: var(--sage);
+  pointer-events: none;
 }
 
 /* Book pages */
 .promises-pages {
-  flex: 1;
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
-  padding: var(--space-10);
+  padding: var(--book-head) 0 var(--book-foot);
 }
 
 .promises-page {
-  padding: var(--space-6);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-12) var(--space-8);
+  background: linear-gradient(
+    var(--book-paper-dir, to right),
+    var(--book-paper-1) 0%,
+    var(--book-paper-2) 5%,
+    var(--book-paper-3) 45%,
+    var(--book-paper-4) 72%,
+    var(--book-paper-5) 88%,
+    var(--book-paper-6) 96%,
+    var(--book-paper-7) 100%
+  );
 }
 
+/* The left half has fewer leaves under it, so it sits lower (lift on BookPageEdge) */
 .promises-page-left {
-  border-right: 1px solid rgba(210, 199, 193, 0.5);
+  --book-fore-rise: 13.6px;
+  --book-fore-width: 4px;
+  padding-right: var(--space-16);
+}
+
+.promises-page-right {
+  --book-paper-dir: to left;
+  --book-fore-rise: 20px;
+  --book-fore-width: 7px;
+  padding-left: var(--space-16);
+}
+
+/* Fore-edge: the side of the stack of leaves, outside each page */
+.promises-page::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--book-fore-rise));
+  bottom: calc(1px - var(--book-foot) + 2px);
+  right: 100%;
+  width: var(--book-fore-width);
+  background:
+    linear-gradient(to bottom, rgba(84, 49, 35, 0.12), transparent 30px),
+    repeating-linear-gradient(to right, var(--book-fore-ink) 0 1px, var(--book-paper-5) 1px 2.34px);
+  border-radius: 1px 0 0 2px;
+}
+
+.promises-page-right::before {
+  right: auto;
+  left: 100%;
+  border-radius: 0 1px 2px 0;
+}
+
+/* Curved head and tail edges (BookPageEdge), drawn for a left-hand page */
+.promises-edge {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 100%;
+  color: var(--book-edge-ink);
+  pointer-events: none;
+}
+
+.promises-edge-top {
+  bottom: calc(100% - 1px);
+  height: calc(var(--book-head) + 1px);
+}
+
+.promises-edge-bottom {
+  top: calc(100% - 1px);
+  height: calc(var(--book-foot) + 1px);
+}
+
+.promises-page-right .promises-edge {
+  transform: scaleX(-1);
 }
 
 /* Page header */
@@ -70,13 +245,22 @@
   font-weight: 400;
   color: var(--espresso);
   display: block;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 .page-divider {
-  width: 150px;
+  --botanical-leaf: #7f9a8c;
+  --botanical-gilt: #b9925a;
+  width: 190px;
+  max-width: 100%;
   margin: 0 auto;
-  color: var(--dusty-peach);
+  color: var(--warm-clay);
+}
+
+.page-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* Promise items */
@@ -119,56 +303,127 @@
   margin: 0;
 }
 
-/* Page botanical decoration */
+/* Botanical plate at the foot of the last page: a sprig of wild rose */
 .page-botanical {
-  position: absolute;
-  bottom: 40px;
-  right: 60px;
-  width: 80px;
-  height: 100px;
-  color: var(--dusty-peach);
-  opacity: 0.3;
+  --botanical-leaf: #7f9a8c;
+  --botanical-bloom: var(--warm-clay);
+  --botanical-gilt: #b9925a;
+  width: 168px;
+  margin: auto auto 0;
+  padding-top: var(--space-6);
+  color: var(--warm-clay);
 }
 
-@media (max-width: 1024px) {
-  .promises-pages {
-    grid-template-columns: 1fr;
-    gap: var(--space-12);
+.page-botanical svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(4deg);
+}
+
+/* --- One page: the right-hand leaf, gutter on its left ------------------- */
+@media (max-width: 900px) {
+  .promises-book {
+    --book-rim-side: 10px;
+    max-width: 560px;
+    padding-left: 16px;
+    border-radius: 5px 9px 7px 5px;
   }
 
-  .promises-page-left {
-    border-right: none;
-    border-bottom: 1px solid rgba(210, 199, 193, 0.5);
-    padding-bottom: var(--space-12);
+  /* The spine now runs down the left side, with its raised bands */
+  .promises-book::before {
+    top: 0;
+    bottom: 0;
+    left: -4px;
+    width: 15px;
+    height: auto;
+    margin-left: 0;
+    border-radius: 7px 0 0 7px / 9px 0 0 9px;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0 68px,
+        rgba(59, 38, 32, 0.3) 68px 70px,
+        rgba(255, 255, 255, 0.22) 70px 75px,
+        rgba(59, 38, 32, 0.3) 75px 77px,
+        transparent 77px 150px
+      ),
+      linear-gradient(
+        to right,
+        var(--clay-deeper) 0%,
+        var(--clay-deep) 45%,
+        var(--warm-clay) 80%,
+        var(--clay-deeper) 100%
+      );
+    box-shadow: -1px 2px 3px rgba(59, 38, 32, 0.35);
+  }
+
+  .promises-book::after {
+    display: none;
+  }
+
+  .promises-pages {
+    grid-template-columns: 1fr;
+  }
+
+  .promises-page {
+    --book-paper-dir: to left;
+    --book-fore-width: 7px;
+    padding: var(--space-4) var(--space-6) var(--space-4) var(--space-12);
+  }
+
+  /* One fore-edge down the right side, across both halves */
+  .promises-page::before {
+    right: auto;
+    left: 100%;
+    border-radius: 0 1px 2px 0;
+  }
+
+  .promises-page-left::before {
+    bottom: 0;
+    border-radius: 0 1px 0 0;
+  }
+
+  .promises-page-right::before {
+    top: 0;
+    border-radius: 0 0 2px 0;
+    background: repeating-linear-gradient(
+      to right,
+      var(--book-fore-ink) 0 1px,
+      var(--book-paper-5) 1px 2.34px
+    );
+  }
+
+  .promises-page-right {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-6);
+  }
+
+  .promises-page-left .promises-edge-bottom,
+  .promises-page-right .promises-edge-top {
+    display: none;
+  }
+
+  .promises-page-left .promises-edge {
+    transform: scaleX(-1);
+  }
+
+  /* Only the right half of the gutter shows */
+  .book-spine {
+    left: 16px;
+    clip-path: inset(-12px 0 -12px 15px);
+  }
+
+  .promises-ribbon {
+    left: 13px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Match the 48px .section padding the neighbouring sections use here. */
+  /* Match the 48px .section padding the neighbouring sections use here,
+     plus room for the ribbon's tail. */
   .promises-section {
-    padding: var(--space-12) var(--space-4);
-  }
-
-  .promises-book {
-    flex-direction: column;
-  }
-
-  .book-spine {
-    width: 100%;
-    height: 20px;
-    border-radius: 4px 4px 0 0;
-  }
-
-  .book-spine svg {
-    display: none;
-  }
-
-  .promises-pages {
-    padding: var(--space-6);
-  }
-
-  .page-botanical {
-    display: none;
+    padding: var(--space-12) var(--space-4) calc(var(--space-12) + var(--space-10));
   }
 }
 
@@ -177,5 +432,14 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .promises-page {
+    padding-right: var(--space-5);
+    padding-left: var(--space-10);
+  }
+
+  .page-botanical {
+    width: 128px;
   }
 }

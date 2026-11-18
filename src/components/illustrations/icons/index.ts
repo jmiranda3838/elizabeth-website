@@ -8,6 +8,8 @@ export { default as IconCrescentMoon } from "./IconCrescentMoon.astro";
 export { default as IconCrown } from "./IconCrown.astro";
 export { default as IconCrystal } from "./IconCrystal.astro";
 export { default as IconEmail } from "./IconEmail.astro";
+export { default as IconFiddlehead } from "./IconFiddlehead.astro";
+export { default as IconFullMoon } from "./IconFullMoon.astro";
 export { default as IconGraduation } from "./IconGraduation.astro";
 export { default as IconHandsOpen } from "./IconHandsOpen.astro";
 export { default as IconHeart } from "./IconHeart.astro";

@@ -1,4 +1,8 @@
 /* === Sections: Illuminated Manuscript Quote === */
+/* A leaf of vellum with a ruled gilt frame. The four ManuscriptCorner pieces grow a
+   vine scroll out of each corner of the frame (rose, ivy, strawberry, daisy),
+   ManuscriptMargin runs down the outer margin, and InitialFlourish is the panel
+   behind the drop cap. Their shapes live in illustrations/frames/illumination.ts. */
 
 .illuminated-section {
   background: var(--warm-paper);
@@ -9,61 +13,117 @@
 }
 
 .illuminated-page {
+  /* The illuminator's colours */
+  --manuscript-vine: #6a7d70;
+  --manuscript-leaf: #7f9a8c;
+  --manuscript-bloom: var(--warm-clay);
+  --manuscript-gilt: #c09d60;
+  /* Distance from the edge of the leaf to the centre of the gilt rule */
+  --frame-inset: 22px;
+
   position: relative;
-  max-width: 800px;
+  isolation: isolate;
+  max-width: 860px;
   margin: 0 auto;
-  padding: var(--space-16) var(--space-12);
-  background: linear-gradient(
-    135deg,
-    rgba(253, 242, 239, 0.5) 0%,
-    rgba(247, 246, 245, 0.8) 50%,
-    rgba(253, 242, 239, 0.3) 100%
-  );
-  border: 1px solid var(--dusty-peach);
+  padding: var(--space-20) var(--space-16) var(--space-16);
+  border-radius: 2px;
+  background:
+    radial-gradient(ellipse 42% 60% at 10% 16%, rgba(208, 180, 166, 0.2), transparent 70%),
+    radial-gradient(ellipse 50% 44% at 90% 84%, rgba(208, 180, 166, 0.18), transparent 70%),
+    radial-gradient(ellipse 34% 40% at 68% 24%, rgba(255, 255, 255, 0.7), transparent 70%),
+    linear-gradient(135deg, #fbf5ee 0%, #fdf8f3 50%, #f9f0e7 100%);
   box-shadow:
-    0 4px 20px rgba(84, 49, 35, 0.08),
-    inset 0 0 60px rgba(208, 180, 166, 0.1);
+    0 1px 2px rgba(84, 49, 35, 0.14),
+    0 14px 30px -12px rgba(84, 49, 35, 0.2),
+    inset 0 0 44px rgba(208, 180, 166, 0.24);
 }
 
-/* Corner flourishes */
-.manuscript-corner {
+/* The ruled frame: an ink hairline outside, a gilt rule, an ink hairline inside */
+.illuminated-page::before,
+.illuminated-page::after {
+  content: "";
   position: absolute;
-  width: 80px;
-  height: 80px;
-  color: var(--dusty-peach);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.illuminated-page::before {
+  inset: calc(var(--frame-inset) - 5px);
+  border: 1px solid rgba(138, 84, 81, 0.4);
+}
+
+.illuminated-page::after {
+  inset: calc(var(--frame-inset) - 1px);
+  border: 2px solid var(--manuscript-gilt);
+  border-image: linear-gradient(
+      115deg,
+      #c8a769 0%,
+      #b08a4e 22%,
+      #ead9ab 38%,
+      #bb975a 55%,
+      #d9c084 76%,
+      #ae884c 100%
+    )
+    1;
+  outline: 1px solid rgba(138, 84, 81, 0.32);
+  outline-offset: -6px;
+}
+
+/* Corner pieces. Each is drawn with the frame's corner at (16,16) of its 80-unit
+   box, so it is pulled back by a fifth of its size to sit on the rule. They differ
+   in size as well as in subject: the border is heaviest by the initial. */
+.manuscript-corner {
+  --off: calc(var(--frame-inset) - var(--corner) * 0.2);
+  position: absolute;
+  z-index: 1;
+  width: var(--corner);
+  height: var(--corner);
+  color: var(--warm-clay);
+  pointer-events: none;
 }
 
 .manuscript-corner-tl {
-  top: 0;
-  left: 0;
+  --corner: 116px;
+  top: var(--off);
+  left: var(--off);
 }
 
 .manuscript-corner-tr {
-  top: 0;
-  right: 0;
+  --corner: 92px;
+  top: var(--off);
+  right: var(--off);
 }
 
 .manuscript-corner-bl {
-  bottom: 0;
-  left: 0;
+  --corner: 104px;
+  bottom: var(--off);
+  left: var(--off);
 }
 
 .manuscript-corner-br {
-  bottom: 0;
-  right: 0;
+  --corner: 92px;
+  bottom: var(--off);
+  right: var(--off);
 }
 
 /* Content area */
 .illuminated-content {
+  position: relative;
+  z-index: 1;
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-6);
   align-items: flex-start;
 }
 
-/* Decorative initial letter */
+/* Illuminated initial: the letter is type, set on InitialFlourish's panel */
 .illuminated-initial {
+  --initial: 5.5rem;
   position: relative;
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: var(--initial);
+  height: var(--initial);
   /* Own stacking context, so the flourish's z-index: -1 tucks it behind the
      letter instead of behind the section's background. */
   isolation: isolate;
@@ -71,21 +131,21 @@
 
 .initial-letter {
   font-family: var(--font-serif);
-  font-size: 5rem;
+  font-size: calc(var(--initial) * 0.98);
   font-weight: 600;
-  line-height: 0.8;
-  color: var(--espresso);
+  line-height: 1;
+  color: var(--clay-deeper);
   display: block;
 }
 
+/* The panel is 80 of the drawing's 100 x 120 units, starting at (10,28) */
 .initial-flourish {
   position: absolute;
-  top: -10px;
-  left: -20px;
-  width: 100px;
-  height: 120px;
+  top: calc(var(--initial) * -0.35);
+  left: calc(var(--initial) * -0.125);
+  width: calc(var(--initial) * 1.25);
+  height: calc(var(--initial) * 1.5);
   color: var(--sage);
-  opacity: 0.6;
   z-index: -1;
 }
 
@@ -140,36 +200,53 @@
   color: var(--sage);
 }
 
-/* Margin decoration */
+/* Margin vine: down the outer margin, centred on the gilt rule */
 .manuscript-margin {
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+  z-index: 1;
+  right: calc(var(--frame-inset) - 20px);
+  top: 46px;
+  bottom: 46px;
   width: 40px;
-  height: 200px;
-  color: var(--dusty-peach);
-  opacity: 0.4;
+  color: var(--warm-clay);
+  pointer-events: none;
+}
+
+.manuscript-margin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 768px) {
   .illuminated-page {
-    padding: var(--space-10) var(--space-6);
+    --frame-inset: 15px;
+    padding: calc(var(--space-12) + var(--space-2)) var(--space-8) var(--space-12);
+  }
+
+  .manuscript-corner-tl {
+    --corner: 84px;
+  }
+
+  .manuscript-corner-tr,
+  .manuscript-corner-br {
+    --corner: 66px;
+  }
+
+  .manuscript-corner-bl {
+    --corner: 74px;
   }
 
   /* Classic floated drop cap, so the "D" stays beside the start of its word
-     and the quote wraps around it. */
+     and the quote wraps around it. It is two lines of the quote tall. */
   .illuminated-content {
     display: block;
   }
 
   .illuminated-initial {
+    --initial: calc(3.2 * clamp(1.25rem, 3vw, 1.75rem) - 6px);
     float: left;
-    margin-right: var(--space-3);
-  }
-
-  .initial-letter {
-    font-size: 4rem;
+    margin: 4px var(--space-3) 0 0;
   }
 
   .manuscript-margin {

@@ -1,45 +1,115 @@
 ---
-// Right gate door (hinges on the right post). Drawn at its real coordinates
-// inside the shared 0 0 800 400 viewBox so it aligns with GateFrame; the whole
-// SVG element is swung open in CSS via transform-origin at the hinge edge.
+// Right gate door (hinges on the right post). Drawn at its real coordinates inside the shared
+// 0 0 800 400 viewBox so it aligns with GateFrame; the whole SVG element is
+// swung open in CSS via transform-origin at the hinge edge. The timber and iron
+// come from gateDoorArt.ts (shared with the left door, drawn here mirrored).
+import { buildDoor } from "./gateDoorArt";
+
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+const art = buildDoor(29);
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 800 400"
   fill="none"
   preserveAspectRatio="xMidYMid meet"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Translucent panel so the door reads as substance and softly catches the
-       garden light; styled (fill) from garden-gate.css via .gate-door-panel. -->
-  <rect class="gate-door-panel" x="420" y="100" width="290" height="300" rx="4"></rect>
+  <g transform="matrix(-1 0 0 1 800 0)" stroke="currentColor" stroke-linejoin="round">
+    <!-- Translucent backing so the door reads as substance and softly catches
+         the garden light between the palings; styled from garden-gate.css. -->
+    <path class="gate-door-panel" d={art.panel} stroke="none"></path>
+    <!-- Palings, each a slightly different weathered tone -->
+    {
+      art.boards.map((b) => (
+        <path
+          d={b.d}
+          fill="currentColor"
+          fill-opacity={b.fo.toFixed(3)}
+          stroke-width="0.9"
+          stroke-opacity="0.5"
+        />
+      ))
+    }
+    <!-- Stiles -->
+    {
+      art.stiles.map((d) => (
+        <path
+          d={d}
+          fill="currentColor"
+          fill-opacity="0.11"
+          stroke-width="1.1"
+          stroke-opacity="0.75"
+        />
+      ))
+    }
+    <!-- Grain and knots -->
+    <g stroke-width="0.5" stroke-opacity="0.22" stroke-linecap="round">
+      {
+        art.grain.map((d, i) => (
+          <path
+            d={d}
+            stroke-dasharray={i % 3 === 0 ? "60 7 30 9" : i % 3 === 1 ? "90 10 20 6" : "40 8 70 11"}
+          />
+        ))
+      }
+      {art.knots.map((d) => <path d={d} stroke-opacity="0.5" />)}
+    </g>
+    <!-- Rails, standing proud of the palings, with their cast shadows -->
+    {
+      art.railShadows.map((d) => (
+        <path d={d} fill="currentColor" fill-opacity="0.1" stroke="none" />
+      ))
+    }
+    {
+      art.rails.map((d) => (
+        <path d={d} fill="currentColor" fill-opacity="0.12" stroke-width="1" stroke-opacity="0.7" />
+      ))
+    }
+    <g fill="currentColor" fill-opacity="0.45" stroke="none">
+      {art.nails.map(([x, y]) => <circle cx={x} cy={y} r="0.9" />)}
+    </g>
+    <!-- Forged strap hinges ending in scrolls -->
+    <g class="gate-door-iron">
+      {
+        art.straps.map((d) => (
+          <path d={d} fill="currentColor" fill-opacity="0.55" stroke-width="0.7" />
+        ))
+      }
+      {
+        art.scrolls.map((d) => (
+          <path d={d} stroke-width="2" stroke-opacity="0.7" stroke-linecap="round" />
+        ))
+      }
+      <g fill="currentColor" fill-opacity="0.85" stroke="none">
+        {art.bolts.map(([x, y]) => <circle cx={x} cy={y} r="1.3" />)}
+      </g>
+    </g>
+  </g>
 
-  <rect x="420" y="100" width="290" height="300" stroke="currentColor" stroke-width="1" fill="none"
-  ></rect>
-  <!-- Vertical bars -->
-  <line x1="470" y1="100" x2="470" y2="400" stroke="currentColor" stroke-width="0.8"></line>
-  <line x1="530" y1="100" x2="530" y2="400" stroke="currentColor" stroke-width="0.8"></line>
-  <line x1="590" y1="100" x2="590" y2="400" stroke="currentColor" stroke-width="0.8"></line>
-  <line x1="650" y1="100" x2="650" y2="400" stroke="currentColor" stroke-width="0.8"></line>
-  <!-- Horizontal rails -->
-  <line x1="420" y1="200" x2="710" y2="200" stroke="currentColor" stroke-width="0.8"></line>
-  <line x1="420" y1="300" x2="710" y2="300" stroke="currentColor" stroke-width="0.8"></line>
-  <!-- Decorative scrollwork -->
-  <path
-    d="M460 150 Q490 130 520 150 Q550 170 520 190 Q490 210 460 190 Q430 170 460 150"
-    stroke="currentColor"
-    stroke-width="0.8"
-    fill="none"></path>
-  <path
-    d="M620 150 Q650 130 680 150 Q710 170 680 190 Q650 210 620 190 Q590 170 620 150"
-    stroke="currentColor"
-    stroke-width="0.8"
-    fill="none"></path>
+  <!-- Thumb latch and ring pull on the meeting stile (right door only) -->
+  <g class="gate-door-iron" stroke="currentColor">
+    <rect
+      x="420"
+      y="128"
+      width="12"
+      height="16"
+      rx="2"
+      fill="currentColor"
+      fill-opacity="0.5"
+      stroke-width="0.7"></rect>
+    <circle cx="426" cy="136" r="1.4" fill="currentColor" stroke="none"></circle>
+    <path
+      d="M426 144 C419 145 418 155 426 156 C434 155 433 145 426 144 Z"
+      stroke-width="1.6"
+      stroke-opacity="0.75"></path>
+  </g>
 </svg>

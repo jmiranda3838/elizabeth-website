@@ -2,29 +2,199 @@
 interface Props {
   class?: string;
   style?: string;
+  [key: string]: unknown;
 }
-const { class: className = "", style = "" } = Astro.props;
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// Leaflets of the two compound leaves: [x, y, rotation, scale]. A rose leaf carries
+// its leaflets in pairs with one at the tip; none of them sit quite opposite.
+const leafA = [
+  [17, 86, 172, 1.1],
+  [23.6, 84, 232, 0.92],
+  [24.6, 84.4, 124, 0.98],
+  [30.8, 82.6, 240, 0.8],
+  [31.8, 83, 114, 0.84],
+];
+const leafB = [
+  [60.5, 68.6, 14, 1.12],
+  [53, 66.4, -54, 0.96],
+  [53.8, 66.8, 64, 0.9],
+  [45.6, 66.6, -66, 0.8],
+  [46.6, 67, 72, 0.76],
+];
+const leafC = [
+  [60, 43.4, 22, 0.86],
+  [54.4, 41.4, -50, 0.7],
+  [55, 41.8, 78, 0.66],
+];
+// One leaflet, base at the origin, tip along +x: ovate, widest below the middle, with
+// the fine saw-teeth of a rose leaf. The lower half is a little narrower than the upper.
+const leaflet = (() => {
+  const L = 12;
+  const n = 7;
+  const f = (v: number) => v.toFixed(2);
+  const side = (dir: number, wide: number) => {
+    const pts: string[] = [];
+    for (let i = 1; i < n; i++) {
+      const t = i / n;
+      const w = wide * Math.sin(Math.PI * Math.pow(t, 0.72));
+      pts.push(`${f(L * t + 0.55)} ${f(dir * (w + 0.42))}`, `${f(L * t + 1)} ${f(dir * w * 0.9)}`);
+    }
+    return pts;
+  };
+  const up = side(-1, 3.3);
+  const down = side(1, 2.9).reverse();
+  return {
+    outline: `M0 0 L${up.join(" L")} L${L} -0.2 L${down.join(" L")} Z`,
+    lower: `M0 0 L${L} -0.2 L${down.join(" L")} Z`,
+  };
+})();
+// Petals of the open flower: [rotation, scale]. Back petals first.
+const petals = [
+  [150, 1.02],
+  [218, 0.96],
+  [76, 1.06],
+  [292, 1],
+  [6, 1.1],
+];
+// Stamens: a loose ring of anthers round the centre.
+const anthers = Array.from({ length: 13 }, (_, i) => {
+  const a = (i / 13) * Math.PI * 2 + (i % 3) * 0.16;
+  const d = 3.3 + (i % 4) * 0.42;
+  return { x: +(Math.cos(a) * d).toFixed(2), y: +(Math.sin(a) * d).toFixed(2) };
+});
 ---
 
 <svg
   class={className}
   style={style}
+  {...rest}
   viewBox="0 0 80 100"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <path
-    d="M40 95 Q38 70 40 50 Q42 30 40 10"
-    stroke="currentColor"
-    stroke-width="0.8"
-    fill="none"
-    stroke-linecap="round"></path>
-  <path d="M40 80 Q25 75 20 82 Q28 85 40 80" stroke="currentColor" stroke-width="0.6" fill="none"
-  ></path>
-  <path d="M40 60 Q55 55 60 62 Q52 65 40 60" stroke="currentColor" stroke-width="0.6" fill="none"
-  ></path>
-  <path d="M40 40 Q25 35 20 42 Q28 45 40 40" stroke="currentColor" stroke-width="0.6" fill="none"
-  ></path>
-  <circle cx="40" cy="8" r="4" stroke="currentColor" stroke-width="0.6" fill="none"></circle>
-  <circle cx="40" cy="8" r="1.5" fill="currentColor" opacity="0.3"></circle>
+  <!-- A sprig of wild rose, as a plate in a flora: one open flower, a bud, three leaves
+       and a dropped petal. It themes through `color`; a page may tint the leaves and
+       the flower apart with --botanical-leaf and --botanical-bloom. -->
+  <defs>
+    <g id="pb-leaflet">
+      <path d={leaflet.outline} fill="currentColor" fill-opacity="0.24"></path>
+      <path d={leaflet.lower} fill="currentColor" fill-opacity="0.22"></path>
+      <path d={leaflet.outline} stroke="currentColor" stroke-width="0.5" stroke-linejoin="round"
+      ></path>
+      <path
+        d="M0.4 0 C4 -0.5 8 -0.5 11.4 -0.2 M2.6 -0.2 l1.9 -2.1 M4.8 -0.3 l1.9 -2.2 M7 -0.4 l1.7 -1.8 M9.1 -0.3 l1.2 -1.2 M3 -0.1 l2 1.9 M5.4 -0.3 l1.9 1.8 M7.8 -0.3 l1.5 1.4"
+        stroke="currentColor"
+        stroke-width="0.34"
+        stroke-linecap="round"
+        stroke-opacity="0.8"></path>
+    </g>
+    <g id="pb-petal">
+      <path
+        d="M0 0.6 C-5.4 -1.6 -9.6 -7.6 -8 -12.4 C-6.8 -15.9 -2.6 -16.4 -0.2 -13.6 C2.4 -16.6 7 -15.6 7.8 -12 C8.9 -7.2 5 -1.6 0 0.6 Z"
+        fill="currentColor"
+        fill-opacity="0.24"></path>
+      <path
+        d="M0 0.6 C-3 -1.4 -4.6 -5 -4.4 -8.4 C-2.8 -6.6 2.6 -6.4 4.4 -8.2 C4.6 -4.8 3 -1.4 0 0.6 Z"
+        fill="currentColor"
+        fill-opacity="0.2"></path>
+      <path
+        d="M0 0.6 C-5.4 -1.6 -9.6 -7.6 -8 -12.4 C-6.8 -15.9 -2.6 -16.4 -0.2 -13.6 C2.4 -16.6 7 -15.6 7.8 -12 C8.9 -7.2 5 -1.6 0 0.6 Z"
+        stroke="currentColor"
+        stroke-width="0.6"
+        stroke-linejoin="round"></path>
+      <path
+        d="M-0.4 -3.4 C-1.6 -6.4 -3 -9 -4.6 -11.4 M0.2 -4 C0.4 -7 0.2 -9.6 -0.2 -12 M0.8 -3.4 C2 -6.2 3.2 -8.6 4.6 -10.8"
+        stroke="currentColor"
+        stroke-width="0.32"
+        stroke-linecap="round"
+        stroke-opacity="0.7"></path>
+    </g>
+  </defs>
+
+  <!-- Stems, thorns and leaves -->
+  <g style="color: var(--botanical-leaf, currentColor)">
+    <path
+      d="M39.6 98 C37.4 86 36 72 38.4 59 C39.8 51.4 43 44.6 45 38.4"
+      stroke="currentColor"
+      stroke-width="1.3"
+      stroke-linecap="round"></path>
+    <path
+      d="M39.6 98 C38.6 92 37.6 86 37.2 80"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M38.2 60 C33.6 54 27 50 22.4 42 M37.3 84 C31 81.6 24 82.4 17 86 M37 70.6 C44 66.4 52 65.6 60.4 68.6 M42.6 45.6 C48 41.6 54 40.6 60 43.4"
+      stroke="currentColor"
+      stroke-width="0.8"
+      stroke-linecap="round"></path>
+    <path
+      d="M37.6 90.6 l-2.5 -0.9 l2.3 -1.3 Z M37.3 76 l2.6 -0.6 l-2.4 -1.5 Z M38.9 54.4 l-2.4 -1.3 l2.7 -0.9 Z M28.6 51 l-0.6 -2.4 l2 1.3 Z"
+      fill="currentColor"
+      fill-opacity="0.75"></path>
+    {
+      [...leafA, ...leafB, ...leafC].map(([x, y, rot, s]) => (
+        <use href="#pb-leaflet" transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`} />
+      ))
+    }
+    <!-- Sepals under the bud, one of them curling away -->
+    <path
+      d="M22.4 42 C19 41 16.6 37.6 17 33.6 C19.6 35.6 21.6 38.6 22.4 42 Z M22.4 42 C24.8 40.4 26.4 37.2 25.6 33.4 C23.4 35.6 22.2 38.6 22.4 42 Z"
+      fill="currentColor"
+      fill-opacity="0.34"
+      stroke="currentColor"
+      stroke-width="0.5"
+      stroke-linejoin="round"></path>
+    <path
+      d="M22.4 41.4 C24.8 41.8 26.6 40.4 27 37.8 M22 41.6 C19.6 44.2 15.8 44.6 13.8 42.6 C13 41.6 13.4 40.4 14.4 40.4"
+      stroke="currentColor"
+      stroke-width="0.55"
+      stroke-linecap="round"></path>
+  </g>
+
+  <g style="color: var(--botanical-bloom, currentColor)">
+    <!-- Bud, just showing colour -->
+    <path
+      d="M21.6 40.4 C18.6 37.6 18.4 32 20.6 27.6 C24 31.4 25 37 22.6 40.4 Z"
+      fill="currentColor"
+      fill-opacity="0.4"
+      stroke="currentColor"
+      stroke-width="0.55"
+      stroke-linejoin="round"></path>
+    <path
+      d="M20.6 27.6 C20.8 32 21.4 36 22 40"
+      stroke="currentColor"
+      stroke-width="0.35"
+      stroke-opacity="0.7"></path>
+    <!-- Open flower, tipped a little toward the viewer -->
+    <g transform="translate(46.5 25) rotate(-14) scale(1 0.88)">
+      {petals.map(([rot, s]) => <use href="#pb-petal" transform={`rotate(${rot}) scale(${s})`} />)}
+    </g>
+    <!-- A petal that has dropped -->
+    <g transform="translate(63 95.4) rotate(102) scale(0.62 0.5)">
+      <use href="#pb-petal"></use>
+    </g>
+  </g>
+
+  <!-- Stamens -->
+  <g
+    transform="translate(46.5 25) rotate(-14) scale(1 0.88)"
+    style="color: var(--botanical-gilt, currentColor)"
+  >
+    <circle r="2.1" fill="currentColor" fill-opacity="0.5"></circle>
+    <circle r="2.1" stroke="currentColor" stroke-width="0.4"></circle>
+    {
+      anthers.map((p) => (
+        <>
+          <path
+            d={`M${(p.x * 0.55).toFixed(2)} ${(p.y * 0.55).toFixed(2)} L${p.x} ${p.y}`}
+            stroke="currentColor"
+            stroke-width="0.3"
+          />
+          <circle cx={p.x} cy={p.y} r="0.55" fill="currentColor" />
+        </>
+      ))
+    }
+  </g>
 </svg>

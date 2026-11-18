@@ -1,0 +1,499 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+type P = [number, number];
+const r = (n: number) => Math.round(n * 10) / 10;
+
+/* A tapering ribbon along a run of points: the stalk of a fern, thick at the
+   crown and thinning into the coil. */
+function ribbon(pts: P[], width: (t: number) => number) {
+  const a: string[] = [];
+  const b: string[] = [];
+  pts.forEach(([x, y], i) => {
+    const [px, py] = pts[Math.max(0, i - 1)];
+    const [nx, ny] = pts[Math.min(pts.length - 1, i + 1)];
+    const len = Math.hypot(nx - px, ny - py) || 1;
+    const ox = (-(ny - py) / len) * (width(i / (pts.length - 1)) / 2);
+    const oy = ((nx - px) / len) * (width(i / (pts.length - 1)) / 2);
+    a.push(`${r(x + ox)} ${r(y + oy)}`);
+    b.unshift(`${r(x - ox)} ${r(y - oy)}`);
+  });
+  return `M${a.join("L")}L${b.join("L")}Z`;
+}
+
+/* A fiddlehead: a stalk rising from (bx, by) into a coil centred on (cx, cy).
+   dir 1 coils to the right, -1 to the left. */
+interface Crozier {
+  bx: number;
+  by: number;
+  cx: number;
+  cy: number;
+  R: number;
+  dir: 1 | -1;
+  w: number; // stalk width at the crown
+  turns?: number;
+  sway?: number;
+  tone?: string;
+}
+function crozier(c: Crozier) {
+  const { bx, by, cx, cy, R, dir, w, turns = 2.2, sway = 0 } = c;
+  const jx = cx - dir * R; // where the stalk meets the coil
+  const h = by - cy;
+  const stalk: P[] = [];
+  const N = 16;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const u = 1 - t;
+    const x =
+      u * u * u * bx +
+      3 * u * u * t * (bx + sway) +
+      3 * u * t * t * (jx - dir * R * 0.1) +
+      t * t * t * jx;
+    const y =
+      u * u * u * by +
+      3 * u * u * t * (by - h * 0.4) +
+      3 * u * t * t * (cy + h * 0.34) +
+      t * t * t * cy;
+    stalk.push([x, y]);
+  }
+  const coil: P[] = [];
+  const nubs: { x: number; y: number; rot: number; s: number }[] = [];
+  const total = turns * 2 * Math.PI;
+  const steps = Math.round(total / 0.26);
+  for (let i = 1; i <= steps; i++) {
+    const th = (i / steps) * total;
+    const rad = R * Math.exp(-0.125 * th);
+    const x = cx + dir * rad * Math.cos(Math.PI + th);
+    const y = cy + rad * Math.sin(Math.PI + th);
+    coil.push([x, y]);
+    // folded pinnae tucked on the inside of the first turn and a half
+    if (i % 2 === 0 && th < Math.PI * 2.5 && rad > 5) {
+      const inner = rad - w * 0.3 - 1.6;
+      nubs.push({
+        x: r(cx + dir * inner * Math.cos(Math.PI + th)),
+        y: r(cy + inner * Math.sin(Math.PI + th)),
+        rot: r(
+          ((Math.atan2(Math.sin(Math.PI + th), dir * Math.cos(Math.PI + th)) * 180) / Math.PI) %
+            360,
+        ),
+        s: r(0.5 + (rad / R) * 0.6),
+      });
+    }
+  }
+  const pts = [...stalk, ...coil];
+  const split = stalk.length / pts.length;
+  const width = (t: number) =>
+    t < split ? w - (w * 0.36 * t) / split : w * 0.64 - w * 0.42 * ((t - split) / (1 - split));
+  // lit edge of the stalk (the side away from the coil)
+  const edge = stalk
+    .map(([x, y], i) => {
+      const [px, py] = stalk[Math.max(0, i - 1)];
+      const [nx, ny] = stalk[Math.min(N, i + 1)];
+      const len = Math.hypot(nx - px, ny - py) || 1;
+      const k = (width((i / N) * split) / 2 - 1) * dir;
+      return `${r(x + ((ny - py) / len) * k)} ${r(y - ((nx - px) / len) * k)}`;
+    })
+    .join("L");
+  // papery scales: short ticks down both sides of the stalk
+  let scales = "";
+  for (let i = 1; i < N - 1; i++) {
+    const [x, y] = stalk[i];
+    const side = i % 2 ? 1 : -1;
+    const k = width((i / N) * split) / 2;
+    scales += `M${r(x + side * k * 0.45)} ${r(y)}l${r(side * k * 0.42)} ${r(1.6 + (i % 3) * 0.5)}`;
+  }
+  return { ...c, d: ribbon(pts, width), edge: `M${edge}`, scales, nubs };
+}
+
+/* An open frond: pinnae in pairs along an arching rachis, longest a third of the
+   way up and dwindling to the tip. Returns one path per side so the two sides
+   can take slightly different tones. */
+interface Frond {
+  bx: number;
+  by: number;
+  tx: number;
+  ty: number;
+  bend: number;
+  n: number;
+  L: number;
+  tone: string;
+  shade: string;
+  opacity?: number;
+}
+function frond(f: Frond) {
+  const { bx, by, tx, ty, bend, n, L } = f;
+  const mx = (bx + tx) / 2;
+  const my = (by + ty) / 2;
+  const dl = Math.hypot(tx - bx, ty - by);
+  const qx = mx + (-(ty - by) / dl) * bend;
+  const qy = my + ((tx - bx) / dl) * bend;
+  const at = (t: number): [number, number, number] => {
+    const u = 1 - t;
+    const x = u * u * bx + 2 * u * t * qx + t * t * tx;
+    const y = u * u * by + 2 * u * t * qy + t * t * ty;
+    const dx = 2 * u * (qx - bx) + 2 * t * (tx - qx);
+    const dy = 2 * u * (qy - by) + 2 * t * (ty - qy);
+    return [x, y, Math.atan2(dy, dx)];
+  };
+  const pinna = (x: number, y: number, ang: number, len: number, wd: number, flip: number) => {
+    // a slightly sickle-shaped leaflet from (x, y) along `ang`
+    const tr = (px: number, py: number) =>
+      `${r(x + px * Math.cos(ang) - py * flip * Math.sin(ang))} ${r(y + px * Math.sin(ang) + py * flip * Math.cos(ang))}`;
+    return `M${tr(0, 0)}C${tr(len * 0.2, -wd * 1.05)} ${tr(len * 0.74, -wd * 0.9)} ${tr(len, -wd * 0.1)}C${tr(len * 0.7, wd * 0.5)} ${tr(len * 0.24, wd * 0.62)} ${tr(0, 0)}Z`;
+  };
+  let up = "";
+  let down = "";
+  for (let i = 0; i < n; i++) {
+    const t = 0.2 + (i / n) * 0.78;
+    const [x, y, ang] = at(t);
+    const prof = Math.pow(Math.sin(Math.PI * (0.16 + 0.84 * t)), 0.85);
+    const len = L * (0.25 + 0.75 * prof) * (i % 2 ? 1 : 0.93);
+    const wd = len * 0.17 + 1.1;
+    const splay = 1.2 - t * 0.42;
+    up += pinna(x, y, ang - splay, len, wd, 1);
+    down += pinna(x, y, ang + splay, len * 0.96, wd, -1);
+  }
+  const [ex, ey, ea] = at(1);
+  up += pinna(ex, ey, ea - 0.1, L * 0.22, 1.6, 1);
+  return { ...f, up, down, rachis: `M${r(bx)} ${r(by)}Q${r(qx)} ${r(qy)} ${r(tx)} ${r(ty)}` };
+}
+
+const SAGE = { deep: "#7f9689", mid: "#96aca0", soft: "#a9bcb0", pale: "#c3d0c6", mist: "#d3ddd4" };
+
+// Fronds, farthest first
+const fronds = [
+  // behind the middle clump
+  { bx: 542, by: 222, tx: 352, ty: 92, bend: -44, n: 18, L: 31, tone: SAGE.mist, shade: SAGE.pale },
+  { bx: 562, by: 222, tx: 770, ty: 100, bend: 46, n: 18, L: 31, tone: SAGE.mist, shade: SAGE.pale },
+  { bx: 548, by: 222, tx: 452, ty: 38, bend: -30, n: 19, L: 30, tone: SAGE.pale, shade: SAGE.soft },
+  { bx: 558, by: 222, tx: 668, ty: 50, bend: 34, n: 19, L: 30, tone: SAGE.pale, shade: SAGE.soft },
+  // left and right clumps
+  { bx: 212, by: 224, tx: 96, ty: 104, bend: -34, n: 15, L: 27, tone: SAGE.mist, shade: SAGE.pale },
+  { bx: 222, by: 224, tx: 316, ty: 116, bend: 30, n: 14, L: 25, tone: SAGE.pale, shade: SAGE.soft },
+  {
+    bx: 886,
+    by: 224,
+    tx: 1004,
+    ty: 108,
+    bend: 34,
+    n: 15,
+    L: 27,
+    tone: SAGE.mist,
+    shade: SAGE.pale,
+  },
+  {
+    bx: 876,
+    by: 224,
+    tx: 790,
+    ty: 124,
+    bend: -28,
+    n: 14,
+    L: 25,
+    tone: SAGE.pale,
+    shade: SAGE.soft,
+  },
+  // far edges, seen only on very wide screens
+  {
+    bx: -150,
+    by: 226,
+    tx: -250,
+    ty: 120,
+    bend: -30,
+    n: 14,
+    L: 26,
+    tone: SAGE.mist,
+    shade: SAGE.pale,
+  },
+  {
+    bx: -140,
+    by: 226,
+    tx: -60,
+    ty: 130,
+    bend: 26,
+    n: 13,
+    L: 24,
+    tone: SAGE.pale,
+    shade: SAGE.soft,
+  },
+  {
+    bx: 1250,
+    by: 226,
+    tx: 1350,
+    ty: 122,
+    bend: 30,
+    n: 14,
+    L: 26,
+    tone: SAGE.mist,
+    shade: SAGE.pale,
+  },
+  {
+    bx: 1240,
+    by: 226,
+    tx: 1160,
+    ty: 132,
+    bend: -26,
+    n: 13,
+    L: 24,
+    tone: SAGE.pale,
+    shade: SAGE.soft,
+  },
+].map((f) => frond(f));
+// Low fronds in front of the stalks, nearer and so a tone deeper
+const nearFronds = [
+  { bx: 534, by: 226, tx: 410, ty: 150, bend: -34, n: 12, L: 21, tone: SAGE.soft, shade: SAGE.mid },
+  { bx: 572, by: 226, tx: 708, ty: 146, bend: 36, n: 12, L: 21, tone: SAGE.soft, shade: SAGE.mid },
+  { bx: 204, by: 228, tx: 142, ty: 170, bend: -18, n: 9, L: 18, tone: SAGE.soft, shade: SAGE.mid },
+  { bx: 894, by: 228, tx: 966, ty: 160, bend: 20, n: 10, L: 19, tone: SAGE.soft, shade: SAGE.mid },
+].map((f) => frond(f));
+
+const croziers = [
+  // middle clump: back pair first, then the two tall ones, then the newest
+  { bx: 530, by: 226, cx: 497, cy: 138, R: 15, dir: 1, w: 10, sway: -4, tone: SAGE.soft },
+  { bx: 578, by: 226, cx: 627, cy: 148, R: 13.5, dir: -1, w: 9.4, sway: 6, tone: SAGE.soft },
+  { bx: 545, by: 228, cx: 547, cy: 62, R: 24, dir: 1, w: 15, sway: 9, tone: SAGE.mid },
+  { bx: 566, by: 228, cx: 583, cy: 112, R: 19, dir: -1, w: 12.6, sway: -8, tone: SAGE.deep },
+  {
+    bx: 553,
+    by: 228,
+    cx: 558,
+    cy: 186,
+    R: 10,
+    dir: 1,
+    w: 8.4,
+    sway: 2,
+    tone: SAGE.mid,
+    turns: 1.8,
+  },
+  // left clump
+  { bx: 213, by: 228, cx: 214, cy: 122, R: 18, dir: 1, w: 12, sway: 7, tone: SAGE.mid },
+  { bx: 230, by: 228, cx: 254, cy: 172, R: 12, dir: -1, w: 8.8, sway: -3, tone: SAGE.deep },
+  // right clump
+  { bx: 885, by: 228, cx: 889, cy: 108, R: 19, dir: -1, w: 12.4, sway: -7, tone: SAGE.mid },
+  { bx: 868, by: 228, cx: 850, cy: 160, R: 13, dir: 1, w: 9.2, sway: 3, tone: SAGE.deep },
+  {
+    bx: 900,
+    by: 228,
+    cx: 921,
+    cy: 184,
+    R: 9,
+    dir: -1,
+    w: 7.4,
+    sway: -2,
+    tone: SAGE.soft,
+    turns: 1.8,
+  },
+].map((c) => crozier(c as Crozier));
+
+// Wood sorrel: three heart leaflets on a hair-thin stalk. [x, y of leaf centre, size, foot x]
+const sorrel = [
+  [356, 208, 1, 362],
+  [378, 214, 0.78, 374],
+  [334, 216, 0.7, 340],
+  [432, 212, 0.82, 428],
+  [664, 212, 0.86, 668],
+  [744, 206, 1, 738],
+  [766, 214, 0.74, 770],
+  [286, 214, 0.8, 290],
+  [808, 214, 0.76, 804],
+  [60, 214, 0.9, 64],
+  [1040, 212, 0.9, 1036],
+];
+// Little five-petalled woodland flowers. [x, y, size, foot x, foot y]
+const blooms = [
+  [404, 190, 1, 410, 224],
+  [420, 200, 0.76, 416, 224],
+  [690, 194, 0.9, 686, 224],
+  [712, 204, 0.72, 714, 224],
+  [140, 204, 0.8, 144, 226],
+  [962, 200, 0.84, 958, 226],
+];
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox="0 0 1100 240"
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- A fern bank in spring: fiddleheads at every stage of unfurling (each one a
+       living question mark) in front of open fronds, with wood sorrel and small
+       flowers in the moss. The ground runs far past the viewBox so the scene can
+       sit centred on any width (the svg is overflow: visible). -->
+  <defs>
+    <path
+      id="fb-heart"
+      d="M0 0 C-2.4 -1.6 -6.6 -3.4 -6.4 -7.4 C-6.2 -10.4 -2.4 -11 0 -8.2 C2.4 -11 6.2 -10.4 6.4 -7.4 C6.6 -3.4 2.4 -1.6 0 0 Z"
+    ></path>
+    <path
+      id="fb-petal"
+      d="M0 0 C-2.6 -2.2 -3 -6 0 -7.6 C3 -6 2.6 -2.2 0 0 Z"
+      stroke="#c4807b"
+      stroke-opacity="0.45"
+      stroke-width="0.35"></path>
+    <!-- New growth blushes bronze-pink at the coil and greens toward the crown -->
+    <linearGradient id="fb-blush" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9a59c" stop-opacity="0.9"></stop>
+      <stop offset="0.26" stop-color="#d9a59c" stop-opacity="0.55"></stop>
+      <stop offset="0.66" stop-color="#d9a59c" stop-opacity="0"></stop>
+    </linearGradient>
+    <linearGradient id="fb-hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eed6cb"></stop>
+      <stop offset="1" stop-color="#f4e3da"></stop>
+    </linearGradient>
+    <linearGradient id="fb-moss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfdcd1"></stop>
+      <stop offset="1" stop-color="#e2e9e1"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Far rise -->
+  <path
+    d="M-900 241 V206 C-640 196 -380 212 -120 204 C20 200 120 190 240 192 C340 194 400 186 480 182 C560 178 640 180 720 188 C800 196 880 190 980 192 C1080 194 1160 204 1300 200 C1560 194 1800 208 2000 202 V241 Z"
+    fill="url(#fb-hill)"></path>
+  <path
+    d="M240 192 C340 194 400 186 480 182 C560 178 640 180 720 188 C800 196 880 190 980 192"
+    stroke="#e3c9bd"
+    stroke-width="0.9"
+    stroke-linecap="round"
+    stroke-dasharray="70 9 30 12 120 10"></path>
+
+  <!-- Open fronds behind -->
+  {
+    fronds.map((f) => (
+      <g>
+        <path d={f.down} fill={f.shade} />
+        <path d={f.up} fill={f.tone} />
+        <path d={f.rachis} stroke={SAGE.soft} stroke-width="1.1" stroke-linecap="round" />
+      </g>
+    ))
+  }
+
+  <!-- Moss -->
+  <path
+    d="M-900 241 V222 C-640 214 -380 228 -140 220 C0 216 90 206 200 206 C300 206 370 218 460 212 C510 208 590 206 650 210 C740 216 800 208 890 206 C980 204 1040 216 1140 218 C1400 222 1700 212 2000 220 V241 Z"
+    fill="url(#fb-moss)"></path>
+  <g stroke="#b9c8bc" stroke-width="0.9" stroke-linecap="round">
+    <path
+      d="M120 210 l-2 -5 M124 209.6 l0.6 -6 M128 209.4 l2.6 -4.6 M300 210.6 l-2 -4.6 M304 211 l0.6 -5.6 M470 211.6 l-2 -4.6 M474 211.4 l1 -5.6 M478 211 l3 -4 M640 209.6 l-2.4 -4.4 M644 209.8 l0.4 -5.6 M790 209 l-2 -5 M794 208.6 l1 -5.6 M798 208.4 l3 -4.4 M980 207.4 l-2 -4.6 M984 207.6 l0.8 -5.6"
+    ></path>
+  </g>
+
+  <!-- Fiddleheads -->
+  {
+    croziers.map((c) => (
+      <g>
+        <path d={c.d} fill={c.tone} />
+        <path d={c.d} fill="url(#fb-blush)" />
+        <path d={c.d} stroke="#60665a" stroke-opacity="0.26" stroke-width="0.7" />
+        <path
+          d={c.edge}
+          stroke="#eef3ef"
+          stroke-opacity="0.42"
+          stroke-width={r(c.w * 0.12)}
+          stroke-linecap="round"
+        />
+        <path
+          d={c.scales}
+          stroke="#8a5451"
+          stroke-opacity="0.34"
+          stroke-width="0.8"
+          stroke-linecap="round"
+        />
+        {c.nubs.map((n) => (
+          <ellipse
+            cx={n.x}
+            cy={n.y}
+            rx={r(3.3 * n.s)}
+            ry={r(1.8 * n.s)}
+            transform={`rotate(${n.rot} ${n.x} ${n.y})`}
+            fill="#f3e1da"
+            fill-opacity="0.9"
+          />
+        ))}
+      </g>
+    ))
+  }
+
+  <!-- Low fronds in front -->
+  {
+    nearFronds.map((f) => (
+      <g>
+        <path d={f.down} fill={f.shade} />
+        <path d={f.up} fill={f.tone} />
+        <path d={f.rachis} stroke={SAGE.deep} stroke-width="1" stroke-linecap="round" />
+      </g>
+    ))
+  }
+
+  <!-- Near ground: the paper of the section below, so the bank is the seam -->
+  <path
+    d="M-900 241 V228 C-600 220 -300 232 0 226 C200 222 330 216 460 220 C520 222 590 222 650 220 C780 216 900 224 1100 224 C1400 224 1700 218 2000 226 V241 Z"
+    fill="#f7f6f5"></path>
+
+  <!-- Flowers -->
+  {
+    blooms.map(([x, y, s, fx, fy], i) => (
+      <g>
+        <path
+          d={`M${fx} ${fy} Q${r((x + fx) / 2 + (i % 2 ? 3 : -3))} ${r((y + fy) / 2)} ${x} ${y}`}
+          stroke={SAGE.deep}
+          stroke-width="0.9"
+          stroke-linecap="round"
+        />
+        <g transform={`translate(${x} ${y}) scale(${s}) rotate(${i * 23})`}>
+          {[0, 72, 144, 216, 288].map((a) => (
+            <use href="#fb-petal" transform={`rotate(${a})`} fill={i % 2 ? "#f9c8c2" : "#f3d6d0"} />
+          ))}
+          <circle r="1.6" fill="#d0a08f" />
+        </g>
+      </g>
+    ))
+  }
+
+  <!-- Wood sorrel -->
+  {
+    sorrel.map(([x, y, s, fx], i) => (
+      <g>
+        <path
+          d={`M${fx} 228 Q${r((x + fx) / 2 + 1.5)} ${r(y + 9)} ${x} ${y}`}
+          stroke={SAGE.mid}
+          stroke-width="0.8"
+          stroke-linecap="round"
+        />
+        <g transform={`translate(${x} ${y}) scale(${s}) rotate(${((i * 37) % 50) - 25})`}>
+          <use href="#fb-heart" fill={SAGE.soft} transform="rotate(-118)" />
+          <use href="#fb-heart" fill={SAGE.mid} transform="rotate(118)" />
+          <use href="#fb-heart" fill={i % 2 ? SAGE.pale : SAGE.soft} />
+          <path
+            d="M0 0 V-7 M0 0 L-5.4 3 M0 0 L5.4 3"
+            stroke="#60665a"
+            stroke-opacity="0.3"
+            stroke-width="0.5"
+            stroke-linecap="round"
+          />
+        </g>
+      </g>
+    ))
+  }
+
+  <!-- Grass and a pebble or two along the near edge -->
+  <g stroke={SAGE.mid} stroke-width="0.9" stroke-linecap="round">
+    <path
+      d="M246 224 l-3 -8 M250 224 l0 -10 M254 224 l4 -7 M500 222 l-3 -7 M504 222 l1 -9 M606 222 l-2 -8 M610 222 l2 -9 M614 222 l4 -6 M842 223 l-3 -7 M846 223 l1 -9 M1010 225 l-3 -7 M1014 225 l1 -9 M1018 225 l4 -6 M30 227 l-3 -7 M34 227 l1 -9"
+    ></path>
+  </g>
+  <g>
+    <ellipse cx="462" cy="223" rx="6.4" ry="3.2" fill="#e6d3c8"></ellipse>
+    <path d="M457 222 q4 -2.2 9 -0.4" stroke="#fff" stroke-opacity="0.7" stroke-width="0.8"></path>
+    <ellipse cx="640" cy="222.4" rx="4.6" ry="2.4" fill="#ddc6ba"></ellipse>
+    <ellipse cx="648" cy="223.4" rx="3" ry="1.7" fill="#e6d3c8"></ellipse>
+  </g>
+</svg>

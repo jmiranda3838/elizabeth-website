@@ -1,0 +1,105 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+const { class: className = "", style = "", ...rest } = Astro.props;
+
+// A satin ribbon marker. It is drawn far longer than any book (the svg crops from the
+// top, `xMidYMax slice`), so the swallow-tail end always sits at the bottom of the box
+// and the box can be any height. The last TAIL units are meant to hang past the book.
+const W = 40;
+const L = 1800;
+const TAIL = 64; // how much hangs out of the book, on the table
+const FOLD = L - TAIL; // where it leaves the book's edge
+const r = (n: number) => Math.round(n * 100) / 100;
+
+// Centre line: a lazy wander down the gutter, then it swings away once it is free.
+const centre = (y: number) => {
+  const wander = 4.4 * Math.sin(y / 150 + 0.6) + 1.6 * Math.sin(y / 57);
+  const free = y > FOLD ? 7 * Math.pow((y - FOLD) / TAIL, 1.4) : 0;
+  return 16 + wander + free;
+};
+// Half-width: satin narrows a touch where it twists.
+const half = (y: number) => 6.3 + 0.9 * Math.sin(y / 150 + 2.2);
+
+const ys: number[] = [];
+for (let y = 0; y <= L - 16; y += 12) ys.push(y);
+const END_L = L - 3;
+const END_R = L - 9;
+const NOTCH = L - 22;
+
+const left = ys.map((y) => `${r(centre(y) - half(y))} ${y}`);
+const right = ys.map((y) => `${r(centre(y) + half(y))} ${y}`);
+const body =
+  `M${left.join(" L")} L${r(centre(END_L) - half(END_L) - 0.6)} ${END_L}` +
+  ` L${r(centre(NOTCH) + 0.4)} ${NOTCH}` +
+  ` L${r(centre(END_R) + half(END_R) + 0.4)} ${END_R}` +
+  ` L${[...right].reverse().join(" L")} Z`;
+
+// Sheen: a band of light whose position slides across the ribbon as it turns.
+const sheenAt = (y: number) => 0.5 * Math.sin(y / 150 + 1.4);
+const sheenL = ys.map((y) => `${r(centre(y) + half(y) * (sheenAt(y) - 0.32))} ${y}`);
+const sheenR = ys.map((y) => `${r(centre(y) + half(y) * (sheenAt(y) + 0.2))} ${y}`);
+const sheen = `M${sheenL.join(" L")} L${[...sheenR].reverse().join(" L")} Z`;
+
+// Shaded selvedge on the side away from the light.
+const shadeIn = ys.map((y) => `${r(centre(y) + half(y) * 0.62)} ${y}`);
+const shade = `M${shadeIn.join(" L")} L${[...right].reverse().join(" L")} Z`;
+---
+
+<svg
+  class={className}
+  style={style}
+  {...rest}
+  viewBox={`0 0 ${W} ${L}`}
+  preserveAspectRatio="xMidYMax slice"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Ribbon bookmark. `color` sets the satin; light and shade are laid over it. -->
+  <defs>
+    <filter id="book-ribbon-soft" x="-60%" y="-1%" width="220%" height="102%">
+      <feGaussianBlur stdDeviation="1.8"></feGaussianBlur>
+    </filter>
+    <pattern
+      id="book-ribbon-weave"
+      width="2.4"
+      height="2.4"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(24)"
+    >
+      <path d="M0 0.6 H2.4" stroke="#fff" stroke-opacity="0.1" stroke-width="0.5"></path>
+      <path d="M0 1.8 H2.4" stroke="#2d2420" stroke-opacity="0.06" stroke-width="0.5"></path>
+    </pattern>
+    <linearGradient
+      id="book-ribbon-fold"
+      x1="0"
+      y1={FOLD - 12}
+      x2="0"
+      y2={FOLD + 16}
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#3b2620" stop-opacity="0"></stop>
+      <stop offset="0.45" stop-color="#3b2620" stop-opacity="0.34"></stop>
+      <stop offset="0.6" stop-color="#3b2620" stop-opacity="0.1"></stop>
+      <stop offset="1" stop-color="#3b2620" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+  <!-- Its soft shadow on the page, and on the table past the book -->
+  <path
+    d={body}
+    fill="#543123"
+    fill-opacity="0.34"
+    filter="url(#book-ribbon-soft)"
+    transform="translate(2.2 2)"></path>
+  <path d={body} fill="currentColor"></path>
+  <path d={body} fill="url(#book-ribbon-weave)"></path>
+  <path d={shade} fill="#2d2420" fill-opacity="0.16"></path>
+  <path d={sheen} fill="#fff" fill-opacity="0.3"></path>
+  <!-- The crease where it bends over the edge of the book -->
+  <path d={body} fill="url(#book-ribbon-fold)"></path>
+  <path d={body} stroke="#2d2420" stroke-opacity="0.28" stroke-width="0.7" stroke-linejoin="round"
+  ></path>
+</svg>
