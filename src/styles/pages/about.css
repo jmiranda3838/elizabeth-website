@@ -387,8 +387,10 @@
    Colourways set --tape-print; lengths set --tape-w. */
 .washi-tape {
   --tape-w: 88px;
-  --tape-base: rgba(226, 190, 181, 0.74);
-  --tape-print: repeating-linear-gradient(
+  /* The rose colourway is the default; it keeps names of its own so a strip
+     dressed in another colourway can be switched back to it */
+  --rose-base: rgba(226, 190, 181, 0.74);
+  --rose-print: repeating-linear-gradient(
     -52deg,
     transparent 0 5px,
     rgba(255, 255, 255, 0.5) 5px 6.5px,
@@ -397,6 +399,8 @@
     transparent 14px 16.5px,
     rgba(255, 255, 255, 0.5) 16.5px 18px
   );
+  --tape-base: var(--rose-base);
+  --tape-print: var(--rose-print);
   --tape-tear: polygon(
     3.4% 0,
     0.6% 8%,
@@ -801,8 +805,8 @@
 .index-card-icon svg {
   position: relative;
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
 }
 
 .index-cards-grid > :nth-child(2) .index-card-icon {
@@ -911,6 +915,26 @@
   padding: var(--space-16) var(--space-8);
 }
 
+/* A soft local shade right behind the words, where they cross her pale
+   blouse: feathered to nothing at its rim, so it reads as shadow on the
+   photo, not a box */
+.photo-band-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--space-8) - 130px);
+  width: 620px;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side at 50% 60%,
+    rgba(60, 48, 40, 0.55) 0%,
+    rgba(60, 48, 40, 0.46) 55%,
+    rgba(60, 48, 40, 0) 100%
+  );
+  pointer-events: none;
+}
+
 /* The open quote hangs just above the first word, a blush accent beside
    the cream script, and carries the same soft shadow */
 .photo-band-quotemark {
@@ -945,8 +969,10 @@
   font-size: var(--text-xs);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(251, 250, 248, 0.85);
-  text-shadow: 0 1px 6px rgba(60, 48, 40, 0.5);
+  color: #fbfaf8;
+  text-shadow:
+    0 1px 2px rgba(60, 48, 40, 0.55),
+    0 1px 8px rgba(60, 48, 40, 0.5);
   margin-bottom: 0;
 }
 
@@ -1003,9 +1029,9 @@
   position: absolute;
   top: 38.75%;
   left: 50%;
-  width: 32px;
-  height: 32px;
-  margin: -16px 0 0 -16px;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
   color: #fff6f0;
   filter: drop-shadow(0.4px 0.8px 0 rgba(74, 42, 38, 0.5));
 }
@@ -1156,7 +1182,7 @@
 .cta-sprig {
   position: absolute;
   right: 64px;
-  bottom: 22px;
+  bottom: 30px;
   width: 104px;
   transform: rotate(54deg);
   transform-origin: 50% 100%;
@@ -1164,7 +1190,7 @@
 }
 
 .cta-sprig .sprig-tape {
-  top: 80%;
+  top: 87%;
   --tape-rot: 12deg;
 }
 
@@ -1303,9 +1329,10 @@
     width: auto;
   }
 
-  /* On the unwound board the rosemary keeps a row of its own at the foot,
-     still lying on its side and taped; the two tucked sprigs (which need
-     something to tuck behind) retire */
+  /* On the unwound board the rosemary still tucks behind a card: its tip
+     slides under the quote scrap's lower edge (the row overlaps the scrap's
+     by a negative margin) and its taped stem lies out on the linen. The two
+     other sprigs, with nothing to tuck behind here, retire */
   .bi-sprig-1 {
     grid-column: 1 / -1;
     justify-self: center;
@@ -1313,16 +1340,39 @@
     position: relative;
     top: auto;
     left: auto;
-    width: 190px;
-    height: 78px;
+    width: min(250px, 100%);
+    height: 70px;
+    margin-top: -48px;
   }
 
   .bi-sprig-1 .board-item-inner {
     position: absolute;
     top: 50%;
-    left: 50%;
-    width: 92px;
-    margin: -83px 0 0 -46px;
+    left: 78%;
+    width: 84px;
+    margin: -76px 0 0 -42px;
+    transform: rotate(-70deg);
+  }
+
+  .bi-sprig-1 .sprig-tape {
+    --tape-w: 50px;
+    --tape-rot: 18deg;
+    height: 20px;
+    top: 84%;
+  }
+
+  /* Two sage strips would sit one above the other: the scrap's goes rose */
+  .bi-quote .washi-tape {
+    --tape-base: var(--rose-base);
+    --tape-print: var(--rose-print);
+  }
+
+  /* Shorter and flatter, so the corner strip stays clear of the prints above */
+  .bi-word-2 .washi-corner {
+    --tape-w: 62px;
+    --tape-rot: -30deg;
+    top: -4px;
+    left: -26px;
   }
 
   .bi-sprig-2,
@@ -1458,9 +1508,17 @@
     background: linear-gradient(
       180deg,
       rgba(60, 48, 40, 0.05) 0%,
-      rgba(60, 48, 40, 0.15) 45%,
-      rgba(60, 48, 40, 0.68) 100%
+      rgba(60, 48, 40, 0.15) 38%,
+      rgba(60, 48, 40, 0.55) 58%,
+      rgba(60, 48, 40, 0.72) 100%
     );
+  }
+
+  .photo-band-content::before {
+    top: 0;
+    bottom: 0;
+    left: -10%;
+    width: 120%;
   }
 
   .photo-band-content {
@@ -1475,15 +1533,17 @@
   }
 
   .cta-sprig {
-    right: 96px;
-    bottom: 22px;
-    width: 66px;
-    transform: rotate(77deg);
+    right: 74px;
+    bottom: 28px;
+    width: 76px;
+    transform: rotate(62deg);
   }
 
   .cta-sprig .sprig-tape {
-    --tape-w: 46px;
-    height: 22px;
+    --tape-w: 42px;
+    --tape-rot: -14deg;
+    top: 88%;
+    height: 16px;
   }
 }
 

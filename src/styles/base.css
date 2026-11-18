@@ -75,7 +75,7 @@ select {
 
 /* Focus styles for accessibility */
 :focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--clay-deep); /* 3:1 or better on every page ground */
   outline-offset: 3px;
 }
 

@@ -63,6 +63,108 @@ const buds: Bud[] = [
   [604, 50, 160],
   [760, 300, 10],
 ];
+
+// --- Ground: the gate stands in a strip of earth and grass that runs past both
+// posts and fades out, with a flagstone path leading up to the threshold. It is
+// drawn below the 400 line (the SVG is overflow: visible in garden-gate.css), so
+// the doors keep their shared viewBox.
+
+// A small deterministic random so every build draws the same grass
+let seed = 7;
+const rand = () => {
+  seed = (seed * 9301 + 49297) % 233280;
+  return seed / 233280;
+};
+
+// One grass blade as a closed, tapering shape from a base on the ground; the
+// tip arches over in the direction of its lean
+const blade = (x: number, y: number, h: number, lean: number, w: number) => {
+  const f = (n: number) => n.toFixed(1);
+  return `M${f(x - w / 2)} ${y} C${f(x - w / 3 + lean * 0.1)} ${f(y - h * 0.45)} ${f(x + lean * 0.45)} ${f(y - h * 0.85)} ${f(x + lean)} ${f(y - h)} C${f(x + lean * 0.4 + w * 0.3)} ${f(y - h * 0.8)} ${f(x + w / 3 + lean * 0.12)} ${f(y - h * 0.4)} ${f(x + w / 2)} ${y} Z`;
+};
+
+type Tuft = [number, number, number, number]; // [centre x, spread, blades, height]
+// Thick clumps at the post feet, sparse ones along the door bottoms, thinning
+// out past the posts where the strip fades
+const tufts: Tuft[] = [
+  [-40, 22, 6, 9],
+  [-4, 24, 9, 13],
+  [30, 20, 12, 20],
+  [56, 28, 16, 26],
+  [86, 20, 12, 18],
+  [112, 16, 6, 11],
+  [160, 18, 5, 9],
+  [232, 14, 4, 8],
+  [306, 12, 4, 8],
+  [498, 12, 4, 8],
+  [566, 16, 5, 9],
+  [640, 18, 5, 10],
+  [690, 18, 8, 15],
+  [716, 22, 12, 20],
+  [742, 28, 16, 26],
+  [772, 20, 12, 19],
+  [806, 24, 9, 13],
+  [842, 22, 6, 9],
+];
+const grassBack: string[] = [];
+const grassFront: string[] = [];
+for (const [cx, spread, n, h] of tufts) {
+  for (let i = 0; i < n; i++) {
+    const x = cx + (rand() - 0.5) * spread;
+    const y = 401 + rand() * 3;
+    const bh = h * (0.55 + rand() * 0.6);
+    const lean = (x - cx) * 0.5 + (rand() - 0.5) * bh * 0.7;
+    const w = 2.2 + rand() * 1.8;
+    (i % 3 === 0 ? grassBack : grassFront).push(blade(x, +y.toFixed(1), bh, lean, w));
+  }
+}
+
+// Flagstones in three rows widening toward the viewer, the threshold slab first.
+// Each is an uneven oval: eight jittered rim points joined by curves through
+// their midpoints. [centre x, centre y, half-width, half-height]
+type Stone = [number, number, number, number];
+const stones: Stone[] = [
+  [400, 404.6, 62, 3.6],
+  [356, 414.8, 40, 4.4],
+  [446, 414.4, 42, 4.6],
+  [320, 427.6, 37, 5.4],
+  [399, 428.4, 35, 5.8],
+  [478, 427.4, 39, 5.4],
+];
+const stoneRims = stones.map(([cx, cy, rx, ry]) =>
+  Array.from({ length: 10 }, (_, i) => {
+    const a = (i / 10) * Math.PI * 2 + 0.2 + (rand() - 0.5) * 0.25;
+    // a squared-off oval (superellipse), each rim point pushed in or out a little
+    const c = Math.cos(a);
+    const sn = Math.sin(a);
+    const k = 1 + (rand() - 0.5) * 0.16;
+    return [
+      cx + Math.sign(c) * Math.abs(c) ** 0.6 * rx * k,
+      cy + Math.sign(sn) * Math.abs(sn) ** 0.75 * ry * k,
+    ] as const;
+  }),
+);
+const stonePath = (pts: readonly (readonly [number, number])[]) => {
+  const mid = (i: number) => {
+    const [x1, y1] = pts[i % pts.length];
+    const [x2, y2] = pts[(i + 1) % pts.length];
+    return `${((x1 + x2) / 2).toFixed(1)} ${((y1 + y2) / 2).toFixed(1)}`;
+  };
+  let d = `M${mid(0)}`;
+  for (let i = 1; i <= pts.length; i++) {
+    const [x, y] = pts[i % pts.length];
+    d += ` Q${x.toFixed(1)} ${y.toFixed(1)} ${mid(i)}`;
+  }
+  return d + " Z";
+};
+
+// Tiny meadow flowers among the post-foot grass: [x, y, scale]
+const daisies: [number, number, number][] = [
+  [24, 392, 0.9],
+  [104, 394, 0.75],
+  [690, 393, 0.8],
+  [778, 391, 1],
+];
 ---
 
 <svg
@@ -259,12 +361,144 @@ const buds: Bud[] = [
     }
   </g>
 
-  <!-- Ground foliage anchoring the post bases -->
+  <!-- Ground: soft shadow, a strip of earth fading out at both ends, flagstones
+       to the threshold, grass and a few small flowers at the post feet -->
   <g class="gate-ground">
-    <use href="#gate-leaf" transform="translate(30 400) rotate(-150) scale(1.3)"></use>
-    <use href="#gate-leaf" transform="translate(84 400) rotate(-40) scale(1.2)"></use>
-    <use href="#gate-leaf" transform="translate(92 400) rotate(-70) scale(0.9)"></use>
-    <use href="#gate-leaf" transform="translate(712 400) rotate(-120) scale(1.1)"></use>
-    <use href="#gate-leaf" transform="translate(770 400) rotate(-30) scale(1.3)"></use>
+    <defs>
+      <linearGradient
+        id="gate-earth-fill"
+        x1="0"
+        y1="399"
+        x2="0"
+        y2="440"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" class="gate-earth-stop" stop-opacity="0.95"></stop>
+        <stop offset="0.45" class="gate-earth-stop" stop-opacity="0.6"></stop>
+        <stop offset="1" class="gate-earth-stop" stop-opacity="0"></stop>
+      </linearGradient>
+      <linearGradient
+        id="gate-earth-fade"
+        x1="-90"
+        y1="0"
+        x2="890"
+        y2="0"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" stop-color="#000"></stop>
+        <stop offset="0.15" stop-color="#fff"></stop>
+        <stop offset="0.85" stop-color="#fff"></stop>
+        <stop offset="1" stop-color="#000"></stop>
+      </linearGradient>
+      <mask
+        id="gate-earth-mask"
+        maskUnits="userSpaceOnUse"
+        x="-100"
+        y="380"
+        width="1000"
+        height="80"
+      >
+        <rect x="-100" y="380" width="1000" height="80" fill="url(#gate-earth-fade)"></rect>
+      </mask>
+      <radialGradient
+        id="gate-shadow"
+        cx="400"
+        cy="402"
+        r="470"
+        gradientTransform="translate(0 380) scale(1 0.055)"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop offset="0" class="gate-shadow-stop" stop-opacity="0.2"></stop>
+        <stop offset="0.75" class="gate-shadow-stop" stop-opacity="0.08"></stop>
+        <stop offset="1" class="gate-shadow-stop" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+    <ellipse class="gate-ground-wash" cx="400" cy="402" rx="470" ry="26" fill="url(#gate-shadow)"
+    ></ellipse>
+    <!-- the earth strip, its top edge a little uneven -->
+    <path
+      class="gate-earth gate-ground-wash"
+      fill="url(#gate-earth-fill)"
+      mask="url(#gate-earth-mask)"
+      d="M-90 401 C-20 399.4 40 401.6 110 400.4 C220 398.8 300 401.2 400 400.2 C500 399.4 600 401.4 690 400.2 C760 399.4 830 401.2 890 400.6 L890 440 L-90 440 Z"
+    ></path>
+    <!-- the ground line, inked in broken strokes -->
+    <g class="gate-soil" stroke="currentColor" stroke-linecap="round">
+      <path
+        stroke-width="1.1"
+        stroke-opacity="0.55"
+        d="M-40 401.2 C20 399.8 60 401.4 110 400.5 C180 399.4 250 401 330 401 M470 401 C540 400.8 610 401.4 690 400.2 C740 399.6 800 401 842 400.8"
+      ></path>
+      <path
+        stroke-width="0.7"
+        stroke-opacity="0.35"
+        d="M-70 401.6 L-52 401.3 M856 401 L874 401.4 M130 405 L144 404.6 M190 408 L198 407.8 M236 405.6 L252 405.2 M552 405.4 L566 405.8 M610 408 L620 407.7 M660 405 L676 404.6 M30 407 L44 406.6 M752 407 L768 407.4"
+      ></path>
+    </g>
+    <!-- pebbles -->
+    <g class="gate-pebble" stroke="currentColor" stroke-width="0.6" stroke-opacity="0.45">
+      <ellipse cx="120" cy="409" rx="3" ry="1.6"></ellipse>
+      <ellipse cx="214" cy="406.5" rx="2.2" ry="1.2"></ellipse>
+      <ellipse cx="586" cy="407" rx="2.6" ry="1.4"></ellipse>
+      <ellipse cx="672" cy="410" rx="3.2" ry="1.6"></ellipse>
+      <ellipse cx="270" cy="412" rx="1.8" ry="1"></ellipse>
+      <ellipse cx="536" cy="413" rx="2" ry="1.1"></ellipse>
+    </g>
+    <!-- flagstones -->
+    <g
+      class="gate-stone"
+      stroke="currentColor"
+      stroke-width="0.9"
+      stroke-opacity="0.55"
+      stroke-linejoin="round"
+    >
+      {stoneRims.map((pts) => <path d={stonePath(pts)} />)}
+    </g>
+    <!-- a shaded lower lip on each stone and the odd hairline crack -->
+    <g
+      class="gate-stone-shade"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="0.6"
+      stroke-opacity="0.32"
+    >
+      {
+        stones.map(([x, y, rx, ry]) => (
+          <path
+            d={`M${x - rx * 0.62} ${y + ry * 0.55} C${x - rx * 0.2} ${y + ry * 0.85} ${x + rx * 0.3} ${y + ry * 0.82} ${x + rx * 0.66} ${y + ry * 0.5}`}
+          />
+        ))
+      }
+      <path d="M378 403.4 L386 405.2 L392 404.6 M332 426 L340 428.2 M462 413 L468 415.4 L474 415"
+      ></path>
+    </g>
+    <!-- grass: the back blades darker, the front ones in sage -->
+    <path class="gate-grass-back" d={grassBack.join(" ")}></path>
+    <path class="gate-grass" d={grassFront.join(" ")}></path>
+    <!-- the rose canes leaf out at their feet -->
+    <use href="#gate-leaf" transform="translate(40 398) rotate(-142) scale(1.05)"></use>
+    <use href="#gate-leaf" transform="translate(45 399) rotate(-62) scale(0.9)"></use>
+    <use href="#gate-leaf" transform="translate(88 399) rotate(-58) scale(0.85)"></use>
+    <use href="#gate-leaf" transform="translate(754 399) rotate(-124) scale(0.95)"></use>
+    <use href="#gate-leaf" transform="translate(760 398) rotate(-38) scale(1.05)"></use>
+    <!-- meadow flowers: five petals round a rose heart, on a short stem -->
+    {
+      daisies.map(([x, y, s]) => (
+        <g transform={`translate(${x} ${y}) scale(${s})`}>
+          <path class="gate-vine" d="M0 2 C0.6 5 -0.4 8 0.4 11" />
+          {[0, 72, 144, 216, 288].map((a) => (
+            <ellipse
+              class="gate-daisy"
+              cx="0"
+              cy="-2.6"
+              rx="1.5"
+              ry="2.6"
+              transform={`rotate(${a})`}
+            />
+          ))}
+          <circle class="gate-daisy-heart" r="1.2" />
+        </g>
+      ))
+    }
   </g>
 </svg>

@@ -5,6 +5,138 @@ interface Props {
   [key: string]: unknown;
 }
 const { class: className = "", style = "", ...rest } = Astro.props;
+
+// An agave rosette seen from the side, drawn filled so it can stand in front of rock.
+// Each leaf is generated from its base, a curve control point and its tip: a broad,
+// thick blade widest a third of the way up, tapering to a dark terminal spine, with
+// small hooked teeth along both margins. Light comes from the upper left, so each
+// leaf's lower-right half (its channel) is in shade and a pale glaucous bloom runs
+// beside the midrib on the lit side. Back leaves paint first and sit in deeper shade,
+// and every blade darkens a little where it leaves the heart.
+// The blade is currentColor; shading, teeth and spines are fixed tones over it.
+type Pt = [number, number];
+type Leaf = { b: Pt; c: Pt; t: Pt; w: number; back?: boolean };
+
+const leaves: Leaf[] = [
+  // back: the low outer pair, then the tall inner ones
+  { b: [56, 96], c: [30, 72], t: [6, 66], w: 6.4, back: true },
+  { b: [64, 96], c: [92, 70], t: [115, 63], w: 6.4, back: true },
+  { b: [58, 96], c: [46, 58], t: [37, 15], w: 5.8, back: true },
+  { b: [62, 96], c: [76, 56], t: [86, 17], w: 5.8, back: true },
+  { b: [60, 96], c: [59, 52], t: [63, 4], w: 5.4, back: true },
+  // front: the arching side leaves, then the short leaves turned toward us
+  { b: [58, 97], c: [36, 62], t: [19, 37], w: 7.2 },
+  { b: [62, 97], c: [86, 64], t: [102, 39], w: 7.2 },
+  { b: [59, 97.5], c: [42, 82], t: [27, 72], w: 7.8 },
+  { b: [61, 97.5], c: [80, 84], t: [95, 74], w: 7.8 },
+  { b: [60, 97.5], c: [60, 68], t: [69, 37], w: 7.4 },
+];
+
+const f = (n: number) => n.toFixed(2);
+const N = 16; // samples along each blade
+
+const leafGeom = (l: Leaf) => {
+  const at = (t: number): Pt => {
+    const u = 1 - t;
+    return [
+      u * u * l.b[0] + 2 * u * t * l.c[0] + t * t * l.t[0],
+      u * u * l.b[1] + 2 * u * t * l.c[1] + t * t * l.t[1],
+    ];
+  };
+  const tangent = (t: number): Pt => {
+    const dx = 2 * (1 - t) * (l.c[0] - l.b[0]) + 2 * t * (l.t[0] - l.c[0]);
+    const dy = 2 * (1 - t) * (l.c[1] - l.b[1]) + 2 * t * (l.t[1] - l.c[1]);
+    const len = Math.hypot(dx, dy) || 1;
+    return [dx / len, dy / len];
+  };
+  // Left-hand normal of the direction of growth
+  const normal = (t: number): Pt => {
+    const [dx, dy] = tangent(t);
+    return [dy, -dx];
+  };
+  // Widest just under halfway up, narrowing into the heart of the rosette
+  const half = (t: number) => (l.w * Math.pow(1 - t, 0.85) * (0.3 + 2.4 * t)) / 0.83;
+  // The shaded side is whichever margin faces down and to the right
+  const nm = normal(0.5);
+  const shadeSide = nm[0] + nm[1] > 0 ? 1 : -1;
+
+  const edge = (side: number, k = 1): Pt[] => {
+    const pts: Pt[] = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N;
+      const p = at(t);
+      const n = normal(t);
+      const h = half(t) * k * side;
+      pts.push([p[0] + n[0] * h, p[1] + n[1] * h]);
+    }
+    return pts;
+  };
+  return { at, tangent, normal, half, shadeSide, edge };
+};
+
+// Catmull-Rom through the points, as cubic Béziers (no leading M)
+const smooth = (pts: Pt[]) => {
+  let d = "";
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1: Pt = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2: Pt = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${f(p2[0])} ${f(p2[1])}`;
+  }
+  return d;
+};
+const start = (p: Pt) => `M${f(p[0])} ${f(p[1])}`;
+
+const drawn = leaves.map((l) => {
+  const g = leafGeom(l);
+  const left = g.edge(1);
+  const right = g.edge(-1);
+  const mid = g.edge(1, 0);
+  const shadeEdge = g.shadeSide === 1 ? left : right;
+  const bloom = g.edge(-g.shadeSide, 0.42);
+
+  // Blade: up one margin to the tip, back down the other
+  const blade = `${start(left[0])}${smooth(left)}${smooth([...right].reverse())} Z`;
+  // Shade over the channel: the midrib to the shaded margin
+  const shade = `${start(mid[0])}${smooth(mid)}${smooth([...shadeEdge].reverse())} Z`;
+  // Glaucous bloom on the lit side of the midrib, fading before the tip
+  const lim = Math.round(N * 0.82);
+  const bloomPath = `${start(mid[1])}${smooth(mid.slice(1, lim))}${smooth(bloom.slice(1, lim).reverse())} Z`;
+  // Deeper tone where the blade leaves the heart of the rosette, in three soft steps
+  const footAt = (foot: number) =>
+    `${start(left[0])}${smooth(left.slice(0, foot + 1))} L${f(right[foot][0])} ${f(right[foot][1])}${smooth(right.slice(0, foot + 1).reverse())} Z`;
+  const feet = [2, 4, 6].map(footAt);
+  const midrib = `${start(mid[2])}${smooth(mid.slice(2, N - 1))}`;
+
+  // Teeth: small hooks along both margins, pointing toward the tip
+  let teeth = "";
+  for (const side of [1, -1]) {
+    for (let t = 0.2; t < 0.88; t += 0.085) {
+      const p = g.at(t);
+      const n = g.normal(t);
+      const tg = g.tangent(t);
+      const h = g.half(t) * side;
+      const e: Pt = [p[0] + n[0] * h, p[1] + n[1] * h];
+      const s = 0.55 + l.w * 0.06;
+      const a: Pt = [e[0] - tg[0] * s * 0.7, e[1] - tg[1] * s * 0.7];
+      const z: Pt = [e[0] + tg[0] * s * 0.7, e[1] + tg[1] * s * 0.7];
+      const tip: Pt = [
+        e[0] + n[0] * side * s * 1.3 + tg[0] * s * 0.9,
+        e[1] + n[1] * side * s * 1.3 + tg[1] * s * 0.9,
+      ];
+      teeth += `${start(a)} L${f(tip[0])} ${f(tip[1])} L${f(z[0])} ${f(z[1])} Z `;
+    }
+  }
+
+  // Terminal spine, carrying on from the tip
+  const tg1 = g.tangent(1);
+  const spine = `${start(l.t)} L${f(l.t[0] + tg1[0] * 3.4)} ${f(l.t[1] + tg1[1] * 3.4)}`;
+
+  return { blade, shade, bloomPath, feet, midrib, teeth, spine, back: !!l.back };
+});
 ---
 
 <svg
@@ -15,23 +147,47 @@ const { class: className = "", style = "", ...rest } = Astro.props;
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Agave rosette: seven pointed leaves fanning from one base, with a ground line -->
-  <g stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M56 95 C40 86 24 74 10 62 C28 68 46 78 60 93 Z"></path>
-    <path d="M57 94 C44 76 32 56 24 32 C38 52 50 72 61 92 Z"></path>
-    <path d="M58 94 C52 70 46 44 44 14 C54 40 60 66 62 92 Z"></path>
-    <path d="M59 94 C60 66 62 36 66 6 C70 36 68 66 63 94 Z"></path>
-    <path d="M60 94 C66 70 74 44 86 16 C80 44 72 70 64 95 Z"></path>
-    <path d="M61 95 C72 76 86 56 102 36 C92 60 78 80 64 96 Z"></path>
-    <path d="M62 96 C78 84 94 72 112 62 C98 76 82 88 65 97 Z"></path>
-  </g>
-  <g stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.7">
-    <path d="M60 93 C58 82 54 64 52 46 M62 92 C64 80 66 60 66 40 M63 93 C70 80 78 62 84 46"></path>
-  </g>
+  <!-- the plant's shadow on the ground -->
+  <ellipse cx="60" cy="96" rx="34" ry="2.6" fill="#6b4a3a" fill-opacity="0.16"></ellipse>
+  {
+    drawn.map((l) => (
+      <g>
+        <path d={l.blade} fill="currentColor" />
+        {l.back && <path d={l.blade} fill="#2a3d31" fill-opacity="0.2" />}
+        {l.feet.map((d) => (
+          <path d={d} fill="#2a3d31" fill-opacity="0.06" />
+        ))}
+        <path d={l.shade} fill="#2a3d31" fill-opacity="0.17" />
+        <path d={l.bloomPath} fill="#f4f8f1" fill-opacity={l.back ? 0.14 : 0.26} />
+        <path
+          d={l.midrib}
+          stroke="#3d5244"
+          stroke-opacity="0.22"
+          stroke-width="0.45"
+          stroke-linecap="round"
+        />
+        <path d={l.teeth} fill="#8a5240" fill-opacity="0.6" />
+        <path
+          d={l.blade}
+          stroke="#4f6355"
+          stroke-opacity="0.55"
+          stroke-width="0.55"
+          stroke-linejoin="round"
+        />
+        <path d={l.spine} stroke="#7a4636" stroke-width="0.9" stroke-linecap="round" />
+      </g>
+    ))
+  }
+  <!-- the ground it grows from, with a few pebbles -->
   <path
-    d="M2 97 Q60 101 118 97"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"
-    opacity="0.6"></path>
+    d="M10 97.2 C30 96.4 46 96.8 60 97 C76 97.2 92 96.6 110 97.2"
+    stroke="#8f5e4a"
+    stroke-opacity="0.45"
+    stroke-width="0.8"
+    stroke-linecap="round"></path>
+  <g fill="#9a6a55" fill-opacity="0.4">
+    <ellipse cx="34" cy="96.6" rx="1.6" ry="0.9"></ellipse>
+    <ellipse cx="88" cy="96.4" rx="1.2" ry="0.7"></ellipse>
+    <ellipse cx="92" cy="97" rx="0.8" ry="0.5"></ellipse>
+  </g>
 </svg>

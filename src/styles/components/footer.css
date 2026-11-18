@@ -68,6 +68,10 @@
 }
 
 .footer-link {
+  /* Half the row gap as padding on each side: the tap targets meet without moving the rows */
+  display: inline-block;
+  padding-block: calc(var(--space-3) / 2);
+  margin-block: calc(var(--space-3) / -2);
   font-size: var(--text-sm);
   color: var(--text-primary);
   transition: color var(--transition-fast);

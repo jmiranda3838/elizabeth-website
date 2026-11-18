@@ -48,6 +48,9 @@
   text-decoration-color: var(--dusty-peach);
   text-underline-offset: 3px;
   overflow-wrap: anywhere;
+  /* A taller tap target for the phone and email links. Vertical padding on
+     an inline link widens what a finger can hit without moving the text. */
+  padding-block: 12px;
 }
 
 .contact-detail-content a:hover {
@@ -106,11 +109,15 @@
     box-shadow var(--transition-fast);
 }
 
+/* A 2px ring in the deep clay (over 3:1 on the paper) so keyboard users can
+   see which field they are in */
 .form-input:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--dusty-peach);
-  box-shadow: 0 0 0 3px rgba(208, 180, 166, 0.2);
+  border-color: var(--clay-deep);
+  box-shadow:
+    0 0 0 1px var(--clay-deep),
+    0 0 0 4px rgba(152, 96, 93, 0.14);
 }
 
 .form-textarea {
@@ -151,8 +158,10 @@
 
 .form-input.error:focus,
 .form-textarea.error:focus {
-  border-color: var(--muted-rose);
-  box-shadow: 0 0 0 3px rgba(198, 148, 145, 0.3);
+  border-color: var(--clay-deep);
+  box-shadow:
+    0 0 0 1px var(--clay-deep),
+    0 0 0 4px rgba(198, 148, 145, 0.3);
 }
 
 .form-checkbox.error {
@@ -393,6 +402,24 @@ select.form-input {
   width: 100%;
   height: var(--door-h);
   margin-top: var(--space-6);
+  /* Its own size container, so the drawing can drop pieces the frame would cut */
+  container: doorway / size;
+}
+
+/* The scene is centred, so the box's proportions decide how much of each side
+   shows. Rather than let the frame slice a piece of furniture in half, leave it
+   out until it fits: the table for two (scene x 1208-1392) needs a box at least
+   2.3 times as wide as it is tall, the wall fountain (x -30 to 75) 1.82 times. */
+@container doorway (aspect-ratio < 23 / 10) {
+  .doorway-table {
+    display: none;
+  }
+}
+
+@container doorway (aspect-ratio < 91 / 50) {
+  .doorway-fountain {
+    display: none;
+  }
 }
 
 .doorway-frame,
@@ -436,6 +463,23 @@ select.form-input {
 @keyframes doorSwing {
   from {
     transform: scaleX(3.5);
+  }
+}
+
+/* The swing is a horizontal stretch, which would smear the window grille, the
+   ring pull and the hinge straps. They stay out of sight until the leaf is
+   nearly at rest, then come up. */
+.doorway-leaf-detail {
+  animation: leafDetail 2.6s linear 0.4s backwards;
+}
+
+@keyframes leafDetail {
+  0%,
+  62% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -530,6 +574,8 @@ select.form-input {
   position: absolute;
   z-index: 2;
   top: var(--header-h);
+  /* the same mix, precomputed, for Safari before 16.2 */
+  color: #87988c;
   color: color-mix(in srgb, var(--sage) 72%, var(--espresso));
   pointer-events: none;
   animation: floatGentle 9s ease-in-out infinite;
@@ -601,6 +647,7 @@ select.form-input {
   .doorway-arch,
   .doorway-arch-inner,
   .doorway-leaf,
+  .doorway-leaf-detail,
   .doorway-light,
   .candle-glow,
   .doorway-petal,

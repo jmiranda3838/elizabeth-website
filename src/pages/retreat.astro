@@ -3,7 +3,7 @@ import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/retreat.css";
 import { RedRockHorizon } from "@illustrations/scenes";
-import { Cairn, VortexSpiral } from "@illustrations/misc";
+import { Cairn, Clothespin, VortexSpiral } from "@illustrations/misc";
 import { DesertAgave, JuniperSprig, PricklyPear } from "@illustrations/botanicals";
 
 // The six things the flyer lists as included, in the flyer's own wording.
@@ -41,11 +41,13 @@ const stops: { title: string; gloss: string; variant: 1 | 2 | 3 }[] = [
   },
 ];
 
-// Prayer-flag string the group photo hangs from. The print's weight pulls the cord
-// down at the two clothespins, so each side is one run that climbs away from its pin
-// and off the edge of the page: y = −(a·d + b·d²) at distance d from the pin, drawn
-// 1:1 in px (the runs never scale with the print). Flags start past the print's edge
-// and keep the traditional order (blue, white, red, green, yellow) left to right.
+// Prayer-flag string the group photo hangs from. The cord runs along the print's top
+// edge through the two clothespins, and from each top corner one run climbs away and
+// off the edge of the page: y = −(a·d + b·d²) at distance d from the corner, drawn
+// 1:1 in px (the runs never scale with the print, only shrink on phones, retreat.css).
+// Measuring from the corner, not the pin, keeps the first flag FLAG_START px out from
+// the print at every print width, so none tucks under the photo. Flags keep the
+// traditional order (blue, white, red, green, yellow) left to right.
 // Wherever the dotted trail passes under the string, retreat-trail.js clears the
 // flags it would touch, so the path runs through a gap at every width.
 const RUN = 2000; // run length in px, enough to leave the page at any width
@@ -53,6 +55,8 @@ const PIN_Y = 200; // the cord's height at the pin, inside each run's viewBox
 const RUN_H = 250;
 const RISE_A = 0.06;
 const RISE_B = 0.000012;
+const FLAG_START = 22; // first flag's centre: its inner edge (and swung hem) clear the print
+const FLAG_GAP = 36;
 const rise = (d: number) => RISE_A * d + RISE_B * d * d;
 const runCord = (dir: 1 | -1) => {
   const x0 = dir === 1 ? 0 : RUN;
@@ -62,7 +66,7 @@ const runCord = (dir: 1 | -1) => {
 };
 const runFlags = (dir: 1 | -1) => {
   const out = [];
-  for (let k = 0, d = 72; d < RUN - 10; k++, d += 36) {
+  for (let k = 0, d = FLAG_START; d < RUN - 10; k++, d += FLAG_GAP) {
     const slope = RISE_A + 2 * RISE_B * d; // the cord's climb at this flag
     const tone = dir === 1 ? (k + 3) % 5 : (((2 - k) % 5) + 5) % 5;
     out.push({
@@ -365,8 +369,12 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit 
             <path class="flagline-string" d="M0 1 Q50 4 100 1"></path>
           </svg>
           <figure class="flagline-print">
-            <span class="flagline-clip flagline-clip-left" aria-hidden="true"></span>
-            <span class="flagline-clip flagline-clip-right" aria-hidden="true"></span>
+            <span class="flagline-clip flagline-clip-left" aria-hidden="true"
+              ><Clothespin variant={1} /></span
+            >
+            <span class="flagline-clip flagline-clip-right" aria-hidden="true"
+              ><Clothespin variant={2} /></span
+            >
             <img
               src={withBase("/images/retreat-circle.jpg")}
               alt="Elizabeth and her colleague sitting on the wooden floor in front of a smiling group of guests from a past summit, in a bright studio with tall plants behind them"
@@ -515,19 +523,6 @@ const mailto = `mailto:${email}?subject=${encodeURIComponent("Relational Summit 
             <stop offset="0" stop-color="#d48f75" stop-opacity="0.95"></stop>
             <stop offset="0.55" stop-color="#e2a98f" stop-opacity="0.55"></stop>
             <stop offset="1" stop-color="#eec6b2" stop-opacity="0"></stop>
-          </linearGradient>
-          {/* Shading for the summit's plants (retreat.css fills their outlines with these) */}
-          <linearGradient id="summit-pad-fill" x1="0.15" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#cbd6c9"></stop>
-            <stop offset="1" stop-color="#9fb3a3"></stop>
-          </linearGradient>
-          <linearGradient id="summit-leaf-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#c3d0c2"></stop>
-            <stop offset="1" stop-color="#93a997"></stop>
-          </linearGradient>
-          <linearGradient id="summit-leaf-back" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#a9baa9"></stop>
-            <stop offset="1" stop-color="#839b88"></stop>
           </linearGradient>
           <clipPath id="summit-clip-far"><path d={toFoot(ridgeFar)}></path></clipPath>
           <clipPath id="summit-clip-mid"><path d={toFoot(ridgeMid)}></path></clipPath>

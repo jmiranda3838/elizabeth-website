@@ -37,9 +37,11 @@
   /* Ink and accents (all hold 4.5:1 on every ground above) */
   --trail-ink: #4f4b43;
   --clay-ink: #864636;
-  --clay-deep: #763d2e;
+  --rr-clay-deep: #763d2e;
   --cream-ink: #fdf6ef;
   --juniper: #7d9384;
+  --agave: #a6b9a8; /* glaucous blue-green of the agave blades (DesertAgave) */
+  --prickly: #adbfab; /* the prickly pear's pads (PricklyPear) */
   --trail-dot: #b0705a;
 
   /* Prayer flags in their traditional order (sky blue, wind white, fire red, water
@@ -94,8 +96,8 @@
 
 .retreat-btn:hover,
 .retreat-btn:focus-visible {
-  background-color: var(--clay-deep);
-  border-color: var(--clay-deep);
+  background-color: var(--rr-clay-deep);
+  border-color: var(--rr-clay-deep);
 }
 
 .retreat-btn-outline {
@@ -107,8 +109,8 @@
 .retreat-btn-outline:hover,
 .retreat-btn-outline:focus-visible {
   background-color: var(--cream-ink);
-  color: var(--clay-deep);
-  border-color: var(--clay-deep);
+  color: var(--rr-clay-deep);
+  border-color: var(--rr-clay-deep);
 }
 
 .retreat-page a:focus-visible {
@@ -666,9 +668,10 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
 
 /* The print hangs 7% of its width below the top of .flagline-hang (percentage padding
    and margins resolve against width), and the clothespins sit at 12.5% and 87.5%.
-   Each flag run is drawn 1:1 in px with its pin at (edge, 200) of a 2000 × 250 box,
-   so margin-top: calc(7% − 203px) puts the cord 3px above the print's top edge.
-   The section's overflow: hidden trims both runs where they leave the page. */
+   Each flag run is drawn 1:1 in px with its start at (edge, 200) of a 2000 × 250 box,
+   set against the print's top corner, so margin-top: calc(7% − 203px) puts the cord
+   3px above the print's top edge. The section's overflow: hidden trims both runs
+   where they leave the page. */
 .flagline-hang {
   position: relative;
   justify-self: end;
@@ -693,18 +696,20 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   pointer-events: none;
 }
 .flagline-run-left {
-  right: 87.5%;
+  right: 100%;
+  transform-origin: 100% 200px;
 }
 .flagline-run-right {
-  left: 87.5%;
+  left: 100%;
+  transform-origin: 0 200px;
 }
 
-/* The short stretch between the pins, along the print's top edge */
+/* The stretch along the print's top edge, through both pins */
 .flagline-span {
   position: absolute;
   top: 0;
-  left: 12.5%;
-  width: 75%;
+  left: 0;
+  width: 100%;
   height: 6px;
   margin-top: calc(7% - 4px);
   overflow: visible;
@@ -757,25 +762,31 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   visibility: hidden;
 }
 
-/* Wooden clothespins, holding the print on the cord */
+/* Wooden clothespins (misc/Clothespin), holding the print on the cord. The pin's
+   notch sits 67.8% down its height, so top: −3px − 0.678 × 40px seats the cord in it;
+   the jaws close over the print's white border, above the photo. */
 .flagline-clip {
   position: absolute;
-  top: -15px;
+  top: -30px;
   z-index: 2;
-  width: 9px;
-  height: 28px;
+  width: 16px;
+  height: 40px;
   translate: -50% 0;
-  border-radius: 2px 2px 3px 3px;
-  background: linear-gradient(90deg, #d9b99c 0 45%, #c9a586 45% 55%, #dcbea2 55%);
-  box-shadow:
-    0 0 0 1px rgba(122, 88, 68, 0.45),
-    0 2px 3px rgba(90, 52, 38, 0.18);
+  color: #e2c9a9;
+}
+.flagline-clip svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 .flagline-clip-left {
   left: 12.5%;
+  rotate: -3deg;
 }
 .flagline-clip-right {
   left: 87.5%;
+  rotate: 2deg;
 }
 
 .flagline-print {
@@ -1043,8 +1054,7 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   left: max(16px, calc(50% - 660px));
   bottom: var(--space-10);
   width: 150px;
-  color: var(--juniper);
-  opacity: 0.75;
+  color: var(--agave);
 }
 
 .permit-agave svg {
@@ -1144,29 +1154,14 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   opacity: 0.45;
 }
 
-/* The summit's plants, drawn filled and shaded so they stand in front of the rock
-   (their outlines come from the shared botanicals; the fills are gradients defined in
-   the ridge svg) */
+/* The summit's plants (PricklyPear, DesertAgave: drawn filled and shaded, so they
+   stand in front of the rock). Each one's ground line sits a few px inside the near
+   swell, below its top edge, at every width (measured against the edge where each
+   plant stands: the ridge slices, so the edge under a plant shifts with the width). */
 .summit-flora {
   position: absolute;
-  bottom: 70px;
-  color: var(--juniper);
+  bottom: 52px;
   pointer-events: none;
-}
-.summit-flora-left g:first-of-type ellipse {
-  fill: url(#summit-pad-fill);
-}
-/* The prickly pear's bloom */
-.summit-flora-left g:nth-of-type(4) path {
-  fill: #eeb0a2;
-  stroke: #c47f70;
-}
-.summit-flora-right g:first-of-type path {
-  fill: url(#summit-leaf-fill);
-}
-/* The agave's outermost and centre leaves sit behind the others */
-.summit-flora-right g:first-of-type path:nth-child(odd) {
-  fill: url(#summit-leaf-back);
 }
 
 .summit-flora svg {
@@ -1177,11 +1172,14 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
 .summit-flora-left {
   left: max(16px, calc(50% - 600px));
   width: 110px;
+  color: var(--prickly);
 }
 
 .summit-flora-right {
   right: max(16px, calc(50% - 610px));
+  bottom: 54px;
   width: 150px;
+  color: var(--agave);
 }
 
 .summit-inner {
@@ -1223,7 +1221,7 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: var(--text-xl);
-  color: var(--clay-deep);
+  color: var(--rr-clay-deep);
   margin-bottom: var(--space-8);
 }
 
@@ -1247,7 +1245,7 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
 
 .summit-contact a,
 .summit-more a {
-  color: var(--clay-deep);
+  color: var(--rr-clay-deep);
   text-decoration: underline;
   text-decoration-color: rgba(118, 61, 46, 0.4);
   text-underline-offset: 3px;
@@ -1283,6 +1281,18 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
 /* ============================================================
    RESPONSIVE (desktop-first)
    ============================================================ */
+@media (max-width: 1800px) {
+  .summit-flora-right {
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .summit-flora-left {
+    bottom: 60px;
+  }
+}
+
 @media (max-width: 1200px) {
   .retreat-sprig {
     display: none;
@@ -1455,7 +1465,7 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
   }
 
   .summit-flora {
-    bottom: 24px;
+    bottom: 6px;
   }
 
   .summit-flora-left {
@@ -1464,6 +1474,19 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
 
   .summit-flora-right {
     width: 100px;
+  }
+}
+
+/* Phones: a little more room either side of the print, and the flag string at 70%
+   (shrunk about where it leaves the print's corner), so two whole flags or more show
+   each side before the screen edge */
+@media (max-width: 680px) {
+  .flagline-hang {
+    width: min(calc(100% - 64px), 480px);
+  }
+
+  .flagline-run {
+    scale: 0.7;
   }
 }
 
@@ -1522,9 +1545,16 @@ body:has(.retreat-page) .header:not(.scrolled) .nav-contact-divider {
     padding-right: var(--space-6);
   }
 
-  /* Small enough that the email address fits on one line down to 320px */
+  /* Small enough that the email address fits on one line down to 320px; the links
+     get taller, so each is a full-size tap target on its own line */
   .summit-contact {
     font-size: var(--text-sm);
+    row-gap: 0;
+  }
+
+  .summit-contact a {
+    display: inline-block;
+    padding-block: 12px;
   }
 }
 

@@ -9,57 +9,109 @@ const { class: className = "", style = "", ...rest } = Astro.props;
 const r = (n: number) => Math.round(n * 10) / 10;
 const HEAD = { x: 138, y: 112 };
 
-/* One dandelion seed: a hair-thin beak from the achene at (x, y) out along `ang`
-   (radians), ending in a parachute of fine hairs. Returns path data only. */
-function seed(x: number, y: number, ang: number, len: number, s: number, n: number) {
-  const tx = x + Math.cos(ang) * len;
-  const ty = y + Math.sin(ang) * len;
-  const beak = `M${r(x)} ${r(y)}L${r(tx)} ${r(ty)}`;
+type V3 = [number, number, number];
+const add = (a: V3, b: V3, k = 1): V3 => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
+const norm = (a: V3): V3 => {
+  const l = Math.hypot(a[0], a[1], a[2]) || 1;
+  return [a[0] / l, a[1] / l, a[2] / l];
+};
+const cross = (a: V3, b: V3): V3 => [
+  a[1] * b[2] - a[2] * b[1],
+  a[2] * b[0] - a[0] * b[2],
+  a[0] * b[1] - a[1] * b[0],
+];
+// A small seeded generator, so the drawing is the same on every build
+let state = 20261117;
+const rand = () => {
+  state = (state * 1664525 + 1013904223) % 4294967296;
+  return state / 4294967296;
+};
+const P = (o: V3, v: V3) => `${r(o[0] + v[0])} ${r(o[1] + v[1])}`;
+
+/* One seed, in 3D around the origin `o` (screen x right, y down, z toward the
+   viewer) and drawn flat: the beak runs from the achene out along `d`, with a
+   slight bow, and ends in a parachute of hairs that open as a shallow cone.
+   Side-on seeds read as fans, seeds facing the viewer as little stars. */
+function seed(o: V3, base: V3, d: V3, len: number, hair: number, k: number) {
+  const tip = add(base, d, len);
+  const bow = (rand() - 0.5) * len * 0.08;
+  const mid = add(add(base, d, len * 0.5), [-d[1], d[0], 0], bow);
+  const beak = `M${P(o, base)}Q${P(o, mid)} ${P(o, tip)}`;
+  const u = norm(cross(d, Math.abs(d[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1]));
+  const v = cross(d, u);
   let hairs = "";
-  const k = 7;
+  const spin = rand() * Math.PI * 2;
   for (let i = 0; i < k; i++) {
-    const a = ang + ((i - (k - 1) / 2) / (k - 1)) * 2.5;
-    const hl = 8.4 * s * (0.86 + ((i * 5 + n * 3) % 4) * 0.07);
-    // each hair lifts away from the beak and then relaxes outward
-    const mx = tx + Math.cos(a) * hl * 0.55 + Math.cos(ang) * hl * 0.16;
-    const my = ty + Math.sin(a) * hl * 0.55 + Math.sin(ang) * hl * 0.16;
-    hairs += `M${r(tx)} ${r(ty)}Q${r(mx)} ${r(my)} ${r(tx + Math.cos(a) * hl)} ${r(ty + Math.sin(a) * hl)}`;
+    const phi = spin + (i / k) * Math.PI * 2 + (rand() - 0.5) * 0.5;
+    const ring = add(
+      [u[0] * Math.cos(phi), u[1] * Math.cos(phi), u[2] * Math.cos(phi)],
+      v,
+      Math.sin(phi),
+    );
+    const c = 1.08 + rand() * 0.22; // opening angle of the parachute
+    const hd = norm(
+      add([d[0] * Math.cos(c), d[1] * Math.cos(c), d[2] * Math.cos(c)], ring, Math.sin(c)),
+    );
+    const hl = hair * (0.8 + rand() * 0.32);
+    // each hair leaves along the beak, then relaxes outward
+    const ctrl = add(tip, norm(add(d, hd, 1.4)), hl * 0.55);
+    hairs += `M${P(o, tip)}Q${P(o, ctrl)} ${P(o, add(tip, hd, hl))}`;
   }
-  return { beak, hairs, tx: r(tx), ty: r(ty) };
+  return { beak, hairs, tip };
 }
 
-// Seeds still on the clock: everything except the windward quarter, which has blown
-const held = { beak: "", hairs: "", back: "", backHairs: "", dots: [] as [number, number][] };
-let n = 0;
-for (let deg = 62; deg <= 318; deg += 9.4) {
-  n++;
-  const a = ((deg + (n % 3) * 2.2) * Math.PI) / 180;
-  const len = 33 + ((n * 7) % 5) * 1.6;
-  const s = seed(HEAD.x + Math.cos(a) * 5.4, HEAD.y + Math.sin(a) * 5.4, a, len, 1, n);
-  held.beak += s.beak;
-  held.hairs += s.hairs;
-  held.dots.push([r(HEAD.x + Math.cos(a) * 5.4), r(HEAD.y + Math.sin(a) * 5.4)]);
-}
-// a shorter, paler layer behind gives the head its depth
-for (let deg = 70; deg <= 310; deg += 13) {
-  n++;
-  const a = ((deg + 4) * Math.PI) / 180;
-  const s = seed(HEAD.x + Math.cos(a) * 4, HEAD.y + Math.sin(a) * 4, a, 21 + (n % 3) * 2, 0.8, n);
-  held.back += s.beak;
-  held.backHairs += s.hairs;
+/* The clock: seeds spread evenly over a sphere (a Fibonacci lattice), less the
+   windward quarter that has already blown and the underside where the stem
+   meets the head. Drawn back, middle and front, each a little stronger. */
+const O: V3 = [HEAD.x, HEAD.y, 0];
+const layers = [
+  { beak: "", hairs: "" },
+  { beak: "", hairs: "" },
+  { beak: "", hairs: "" },
+];
+const achenes: [number, number, number][] = [];
+const N = 128;
+for (let i = 0; i < N; i++) {
+  const y = 1 - ((i + 0.5) / N) * 2;
+  const rad = Math.sqrt(1 - y * y);
+  const th = i * 2.39996 + 0.4;
+  const d = norm([
+    Math.cos(th) * rad + (rand() - 0.5) * 0.12,
+    y + (rand() - 0.5) * 0.12,
+    Math.sin(th) * rad + (rand() - 0.5) * 0.12,
+  ]);
+  const deg = (Math.atan2(d[1], d[0]) * 180) / Math.PI;
+  const flat = Math.hypot(d[0], d[1]);
+  // the blown quarter, up and to the right, with a ragged, thinning edge
+  const lo = -104 + rand() * 18;
+  const hi = -14 - rand() * 22;
+  if (flat > 0.25 && deg > lo && deg < hi) continue;
+  if (flat > 0.25 && deg > lo - 18 && deg < hi + 16 && rand() < 0.4) continue;
+  // where the stem joins, a few seeds already gone elsewhere, and some of
+  // those facing straight out, which would only crowd the middle
+  if (d[1] > 0.86 || rand() < 0.06 || (d[2] > 0.8 && rand() < 0.6)) continue;
+  const base = add([0, 0, 0], d, 5.4);
+  const len = 29 + rand() * 7;
+  const layer = d[2] < -0.25 ? 0 : d[2] < 0.35 ? 1 : 2;
+  const s = seed(O, base, d, len, 7.6 + rand() * 1.8, layer === 0 ? 7 : 8);
+  layers[layer].beak += s.beak;
+  layers[layer].hairs += s.hairs;
+  if (d[2] > 0.3) achenes.push([r(O[0] + base[0]), r(O[1] + base[1]), r(Math.atan2(d[1], d[0]))]);
 }
 
-// Seeds on the wind, nearest first: [x, y of the achene, angle°, size]
+// Seeds on the wind, nearest first: [x, y of the achene, angle°, tilt toward us°, size]
 const adrift = [
-  [186, 96, -62, 1],
-  [214, 70, -38, 0.96],
-  [236, 108, -74, 0.9],
-  [262, 50, -52, 0.86],
-  [286, 88, -30, 0.8],
-  [300, 30, -66, 0.74],
-].map(([x, y, deg, s], i) => {
+  [186, 96, -62, 18, 1],
+  [214, 70, -38, -26, 0.96],
+  [236, 108, -74, 40, 0.9],
+  [262, 50, -52, -10, 0.86],
+  [286, 88, -30, 30, 0.8],
+  [300, 30, -66, -34, 0.74],
+].map(([x, y, deg, tilt, s], i) => {
   const a = (deg * Math.PI) / 180;
-  return { ...seed(x, y, a, 18 * s, s, i), x, y, deg, s, i };
+  const t = (tilt * Math.PI) / 180;
+  const d: V3 = [Math.cos(a) * Math.cos(t), Math.sin(a) * Math.cos(t), Math.sin(t)];
+  return { ...seed([x, y, 0], [0, 0, 0], d, 19 * s, 8.6 * s, 9), x, y, deg, s, i };
 });
 
 // Toothed leaves of the rosette: [rotation°, length, mirrored, fill]
@@ -98,15 +150,15 @@ const TOOTH =
       <stop offset="0.6" stop-color="#fff" stop-opacity="0.62"></stop>
       <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
     </radialGradient>
+    <radialGradient id="dc-halo">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.7"></stop>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </radialGradient>
     <linearGradient id="dc-stem" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#b5c7ba"></stop>
       <stop offset="0.7" stop-color="#a9bcb0"></stop>
       <stop offset="1" stop-color="#d7b3a8"></stop>
     </linearGradient>
-    <clipPath id="dc-gap">
-      <!-- everything but the blown quarter (up and to the right) -->
-      <path d="M138 112 L212 45 L212 20 L40 20 L40 215 L185 215 L185 200 Z"></path>
-    </clipPath>
   </defs>
 
   <!-- Ground -->
@@ -178,41 +230,58 @@ const TOOTH =
     stroke-width="1.1"
     stroke-linecap="round"></path>
 
-  <!-- Seed head -->
-  <circle cx={HEAD.x} cy={HEAD.y} r="46" fill="url(#dc-puff)" clip-path="url(#dc-gap)"></circle>
+  <!-- Seed head: the far side of the clock, the bracts and bare receptacle,
+       then the near side over them -->
+  <circle cx={HEAD.x - 7} cy={HEAD.y + 7} r="43" fill="url(#dc-puff)"></circle>
   <g stroke-linecap="round">
-    <path d={held.back} stroke="#a9bcb0" stroke-width="0.6" stroke-opacity="0.8"></path>
-    <path d={held.backHairs} stroke="#b9c8bc" stroke-width="0.5" stroke-opacity="0.8"></path>
-    <path d={held.beak} stroke="#8e9f93" stroke-width="0.7"></path>
-    <path d={held.hairs} stroke="#8e9f93" stroke-width="0.55" stroke-opacity="0.85"></path>
+    <path d={layers[0].beak} stroke="#b3c3b7" stroke-width="0.5"></path>
+    <path d={layers[0].hairs} stroke="#c3d0c6" stroke-width="0.4"></path>
   </g>
   <!-- bracts folded back under the head -->
   <path
-    d="M132 121 C126 126 122 132 121 139 C126 136 131 131 135 124 Z M138 122 C137 129 138 136 141 142 C143 136 143 129 141 122 Z M144 120 C149 125 153 131 154 138 C149 135 145 130 141 123 Z"
-    fill="#96aca0"></path>
-  <!-- the bare receptacle where seeds have left, pitted -->
-  <ellipse cx={HEAD.x} cy={HEAD.y} rx="7.4" ry="6.6" fill="#ecdccb"></ellipse>
+    d="M132 119 C125 124 121 131 120.6 139 C126 135.6 131 130 134.6 122 Z M138 120 C136.6 127 137.6 135 140.6 142 C142.6 135 142.8 127 140.8 120 Z M144 118 C149.6 123 153.4 130 154.4 138 C149 134.6 145 129 141.4 121 Z"
+    fill="#a3b7aa"></path>
   <path
-    d="M133 107 C136 105 141 105 144 108"
-    stroke="#fff"
-    stroke-opacity="0.8"
-    stroke-width="1"
+    d="M127 125 C124.6 129 123 133 122.6 137 M139 124 C139 130 139.6 135 140.6 139 M148 123 C150.6 127 152.4 131 153 135"
+    stroke="#f1f5f3"
+    stroke-opacity="0.55"
+    stroke-width="0.7"
     stroke-linecap="round"></path>
-  <ellipse cx={HEAD.x} cy={HEAD.y} rx="7.4" ry="6.6" stroke="#b99c8c" stroke-width="0.8"></ellipse>
+  <!-- the receptacle, pitted where seeds have left -->
+  <ellipse cx={HEAD.x} cy={HEAD.y} rx="6.6" ry="6" fill="#ecdccb"></ellipse>
+  <ellipse cx={HEAD.x} cy={HEAD.y} rx="6.6" ry="6" stroke="#b99c8c" stroke-width="0.7"></ellipse>
   <path
-    d="M141 108.6 h0.1 M143.4 111.6 h0.1 M140.6 112.4 h0.1 M142.6 115 h0.1 M138.4 109.6 h0.1"
+    d="M141 108.6 h0.1 M143.2 111.4 h0.1 M140.4 112.2 h0.1 M142.2 114.6 h0.1 M138.6 109.4 h0.1"
     stroke="#b99c8c"
-    stroke-width="1.3"
+    stroke-width="1.2"
     stroke-linecap="round"></path>
-  <g fill="#c69491">
-    {held.dots.map(([x, y]) => <circle cx={x} cy={y} r="0.7" />)}
+  <g stroke-linecap="round">
+    <path d={layers[1].beak} stroke="#a3b3a7" stroke-width="0.5"></path>
+    <path d={layers[1].hairs} stroke="#afbfb3" stroke-width="0.42"></path>
+  </g>
+  <g fill="#b8817e" fill-opacity="0.7">
+    {
+      achenes.map(([x, y, a]) => (
+        <ellipse
+          cx={x}
+          cy={y}
+          rx="0.6"
+          ry="1.5"
+          transform={`rotate(${r((a * 180) / Math.PI + 90)} ${x} ${y})`}
+        />
+      ))
+    }
+  </g>
+  <g stroke-linecap="round">
+    <path d={layers[2].beak} stroke="#8e9f93" stroke-width="0.55"></path>
+    <path d={layers[2].hairs} stroke="#95a69a" stroke-width="0.45" stroke-opacity="0.8"></path>
   </g>
 
   <!-- Seeds on the wind -->
   {
     adrift.map((s) => (
       <g class="dandelion-seed" style={`--i:${s.i}`}>
-        <circle cx={s.tx} cy={s.ty} r={r(8 * s.s)} fill="#fff" fill-opacity="0.6" />
+        <circle cx={r(s.tip[0] + s.x)} cy={r(s.tip[1] + s.y)} r={r(9 * s.s)} fill="url(#dc-halo)" />
         <path d={s.hairs} stroke="#8e9f93" stroke-width="0.6" stroke-linecap="round" />
         <path d={s.beak} stroke="#8e9f93" stroke-width="0.8" stroke-linecap="round" />
         <ellipse

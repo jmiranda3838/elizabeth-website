@@ -414,8 +414,16 @@
     clip-path: inset(-12px 0 -12px 15px);
   }
 
+  /* One tall page: a ribbon down its whole length reads as a pipe, so it lies
+     between the leaves instead (under .promises-pages) and only its end shows,
+     slipping out at the foot of the page block, over the board and hanging
+     its swallow-tail below the cover. Its 64px TAIL stays past the book. */
   .promises-ribbon {
     left: 13px;
+    z-index: 0;
+    top: auto;
+    bottom: -64px;
+    height: calc(64px + var(--book-rim-bottom) + 40px);
   }
 }
 

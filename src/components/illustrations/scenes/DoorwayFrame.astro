@@ -937,31 +937,34 @@ const GABLE =
         <path d="M688 557 V172"></path>
         <path d="M669.6 554 V206"></path>
       </g>
-      <!-- A grille window, lit from behind -->
-      <path
-        d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z"
-        fill="#ffeecd"></path>
-      <path
-        d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z M683.5 270.6 V233 M689.5 271 V227.5 M695.5 271.5 V231 M677 251 L702 252.6"
-        stroke="#5d6a5f"
-        stroke-width="1.1"
-        stroke-linejoin="round"></path>
-      <!-- Strap hinges, ring pull, studs -->
-      <g fill="#5d6a5f">
+      <!-- Window and ironwork: faded in late by contact.css, so the swing does not stretch them -->
+      <g class="doorway-leaf-detail">
+        <!-- A grille window, lit from behind -->
         <path
-          d="M727 335 L684 342.5 C680 341 675 343.5 673 347.5 C675 351.5 680 354 684 352.5 L727 346 Z"
-        ></path>
+          d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z"
+          fill="#ffeecd"></path>
         <path
-          d="M727 504 L684 501 C680 499.5 675 502 673 505.5 C675 509.5 680 511.5 684 510 L727 515 Z"
-        ></path>
-        <ellipse cx="662" cy="432" rx="2.6" ry="4.4"></ellipse>
+          d="M677 270 V246 C677 235 683 228 689 227 C696 229 702 237 702 248 V272 Z M683.5 270.6 V233 M689.5 271 V227.5 M695.5 271.5 V231 M677 251 L702 252.6"
+          stroke="#5d6a5f"
+          stroke-width="1.1"
+          stroke-linejoin="round"></path>
+        <!-- Strap hinges, ring pull, studs -->
+        <g fill="#5d6a5f">
+          <path
+            d="M727 335 L684 342.5 C680 341 675 343.5 673 347.5 C675 351.5 680 354 684 352.5 L727 346 Z"
+          ></path>
+          <path
+            d="M727 504 L684 501 C680 499.5 675 502 673 505.5 C675 509.5 680 511.5 684 510 L727 515 Z"
+          ></path>
+          <ellipse cx="662" cy="432" rx="2.6" ry="4.4"></ellipse>
+        </g>
+        <ellipse cx="662" cy="440" rx="3.6" ry="6.4" stroke="#5d6a5f" stroke-width="1.3"></ellipse>
+        <path
+          d="M718 341.4 h0.1 M704 343.8 h0.1 M690 346.2 h0.1 M718 509 h0.1 M704 507.6 h0.1 M690 506.4 h0.1"
+          stroke="#aebdb1"
+          stroke-width="1.6"
+          stroke-linecap="round"></path>
       </g>
-      <ellipse cx="662" cy="440" rx="3.6" ry="6.4" stroke="#5d6a5f" stroke-width="1.3"></ellipse>
-      <path
-        d="M718 341.4 h0.1 M704 343.8 h0.1 M690 346.2 h0.1 M718 509 h0.1 M704 507.6 h0.1 M690 506.4 h0.1"
-        stroke="#aebdb1"
-        stroke-width="1.6"
-        stroke-linecap="round"></path>
       <!-- The door's edge and top, catching the light -->
       <path
         d="M652 553 L646 550.8 V304 C648 246 661 176 685 166.4 L688 165 C667 172 654 242 652 300 Z"
@@ -1175,9 +1178,13 @@ const GABLE =
   </g>
 
   <g class="doorway-courtyard">
-    <!-- low shrubs along the wall -->
+    <!-- low shrubs along the wall, each end group on a soft shadow -->
     <path
-      d="M-400 612 C-396 584 -366 574 -346 588 C-336 572 -304 572 -296 590 C-276 584 -258 598 -262 614 Z M1418 614 C1414 594 1436 582 1454 592 C1466 576 1498 578 1504 596 C1524 590 1548 600 1546 616 C1566 606 1596 610 1600 620 L1600 626 H1418 Z M-150 612 C-150 598 -132 592 -120 600 C-110 592 -90 596 -88 612 Z M924 612 C924 598 940 592 952 600 C964 590 986 596 986 612 Z"
+      d="M-400 615 C-360 617.4 -300 618 -258 615.4 C-270 614 -296 613 -330 613 Z M1416 619.4 C1460 623.6 1540 625.4 1600 624.6 V620 C1520 616 1450 616 1416 619.4 Z"
+      fill="#a9b6a3"
+      fill-opacity="0.35"></path>
+    <path
+      d="M-400 612 C-396 584 -366 574 -346 588 C-336 572 -304 572 -296 590 C-276 584 -258 598 -262 614 Z M1424 619 C1410 604 1428 584 1454 592 C1466 576 1498 578 1504 596 C1524 590 1548 600 1546 616 C1566 606 1596 610 1600 620 V623 C1560 624 1500 623.4 1452 621.6 C1438 621 1428 620.6 1424 619 Z M-150 612 C-150 598 -132 592 -120 600 C-110 592 -90 596 -88 612 Z M924 612 C924 598 940 592 952 600 C964 590 986 596 986 612 Z"
       fill="#b3c2b2"></path>
     <path
       d="M-386 600 q8 -8 18 -4 M-330 590 q10 -6 18 0 M1436 598 q8 -6 16 -2 M1474 590 q10 -5 18 1 M1560 612 q10 -5 20 -1"

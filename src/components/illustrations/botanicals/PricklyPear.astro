@@ -5,6 +5,118 @@ interface Props {
   [key: string]: unknown;
 }
 const { class: className = "", style = "", ...rest } = Astro.props;
+
+// A prickly pear, drawn filled so it can stand in front of rock: four obovate pads
+// (wider toward the top, as the real cladodes are), each growing from the rim of the
+// one below and painted back to front so the old pad at the foot overlaps its young.
+// Light from the upper left leaves a shaded rim down each pad's lower right. Areoles
+// sit in staggered rows, each a pale tuft with a dark heart and a spine or two, and a
+// few spines stand out from the margins. A bloom opens on the right pad and two ripe
+// fruits (tunas) sit on the top pad. The pads are currentColor; the rest are fixed tones.
+type Pt = [number, number];
+type Pad = { cx: number; cy: number; len: number; wid: number; rot: number; seed: number };
+
+// Back to front
+const pads: Pad[] = [
+  { cx: 30, cy: 27, len: 24, wid: 17.5, rot: -8, seed: 3 },
+  { cx: 66, cy: 60, len: 33, wid: 25, rot: 20, seed: 2 },
+  { cx: 35, cy: 57, len: 35, wid: 27, rot: -18, seed: 1 },
+  { cx: 50, cy: 92, len: 46, wid: 38, rot: 0, seed: 0 },
+];
+
+const f = (n: number) => n.toFixed(2);
+const start = (p: Pt) => `M${f(p[0])} ${f(p[1])}`;
+
+// Closed Catmull-Rom through the points, as cubic Béziers
+const closed = (pts: Pt[]) => {
+  const n = pts.length;
+  let d = start(pts[0]);
+  for (let i = 0; i < n; i++) {
+    const p0 = pts[(i - 1 + n) % n];
+    const p1 = pts[i];
+    const p2 = pts[(i + 1) % n];
+    const p3 = pts[(i + 2) % n];
+    d += ` C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)} ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
+  }
+  return d + " Z";
+};
+
+const padGeom = (p: Pad) => {
+  const r = (p.rot * Math.PI) / 180;
+  const cos = Math.cos(r);
+  const sin = Math.sin(r);
+  // local (pad axis up) to page coordinates
+  const toPage = (x: number, y: number): Pt => [p.cx + x * cos - y * sin, p.cy + x * sin + y * cos];
+  // Outline in local units: a = 0 at the top, the top half fuller than the base, with
+  // a slight, pad-specific wobble so no two read as stamped
+  const local = (a: number, k = 1): Pt => {
+    const wob = 1 + 0.025 * Math.sin(a * 3 + p.seed * 1.9) + 0.015 * Math.sin(a * 5 + p.seed);
+    const x = (p.wid / 2) * Math.sin(a) * (1 + 0.2 * Math.cos(a)) * wob * k;
+    const y = ((-p.len / 2) * Math.cos(a) - p.len * 0.1 * Math.sin(a) ** 2) * wob * k;
+    return [x, y];
+  };
+  const outline = (k = 1, dx = 0, dy = 0) => {
+    const pts: Pt[] = [];
+    for (let i = 0; i < 28; i++) {
+      const [x, y] = local((i / 28) * Math.PI * 2, k);
+      pts.push(toPage(x + dx, y + dy));
+    }
+    return closed(pts);
+  };
+  // Is a local point comfortably inside the pad?
+  const inside = (x: number, y: number, k: number) => {
+    const ny = (-2 * y) / p.len - 0.2; // +1 at top, 0 about where the pad is widest
+    const halfW = (p.wid / 2) * Math.sqrt(Math.max(0, 1 - ny * ny)) * (1 + 0.2 * ny);
+    return Math.abs(ny) < k && Math.abs(x) < halfW * k;
+  };
+  return { toPage, local, outline, inside };
+};
+
+const drawn = pads.map((p) => {
+  const g = padGeom(p);
+  // Staggered rows of areoles
+  const step = 7.4;
+  const areoles: { at: Pt; spines: string }[] = [];
+  let row = 0;
+  for (let y = -p.len / 2 + 5; y < p.len / 2 - 4; y += step * 0.86, row++) {
+    for (let x = -p.wid / 2 + (row % 2 ? step / 2 : 0); x < p.wid / 2; x += step) {
+      if (!g.inside(x, y, 0.8)) continue;
+      const at = g.toPage(x, y);
+      // one or two short spines, leaning out and up from the pad's centre line
+      const side = x === 0 ? 1 : Math.sign(x);
+      const k = (row * 7 + Math.round(x * 3) + p.seed * 5) % 3;
+      let spines = "";
+      const lean = [
+        [side * 1.6, -2.4],
+        [side * 2.6, -0.8],
+      ];
+      for (let s = 0; s < (k === 0 ? 2 : 1); s++) {
+        const [lx, ly] = lean[s];
+        const e = g.toPage(x + lx, y + ly);
+        spines += `${start(at)} L${f(e[0])} ${f(e[1])} `;
+      }
+      areoles.push({ at, spines });
+    }
+  }
+  // Spines standing out from the margin
+  let rim = "";
+  for (let i = 0; i < 9; i++) {
+    const a = 0.45 + i * 0.68 + p.seed * 0.3;
+    if (Math.cos(a) < -0.55) continue; // none at the foot, where it joins
+    const [x, y] = g.local(a, 0.97);
+    const [ox, oy] = g.local(a, 1.16);
+    const p1 = g.toPage(x, y);
+    const p2 = g.toPage(ox + (i % 2 ? 0.6 : -0.6), oy - 0.8);
+    rim += `${start(p1)} L${f(p2[0])} ${f(p2[1])} `;
+  }
+  return {
+    body: g.outline(),
+    lit: g.outline(0.86, -p.wid * 0.05, -p.len * 0.035),
+    sheen: g.outline(0.42, -p.wid * 0.16, -p.len * 0.16),
+    areoles,
+    rim,
+  };
+});
 ---
 
 <svg
@@ -15,32 +127,107 @@ const { class: className = "", style = "", ...rest } = Astro.props;
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <!-- Prickly pear: four stacked pads with areoles, and one bloom -->
-  <g stroke="currentColor" stroke-width="1.1" stroke-linejoin="round">
-    <ellipse cx="50" cy="92" rx="19" ry="23"></ellipse>
-    <ellipse cx="35" cy="56" rx="13" ry="17" transform="rotate(-18 35 56)"></ellipse>
-    <ellipse cx="66" cy="60" rx="12" ry="16" transform="rotate(20 66 60)"></ellipse>
-    <ellipse cx="30" cy="26" rx="8.5" ry="11.5" transform="rotate(-8 30 26)"></ellipse>
-  </g>
-  <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+  <!-- the plant's shadow on the ground -->
+  <ellipse cx="51" cy="115.4" rx="25" ry="2.2" fill="#6b4a3a" fill-opacity="0.16"></ellipse>
+  {
+    drawn.map((p) => (
+      <g>
+        {/* the pad, in shade, then its lit face set up and left of the rim */}
+        <path d={p.body} fill="currentColor" />
+        <path d={p.body} fill="#2a3d31" fill-opacity="0.2" />
+        <path d={p.lit} fill="currentColor" />
+        <path d={p.sheen} fill="#f4f8f1" fill-opacity="0.2" />
+        <path
+          d={p.body}
+          stroke="#4f6355"
+          stroke-opacity="0.55"
+          stroke-width="0.6"
+          stroke-linejoin="round"
+        />
+        <path d={p.rim} stroke="#8a6a55" stroke-opacity="0.65" stroke-width="0.4" />
+        <path
+          d={p.areoles.map((a) => a.spines).join("")}
+          stroke="#8a6a55"
+          stroke-opacity="0.6"
+          stroke-width="0.35"
+          stroke-linecap="round"
+        />
+        {p.areoles.map((a) => (
+          <>
+            <circle cx={f(a.at[0])} cy={f(a.at[1])} r="0.85" fill="#f2ead9" fill-opacity="0.9" />
+            <circle cx={f(a.at[0])} cy={f(a.at[1])} r="0.38" fill="#7d5644" fill-opacity="0.75" />
+          </>
+        ))}
+      </g>
+    ))
+  }
+
+  <!-- Two ripe fruits on the top pad's rim -->
+  <g stroke="#93474f" stroke-opacity="0.6" stroke-width="0.5" stroke-linejoin="round">
     <path
-      d="M44 82 h0.1 M56 80 h0.1 M50 94 h0.1 M42 102 h0.1 M58 104 h0.1 M32 50 h0.1 M40 60 h0.1 M30 64 h0.1 M64 52 h0.1 M70 64 h0.1 M62 68 h0.1 M29 22 h0.1 M32 32 h0.1"
-    ></path>
-  </g>
-  <g stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.75">
+      d="M24.4 15.6 C22.2 13.6 21.8 10 23.2 7.6 C24.4 5.8 27 5.8 28.2 7.4 C29.6 9.6 29 13.2 26.8 15.4 C26 16.1 25.1 16.2 24.4 15.6 Z"
+      fill="#c96f78"></path>
     <path
-      d="M44 82 l-3 -3 M56 80 l3 -3 M42 102 l-3 2 M58 104 l3 2 M32 50 l-3 -2 M64 52 l3 -2 M70 64 l3 1"
-    ></path>
+      d="M31.6 14.6 C30.4 12.4 30.8 9 32.6 7.4 C34 6.2 36.2 6.6 36.8 8.4 C37.6 10.8 36.4 13.6 34 15 C33.1 15.5 32.1 15.4 31.6 14.6 Z"
+      fill="#d07f84"></path>
   </g>
-  <!-- Bloom on the right pad -->
-  <g stroke="currentColor" stroke-width="1" stroke-linejoin="round">
-    <path d="M72 44 C68 38 68 32 72 30 C74 34 76 34 78 30 C82 32 82 38 78 44 Z"></path>
-    <path d="M71 34 C70 30 72 27 75 28 C77 27 79 30 78 34"></path>
+  <g fill="#fbe9e2" fill-opacity="0.5">
+    <path d="M23.8 9.4 C24.2 8.2 25.2 7.6 26 7.8 C25 8.6 24.6 9.6 24.6 11 Z"></path>
+    <path d="M32.2 9.8 C32.6 8.6 33.6 8 34.4 8.2 C33.4 8.8 33 9.8 33 11 Z"></path>
   </g>
+  <g fill="#7d4a40" fill-opacity="0.7">
+    <ellipse cx="25.7" cy="6.9" rx="1.6" ry="0.6"></ellipse>
+    <ellipse cx="34.4" cy="7.1" rx="1.4" ry="0.55" transform="rotate(14 34.4 7.1)"></ellipse>
+    <circle cx="24.6" cy="11.6" r="0.35"></circle>
+    <circle cx="27" cy="12.4" r="0.35"></circle>
+    <circle cx="33" cy="11.6" r="0.35"></circle>
+    <circle cx="35.2" cy="10.6" r="0.35"></circle>
+  </g>
+
+  <!-- A bloom opening on the right pad: cupped petals, a darker throat, stamens -->
+  <g stroke-linejoin="round" transform="translate(-3.6 0.8)">
+    <path
+      d="M75.4 46.6 C72.6 44.8 71.6 42.4 72.4 40.6 C73.4 41.6 74.6 42.2 75.6 42 C76.6 42.2 77.8 41.6 78.6 40.6 C79.4 42.4 78.4 44.8 75.6 46.6 Z"
+      fill="#9fb3a3"
+      stroke="#4f6355"
+      stroke-opacity="0.5"
+      stroke-width="0.5"></path>
+    <path
+      d="M70.4 37.6 C68.4 34.4 68.6 31 70.8 29.4 C71.8 31.6 73 32.4 74 32.2 C73.4 29.6 73.8 27.2 75.6 26 C77.2 27.4 77.8 29.8 77.2 32.2 C78.4 32.2 79.6 31.2 80.4 29.2 C82.6 31 82.6 34.6 80.6 37.6 C79 40 72 40 70.4 37.6 Z"
+      fill="#f0b6a7"
+      stroke="#c47f70"
+      stroke-width="0.55"></path>
+    <path
+      d="M72.6 37.2 C72 35.4 72.4 33.6 73.8 33 C74.6 34.4 76.4 34.4 77.2 33 C78.6 33.6 79 35.4 78.4 37.2 C77.2 38.6 73.8 38.6 72.6 37.2 Z"
+      fill="#dd8e80"
+      fill-opacity="0.85"></path>
+    <path
+      d="M73.6 31 C73.2 29.4 73.8 28 75 27.4 M78 30.4 C78.4 29.2 79.2 28.4 80 28.2"
+      stroke="#fff4ee"
+      stroke-opacity="0.6"
+      stroke-width="0.5"
+      stroke-linecap="round"></path>
+    <path
+      d="M75.5 37 L74.4 34.2 M75.5 37 L75.6 33.8 M75.5 37 L76.8 34.2"
+      stroke="#c9a15a"
+      stroke-width="0.45"
+      stroke-linecap="round"></path>
+    <g fill="#e6c27f">
+      <circle cx="74.3" cy="33.9" r="0.6"></circle>
+      <circle cx="75.6" cy="33.5" r="0.6"></circle>
+      <circle cx="76.9" cy="33.9" r="0.6"></circle>
+    </g>
+  </g>
+
+  <!-- the ground it grows from -->
   <path
-    d="M24 115 Q50 118 76 115"
-    stroke="currentColor"
-    stroke-width="1"
-    stroke-linecap="round"
-    opacity="0.6"></path>
+    d="M22 116 C34 115.4 44 115.6 52 115.8 C62 116 70 115.6 80 116"
+    stroke="#8f5e4a"
+    stroke-opacity="0.45"
+    stroke-width="0.8"
+    stroke-linecap="round"></path>
+  <g fill="#9a6a55" fill-opacity="0.4">
+    <ellipse cx="29" cy="115.5" rx="1.3" ry="0.7"></ellipse>
+    <ellipse cx="74" cy="115.6" rx="1" ry="0.6"></ellipse>
+  </g>
 </svg>

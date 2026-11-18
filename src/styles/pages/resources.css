@@ -22,13 +22,16 @@
   --pocket-kraft: #ebdcc6; /* kraft-paper card pocket */
   --ribbon-rose: var(--muted-rose);
   --spine-ink: #2f332c; /* dark ink for lendable spine titles (AA on their colors) */
+  --spine-fawn: #a5826f; /* a fawn cloth deep enough for a cream title (3.3:1) */
+  --spine-biscuit: #c9a898; /* paler fawn: only under a pasted paper label */
+  --sage-ink: #66806f; /* sage deep enough for script on the blush wash (3.9:1) */
   --brass: #a98f62; /* catalog drawer hardware */
   --gilt: rgba(243, 226, 178, 0.92); /* tooling on the book spines */
   --gilt-soft: rgba(243, 226, 178, 0.5);
   /* Uneven ink for the rubber stamps (a mask), kraft-paper fibres, and the mark printed
      on the card pockets */
   --ink-wear: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='60'%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.4 2.75'/%3E%3C/filter%3E%3Crect width='150' height='60' filter='url(%23w)'/%3E%3C/svg%3E");
-  --kraft-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cfilter id='k' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.09 .5' numOctaves='3' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .34 0 0 0 0 .22 0 0 0 .9 -.37'/%3E%3C/filter%3E%3Crect width='300' height='120' filter='url(%23k)'/%3E%3C/svg%3E");
+  --kraft-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='120'%3E%3Cfilter id='k' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1 .8' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .44 0 0 0 0 .33 0 0 0 0 .21 0 0 0 .75 -.36'/%3E%3C/filter%3E%3Crect width='300' height='120' filter='url(%23k)'/%3E%3C/svg%3E");
   --pocket-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 24' fill='none' stroke='%238a6848' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 6.5C19 4 13 3.4 7 4.6V18.6C13 17.4 19 18 23 20.5C27 18 33 17.4 39 18.6V4.6C33 3.4 27 4 23 6.5ZM23 6.5V20.5'/%3E%3Cpath d='M10.5 8.4C14 8 17.4 8.4 20 9.6M10.5 11.6C14 11.2 17.4 11.6 20 12.8M10.5 14.8C14 14.4 17.4 14.8 20 16M26 9.6C28.6 8.4 32 8 35.5 8.4M26 12.8C28.6 11.6 32 11.2 35.5 11.6M26 16C28.6 14.8 32 14.4 35.5 14.8' stroke-width='.6' stroke-opacity='.75'/%3E%3Cpath d='M4 21.4C10 20 17 20.4 23 22.6C29 20.4 36 20 42 21.4' stroke-opacity='.6'/%3E%3C/svg%3E");
   /* Wood grain, drawn as inline SVG so no file path (and no base path) is involved */
   --grain-plank: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='22' viewBox='0 0 520 22' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%236f4e33' stroke-linecap='round'%3E%3Cpath d='M0 4.5C70 3 150 6.5 240 4.6S420 3 520 4.5' stroke-opacity='.22' stroke-width='.7'/%3E%3Cpath d='M0 8.6C90 10.4 170 7 250 8.8S430 10.2 520 8.6' stroke-opacity='.16' stroke-width='.6'/%3E%3Cpath d='M0 13C60 11.6 120 12.4 150 13.2C170 9.8 214 9.8 232 13.4C300 14.6 420 11.8 520 13' stroke-opacity='.2' stroke-width='.7'/%3E%3Cpath d='M158 13.6C174 11.6 208 11.6 224 13.8C208 15.8 174 15.8 158 13.6Z' stroke-opacity='.2' stroke-width='.6'/%3E%3Cpath d='M0 17.4C110 18.8 150 17 190 17.8S400 16.2 520 17.4' stroke-opacity='.18' stroke-width='.6'/%3E%3Cpath d='M300 6.4C340 5.6 380 6.8 430 6.2M40 15.4C70 15 96 15.8 120 15.4M330 19.6C370 19 410 20 450 19.4' stroke-opacity='.14' stroke-width='.5'/%3E%3C/g%3E%3C/svg%3E");
@@ -364,8 +367,11 @@
   font-style: italic;
   font-size: clamp(0.72rem, calc(14 * var(--u)), var(--text-sm));
   letter-spacing: 0.06em;
-  color: rgba(253, 250, 242, 0.96);
-  text-shadow: 0 1px 1px rgba(52, 40, 34, 0.28);
+  color: rgba(253, 250, 242, 0.98);
+  /* a soft dark halo, like gilt pressed into the cloth, lifts the title off pale spines */
+  text-shadow:
+    0 1px 1px rgba(52, 40, 34, 0.42),
+    0 0 3px rgba(52, 40, 34, 0.38);
   white-space: nowrap;
   pointer-events: none;
 }
@@ -496,23 +502,23 @@
   z-index: 5;
 }
 
-/* A pressed cosmos propped against the picture frame */
+/* A cosmos in a glass bud vase (ShelfBudVase, 48 x 132), standing on the plank just in
+   front of the picture frame's corner */
 .shelf-flower {
   position: relative;
   z-index: 1;
   flex: 0 0 auto;
-  width: calc(40 * var(--u));
+  width: calc(48 * var(--u));
   align-self: flex-end;
-  margin: 0 calc(-9 * var(--u)) 0 0;
-  color: var(--clay-deep);
-  transform: rotate(9deg);
-  transform-origin: bottom center;
+  margin: 0 calc(-14 * var(--u)) 0 calc(-3 * var(--u));
 }
 
 .shelf-flower svg {
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
+  filter: drop-shadow(-4px 2px 3px rgba(70, 56, 44, 0.16));
 }
 
 /* Bookends: things with weight that stand on the plank and hold the row up.
@@ -1174,7 +1180,7 @@
   font-family: "Great Vibes", cursive;
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
   line-height: 1.35;
-  color: var(--warm-clay);
+  color: var(--clay-deep);
   max-width: 560px;
   margin: 0 auto var(--space-3);
 }
@@ -1224,7 +1230,7 @@
 }
 
 .bookmark-band--alt .bookmark-quote {
-  color: var(--sage);
+  color: var(--sage-ink);
 }
 
 /* ============================================
@@ -1483,6 +1489,9 @@
   color: var(--text-primary);
   text-decoration: underline dashed rgba(113, 121, 110, 0.6) 1px;
   text-underline-offset: 4px;
+  /* a 44px tap target; the negative margin keeps the text on the card's 26px rule */
+  padding: 9px 0;
+  margin: -9px 0;
 }
 
 .catalog-download:hover,
@@ -1551,7 +1560,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-2) var(--space-4);
-  padding: var(--space-4) 0;
+  padding: var(--space-3) 0;
   border-top: 1px solid rgba(198, 148, 145, 0.35);
 }
 
@@ -1560,6 +1569,10 @@
 }
 
 .helpdesk-lines a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   font-family: var(--font-sans);
   font-size: var(--text-xl);
   font-weight: 600;
@@ -1689,7 +1702,7 @@
   font-family: "Great Vibes", cursive;
   font-size: 1.9rem;
   line-height: 1.3;
-  color: var(--warm-clay);
+  color: var(--clay-deep);
   text-align: left;
   white-space: nowrap;
 }
@@ -1771,34 +1784,24 @@
   color: var(--slate-olive);
 }
 
-/* A poppy and a bay branch tucked behind the card: they stand up above its top edge,
-   where there is room for them at every width */
-.lending-sprig {
+/* Dried lavender and eucalyptus (PocketSprigs, 132 x 200) tucked into the pocket behind
+   the photo. The stems gather at the drawing's lower right, which sits at the middle of
+   the pocket's mouth; the heads fan out past the photo's left edge. The photo (a later,
+   transformed sibling) and the pocket front (::after) both paint over them. */
+.lending-sprigs {
   position: absolute;
-  z-index: -1;
-  transform-origin: bottom center;
+  right: 50%;
+  bottom: 6px;
+  width: 104%;
+  pointer-events: none;
 }
 
-.lending-sprig svg {
+.lending-sprigs svg {
   display: block;
   width: 100%;
   height: auto;
-}
-
-.lending-sprig-left {
-  top: -118px;
-  left: 7%;
-  width: 104px;
-  color: var(--clay-deep);
-  transform: rotate(-9deg);
-}
-
-.lending-sprig-right {
-  top: -96px;
-  left: calc(7% + 78px);
-  width: 62px;
-  color: #6f8779;
-  transform: rotate(13deg);
+  overflow: visible;
+  filter: drop-shadow(-2px 2px 2px rgba(70, 56, 44, 0.16));
 }
 
 /* ============================================
@@ -1907,10 +1910,10 @@
     letter-spacing: 0.1em;
   }
 
-  /* Bookmark bands on a phone: a shorter ribbon, and the handmade bookmark laid on
-     its side under the note, clear of the text */
+  /* Bookmark bands on a phone: a shorter ribbon, and the handmade bookmark hanging
+     upright under the note, clear of the text, at a small tilt */
   .bookmark-band {
-    padding-bottom: 116px;
+    padding-bottom: 160px;
   }
 
   .bookmark-ribbon {
@@ -1920,17 +1923,17 @@
   .bookmark-flower,
   .bookmark-band--alt .bookmark-flower {
     top: auto;
-    bottom: 4px;
+    bottom: 22px;
     left: auto;
-    right: calc(50% - 31px);
-    width: 62px;
-    padding: 25px 10px 9px;
-    transform: rotate(83deg);
+    right: calc(50% - 29px);
+    width: 58px;
+    padding: 26px 10px 10px;
+    transform: rotate(6deg);
   }
 
   .bookmark-band--alt .bookmark-flower {
-    padding: 24px 14px 8px;
-    transform: rotate(-83deg);
+    padding: 24px 12px 8px;
+    transform: rotate(-6deg);
   }
 }
 
@@ -2021,15 +2024,9 @@
     width: 96px;
   }
 
-  .lending-sprig-left {
-    top: -100px;
-    width: 88px;
-  }
-
-  .lending-sprig-right {
-    top: -82px;
-    left: calc(7% + 66px);
-    width: 52px;
+  /* the posy draws in a little, so its heads stay on the card */
+  .lending-sprigs {
+    width: 84%;
   }
 }
 

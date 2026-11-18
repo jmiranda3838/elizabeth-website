@@ -365,12 +365,15 @@ import { FernBank, MeadowHorizon } from "@illustrations/scenes";
           Therapy is not appropriate for crisis situations. If you are in immediate danger or
           experiencing a mental health emergency, please take one of the following steps:
         </p>
-        <p>
-          <a href="tel:988"><strong>Call 988</strong></a> (Suicide & Crisis Lifeline, available 24/7)<br
-          />
-          <a href="tel:911"><strong>Call 911</strong></a> or go to your nearest emergency room<br />
-          <a href="sms:741741"><strong>Text HOME to 741741</strong></a> (Crisis Text Line)
-        </p>
+        <ul class="crisis-lines">
+          <li>
+            <a href="tel:988"><strong>Call 988</strong></a> (Suicide & Crisis Lifeline, available 24/7)
+          </li>
+          <li>
+            <a href="tel:911"><strong>Call 911</strong></a> or go to your nearest emergency room
+          </li>
+          <li><a href="sms:741741"><strong>Text HOME to 741741</strong></a> (Crisis Text Line)</li>
+        </ul>
         <p>
           Please do not use email or my contact form to communicate urgent matters, as I may not see
           messages immediately.
@@ -615,7 +618,7 @@ import { FernBank, MeadowHorizon } from "@illustrations/scenes";
     }
 
     .crisis-callout h3 {
-      color: var(--warm-clay);
+      color: var(--clay-deep);
       margin-bottom: var(--space-3);
     }
 
@@ -628,8 +631,36 @@ import { FernBank, MeadowHorizon } from "@illustrations/scenes";
       margin-bottom: 0;
     }
 
+    /* One line per crisis number, the number as a tall, underlined tap target
+       and its note hanging beside it when it wraps */
+    .crisis-lines {
+      list-style: none;
+      margin: 0 0 var(--space-3);
+      padding: 0;
+      font-size: var(--text-sm);
+    }
+
+    .crisis-lines li {
+      display: flex;
+      align-items: baseline;
+      column-gap: var(--space-1);
+      margin: 0;
+    }
+
+    .crisis-lines a {
+      flex: none;
+      padding-block: var(--space-2);
+    }
+
+    .crisis-callout a {
+      color: var(--clay-deep);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
     .crisis-callout a:hover {
-      color: var(--warm-clay);
+      color: var(--clay-deeper);
     }
 
     .crisis-callout a:focus-visible {

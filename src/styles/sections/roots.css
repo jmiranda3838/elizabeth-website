@@ -24,7 +24,8 @@
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--sage);
+  /* --sage alone is about 2:1 here, and --text-secondary just under 4.5:1 */
+  color: var(--text-primary);
   margin-bottom: var(--space-4);
 }
 

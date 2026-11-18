@@ -2,13 +2,15 @@
 import { withBase } from "@/lib/withBase";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import "@styles/pages/resources.css";
-import { LavenderSprig, LeafBranch, PressedFlower, Wildflower } from "@illustrations/botanicals";
+import { LavenderSprig, PressedFlower } from "@illustrations/botanicals";
 import { LeafDivider } from "@illustrations/dividers";
 import {
   BookmarkRibbon,
   CatalogPull,
   LavenderJar,
+  PocketSprigs,
   ShelfBookStack,
+  ShelfBudVase,
   ShelfPlant,
 } from "@illustrations/misc";
 import { ArrowRight } from "@illustrations/icons";
@@ -85,7 +87,7 @@ import { ArrowRight } from "@illustrations/icons";
 
           <div
             class="shelf-book shelf-book--spare shelf-book--capped"
-            style="--book-w: 34; --book-h: 186; --book-c: #c9a898; --book-lean: -5deg;"
+            style="--book-w: 34; --book-h: 186; --book-c: var(--spine-fawn); --book-lean: -5deg;"
             aria-hidden="true"
           >
             <span class="shelf-book-title">journey</span>
@@ -111,7 +113,7 @@ import { ArrowRight } from "@illustrations/icons";
             <span class="shelf-slip" id="shelf-slip-2">What if you fly?</span>
           </div>
 
-          <span class="shelf-flower" aria-hidden="true"><PressedFlower /></span>
+          <span class="shelf-flower" aria-hidden="true"><ShelfBudVase /></span>
 
           <figure class="shelf-frame">
             <img
@@ -134,7 +136,7 @@ import { ArrowRight } from "@illustrations/icons";
           <div class="shelf-lend-wrap" style="--slip-shift: -36px;">
             <button
               class="shelf-book shelf-book--lend"
-              style="--book-w: 44; --book-h: 208; --book-c: #c9a898; --tab-c: var(--misty-blue);"
+              style="--book-w: 44; --book-h: 208; --book-c: var(--spine-biscuit); --tab-c: var(--misty-blue);"
               aria-expanded="false"
               aria-controls="shelf-slip-3"
             >
@@ -429,9 +431,6 @@ import { ArrowRight } from "@illustrations/icons";
     <!-- Checking Out: closing CTA -->
     <section class="lending-cta">
       <div class="lending-cta-wrap reveal">
-        <span class="lending-sprig lending-sprig-left" aria-hidden="true"><Wildflower /></span>
-        <span class="lending-sprig lending-sprig-right" aria-hidden="true"><LeafBranch /></span>
-
         <div class="lending-cta-card">
           <span class="lending-cta-stamp" aria-hidden="true">Due Back: Whenever</span>
           <p class="eyebrow">Checking Out</p>
@@ -446,6 +445,7 @@ import { ArrowRight } from "@illustrations/icons";
           >
           <div class="lending-signoff">
             <div class="lending-pocket">
+              <span class="lending-sprigs" aria-hidden="true"><PocketSprigs /></span>
               <figure class="lending-patron" style="--tilt: -4deg;">
                 <img
                   src={withBase("/images/resources-cta-patron.jpg")}

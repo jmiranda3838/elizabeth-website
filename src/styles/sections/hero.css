@@ -38,12 +38,16 @@
 /* A stand of three plants in pale ink at the lower right: lavender, a poppy and
    poppy seed heads, rooted where the photo fades to paper so their stems rise
    out of the mist. They balance the text block and stay clear of the face. */
+/* A stand of wild plants at the lower right: lavender behind, a poppy leaning
+   in on the right, seed heads in front, overlapping at the foot so they read as
+   one clump. They take the garland's own tints (its lavender, the palest of its
+   roses, its pale sage), and the clump scales with the viewport from --stand. */
 .botanical {
+  --stand: clamp(100px, 7.4vw, 156px);
   position: absolute;
   pointer-events: none;
   z-index: 3;
-  color: #fdf8ef;
-  filter: drop-shadow(0 1px 5px rgba(38, 30, 22, 0.45));
+  filter: drop-shadow(0 1px 4px rgba(38, 30, 22, 0.5));
   transform-origin: 50% 100%;
   transform: rotate(var(--base-rotate, 0deg));
   animation: sway 9s ease-in-out infinite;
@@ -53,31 +57,34 @@
 }
 
 .botanical-1 {
-  width: 104px;
-  height: 208px;
-  right: 11.5%;
-  bottom: 7%;
-  opacity: 0.9;
+  width: var(--stand);
+  height: calc(var(--stand) * 2);
+  right: calc(5% + var(--stand) * 0.4);
+  bottom: 7.5%;
+  color: #d4cdee;
+  opacity: 0.95;
   --base-rotate: -3deg;
 }
 
 .botanical-2 {
-  width: 96px;
-  height: 160px;
-  right: 5.5%;
-  bottom: 7.5%;
-  opacity: 0.85;
-  --base-rotate: 5deg;
+  width: calc(var(--stand) * 0.92);
+  height: calc(var(--stand) * 1.54);
+  right: 5%;
+  bottom: 7%;
+  color: #f4d3cc;
+  opacity: 0.95;
+  --base-rotate: 6deg;
   animation-delay: -3s;
 }
 
 .botanical-3 {
-  width: 126px;
-  height: 90px;
-  right: 17%;
-  bottom: 8%;
-  opacity: 0.8;
-  --base-rotate: -4deg;
+  width: calc(var(--stand) * 1.2);
+  height: calc(var(--stand) * 0.86);
+  right: calc(5% + var(--stand) * 0.78);
+  bottom: 6.5%;
+  color: #e9efe2;
+  opacity: 0.92;
+  --base-rotate: -5deg;
   animation-delay: -6s;
 }
 
@@ -159,19 +166,8 @@
     font-size: 3.5rem;
   }
 
-  .botanical-1 {
-    width: 84px;
-    height: 168px;
-  }
-
-  .botanical-2 {
-    width: 78px;
-    height: 130px;
-  }
-
-  .botanical-3 {
-    width: 104px;
-    height: 74px;
+  .botanical {
+    --stand: 84px;
   }
 }
 
